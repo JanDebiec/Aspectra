@@ -1,0 +1,53 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <!-- NOTE: EditTextPreference accepts EditText attributes. -->
+    <!-- NOTE: EditTextPreference's summary should be set to its value by the activity code. -->
+    <EditTextPreference
+        android:key="@string/PREFS_KEY_WIDTH_START"
+        android:title="@string/pref_title_width_start"
+        android:defaultValue="@string/DEFAULT_WIDTH_START"
+        android:selectAllOnFocus="true"
+        android:inputType="number"
+        android:singleLine="true"
+        android:maxLines="1" />
+
+    <EditTextPreference
+        android:key="@string/PREFS_KEY_WIDTH_END"
+        android:title="@string/pref_title_width_end"
+        android:defaultValue="@string/DEFAULT_WIDTH_END"
+        android:selectAllOnFocus="true"
+        android:inputType="number"
+        android:singleLine="true"
+        android:maxLines="1" />
+
+    <EditTextPreference
+        android:key="@string/PREFS_KEY_HEIGHT_START"
+        android:title="@string/pref_title_height_start"
+        android:defaultValue="@string/DEFAULT_HEIGHT_START"
+        android:selectAllOnFocus="true"
+        android:inputType="number"
+        android:singleLine="true"
+        android:maxLines="1" />
+    <!--<EditTextPreference-->
+        <!--android:key="@string/PREFS_KEY_HEIGHT_END"-->
+        <!--android:title="@string/pref_title_height_end"-->
+        <!--android:defaultValue="@string/DEFAULT_HEIGHT_END"-->
+        <!--android:selectAllOnFocus="true"-->
+        <!--android:inputType="number"-->
+        <!--android:singleLine="true"-->
+        <!--android:maxLines="1" />-->
+    <EditTextPreference
+        android:key="@string/PREFS_KEY_SCAN_AREA_WIDTH"
+        android:title="@string/pref_title_scan_line_width"
+        android:defaultValue="@string/DEFAULT_SCAN_AREA_WIDTH"
+        android:selectAllOnFocus="true"
+        android:inputType="number"
+        android:singleLine="true"
+        android:maxLines="1" />
+    <CheckBoxPreference
+        android:key="@string/PREFS_KEY_ENABLE_NORMALIZE"
+        android:title="@string/pref_title_enable_normalize"
+        android:summary="@string/pref_description_enable_normalize"
+        android:defaultValue="true" />
+</PreferenceScreen>

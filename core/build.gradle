@@ -1,0 +1,32 @@
+apply plugin: 'java'
+
+repositories {
+    mavenCentral()
+}
+
+sourceSets {
+    main {
+        java {
+            srcDir 'src/main'
+        }
+    }
+    intTest {
+        java {
+            srcDir 'srd/test'  // Note @Peter's comment below
+        }
+    }
+}
+
+
+//test {
+ //   testLogging {
+//// Show that tests are run in the command-line output
+    //                    events 'started', 'passed'
+     //}
+//}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+//    androidTestCompile 'junit:junit:4.+'
+    testCompile 'junit:junit:4.+'
+}

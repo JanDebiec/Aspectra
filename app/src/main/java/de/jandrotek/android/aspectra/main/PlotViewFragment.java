@@ -1,7 +1,7 @@
 /**
  * 14.03.2015 source in Github
  */
-package de.jandrotek.android.aspectra.mini;
+package de.jandrotek.android.aspectra.main;
 
 import android.app.Activity;
 import android.net.Uri;

@@ -2,7 +2,7 @@ package de.jandrotek.android.aspectra.core.test;
 
 import junit.framework.TestCase;
 
-import de.jandrotek.android.aspectra.core.AspectraGlobals;
+import de.jandrotek.android.aspectra.main.AspectraGlobals;
 import de.jandrotek.android.aspectra.core.SpectrumAsp;
 
 /**

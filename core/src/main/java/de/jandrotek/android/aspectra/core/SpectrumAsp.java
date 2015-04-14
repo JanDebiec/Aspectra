@@ -1,10 +1,5 @@
 package de.jandrotek.android.aspectra.core;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
-
 /**
  * class for saving,reading Aspectra-Spectra files.
  * Aspectra files:

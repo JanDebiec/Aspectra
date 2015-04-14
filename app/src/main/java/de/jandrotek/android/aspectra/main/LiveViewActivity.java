@@ -103,22 +103,49 @@ public class LiveViewActivity extends BaseActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            Intent intent = new Intent(this, SettingsActivity.class);
-            startActivity(intent);
-            return true;
-        } else if (id == R.id.action_save) {
-            AspectraGlobals.mSavePlotInFile = true;
+        if(BuildConfig.flavorType == FlavorSettings.eFlavorType.typeVanilla) {
+            if (id == R.id.action_settings) {
+                Intent intent = new Intent(this, SettingsActivity.class);
+                startActivity(intent);
+                return true;
+            } else if (id == R.id.action_save) {
+                AspectraGlobals.mSavePlotInFile = true;
 
-            return true;
-        } else if (id == R.id.action_analyze) {
-            //Intent intent = new Intent(this, SettingsActivity.class);
-            //startActivity(intent);
-            Toast.makeText(this.getApplicationContext(),
-                    "call analyze",
-                    Toast.LENGTH_SHORT).show();
-            return true;
+                return true;
+
+            }
+        } else if (BuildConfig.flavorType == FlavorSettings.eFlavorType.typeMini) {
+            if (id == R.id.action_settings) {
+                Intent intent = new Intent(this, SettingsActivity.class);
+                startActivity(intent);
+                return true;
+            } else if (id == R.id.action_save) {
+                AspectraGlobals.mSavePlotInFile = true;
+
+                return true;
+//            } else if (id == R.id.action_list) {
+//                //Intent intent = new Intent(this, SettingsActivity.class);
+//                //startActivity(intent);
+//                Toast.makeText(this.getApplicationContext(),
+//                        "call list",
+//                        Toast.LENGTH_SHORT).show();
+//                return true;
+           }
+
+        } else {
+            if (id == R.id.action_settings) {
+                Intent intent = new Intent(this, SettingsActivity.class);
+                startActivity(intent);
+                return true;
+            } else if (id == R.id.action_save) {
+                AspectraGlobals.mSavePlotInFile = true;
+
+                return true;
+
+            }
         }
+
+
 
         return super.onOptionsItemSelected(item);
     }

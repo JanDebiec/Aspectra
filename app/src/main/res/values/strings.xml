@@ -77,5 +77,6 @@
     <string name="PREFS_KEY_EXTENSION_NAME">PREFS_KEY_EXTENSION_NAME</string>
     <string name="pref_title_extension_name">File extension for spectra files</string>
     <string name="DEFAULT_EXTENSION_NAME">asp</string>
+    <string name="action_list">List spectra</string>
 
 </resources>

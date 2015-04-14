@@ -161,7 +161,7 @@ public class CameraViewFragment extends Fragment {
         mCamPreview.setVisibility(View.INVISIBLE);
 
 
-        // if possible update preview size from AspectraGlobals
+        // if possible update preview size from FlavorSettings
 
 
         FrameLayout mConfigContainer = (FrameLayout) rootView.findViewById(R.id.extLineConfigContainer);

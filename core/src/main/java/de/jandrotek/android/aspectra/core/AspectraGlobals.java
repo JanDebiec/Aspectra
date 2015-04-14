@@ -4,6 +4,7 @@ package de.jandrotek.android.aspectra.core;
  * Created by jan on 20.01.15.
  */
 public class AspectraGlobals {
+
     public static final int eMessageCompleteLine = 0;
     public static final int eMessagePreviewSize = 1;
     public static int mPreviewWidthX;

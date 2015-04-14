@@ -7,4 +7,4 @@ aspectra apps with flavors
   
   mini: LiveViewer plus file viewer
   
-  full mini + spectra analyzer
+  full: mini + spectra analyzer

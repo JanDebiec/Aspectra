@@ -24,13 +24,13 @@ android {
                     "flavorType", "de.jandrotek.android.aspectra.main.FlavorSettings.eFlavorType.typeVanilla"
         }
         mini {
-            applicationId "de.jandrotek.android.aspectra.mini"
+            applicationId "de.jandrotek.android.aspectra.main"
             buildConfigField "de.jandrotek.android.aspectra.main.FlavorSettings.eFlavorType",
                     "flavorType", "de.jandrotek.android.aspectra.main.FlavorSettings.eFlavorType.typeMini"
 
         }
         full {
-            applicationId "de.jandrotek.android.aspectra.full"
+            applicationId "de.jandrotek.android.aspectra.main"
 
         }
     }

@@ -33,7 +33,7 @@ public class ItemListActivity extends BaseActivity
 //	private static final String KEY_BASEPATH = "BasePath";
 //	private static final String KEY_LENGTH = "length";
 
-    private AspectraSettings mAspectraSettings;
+    //private AspectraSettings mAspectraSettings;
 
 
     private SpectrumFiles mSpectrumFiles = null;
@@ -57,6 +57,10 @@ public class ItemListActivity extends BaseActivity
 
         if(mSpectrumFiles == null) {
             mSpectrumFiles = new SpectrumFiles();
+            mSpectrumFiles.setFileFolder(mFileFolder);
+            mSpectrumFiles.setFileExt(mFileExt);
+            mSpectrumFiles.searchForFiles();
+            mFileListSize = mSpectrumFiles.getFileListSize();
         }
 
         setContentView(R.layout.activity_item_list);

@@ -123,13 +123,13 @@ public class LiveViewActivity extends BaseActivity
                 AspectraGlobals.mSavePlotInFile = true;
 
                 return true;
-//            } else if (id == R.id.action_list) {
-//                //Intent intent = new Intent(this, SettingsActivity.class);
-//                //startActivity(intent);
-//                Toast.makeText(this.getApplicationContext(),
-//                        "call list",
-//                        Toast.LENGTH_SHORT).show();
-//                return true;
+            } else if (id == R.id.action_list) {
+                Intent intent = new Intent(this, ItemListActivity.class);
+                startActivity(intent);
+                Toast.makeText(this.getApplicationContext(),
+                        "call list",
+                        Toast.LENGTH_SHORT).show();
+                return true;
            }
 
         } else {

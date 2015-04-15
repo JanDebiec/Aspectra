@@ -20,11 +20,13 @@ android {
     productFlavors{
         vanilla {
             applicationId "de.jandrotek.android.aspectra.main"
+           // versionName android.defaultConfig.versionName + "-vanilla"
             buildConfigField "de.jandrotek.android.aspectra.main.FlavorSettings.eFlavorType",
                     "flavorType", "de.jandrotek.android.aspectra.main.FlavorSettings.eFlavorType.typeVanilla"
         }
         mini {
             applicationId "de.jandrotek.android.aspectra.main"
+            //versionName android.defaultConfig.versionName + "-mini"
             buildConfigField "de.jandrotek.android.aspectra.main.FlavorSettings.eFlavorType",
                     "flavorType", "de.jandrotek.android.aspectra.main.FlavorSettings.eFlavorType.typeMini"
 

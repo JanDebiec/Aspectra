@@ -17,7 +17,7 @@ import java.io.File;
 import java.lang.ref.WeakReference;
 
 import de.jandrotek.android.aspectra.core.AspectraGlobals;
-import de.jandrotek.android.aspectra.core.FileUtils;
+//import de.jandrotek.android.aspectra.core.FileUtils;
 import de.jandrotek.android.aspectra.core.SpectrumAsp;
 /**
  * here comes the source from MainActivity, handling CameraViewFragment,
@@ -210,7 +210,7 @@ public class LiveViewActivity extends BaseActivity
         @Override
         protected Void doInBackground(Void... args) {
             try {
-                FileUtils.saveStringToFile(text, target);
+                SpectrumFiles.saveStringToFile(text, target);
             }
             catch (Exception e) {
                 this.e=e;
@@ -293,7 +293,7 @@ public class LiveViewActivity extends BaseActivity
                     mPlotViewFragment.showPlot(data, length);
                     if(AspectraGlobals.mSavePlotInFile){
                         AspectraGlobals.mSavePlotInFile = false;
-                        String fileName = FileUtils.generateSpectrumAspFileName();
+                        String fileName = SpectrumFiles.generateSpectrumAspFileName();
                         SpectrumAsp mSpectrum = new SpectrumAsp(fileName);
                         mSpectrum.setData(data, AspectraGlobals.eNoNormalize);
                         new SaveSpectrumTask(mSpectrum.toString(), getTarget(fileName)).execute();

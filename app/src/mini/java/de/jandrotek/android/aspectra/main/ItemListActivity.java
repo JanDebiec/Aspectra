@@ -36,7 +36,7 @@ public class ItemListActivity extends BaseActivity
     private AspectraSettings mAspectraSettings;
 
 
-    private SpectrumFiles mSpectrumFiles;
+    private SpectrumFiles mSpectrumFiles = null;
     private int mFileListSize = 0;
     private String[] mFiles;
     private String mFileFolder;
@@ -52,24 +52,10 @@ public class ItemListActivity extends BaseActivity
         super.onCreate(savedInstanceState);
         Log.d(TAG, "onCreate() called");
 
-        // try to load from setting file or from Bundle
-//        if (savedInstanceState != null) {
-//        	mFileFolder = savedInstanceState.getString(KEY_BASEPATH, "spectra");     //.getString(KEY_BASEPATH, 0);
-//        	mChartLength = savedInstanceState.getInt(KEY_LENGTH, 800);
-//        }
-//        else {
-//        	mFileFolder = "spectra";
-//        	mChartLength = 800;
-//        }
-
         updateFromPreferences();
 
-        // first check files, to fill the item list
-        if(mFileListSize == 0){
-        	mSpectrumFiles = new SpectrumFiles();
-        	mSpectrumFiles.setFileFolder(mFileFolder);
-        	mSpectrumFiles.searchForFiles();
-        	mFileListSize = mSpectrumFiles.getFileListSize();
+        if(mSpectrumFiles == null) {
+            mSpectrumFiles = new SpectrumFiles();
         }
 
         setContentView(R.layout.activity_item_list);
@@ -102,9 +88,9 @@ public class ItemListActivity extends BaseActivity
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
         super.onSaveInstanceState(savedInstanceState);
-        Log.i(TAG, "onSaveInstanceState");
-        savedInstanceState.putString(KEY_BASEPATH, mFileFolder);
-        savedInstanceState.putInt(KEY_LENGTH, mChartLength);
+//        Log.i(TAG, "onSaveInstanceState");
+//        savedInstanceState.putString(KEY_BASEPATH, mFileFolder);
+//        savedInstanceState.putInt(KEY_LENGTH, mChartLength);
     }
 
     @Override
@@ -116,6 +102,9 @@ public class ItemListActivity extends BaseActivity
     public void onResume() {
         super.onResume();
         updateFromPreferences();
+        mSpectrumFiles.setFileFolder(mFileFolder);
+        mSpectrumFiles.searchForFiles();
+        mFileListSize = mSpectrumFiles.getFileListSize();
     }
 
     @Override

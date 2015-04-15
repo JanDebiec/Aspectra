@@ -82,7 +82,7 @@ public class ItemListActivity extends BaseActivity
         super.updateFromPreferences();
         mFileFolder = mAspectraSettings.getPrefsSpectraBasePath();
        	mChartLength = mAspectraSettings.getPrefsSpectraLength();
-        mFileExt = mAspectraSettings.getPrefsSpectraFileExt();
+        mFileExt = mAspectraSettings.getPrefsSpectraExt();
     }
 
 

@@ -25,12 +25,8 @@ public class SpectrumFiles {
     public static String mPath = "";
     private FileWalker mFileWalker;
 
-    public void setFileExt(String mFileExt) {
-        this.mFileExt = mFileExt;
-    }
-
-    private String mFileExt = "spk";
-    private String mFileFolder;
+    private static String mFileExt = "spk";
+    private static String mFileFolder;
 
 
     public String getFileFolder() {
@@ -43,12 +39,12 @@ public class SpectrumFiles {
 	}
 
 
-	public String getFileExt() {
+	public static String getFileExt() {
 		return mFileExt;
 	}
 
 
-	public void setFileExt(String fileExt) {
+	public void setFileExt (String fileExt) {
 		mFileExt = fileExt;
 	}
 
@@ -101,7 +97,7 @@ public class SpectrumFiles {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss");
         String currentDateandTime = sdf.format(new Date());
 
-        return currentDateandTime + "." + AspectraGlobals.mExtensionAsp;
+        return mPath  + "/" + currentDateandTime + "." + mFileExt;
     }
 
     public static void saveStringToFile(String text, File target) throws IOException {

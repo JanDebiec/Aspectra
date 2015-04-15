@@ -10,7 +10,7 @@ public class AspectraGlobals {
     public static int mPreviewWidthX;
     public static int mPreviewHeightY;
     public static boolean mSavePlotInFile;
-    public static String mExtensionAsp = "asp";
+    //public static String mExtensionAsp = "asp";
     public static final int eNoNormalize = -1;
     public static final int eNormalize1024 = 1024;
     public static final int eTypeUnkown     = 0;

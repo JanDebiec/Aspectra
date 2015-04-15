@@ -1,8 +1,11 @@
 package de.jandrotek.android.aspectra.main;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Menu;
 
@@ -23,12 +26,15 @@ import android.view.Menu;
  * {@link ItemListFragment.Callbacks} interface
  * to listen for item selections.
  */
-public class ItemListActivity extends Activity
+public class ItemListActivity extends BaseActivity
         implements ItemListFragment.Callbacks {
 
     private static final String TAG = "ListItemsAct";
 	private static final String KEY_BASEPATH = "BasePath";
 	private static final String KEY_LENGTH = "length";
+
+    private AspectraSettings mAspectraSettings;
+
 
     private SpectrumFiles mSpectrumFiles;
     private int mFileListSize = 0;
@@ -47,14 +53,14 @@ public class ItemListActivity extends Activity
         Log.d(TAG, "onCreate() called");
 
         // try to load from setting file or from Bundle
-        if (savedInstanceState != null) {
-        	mFileFolder = savedInstanceState.getString(KEY_BASEPATH, "spectra");     //.getString(KEY_BASEPATH, 0);
-        	mChartLength = savedInstanceState.getInt(KEY_LENGTH, 800);
-        }
-        else {
-        	mFileFolder = "spectra";
-        	mChartLength = 800;
-        }
+//        if (savedInstanceState != null) {
+//        	mFileFolder = savedInstanceState.getString(KEY_BASEPATH, "spectra");     //.getString(KEY_BASEPATH, 0);
+//        	mChartLength = savedInstanceState.getInt(KEY_LENGTH, 800);
+//        }
+//        else {
+//        	mFileFolder = "spectra";
+//        	mChartLength = 800;
+//        }
 
 
         // first check files, to fill the item list
@@ -82,6 +88,9 @@ public class ItemListActivity extends Activity
         }
 
     }
+
+
+
 
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {

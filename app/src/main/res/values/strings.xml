@@ -78,5 +78,9 @@
     <string name="pref_title_extension_name">File extension for spectra files</string>
     <string name="DEFAULT_EXTENSION_NAME">asp</string>
     <string name="action_list">List spectra</string>
+    <string name="DEFAULT_KEY_SPECTRA_LENGTH">DEFAULT_KEY_SPECTRA_LENGTH</string>
+    <string name="PREFS_KEY_SPECTRA_LENGTH">PREFS_KEY_SPECTRA_LENGTH</string>
+    <string name="DEFAULT_KEY_SPECTRA_BASEPATH">DEFAULT_KEY_SPECTRA_BASEPATH</string>
+    <string name="PREFS_KEY_SPECTRA_BASEPATH">PREFS_KEY_SPECTRA_BASEPATH</string>
 
 </resources>

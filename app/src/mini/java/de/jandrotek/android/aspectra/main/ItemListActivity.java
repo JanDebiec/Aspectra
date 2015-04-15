@@ -30,8 +30,8 @@ public class ItemListActivity extends BaseActivity
         implements ItemListFragment.Callbacks {
 
     private static final String TAG = "ListItemsAct";
-	private static final String KEY_BASEPATH = "BasePath";
-	private static final String KEY_LENGTH = "length";
+//	private static final String KEY_BASEPATH = "BasePath";
+//	private static final String KEY_LENGTH = "length";
 
     private AspectraSettings mAspectraSettings;
 
@@ -62,6 +62,7 @@ public class ItemListActivity extends BaseActivity
 //        	mChartLength = 800;
 //        }
 
+        updateFromPreferences();
 
         // first check files, to fill the item list
         if(mFileListSize == 0){
@@ -89,6 +90,12 @@ public class ItemListActivity extends BaseActivity
 
     }
 
+    //@Override
+    protected void updateFromPreferences(){
+        super.updateFromPreferences();
+        mFileFolder = mAspectraSettings.getPrefsSpectraBasePath();
+       	mChartLength = mAspectraSettings.getPrefsSpectraLength();
+    }
 
 
 
@@ -103,31 +110,27 @@ public class ItemListActivity extends BaseActivity
     @Override
     public void onStart() {
         super.onStart();
-        Log.i(TAG, "onStart");
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        Log.i(TAG, "onResume");
+        updateFromPreferences();
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        Log.i(TAG, "onPause");
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        Log.i(TAG, "onStop");
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        Log.i(TAG, "onDestroy");
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

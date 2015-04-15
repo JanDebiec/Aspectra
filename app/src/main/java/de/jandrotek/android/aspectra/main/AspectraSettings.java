@@ -176,7 +176,7 @@ public class AspectraSettings {
         editor.putString(mPREFS_KEY_SCAN_AREA_WIDTH, Integer.toString(mPrefsScanAreaWidth));
         editor.commit();
 
-        mPREFS_KEY_SCAN_AREA_WIDTH =  mContext.getResources().getString(R.string.PREFS_KEY_SPECTRA_LENGTH);
+        mPREFS_KEY_SPECTRA_LENGTH =  mContext.getResources().getString(R.string.PREFS_KEY_SPECTRA_LENGTH);
         editor.putString(mPREFS_KEY_SCAN_AREA_WIDTH, Integer.toString(mPrefsSpectraLength));
         editor.commit();
 

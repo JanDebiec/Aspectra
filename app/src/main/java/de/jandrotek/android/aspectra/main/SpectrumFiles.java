@@ -24,6 +24,11 @@ public class SpectrumFiles {
     public static String[] mFilelNameListOutput;
     public static String mPath = "";
     private FileWalker mFileWalker;
+
+    public void setFileExt(String mFileExt) {
+        this.mFileExt = mFileExt;
+    }
+
     private String mFileExt = "spk";
     private String mFileFolder;
 
@@ -72,7 +77,7 @@ public class SpectrumFiles {
     public void searchForFiles(){
 
         updateExternalStorageState();
-        if(mExternalStorageAvailable) {
+        if((mExternalStorageAvailable)) {
 
             mFileWalker = new FileWalker(mPath);
             mFilelNameListOutput = mFileWalker.search4Files(mFileExt);

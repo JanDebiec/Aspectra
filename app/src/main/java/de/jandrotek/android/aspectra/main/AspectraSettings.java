@@ -23,6 +23,7 @@ public class AspectraSettings {
     private static String mPREFS_KEY_SCAN_AREA_WIDTH;
     private static String mPREFS_KEY_SPECTRA_BASEPATH;
     private static String mPREFS_KEY_SPECTRA_LENGTH;
+    private static String mPREFS_KEY_SPECTRA_EXTENSION;
 
     //DEFAULTs
     private String mDefaultWidthStart;
@@ -32,6 +33,7 @@ public class AspectraSettings {
     private String mDefaultScanAreaWidth;
     private String mDefaultSpectraBasePath;
     private String mDefaultSpectraLength;
+    private String mDefaultSpectraExtension;
 
     //values
     private int mPrefsWidthStart;
@@ -41,6 +43,7 @@ public class AspectraSettings {
 
     private int mPrefsSpectraLength;
     private String mPrefsSpectraBasePath;
+    private String mPrefsSpectraExt;
     private int mPrefsScanAreaWidth;
 
     public int getPrefsWidthStart() {
@@ -98,6 +101,13 @@ public class AspectraSettings {
         this.mPrefsSpectraBasePath = mPrefsSpectraBasePath;
     }
 
+    public String getPrefsSpectraExt() {
+        return mPrefsSpectraExt;
+    }
+
+    public void setPrefsSpectraExt(String mPrefsSpectraExt) {
+        this.mPrefsSpectraExt = mPrefsSpectraExt;
+    }
 
 
     public void connectPrefs(Context context, SharedPreferences prefs){
@@ -130,11 +140,16 @@ public class AspectraSettings {
 
         mDefaultSpectraLength = mContext.getResources().getString(R.string.DEFAULT_KEY_SPECTRA_LENGTH);
         mPREFS_KEY_SPECTRA_LENGTH =  mContext.getResources().getString(R.string.PREFS_KEY_SPECTRA_LENGTH);
-        this.mPrefsSpectraLength = Integer.parseInt(mPrefs.getString(mPREFS_KEY_SCAN_AREA_WIDTH, mDefaultSpectraLength));
+        this.mPrefsSpectraLength = Integer.parseInt(mPrefs.getString(mPREFS_KEY_SPECTRA_LENGTH, mDefaultSpectraLength));
 
         mDefaultSpectraBasePath = mContext.getResources().getString(R.string.DEFAULT_KEY_SPECTRA_BASEPATH);
         mPREFS_KEY_SPECTRA_BASEPATH =  mContext.getResources().getString(R.string.PREFS_KEY_SPECTRA_BASEPATH);
-        this.mPrefsSpectraBasePath = mPrefs.getString(mPREFS_KEY_SPECTRA_BASEPATH, mDefaultSpectraLength);
+        this.mPrefsSpectraBasePath = mPrefs.getString(mPREFS_KEY_SPECTRA_BASEPATH, mDefaultSpectraBasePath);
+
+
+        mDefaultSpectraExtension = mContext.getResources().getString(R.string.DEFAULT_KEY_SPECTRA_EXTENSION);
+        mPREFS_KEY_SPECTRA_EXTENSION =  mContext.getResources().getString(R.string.PREFS_KEY_SPECTRA_EXTENSION);
+        this.mPrefsSpectraExt = mPrefs.getString(mPREFS_KEY_SPECTRA_EXTENSION, mDefaultSpectraExtension);
 
     }
 
@@ -169,6 +184,9 @@ public class AspectraSettings {
         editor.putString(mPREFS_KEY_SPECTRA_BASEPATH, (mDefaultSpectraBasePath));
         editor.commit();
 
+        mPREFS_KEY_SPECTRA_EXTENSION =  mContext.getResources().getString(R.string.PREFS_KEY_SPECTRA_EXTENSION);
+        editor.putString(mPREFS_KEY_SPECTRA_EXTENSION, (mDefaultSpectraExtension));
+        editor.commit();
     }
 }
 

@@ -40,6 +40,7 @@ public class ItemListActivity extends BaseActivity
     private int mFileListSize = 0;
     private String[] mFiles;
     private String mFileFolder;
+    private String mFileExt;
     private int mChartLength;
     /**
      * Whether or not the activity is in two-pane mode, i.e. running on a tablet
@@ -81,6 +82,7 @@ public class ItemListActivity extends BaseActivity
         super.updateFromPreferences();
         mFileFolder = mAspectraSettings.getPrefsSpectraBasePath();
        	mChartLength = mAspectraSettings.getPrefsSpectraLength();
+        mFileExt = mAspectraSettings.getPrefsSpectraFileExt();
     }
 
 
@@ -103,6 +105,7 @@ public class ItemListActivity extends BaseActivity
         super.onResume();
         updateFromPreferences();
         mSpectrumFiles.setFileFolder(mFileFolder);
+        mSpectrumFiles.setFileExt(mFileExt);
         mSpectrumFiles.searchForFiles();
         mFileListSize = mSpectrumFiles.getFileListSize();
     }

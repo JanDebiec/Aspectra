@@ -126,9 +126,10 @@ public class LiveViewActivity extends BaseActivity
             } else if (id == R.id.action_list) {
                 Intent intent = new Intent(this, ItemListActivity.class);
                 startActivity(intent);
-                Toast.makeText(this.getApplicationContext(),
-                        "call list",
-                        Toast.LENGTH_SHORT).show();
+                // disable toast, we don't need anymore
+//                Toast.makeText(this.getApplicationContext(),
+//                        "call list",
+//                        Toast.LENGTH_SHORT).show();
                 return true;
            }
 

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.app.Activity;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 
 
@@ -16,7 +17,7 @@ import android.view.MenuItem;
  * This activity is mostly just a 'shell' activity containing nothing
  * more than a {@link ItemDetailFragment}.
  */
-public class ItemDetailActivity extends Activity {
+public class ItemDetailActivity extends BaseActivity {
     private static final String TAG = "DetailItemsAct";
 
     @Override
@@ -25,9 +26,6 @@ public class ItemDetailActivity extends Activity {
         Log.d(TAG, "onCreate() called");
 
         setContentView(R.layout.activity_item_detail);
-
-        // Show the Up button in the action bar.
-        getActionBar().setDisplayHomeAsUpEnabled(true);
 
         // savedInstanceState is non-null when there is fragment state
         // saved from previous configurations of this activity
@@ -50,6 +48,8 @@ public class ItemDetailActivity extends Activity {
                     .add(R.id.item_detail_container, fragment)
                     .commit();
         }
+        // Show the Up button in the action bar.
+//        getActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
 
@@ -82,6 +82,15 @@ public class ItemDetailActivity extends Activity {
         super.onDestroy();
         Log.i(TAG, "onDestroy");
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.global, menu);
+        return true;
+    }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

@@ -39,10 +39,12 @@ android {
 }
 
 dependencies {
-//    compile fileTree(dir: 'libs', include: ['*.jar'])
+    // new one
     compile 'com.android.support:appcompat-v7:22.0.0'
     compile project(':core')
     compile files('libs/GraphView-3.1.2.jar')
+    //old one
 //    compile 'com.android.support:appcompat-v7:21.+'
-    compile 'com.android.support:support-v4:21.+'
+    // added by studio
+//    compile 'com.android.support:support-v4:21.+'
 }

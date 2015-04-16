@@ -27,6 +27,6 @@ sourceSets {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-//    androidTestCompile 'junit:junit:4.+'
-    testCompile 'junit:junit:4.+'
+// temp disabled
+ //   testCompile 'junit:junit:4.+'
 }

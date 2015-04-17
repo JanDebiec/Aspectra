@@ -79,9 +79,10 @@ public class BaseActivity extends ActionBarActivity
 
     protected void updateFromPreferences() {
         mAspectraSettings.loadSettings();
+        // used by all activities
         mFileFolder = mAspectraSettings.getPrefsSpectraBasePath();
-        //mChartLength = mAspectraSettings.getPrefsSpectraLength();
         mFileExt = mAspectraSettings.getPrefsSpectraExt();
+        // the rest is updated local
     }
 
 }

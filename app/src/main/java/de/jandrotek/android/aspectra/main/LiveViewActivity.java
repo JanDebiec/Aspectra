@@ -294,7 +294,7 @@ public class LiveViewActivity extends BaseActivity
                     mPlotViewFragment.showPlot(data, length);
                     if(AspectraGlobals.mSavePlotInFile){
                         AspectraGlobals.mSavePlotInFile = false;
-                        String fileName = SpectrumFiles.generateSpectrumAspFileName();
+                        String fileName = SpectrumFiles.generateSpectrumAspFileName(mFileExt);
                         //fileName = fileName + "." + SpectrumFiles.getFileExt();
                         SpectrumAsp mSpectrum = new SpectrumAsp(fileName);
                         mSpectrum.setData(data, AspectraGlobals.eNoNormalize);

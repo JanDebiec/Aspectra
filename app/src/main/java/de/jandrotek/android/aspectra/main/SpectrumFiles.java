@@ -25,7 +25,7 @@ public class SpectrumFiles {
     public static String mPath = "";
     private FileWalker mFileWalker;
 
-    private static String mFileExt = "spk";
+    private static String mFileExt = "";
     private static String mFileFolder;
 
 
@@ -91,13 +91,13 @@ public class SpectrumFiles {
         return mFilelNameListOutput.length;
     }
 
-    public static String generateSpectrumAspFileName(){
+    public static String generateSpectrumAspFileName(String fileExt){
 
         // prepare date as string
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss");
         String currentDateandTime = sdf.format(new Date());
 
-        return mPath  + "/" + currentDateandTime + "." + mFileExt;
+        return mPath  + "/" + currentDateandTime + "." + fileExt;
     }
 
     public static void saveStringToFile(String text, File target) throws IOException {

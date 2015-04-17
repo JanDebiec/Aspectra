@@ -21,6 +21,9 @@ public class BaseActivity extends ActionBarActivity
     protected static final int ACT_ITEM_ANALYZE     = 2;
 
     protected AspectraSettings mAspectraSettings;
+    protected String mFileFolder;
+    protected String mFileExt;
+
 
     protected boolean mCameraPresent = false;
 
@@ -76,6 +79,9 @@ public class BaseActivity extends ActionBarActivity
 
     protected void updateFromPreferences() {
         mAspectraSettings.loadSettings();
+        mFileFolder = mAspectraSettings.getPrefsSpectraBasePath();
+        //mChartLength = mAspectraSettings.getPrefsSpectraLength();
+        mFileExt = mAspectraSettings.getPrefsSpectraExt();
     }
 
 }

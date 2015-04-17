@@ -48,7 +48,7 @@ public class FileWalker {
             	{
             		String fullNameWithPath = f.getAbsolutePath();
             		String nameWithoutPath = fullNameWithPath.substring(lengthOfThePath);
-            		String nameWithoutBase = fullNameWithPath.substring(mLengthOfBasePath);
+            		String nameWithoutBase = fullNameWithPath.substring(mLengthOfBasePath + 1);// 1 for '/'
             		String relativePath = path.substring(mLengthOfBasePath);
             		mFileArray.add(nameWithoutBase);
             	}

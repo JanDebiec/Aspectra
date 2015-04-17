@@ -10,11 +10,10 @@
     </item>
 
     <item
-        android:id="@+id/item_analyze"
-        android:icon="@android:drawable/ic_menu_delete"
+        android:id="@+id/item_compare"
         android:showAsAction="ifRoom|withText"
-        android:title="Analyze"
-        android:titleCondensed="Analyze">
+        android:title="Compare"
+        android:titleCondensed="Compare">
     </item>
 
 </menu>

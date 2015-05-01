@@ -41,41 +41,47 @@ public class ImageProcessing {
 
     }
 
-    public int[] extractBinnedLine(byte[] inputArray) {
+    public int[] extractBinnedLine(byte[] inputArray)
+    throws ArrayIndexOutOfBoundsException {
         int indexStartX, indexW, index;
         int indexStartY, indexY;
 
-        mSizeX = mPictureWidthX * (mEndPercentX - mStartPercentX) / 100;
-        //mSizeY = mPictureHeightY * (mEndPercentY - mStartPercentY) / 100;
-        indexStartX = mPictureWidthX * mStartPercentX / 100;
-        indexStartY = mPictureHeightY * mStartPercentY / 100;
-        if (mBinnedLine == null) {
-            mBinnedLine = new int[mSizeX];
-        } else {
-            mBinnedLine = (int[]) resizeArray(mBinnedLine, mSizeX);
-        }
+        try {
+            mSizeX = mPictureWidthX * (mEndPercentX - mStartPercentX) / 100;
+            //mSizeY = mPictureHeightY * (mEndPercentY - mStartPercentY) / 100;
+            indexStartX = mPictureWidthX * mStartPercentX / 100;
+            indexStartY = mPictureHeightY * mStartPercentY / 100;
+            if (mBinnedLine == null) {
+                mBinnedLine = new int[mSizeX];
+            } else {
+                mBinnedLine = (int[]) resizeArray(mBinnedLine, mSizeX);
+            }
 
-        index = indexStartX + mPictureWidthX * indexStartY;
+            index = indexStartX + mPictureWidthX * indexStartY;
 
-        //first line
-        for (int x = 0; x < mSizeX; x++) {
-
-            mBinnedLine[x] = inputArray[index] & 0xFF;
-            index++;
-        }
-
-        //next lines
-        indexY = indexStartY + 1;
-        index = indexStartX + mPictureWidthX * indexY;
-        for (int y = 1; y < mSizeY; y++) {
+            //first line
             for (int x = 0; x < mSizeX; x++) {
-                mBinnedLine[x] += inputArray[index] & 0xFF;
+
+                mBinnedLine[x] = inputArray[index] & 0xFF;
                 index++;
             }
-            indexY++;
-            index = indexStartX + mPictureWidthX * indexY;
-        }
 
+            //next lines
+            indexY = indexStartY + 1;
+            index = indexStartX + mPictureWidthX * indexY;
+            for (int y = 1; y < mSizeY; y++) {
+                for (int x = 0; x < mSizeX; x++) {
+                    mBinnedLine[x] += inputArray[index] & 0xFF;
+                    index++;
+                }
+                indexY++;
+                index = indexStartX + mPictureWidthX * indexY;
+            }
+
+        }
+        catch (ArrayIndexOutOfBoundsException e){
+
+        }
         return mBinnedLine;
     }
 

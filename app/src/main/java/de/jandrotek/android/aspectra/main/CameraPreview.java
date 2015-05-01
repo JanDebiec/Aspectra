@@ -154,7 +154,7 @@ public class CameraPreview  extends ViewGroup implements SurfaceHolder.Callback,
 
             mCamera.startPreview();
         } catch (Exception e) {
- //           e.printStackTrace();
+            e.printStackTrace();
             Log.e(TAG, "Exception caused by setCameraParams()", e);
         }
     }
@@ -191,11 +191,16 @@ public class CameraPreview  extends ViewGroup implements SurfaceHolder.Callback,
             mbProcessing = true;
 //            int[] line = extractLine(mFrameData);
 
-            int[] line = mIimageProcessing.extractBinnedLine(mFrameData);
-
+            try {
+                int[] line = mIimageProcessing.extractBinnedLine(mFrameData);
             Message completeMessage =
                     mLVActHandler.obtainMessage(AspectraGlobals.eMessageCompleteLine, line);
             completeMessage.sendToTarget();
+            }
+            catch (Exception e){
+                Log.e(TAG, "Exception caused by mIimageProcessing()", e);
+
+            }
             mbProcessing = false;
         }
     };

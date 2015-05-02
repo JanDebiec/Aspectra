@@ -11,6 +11,7 @@ import android.content.SharedPreferences;
  * Saving is managed in PrefsActivity
  * Every item has 3 defines: mPREFS_KEY, mDefaultValueString, mPrefsValue
  * Strings are defined in file: prefs_default.xml
+ * TODO: add checking limits, and ev update and save limited  values
  */
 public class AspectraSettings {
     private Context mContext;
@@ -177,7 +178,7 @@ public class AspectraSettings {
         editor.commit();
 
         mPREFS_KEY_SPECTRA_LENGTH =  mContext.getResources().getString(R.string.PREFS_KEY_SPECTRA_LENGTH);
-        editor.putString(mPREFS_KEY_SCAN_AREA_WIDTH, Integer.toString(mPrefsSpectraLength));
+        editor.putString(mPREFS_KEY_SPECTRA_LENGTH, Integer.toString(mPrefsSpectraLength));
         editor.commit();
 
         mPREFS_KEY_SPECTRA_BASEPATH =  mContext.getResources().getString(R.string.PREFS_KEY_SPECTRA_BASEPATH);

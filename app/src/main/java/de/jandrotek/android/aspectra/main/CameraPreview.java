@@ -114,7 +114,9 @@ public class CameraPreview  extends ViewGroup implements SurfaceHolder.Callback,
     }
 
     @Override
-    public void surfaceChanged(SurfaceHolder arg0, int arg1, int arg2, int arg3) {
+    public void surfaceChanged(SurfaceHolder arg0, int arg1, int arg2, int arg3)
+//    throws Exception {
+    {
     //TODO: check configuration: portrait/landscape, disable by portrait
 
         try {

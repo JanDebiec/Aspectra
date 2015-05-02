@@ -65,9 +65,9 @@ public class SettingsActivity extends PreferenceActivity {
         addPreferencesFromResource(R.xml.pref_system);
 
         PreferenceCategory fakeHeader = new PreferenceCategory(this);
-        fakeHeader.setTitle(R.string.pref_header_camera);
-        getPreferenceScreen().addPreference(fakeHeader);
-        addPreferencesFromResource(R.xml.pref_camera);
+//        fakeHeader.setTitle(R.string.pref_header_camera);
+//        getPreferenceScreen().addPreference(fakeHeader);
+//        addPreferencesFromResource(R.xml.pref_camera);
 
         // Bind the summaries of EditText/List/Dialog/Ringtone preferences to
         // their values. When their values change, their summaries are updated
@@ -82,10 +82,10 @@ public class SettingsActivity extends PreferenceActivity {
         String keyHeightStart = getResources().getString(R.string.PREFS_KEY_HEIGHT_START);
         String keyScanLineWidth = getResources().getString(R.string.PREFS_KEY_SCAN_AREA_WIDTH);
 
-        bindPreferenceSummaryToValue(findPreference(keyWidthStart));
-        bindPreferenceSummaryToValue(findPreference(keyWidthEnd));
-        bindPreferenceSummaryToValue(findPreference(keyHeightStart));
-        bindPreferenceSummaryToValue(findPreference(keyScanLineWidth));
+//        bindPreferenceSummaryToValue(findPreference(keyWidthStart));
+//        bindPreferenceSummaryToValue(findPreference(keyWidthEnd));
+//        bindPreferenceSummaryToValue(findPreference(keyHeightStart));
+//        bindPreferenceSummaryToValue(findPreference(keyScanLineWidth));
 
     }
 

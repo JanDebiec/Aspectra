@@ -37,7 +37,7 @@ public class CameraViewFragment extends Fragment {
     private static final String ARG_PARAM2 = "param2";
 
     // TODO: Rename and change types of parameters
-    private static String mParam1;
+//    private static String mParam1;
     private static int mParam2;
 
     private boolean mFlagConfigStarted = false;
@@ -80,10 +80,11 @@ public class CameraViewFragment extends Fragment {
      * @return A new instance of fragment CameraViewFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static CameraViewFragment newInstance(String param1, int nParam2) {
+//    public static CameraViewFragment newInstance(String param1, int nParam2) {
+        public static CameraViewFragment newInstance(int nParam2) {
         CameraViewFragment fragment = new CameraViewFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
+        //args.putString(ARG_PARAM1, param1);
         //args.putString(ARG_PARAM2, param2);
         args.putInt(ARG_PARAM2, nParam2);
         fragment.setArguments(args);
@@ -99,7 +100,7 @@ public class CameraViewFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
+           // mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getInt(ARG_PARAM2);
         }
 

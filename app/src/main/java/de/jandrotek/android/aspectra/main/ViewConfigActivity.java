@@ -173,7 +173,7 @@ public class ViewConfigActivity extends BaseActivity
         mSeekBarCreated = true;
 
         if (savedInstanceState == null) {
-            mCameraViewFragment = CameraViewFragment.newInstance("ViewConfig", ACT_ITEM_VIEW_CONFIG);
+            mCameraViewFragment = CameraViewFragment.newInstance(ACT_ITEM_VIEW_CONFIG);
             getSupportFragmentManager().beginTransaction()
 // from LiveViewAct
                     .add(R.id.fragmentHolderCameraView_vca, mCameraViewFragment)

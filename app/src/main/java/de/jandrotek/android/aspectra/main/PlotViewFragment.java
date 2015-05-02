@@ -45,7 +45,7 @@ public class PlotViewFragment extends Fragment
     private int realPlotDataSize = PLOT_DATA_SIZE;
 
     // TODO: Rename and change types of parameters
-    private String mParam1;
+//    private String mParam1;
     private int mParam2;
 
     private GraphView mGraphView;
@@ -67,11 +67,12 @@ public class PlotViewFragment extends Fragment
      * @return A new instance of fragment PlotViewFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static PlotViewFragment newInstance(String param1, String param2) {
+//    public static PlotViewFragment newInstance(String param1, String param2) {
+        public static PlotViewFragment newInstance(int param2) {
         PlotViewFragment fragment = new PlotViewFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
+        //args.putString(ARG_PARAM1, param1);
+            args.putInt(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -84,7 +85,7 @@ public class PlotViewFragment extends Fragment
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
+//            mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getInt(ARG_PARAM2);
         }
         realData = new GraphViewData[realPlotDataSize];

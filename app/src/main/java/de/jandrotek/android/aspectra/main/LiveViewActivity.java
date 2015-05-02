@@ -56,11 +56,12 @@ public class LiveViewActivity extends BaseActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_live_view);
         if (savedInstanceState == null) {
-            mCameraViewFragment = CameraViewFragment.newInstance("LiveView", ACT_ITEM_LIVE_VIEW);
+//            mCameraViewFragment = CameraViewFragment.newInstance("LiveView", ACT_ITEM_LIVE_VIEW);
+            mCameraViewFragment = CameraViewFragment.newInstance( ACT_ITEM_LIVE_VIEW);
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.fragmentHolderCameraView, mCameraViewFragment)
                     .commit();
-            mPlotViewFragment = PlotViewFragment.newInstance("LiveView", "d");
+            mPlotViewFragment = PlotViewFragment.newInstance(ACT_ITEM_LIVE_VIEW);
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.fvPlotView, mPlotViewFragment)
                     .commit();
@@ -103,7 +104,8 @@ public class LiveViewActivity extends BaseActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if(BuildConfig.flavorType == FlavorSettings.eFlavorType.typeVanilla) {
+        if(BuildConfig.FLAVOR == "vanilla") {
+//            if(BuildConfig.flavorType == FlavorSettings.eFlavorType.typeVanilla) {
             if (id == R.id.action_settings) {
                 Intent intent = new Intent(this, SettingsActivity.class);
                 startActivity(intent);
@@ -114,7 +116,8 @@ public class LiveViewActivity extends BaseActivity
                 return true;
 
             }
-        } else if (BuildConfig.flavorType == FlavorSettings.eFlavorType.typeMini) {
+        } else if (BuildConfig.FLAVOR == "mini") {
+//        } else if (BuildConfig.flavorType == FlavorSettings.eFlavorType.typeMini) {
             if (id == R.id.action_settings) {
                 Intent intent = new Intent(this, SettingsActivity.class);
                 startActivity(intent);

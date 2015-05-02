@@ -21,18 +21,21 @@ android {
         vanilla {
             applicationId "de.jandrotek.android.aspectra.main.vanilla"
            // versionName android.defaultConfig.versionName + "-vanilla"
-            buildConfigField "de.jandrotek.android.aspectra.main.FlavorSettings.eFlavorType",
-                    "flavorType", "de.jandrotek.android.aspectra.main.FlavorSettings.eFlavorType.typeVanilla"
+      //      buildConfigField 'de.jandrotek.android.aspectra.main.FlavorSettings.eFlavorType',
+      //              'flavorType', 'de.jandrotek.android.aspectra.main.FlavorSettings.eFlavorType.typeVanilla'
+      //         buildConfigField "String", "flavor", 'vanilla'
         }
         mini {
             applicationId "de.jandrotek.android.aspectra.main.mini"
             //versionName android.defaultConfig.versionName + "-mini"
-            buildConfigField "de.jandrotek.android.aspectra.main.FlavorSettings.eFlavorType",
-                    "flavorType", "de.jandrotek.android.aspectra.main.FlavorSettings.eFlavorType.typeMini"
+//            buildConfigField 'de.jandrotek.android.aspectra.main.FlavorSettings.eFlavorType',
+//                    'flavorType', 'de.jandrotek.android.aspectra.main.FlavorSettings.eFlavorType.typeMini'
+        //    buildConfigField "String", "flavor", 'mini'
 
         }
         full {
             applicationId "de.jandrotek.android.aspectra.main"
+          //  buildConfigField "String", "flavor", 'full'
 
         }
     }

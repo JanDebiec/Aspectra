@@ -1,0 +1,73 @@
+package de.jandrotek.android.aspectra.touch;
+
+import android.support.v7.app.ActionBarActivity;
+import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.widget.TextView;
+
+
+public class MainActivity extends ActionBarActivity
+implements TouchView.OnTouchViewInteractionListener
+{
+    private TouchView mTouchView;
+    private TextView mToolName;
+    private TextView mToolValue;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        mTouchView = (TouchView)findViewById(R.id.touchOverlay);
+        mToolName = (TextView)findViewById(R.id.toolName);
+        mToolValue = (TextView)findViewById(R.id.toolValue);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    public void onTouchViewInteraction(int _toolId, float _value){
+        mToolName.setText(Integer.toHexString(_toolId));
+        mToolValue.setText(Float.toString(_value));
+//        switch(_toolId){
+//            case TouchView.ePlotAction_Idle:
+//            {
+//                mToolName.setText(Integer.toHexString(_toolId));
+//                mToolValue.setText(Float.toString(_value));
+//                break;
+//            }
+//            case TouchView.ePlotAction_Move:
+//            {
+//                mToolName.setText(Integer.toHexString(_toolId));
+//                mToolValue.setText(Float.toString(_value));
+//                break;
+//            }
+//            case TouchView.ePlotAction_Stretch:
+//            {
+//                break;
+//            }
+//            default:
+//                break;
+//        }// switch
+    }
+
+}

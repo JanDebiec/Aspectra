@@ -103,9 +103,7 @@ public class LiveViewActivity extends BaseActivity
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if(BuildConfig.FLAVOR == "vanilla") {
-//            if(BuildConfig.flavorType == FlavorSettings.eFlavorType.typeVanilla) {
+        if (BuildConfig.flavor_type == 0) {
             if (id == R.id.action_settings) {
                 Intent intent = new Intent(this, SettingsActivity.class);
                 startActivity(intent);
@@ -116,8 +114,7 @@ public class LiveViewActivity extends BaseActivity
                 return true;
 
             }
-        } else if (BuildConfig.FLAVOR == "mini") {
-//        } else if (BuildConfig.flavorType == FlavorSettings.eFlavorType.typeMini) {
+        } else if (BuildConfig.flavor_type == 1) {
             if (id == R.id.action_settings) {
                 Intent intent = new Intent(this, SettingsActivity.class);
                 startActivity(intent);

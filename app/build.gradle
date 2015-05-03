@@ -20,6 +20,7 @@ android {
     productFlavors{
         vanilla {
             applicationId "de.jandrotek.android.aspectra.main.vanilla"
+            buildConfigField 'int', 'flavor_type', '0'
            // versionName android.defaultConfig.versionName + "-vanilla"
       //      buildConfigField 'de.jandrotek.android.aspectra.main.FlavorSettings.eFlavorType',
       //              'flavorType', 'de.jandrotek.android.aspectra.main.FlavorSettings.eFlavorType.typeVanilla'
@@ -27,6 +28,7 @@ android {
         }
         mini {
             applicationId "de.jandrotek.android.aspectra.main.mini"
+            buildConfigField 'int', 'flavor_type', '1'
             //versionName android.defaultConfig.versionName + "-mini"
 //            buildConfigField 'de.jandrotek.android.aspectra.main.FlavorSettings.eFlavorType',
 //                    'flavorType', 'de.jandrotek.android.aspectra.main.FlavorSettings.eFlavorType.typeMini'
@@ -34,8 +36,8 @@ android {
 
         }
         full {
-            applicationId "de.jandrotek.android.aspectra.main"
-          //  buildConfigField "String", "flavor", 'full'
+            applicationId "de.jandrotek.android.aspectra.main.full"
+            buildConfigField 'int', 'flavor_type', '2'
 
         }
     }

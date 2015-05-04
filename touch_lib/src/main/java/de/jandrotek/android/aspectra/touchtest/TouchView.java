@@ -1,8 +1,6 @@
-package de.jandrotek.android.aspectra.touch;
+package de.jandrotek.android.aspectra.touchtest;
 
 import android.content.Context;
-import android.graphics.PointF;
-import android.net.Uri;
 import android.util.AttributeSet;
 import android.util.SparseArray;
 import android.view.MotionEvent;

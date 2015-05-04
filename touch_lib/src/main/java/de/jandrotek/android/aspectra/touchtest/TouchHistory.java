@@ -1,4 +1,4 @@
-package de.jandrotek.android.aspectra.touch;
+package de.jandrotek.android.aspectra.touchtest;
 
 import android.graphics.PointF;
 

@@ -6,6 +6,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import de.jandrotek.android.aspectra.touch.TouchView;
+
 
 public class MainActivity extends ActionBarActivity
 implements TouchView.OnTouchViewInteractionListener
@@ -48,26 +50,6 @@ implements TouchView.OnTouchViewInteractionListener
     public void onTouchViewInteraction(int _toolId, float _value){
         mToolName.setText(Integer.toHexString(_toolId));
         mToolValue.setText(Float.toString(_value));
-//        switch(_toolId){
-//            case TouchView.ePlotAction_Idle:
-//            {
-//                mToolName.setText(Integer.toHexString(_toolId));
-//                mToolValue.setText(Float.toString(_value));
-//                break;
-//            }
-//            case TouchView.ePlotAction_Move:
-//            {
-//                mToolName.setText(Integer.toHexString(_toolId));
-//                mToolValue.setText(Float.toString(_value));
-//                break;
-//            }
-//            case TouchView.ePlotAction_Stretch:
-//            {
-//                break;
-//            }
-//            default:
-//                break;
-//        }// switch
     }
 
 }

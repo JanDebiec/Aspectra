@@ -36,13 +36,13 @@ public class TouchHistory {
         public PointF[] history = new PointF[HISTORY_COUNT];
 
         private static final int MAX_POOL_SIZE = 10;
-        private static final android.support.v4.util.Pools.SimplePool<de.jandrotek.android.aspectra.touch.TouchHistory> sPool =
-                new android.support.v4.util.Pools.SimplePool<de.jandrotek.android.aspectra.touch.TouchHistory>(MAX_POOL_SIZE);
+        private static final android.support.v4.util.Pools.SimplePool<TouchHistory> sPool =
+                new android.support.v4.util.Pools.SimplePool<TouchHistory>(MAX_POOL_SIZE);
 
         public static TouchHistory obtain(float x, float y, float pressure) {
-            de.jandrotek.android.aspectra.touch.TouchHistory data = sPool.acquire();
+            TouchHistory data = sPool.acquire();
             if (data == null) {
-                data = new de.jandrotek.android.aspectra.touch.TouchHistory();
+                data = new TouchHistory();
             }
 
             data.setTouch(x, y, pressure);

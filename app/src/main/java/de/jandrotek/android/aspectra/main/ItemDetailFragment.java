@@ -64,7 +64,7 @@ public class ItemDetailFragment extends Fragment {
             mItem = ListContent.ITEM_MAP.get(getArguments().getString(ARG_ITEM_ID));
 
             // load file specified in mItem.content
-            mFileName = SpectrumFiles.mPath + mItem.name;
+            mFileName = SpectrumFiles.mPath +"/" + mItem.name;
             mSpectrumFile = new SpectrumChr(mFileName);
             try{
             	fileLength = mSpectrumFile.readValuesChr();

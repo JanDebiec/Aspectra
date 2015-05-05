@@ -112,4 +112,7 @@ public class TouchHistory {
             return deltaY;
         }
     //}
+        public float getLastX(){
+            return this.x;
+        }
 }

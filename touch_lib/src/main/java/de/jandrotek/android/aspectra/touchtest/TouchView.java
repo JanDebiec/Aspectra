@@ -23,6 +23,7 @@ public class TouchView extends View {
 
     // Is there an active touch?
     private boolean mHasTouch = false;
+    private float deltaXStart = 0f;
 
 
     public TouchView(Context context, AttributeSet attrs) {
@@ -40,7 +41,9 @@ public class TouchView extends View {
 
         final int action = event.getAction();
         float deltaX = 0f;
-        float deltaMove = 0f;
+        float deltaXAbs = 0f;
+        float deltaXAbsStart = 0f;
+        //float deltaMove = 0f;
         float x0 = 0;
         float x1 = 0;
 
@@ -73,6 +76,7 @@ public class TouchView extends View {
                 mTouches.put(id, data);
 
                 mHasTouch = true;
+                deltaXStart = 0f;
 
                 break;
             }
@@ -98,15 +102,31 @@ public class TouchView extends View {
                         event.getPressure(index));
                 data.label = "id: " + id;
 
-                /*
+                // add previous position to history and add new values
+                data.addHistory(data.x, data.y);
+                data.setTouch(event.getX(index), event.getY(index),
+                        event.getPressure(index));
+               /*
                  * Store the data under its pointer identifier. The index of
                  * this pointer can change over multiple events, but this
                  * pointer is always identified by the same identifier for this
                  * active gesture.
                  */
+
+                if (index == 1) { // second touch
+
+                    // defining x0 and deltaStart
+                    // get the data stored externally about this pointer.
+                    TouchHistory data0 = mTouches.get(0);
+                    x0 = data0.getLastX();
+
+                    x1 = event.getX(index);
+
+                    deltaXStart = x1 - x0;
+
+                }
                 mTouches.put(id, data);
                 plotAction = ePlotAction_Idle;
-
                 break;
             }
 
@@ -201,19 +221,19 @@ public class TouchView extends View {
                     if(id == 0){
                         x0 = event.getX(index);
                         deltaX = data.getDeltaX();
+                        deltaXAbs = deltaX;
                     }else if(id == 1){
                         x1 = event.getX(index);
                         deltaX = x1 - x0;
+
+                        deltaXAbs = deltaX - deltaXStart;
                     }
-
-
                 }
-
                 break;
             }
         }
 
-        mCallback.onTouchViewInteraction(plotAction, deltaX);
+        mCallback.onTouchViewInteraction(plotAction, deltaXAbs);
         return true;
     }
 

@@ -28,7 +28,7 @@ public class ListContent {
     static {
     	if(SpectrumFiles.mFilelNameListOutput.length > 0){
     	for(int i = 0; i < SpectrumFiles.mFilelNameListOutput.length; i++)
-    		addItem(new SpectrumItem("1", SpectrumFiles.mFilelNameListOutput[i], "some notes"));
+    		addItem(new SpectrumItem(Integer.toString(i), SpectrumFiles.mFilelNameListOutput[i], "some notes"));
     	}
     	else
     	{

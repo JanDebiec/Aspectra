@@ -41,6 +41,10 @@ android {
 
         }
     }
+
+    dexOptions {
+        incremental true
+    }
 }
 
 dependencies {
@@ -53,3 +57,4 @@ dependencies {
     // added by studio
 //    compile 'com.android.support:support-v4:21.+'
 }
+

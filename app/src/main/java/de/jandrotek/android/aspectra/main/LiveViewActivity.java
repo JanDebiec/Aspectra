@@ -103,36 +103,28 @@ public class LiveViewActivity extends BaseActivity
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        if (BuildConfig.flavor_type == 0) {
+        if (BuildConfig.FLAVOR == "vanilla") {
             if (id == R.id.action_settings) {
                 Intent intent = new Intent(this, SettingsActivity.class);
                 startActivity(intent);
                 return true;
             } else if (id == R.id.action_save) {
                 AspectraGlobals.mSavePlotInFile = true;
-
                 return true;
-
             }
-        } else if (BuildConfig.flavor_type == 1) {
+        } else if (BuildConfig.FLAVOR == "mini") {
             if (id == R.id.action_settings) {
                 Intent intent = new Intent(this, SettingsActivity.class);
                 startActivity(intent);
                 return true;
             } else if (id == R.id.action_save) {
                 AspectraGlobals.mSavePlotInFile = true;
-
                 return true;
             } else if (id == R.id.action_list) {
                 Intent intent = new Intent(this, ItemListActivity.class);
                 startActivity(intent);
-                // disable toast, we don't need anymore
-//                Toast.makeText(this.getApplicationContext(),
-//                        "call list",
-//                        Toast.LENGTH_SHORT).show();
                 return true;
            }
-
         } else {
             if (id == R.id.action_settings) {
                 Intent intent = new Intent(this, SettingsActivity.class);

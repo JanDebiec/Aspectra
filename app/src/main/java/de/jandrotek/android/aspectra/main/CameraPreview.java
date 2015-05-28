@@ -133,7 +133,7 @@ public class CameraPreview  extends ViewGroup implements SurfaceHolder.Callback,
             AspectraGlobals.mPreviewHeightY = mPreviewHeightY;
             if(BuildConfig.DEBUG) {
 
-                Log.e(TAG, "width = " + mPreviewWidthX + ", height = " + mPreviewHeightY);
+                Log.i(TAG, "width = " + mPreviewWidthX + ", height = " + mPreviewHeightY);
             }
             // send message, that size is already known
             int[] previewSize = new int[2];
@@ -297,10 +297,10 @@ public class CameraPreview  extends ViewGroup implements SurfaceHolder.Callback,
 
                 mCamera.setParameters(parameters);
             } catch (Exception exception) {
-                if(BuildConfig.DEBUG) {
+//                if(BuildConfig.DEBUG) {
 
                     Log.e(TAG, "IOException caused by mCamera.setParameters()", exception);
-                }
+  //              }
             }
         }
     }

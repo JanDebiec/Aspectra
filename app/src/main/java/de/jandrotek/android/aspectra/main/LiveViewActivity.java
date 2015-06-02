@@ -120,10 +120,10 @@ public class LiveViewActivity extends BaseActivity
             } else if (id == R.id.action_save) {
                 AspectraGlobals.mSavePlotInFile = true;
                 return true;
-            } else if (id == R.id.action_list) {
-                Intent intent = new Intent(this, ItemListActivity.class);
-                startActivity(intent);
-                return true;
+//            } else if (id == R.id.action_list) {
+//                Intent intent = new Intent(this, ItemListActivity.class);
+//                startActivity(intent);
+//                return true;
            }
         } else {
             if (id == R.id.action_settings) {

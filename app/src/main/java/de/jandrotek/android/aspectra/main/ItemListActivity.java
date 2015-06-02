@@ -31,17 +31,10 @@ public class ItemListActivity extends BaseActivity
         implements ItemListFragment.Callbacks {
 
     private static final String TAG = "ListItemsAct";
-//	private static final String KEY_BASEPATH = "BasePath";
-//	private static final String KEY_LENGTH = "length";
-
-    //private AspectraSettings mAspectraSettings;
-
 
     private SpectrumFiles mSpectrumFiles = null;
     private int mFileListSize = 0;
     private String[] mFiles;
-//    private String mFileFolder;
-//    private String mFileExt;
     private int mChartLength;
     /**
      * Whether or not the activity is in two-pane mode, i.e. running on a tablet
@@ -93,9 +86,6 @@ public class ItemListActivity extends BaseActivity
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
         super.onSaveInstanceState(savedInstanceState);
-//        Log.i(TAG, "onSaveInstanceState");
-//        savedInstanceState.putString(KEY_BASEPATH, mFileFolder);
-//        savedInstanceState.putInt(KEY_LENGTH, mChartLength);
     }
 
     @Override

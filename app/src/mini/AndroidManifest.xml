@@ -43,18 +43,18 @@
             android:name="de.jandrotek.android.aspectra.main.SettingsActivity"
             android:label="@string/title_activity_settings" >
         </activity>
-        <activity
-            android:name=".ItemListActivity"
-            android:label="@string/app_name" >
-        </activity>
-        <activity
-            android:name=".ItemDetailActivity"
-            android:label="@string/title_item_detail"
-            android:parentActivityName=".ItemListActivity" >
-            <!--<meta-data-->
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="de.jandrotek.android.aspectra.main.ItemListActivity" />
-        </activity>
+        <!--<activity-->
+            <!--android:name=".ItemListActivity"-->
+            <!--android:label="@string/app_name" >-->
+        <!--</activity>-->
+        <!--<activity-->
+            <!--android:name=".ItemDetailActivity"-->
+            <!--android:label="@string/title_item_detail"-->
+            <!--android:parentActivityName=".ItemListActivity" >-->
+            <!--&lt;!&ndash;<meta-data&ndash;&gt;-->
+                <!--android:name="android.support.PARENT_ACTIVITY"-->
+                <!--android:value="de.jandrotek.android.aspectra.main.ItemListActivity" />-->
+        <!--</activity>-->
         <!-- not as separate activity
                  <activity
                      android:name="de.jandrotek.android.aspectra.mini.BaseActivity"

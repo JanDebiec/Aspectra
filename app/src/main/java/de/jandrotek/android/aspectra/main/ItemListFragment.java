@@ -1,5 +1,8 @@
 package de.jandrotek.android.aspectra.main;
 
+//TODO: 02.06.2015 do we need that file???
+// seems yes, if we have two pane layout
+
 import java.util.List;
 
 import android.app.Activity;

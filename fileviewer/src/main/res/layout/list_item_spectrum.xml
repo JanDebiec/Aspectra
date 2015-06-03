@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content"
+    >
+  <CheckBox android:id="@+id/cb_spectra_list_item_checked"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:layout_alignParentRight="true"
+    android:enabled="false"
+    android:focusable="false"
+      android:onClick=""
+    android:padding="4dp" />
+  <TextView android:id="@+id/tv_spectra_list_item_name"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_toLeftOf="@id/cb_spectra_list_item_checked"
+    android:textStyle="bold"
+    android:paddingLeft="4dp"
+    android:paddingRight="4dp"
+    android:text="@string/file_name" />
+  <TextView android:id="@+id/tv_spectra_list_item_notes"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_below="@id/tv_spectra_list_item_name"
+    android:layout_toLeftOf="@id/cb_spectra_list_item_checked"
+    android:paddingLeft="4dp"
+    android:paddingRight="4dp"
+    android:paddingTop="4dp"
+    android:text="@string/file_detail" />
+</RelativeLayout>
+

@@ -77,15 +77,15 @@ public class SettingsActivity extends PreferenceActivity {
         String keyExtensionName = getResources().getString(R.string.PREFS_KEY_EXTENSION_NAME);
         bindPreferenceSummaryToValue(findPreference(keyExtensionName));
 
-        String keyWidthStart = getResources().getString(R.string.PREFS_KEY_WIDTH_START);
-        String keyWidthEnd = getResources().getString(R.string.PREFS_KEY_WIDTH_END);
-        String keyHeightStart = getResources().getString(R.string.PREFS_KEY_HEIGHT_START);
-        String keyScanLineWidth = getResources().getString(R.string.PREFS_KEY_SCAN_AREA_WIDTH);
-
-//        bindPreferenceSummaryToValue(findPreference(keyWidthStart));
-//        bindPreferenceSummaryToValue(findPreference(keyWidthEnd));
-//        bindPreferenceSummaryToValue(findPreference(keyHeightStart));
-//        bindPreferenceSummaryToValue(findPreference(keyScanLineWidth));
+//        String keyWidthStart = getResources().getString(R.string.PREFS_KEY_WIDTH_START);
+//        String keyWidthEnd = getResources().getString(R.string.PREFS_KEY_WIDTH_END);
+//        String keyHeightStart = getResources().getString(R.string.PREFS_KEY_HEIGHT_START);
+//        String keyScanLineWidth = getResources().getString(R.string.PREFS_KEY_SCAN_AREA_WIDTH);
+//
+////        bindPreferenceSummaryToValue(findPreference(keyWidthStart));
+////        bindPreferenceSummaryToValue(findPreference(keyWidthEnd));
+////        bindPreferenceSummaryToValue(findPreference(keyHeightStart));
+////        bindPreferenceSummaryToValue(findPreference(keyScanLineWidth));
 
     }
 

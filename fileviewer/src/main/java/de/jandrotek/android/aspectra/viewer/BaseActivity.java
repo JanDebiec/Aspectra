@@ -10,6 +10,8 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
+//import de.jandrotek.android.aspectra.common.AspectraSettings;
+
 
 public class BaseActivity extends ActionBarActivity
 {
@@ -21,7 +23,7 @@ public class BaseActivity extends ActionBarActivity
     protected static final int ACT_ITEM_VIEW_PLOT   = 2;
     protected static final int ACT_ITEM_ANALYZE     = 3;
 
-    protected AspectraSettings mAspectraSettings;
+  //  protected AspectraSettings mAspectraSettings;
     protected String mFileFolder;
     protected String mFileExt;
 
@@ -31,13 +33,13 @@ public class BaseActivity extends ActionBarActivity
    @Override
     protected void onCreate(Bundle savedInstanceState) {
        super.onCreate(savedInstanceState);
-       mAspectraSettings = new AspectraSettings();
+ //      mAspectraSettings = new AspectraSettings();
        Context context = getApplicationContext();
        SharedPreferences prefs = PreferenceManager
                .getDefaultSharedPreferences(context);
-       mAspectraSettings.connectPrefs(context, prefs);
+   //    mAspectraSettings.connectPrefs(context, prefs);
 
-       updateFromPreferences();
+   //    updateFromPreferences();
 
    }
 
@@ -78,13 +80,13 @@ public class BaseActivity extends ActionBarActivity
         super.onActivityResult(requestCode, resultCode, data);
     }
 
-    protected void updateFromPreferences() {
-        mAspectraSettings.loadSettings();
-        // used by all activities
-        mFileFolder = mAspectraSettings.getPrefsSpectraBasePath();
-        mFileExt = mAspectraSettings.getPrefsSpectraExt();
-        // the rest is updated local
-    }
+//    protected void updateFromPreferences() {
+//        mAspectraSettings.loadSettings();
+//        // used by all activities
+//        mFileFolder = mAspectraSettings.getPrefsSpectraBasePath();
+//        mFileExt = mAspectraSettings.getPrefsSpectraExt();
+//        // the rest is updated local
+//    }
 
 }
 

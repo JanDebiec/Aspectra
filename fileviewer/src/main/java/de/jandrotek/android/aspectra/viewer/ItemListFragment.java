@@ -19,7 +19,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import de.jandrotek.android.aspectra.main.ListContent.SpectrumItem;
+//import de.jandrotek.android.aspectra.main.ListContent.SpectrumItem;
 
 import static android.widget.AbsListView.MultiChoiceModeListener;
 import static android.widget.AbsListView.OnClickListener;
@@ -288,9 +288,9 @@ public class ItemListFragment extends ListFragment {
         mActivatedPosition = position;
     }
 
-    private class SpectrumAdapter extends ArrayAdapter<SpectrumItem> {
+    private class SpectrumAdapter extends ArrayAdapter<ListContent.SpectrumItem> {
 
-        public SpectrumAdapter(List<SpectrumItem> spectra) {
+        public SpectrumAdapter(List<ListContent.SpectrumItem> spectra) {
 //            public SpectrumAdapter(ArrayList<SpectrumItem> spectra) {
 
             super(getActivity(), R.layout.list_item_spectrum, spectra);
@@ -306,7 +306,7 @@ public class ItemListFragment extends ListFragment {
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             View view = null;
-            SpectrumItem spectrum = getItem(position);
+            ListContent.SpectrumItem spectrum = getItem(position);
             // if we weren't given a view, inflate one
             if (null == convertView) {
                 view = getActivity().getLayoutInflater()
@@ -318,7 +318,7 @@ public class ItemListFragment extends ListFragment {
                 viewHolder.checkbox.setOnClickListener(new OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        SpectrumItem item = (SpectrumItem) viewHolder.checkbox.getTag();
+                        ListContent.SpectrumItem item = (ListContent.SpectrumItem) viewHolder.checkbox.getTag();
                         //item.setSelected(v.isChecked());
 
                     }
@@ -348,7 +348,7 @@ public class ItemListFragment extends ListFragment {
         }
 
         public void toggleSelection(int position) {
-            SpectrumItem spectrum = getItem(position);
+            ListContent.SpectrumItem spectrum = getItem(position);
             //boolean actFlag =
 
         }

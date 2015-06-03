@@ -6,7 +6,7 @@ package de.jandrotek.android.aspectra.main;
 public class FlavorSettings {
 
     public enum eFlavorType {
-        typeVanilla, typeMini, typeFull};
+        typeVanilla, typeMini, typeFull}
 
 
 }

@@ -178,7 +178,7 @@ public class CameraViewFragment extends Fragment {
                 float m_touched_y = event.getY();
                 boolean m_touched = false;
 
-                if (mFlagConfigStarted != true) {
+                if (!mFlagConfigStarted) {
                     mFlagConfigStarted = true;
                     int action = event.getAction();
 
@@ -291,7 +291,7 @@ public class CameraViewFragment extends Fragment {
      */
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
-        public void onFragmentInteraction(Uri uri);
+        void onFragmentInteraction(Uri uri);
     }
 
     public void updateBorderInConfigView(float startPercentX, float endPercentX, float startPercentY, float deltaLinesY) {

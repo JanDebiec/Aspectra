@@ -53,12 +53,12 @@ public class CameraPreview  extends ViewGroup implements SurfaceHolder.Callback,
     private Activity mActivity = null;
     private Handler mLVActHandler = null;
     //Handler mVCActHandler = null;
-    private ImageProcessing mIimageProcessing;
+    private ImageProcessing mImageProcessing;
 
     public CameraPreview(Context context, int activityId) {
         super(context);
-        Context mContext = context;
-        mActivity = (Activity) mContext;
+        //Context mContext = context;
+        mActivity = (Activity) context;
         if(activityId == BaseActivity.ACT_ITEM_LIVE_VIEW) {
             LiveViewActivity lvActivity = (LiveViewActivity) context;
             mLVActHandler = lvActivity.getHandler();
@@ -67,7 +67,7 @@ public class CameraPreview  extends ViewGroup implements SurfaceHolder.Callback,
             // act. no need for handler in that activity
             //mVCActHandler = vcActivity.getHandler();
         }
-        //as in ASOP sample
+        //as in AOSP sample
         mSurfaceView = new SurfaceView(context);
         addView(mSurfaceView);
 
@@ -146,8 +146,8 @@ public class CameraPreview  extends ViewGroup implements SurfaceHolder.Callback,
                 configMessage.sendToTarget();
             }
 
-            mIimageProcessing.setPictureWidthX(mPreviewWidthX);
-            mIimageProcessing.setPictureHeightY(mPreviewHeightY);
+            mImageProcessing.setPictureWidthX(mPreviewWidthX);
+            mImageProcessing.setPictureHeightY(mPreviewHeightY);
             mImageFormat = parameters.getPreviewFormat();
 
             setCameraDisplayOrientation(0, mCamera);
@@ -194,13 +194,13 @@ public class CameraPreview  extends ViewGroup implements SurfaceHolder.Callback,
 //            int[] line = extractLine(mFrameData);
 
             try {
-                int[] line = mIimageProcessing.extractBinnedLine(mFrameData);
+                int[] line = mImageProcessing.extractBinnedLine(mFrameData);
             Message completeMessage =
                     mLVActHandler.obtainMessage(AspectraGlobals.eMessageCompleteLine, line);
             completeMessage.sendToTarget();
             }
             catch (Exception e){
-                Log.e(TAG, "Exception caused by mIimageProcessing()", e);
+                Log.e(TAG, "Exception caused by mImageProcessing()", e);
 
             }
             mbProcessing = false;
@@ -321,8 +321,8 @@ public class CameraPreview  extends ViewGroup implements SurfaceHolder.Callback,
             }
 
             // configure ImageProcessing
-            mIimageProcessing.setPictureWidthX(mPreviewWidthX);
-            mIimageProcessing.setPictureHeightY(mPreviewHeightY);
+            mImageProcessing.setPictureWidthX(mPreviewWidthX);
+            mImageProcessing.setPictureHeightY(mPreviewHeightY);
 
             // Center the child SurfaceView within the parent.
             if (width * mPreviewHeightY > height * mPreviewWidthX) {
@@ -342,7 +342,7 @@ public class CameraPreview  extends ViewGroup implements SurfaceHolder.Callback,
 
     // getter and setters
     public void setProcessing(ImageProcessing imageProcessing) {
-        mIimageProcessing = imageProcessing;
+        mImageProcessing = imageProcessing;
     }
 
 
@@ -357,27 +357,27 @@ public class CameraPreview  extends ViewGroup implements SurfaceHolder.Callback,
 
     public void setStartPercentH(int startPercent) {
         mStartPercentH = startPercent;
-//        if(mIimageProcessing != null) {
-//            mIimageProcessing.setStartPercentX(startPercent);
+//        if(mImageProcessing != null) {
+//            mImageProcessing.setStartPercentX(startPercent);
 //        }
     }
 
     public void setEndPercentH(int endPercent) {
         mEndPercentH = endPercent;
-//        mIimageProcessing.setEndPercentX(endPercent);
+//        mImageProcessing.setEndPercentX(endPercent);
     }
 
 
     public void setStartPercentV(int startPercentV) {
         mStartPercentV = startPercentV;
-//        mIimageProcessing.setStartPercentY(startPercentV);
+//        mImageProcessing.setStartPercentY(startPercentV);
     }
 
 
 
     public void setEndPercentV(int endPercentV) {
         mEndPercentV = endPercentV;
-//        mIimageProcessing.setEndPercentY(endPercentV);
+//        mImageProcessing.setEndPercentY(endPercentV);
     }
 
 

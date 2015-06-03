@@ -79,7 +79,7 @@ public class LiveViewActivity extends BaseActivity
         } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT){
             Toast.makeText(this, "portrait", Toast.LENGTH_SHORT).show();
         }
-    };
+    }
 
 
     private static void updatePreviewSizeInConfigView() {

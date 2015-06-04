@@ -2,6 +2,7 @@ package de.jandrotek.android.aspectra.viewer;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.MenuItem;
 //import de.jandrotek.android.aspectra.common.SettingsActivity;
@@ -23,10 +24,14 @@ import android.view.MenuItem;
  * {@link ItemListFragment.Callbacks} interface
  * to listen for item selections.
  */
-public class ItemListActivity extends BaseActivity
+//public class ItemListActivity extends BaseActivity
+public class ItemListActivity extends ActionBarActivity
         implements ItemListFragment.Callbacks {
 
     private static final String TAG = "ListItemsAct";
+    private AspectraSettings mAspectraSettings;
+    private String mFileFolder;
+    private String mFileExt;
 
     private SpectrumFiles mSpectrumFiles = null;
     private int mFileListSize = 0;
@@ -71,11 +76,11 @@ public class ItemListActivity extends BaseActivity
 
     }
 
-    //@Override
-    protected void updateFromPreferences(){
-        super.updateFromPreferences();
-       	mChartLength = mAspectraSettings.getPrefsSpectraLength();
-    }
+//    //@Override
+//    protected void updateFromPreferences(){
+//        super.updateFromPreferences();
+//       	mChartLength = mAspectraSettings.getPrefsSpectraLength();
+//    }
 
 
 
@@ -162,4 +167,13 @@ public class ItemListActivity extends BaseActivity
             startActivity(detailIntent);
         }
     }
+
+    protected void updateFromPreferences() {
+        mAspectraSettings.loadSettings();
+        // used by all activities
+        mFileFolder = mAspectraSettings.getPrefsSpectraBasePath();
+        mFileExt = mAspectraSettings.getPrefsSpectraExt();
+        // the rest is updated local
+    }
+
 }

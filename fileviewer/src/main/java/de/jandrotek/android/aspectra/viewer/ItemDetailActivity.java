@@ -1,7 +1,10 @@
 package de.jandrotek.android.aspectra.viewer;
 
+import android.annotation.TargetApi;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.MenuItem;
 
@@ -15,7 +18,8 @@ import android.view.MenuItem;
  * This activity is mostly just a 'shell' activity containing nothing
  * more than a {@link ItemDetailFragment}.
  */
-public class ItemDetailActivity extends BaseActivity {
+public class ItemDetailActivity extends ActionBarActivity {
+//    public class ItemDetailActivity extends BaseActivity {
     private static final String TAG = "DetailItemsAct";
 
     @Override
@@ -85,6 +89,7 @@ public class ItemDetailActivity extends BaseActivity {
 //    }
 
 
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();

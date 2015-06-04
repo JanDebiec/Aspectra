@@ -1,4 +1,4 @@
-package de.jandrotek.android.aspectra.common;
+package de.jandrotek.android.aspectra.viewer;
 
 import android.content.Context;
 import android.content.SharedPreferences;

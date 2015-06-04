@@ -1,7 +1,10 @@
 package de.jandrotek.android.aspectra.viewer;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.MenuItem;
@@ -47,6 +50,12 @@ public class ItemListActivity extends ActionBarActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.d(TAG, "onCreate() called");
+
+        mAspectraSettings = new AspectraSettings();
+        Context context = getApplicationContext();
+        SharedPreferences prefs = PreferenceManager
+                .getDefaultSharedPreferences(context);
+        mAspectraSettings.connectPrefs(context, prefs);
 
         updateFromPreferences();
 

@@ -7,6 +7,7 @@ import android.app.Activity;
 import android.app.ListFragment;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.SparseBooleanArray;
 import android.view.ActionMode;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -147,15 +148,15 @@ public class ItemListFragment extends ListFragment {
 //                    // Captures all selected ids with a loop
 //                    for (int i = (selected.size() - 1); i >= 0; i--) {
 //                        if (selected.valueAt(i)) {
-//                            SpectrumItem selecteditem = SpectrumAdapter
+//                            ListContent.SpectrumItem selecteditem = SpectrumAdapter
 //                                    .getItem(selected.keyAt(i));
 //                            // Remove selected items following the ids
 ////                            SpectrumAdapter.remove(selecteditem);
-//                        }
-//                    }
-//                    // Close CAB
+             //           }
+                        // Close CAB
                         mode.finish();
                         return true;
+               //     }
                     case R.id.item_compare:
                         //TODO: show more spectra in plot
                         return true;

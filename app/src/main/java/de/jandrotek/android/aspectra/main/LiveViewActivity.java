@@ -103,7 +103,6 @@ public class LiveViewActivity extends BaseActivity
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        if (BuildConfig.FLAVOR == "vanilla") {
             if (id == R.id.action_settings) {
                 Intent intent = new Intent(this, SettingsActivity.class);
                 startActivity(intent);
@@ -111,32 +110,11 @@ public class LiveViewActivity extends BaseActivity
             } else if (id == R.id.action_save) {
                 AspectraGlobals.mSavePlotInFile = true;
                 return true;
-            }
-        } else if (BuildConfig.FLAVOR == "mini") {
-            if (id == R.id.action_settings) {
-                Intent intent = new Intent(this, SettingsActivity.class);
-                startActivity(intent);
+            } else if (id == R.id.action_list) {
+                Intent LaunchIntent = getPackageManager().getLaunchIntentForPackage("de.jandrotek.android.aspectra.viewer");
+                startActivity( LaunchIntent );
                 return true;
-            } else if (id == R.id.action_save) {
-                AspectraGlobals.mSavePlotInFile = true;
-                return true;
-//            } else if (id == R.id.action_list) {
-//                Intent intent = new Intent(this, ItemListActivity.class);
-//                startActivity(intent);
-//                return true;
            }
-        } else {
-            if (id == R.id.action_settings) {
-                Intent intent = new Intent(this, SettingsActivity.class);
-                startActivity(intent);
-                return true;
-            } else if (id == R.id.action_save) {
-                AspectraGlobals.mSavePlotInFile = true;
-
-                return true;
-
-            }
-        }
 
 
 
@@ -241,7 +219,7 @@ public class LiveViewActivity extends BaseActivity
             String sFileName = mFullPath + "/" + fileName;
             f = new File(sFileName);
           } else {
-            Log.w("TAG", "media not availeable !");
+            Log.w("TAG", "media not available !");
         }
         Toast.makeText(this, f.toString(), Toast.LENGTH_SHORT)
                 .show();

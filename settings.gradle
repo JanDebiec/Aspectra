@@ -1,1 +1,1 @@
-include ':app', ':core', ':touch_lib', ':touchtest', ':fileviewer', ':analyze', ':common'
+include ':app', ':core', ':touch_lib', ':touchtest', ':fileviewer', ':common'

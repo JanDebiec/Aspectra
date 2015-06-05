@@ -27,13 +27,13 @@ public class AspectraSettings {
     private static String mPREFS_KEY_SPECTRA_EXTENSION;
 
     //DEFAULTs
-    private String mDefaultWidthStart;
-    private String mDefaultWidthEnd;
-    private String mDefaultHeightStart;
-    private String mDefaultHeightEnd;
-    private String mDefaultScanAreaWidth;
+//    private String mDefaultWidthStart;
+//    private String mDefaultWidthEnd;
+//    private String mDefaultHeightStart;
+//    private String mDefaultHeightEnd;
+//    private String mDefaultScanAreaWidth;
+//    private String mDefaultSpectraLength;
     private String mDefaultSpectraBasePath;
-    private String mDefaultSpectraLength;
     private String mDefaultSpectraExtension;
 
     //values
@@ -119,6 +119,13 @@ public class AspectraSettings {
 
     public void loadSettings() {
 
+        String mDefaultWidthStart;
+        String mDefaultWidthEnd;
+        String mDefaultHeightStart;
+        String mDefaultHeightEnd;
+        String mDefaultScanAreaWidth;
+        String mDefaultSpectraLength;
+
         mDefaultWidthStart = mContext.getResources().getString(R.string.DEFAULT_WIDTH_START);
         mPREFS_KEY_WIDTH_START =  mContext.getResources().getString(R.string.PREFS_KEY_WIDTH_START);
         this.mPrefsWidthStart = Integer.parseInt(mPrefs.getString(mPREFS_KEY_WIDTH_START, mDefaultWidthStart));
@@ -159,35 +166,43 @@ public class AspectraSettings {
 
         mPREFS_KEY_WIDTH_START =  mContext.getResources().getString(R.string.PREFS_KEY_WIDTH_START);
         editor.putString(mPREFS_KEY_WIDTH_START, Integer.toString(mPrefsWidthStart));
-        editor.commit();
+        //editor.commit();
+        editor.apply();
 
         mPREFS_KEY_WIDTH_END =  mContext.getResources().getString(R.string.PREFS_KEY_WIDTH_END);
         editor.putString(mPREFS_KEY_WIDTH_END, Integer.toString(mPrefsWidthEnd));
-        editor.commit();
+        //editor.commit();
+        editor.apply();
 
         mPREFS_KEY_HEIGHT_START =  mContext.getResources().getString(R.string.PREFS_KEY_HEIGHT_START);
         editor.putString(mPREFS_KEY_HEIGHT_START, Integer.toString(mPrefsHeightStart));
-        editor.commit();
+        //editor.commit();
+        editor.apply();
 
         mPREFS_KEY_HEIGHT_END =  mContext.getResources().getString(R.string.PREFS_KEY_HEIGHT_END);
         editor.putString(mPREFS_KEY_HEIGHT_END, Integer.toString(mPrefsHeightEnd));
-        editor.commit();
+        //editor.commit();
+        editor.apply();
 
         mPREFS_KEY_SCAN_AREA_WIDTH =  mContext.getResources().getString(R.string.PREFS_KEY_SCAN_AREA_WIDTH);
         editor.putString(mPREFS_KEY_SCAN_AREA_WIDTH, Integer.toString(mPrefsScanAreaWidth));
-        editor.commit();
+        //editor.commit();
+        editor.apply();
 
         mPREFS_KEY_SPECTRA_LENGTH =  mContext.getResources().getString(R.string.PREFS_KEY_SPECTRA_LENGTH);
         editor.putString(mPREFS_KEY_SPECTRA_LENGTH, Integer.toString(mPrefsSpectraLength));
-        editor.commit();
+        //editor.commit();
+        editor.apply();
 
         mPREFS_KEY_SPECTRA_BASEPATH =  mContext.getResources().getString(R.string.PREFS_KEY_SPECTRA_BASEPATH);
         editor.putString(mPREFS_KEY_SPECTRA_BASEPATH, (mDefaultSpectraBasePath));
-        editor.commit();
+        //editor.commit();
+        editor.apply();
 
         mPREFS_KEY_SPECTRA_EXTENSION =  mContext.getResources().getString(R.string.PREFS_KEY_SPECTRA_EXTENSION);
         editor.putString(mPREFS_KEY_SPECTRA_EXTENSION, (mDefaultSpectraExtension));
-        editor.commit();
+        //editor.commit();
+        editor.apply();
     }
 }
 

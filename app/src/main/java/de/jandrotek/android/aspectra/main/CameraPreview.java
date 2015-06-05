@@ -6,6 +6,7 @@ package de.jandrotek.android.aspectra.main;
 import java.io.IOException;
 import java.util.List;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Handler;
@@ -25,11 +26,12 @@ import android.hardware.Camera.Parameters;
 import de.jandrotek.android.aspectra.core.AspectraGlobals;
 import de.jandrotek.android.aspectra.core.ImageProcessing;
 
+@SuppressLint("ViewConstructor")
 public class CameraPreview  extends ViewGroup implements SurfaceHolder.Callback,
         Camera.PreviewCallback {
     private static final String TAG = "CameraPreview";
     private Camera mCamera = null;
-    private SurfaceView mSurfaceView;
+//    private SurfaceView mSurfaceView;
     private SurfaceHolder mCameraHolder;
     //private static FragmentActivity mActivity = null;
     private Size mPreviewSize;
@@ -38,13 +40,13 @@ public class CameraPreview  extends ViewGroup implements SurfaceHolder.Callback,
     private int mPreviewWidthX;
     private int mPreviewHeightY;
 
-    private int mStartPercentH = 0;
-    private int mStartIndexH;
-    private int mEndIndexH;
-    private int mEndPercentH = 100;
-    private int mLineLength;
-    private int mEndPercentV = 50;
-    private int mStartPercentV = 49;
+//    private int mStartPercentH = 0;
+//    private int mStartIndexH;
+//    private int mEndIndexH;
+//    private int mEndPercentH = 100;
+//    private int mLineLength;
+//    private int mEndPercentV = 50;
+//    private int mStartPercentV = 49;
 
     private byte[] mFrameData = null;
     private int mImageFormat;
@@ -57,21 +59,22 @@ public class CameraPreview  extends ViewGroup implements SurfaceHolder.Callback,
 
     public CameraPreview(Context context, int activityId) {
         super(context);
+        SurfaceView surfaceView;
         //Context mContext = context;
         mActivity = (Activity) context;
         if(activityId == BaseActivity.ACT_ITEM_LIVE_VIEW) {
             LiveViewActivity lvActivity = (LiveViewActivity) context;
             mLVActHandler = lvActivity.getHandler();
-        } else if(activityId == BaseActivity.ACT_ITEM_VIEW_CONFIG){
-            ViewConfigActivity vcActivity = (ViewConfigActivity) context;
-            // act. no need for handler in that activity
-            //mVCActHandler = vcActivity.getHandler();
+//        } else if(activityId == BaseActivity.ACT_ITEM_VIEW_CONFIG){
+//            ViewConfigActivity vcActivity = (ViewConfigActivity) context;
+//            // act. no need for handler in that activity
+//            //mVCActHandler = vcActivity.getHandler();
         }
         //as in AOSP sample
-        mSurfaceView = new SurfaceView(context);
-        addView(mSurfaceView);
+        surfaceView = new SurfaceView(context);
+        addView(surfaceView);
 
-        mCameraHolder = mSurfaceView.getHolder();
+        mCameraHolder = surfaceView.getHolder();
         mCameraHolder.addCallback(this);
         mCameraHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
     }
@@ -355,30 +358,30 @@ public class CameraPreview  extends ViewGroup implements SurfaceHolder.Callback,
     }
 
 
-    public void setStartPercentH(int startPercent) {
-        mStartPercentH = startPercent;
-//        if(mImageProcessing != null) {
-//            mImageProcessing.setStartPercentX(startPercent);
-//        }
-    }
+//    public void setStartPercentH(int startPercent) {
+//        mStartPercentH = startPercent;
+////        if(mImageProcessing != null) {
+////            mImageProcessing.setStartPercentX(startPercent);
+////        }
+//    }
 
-    public void setEndPercentH(int endPercent) {
-        mEndPercentH = endPercent;
-//        mImageProcessing.setEndPercentX(endPercent);
-    }
-
-
-    public void setStartPercentV(int startPercentV) {
-        mStartPercentV = startPercentV;
-//        mImageProcessing.setStartPercentY(startPercentV);
-    }
+//    public void setEndPercentH(int endPercent) {
+//        mEndPercentH = endPercent;
+////        mImageProcessing.setEndPercentX(endPercent);
+//    }
 
 
+//    public void setStartPercentV(int startPercentV) {
+//        mStartPercentV = startPercentV;
+////        mImageProcessing.setStartPercentY(startPercentV);
+//    }
 
-    public void setEndPercentV(int endPercentV) {
-        mEndPercentV = endPercentV;
-//        mImageProcessing.setEndPercentY(endPercentV);
-    }
+
+
+//    public void setEndPercentV(int endPercentV) {
+//        mEndPercentV = endPercentV;
+////        mImageProcessing.setEndPercentY(endPercentV);
+//    }
 
 
 }

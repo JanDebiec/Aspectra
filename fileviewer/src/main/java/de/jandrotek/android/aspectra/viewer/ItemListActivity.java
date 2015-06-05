@@ -179,10 +179,8 @@ public class ItemListActivity extends ActionBarActivity
 
     protected void updateFromPreferences() {
         mAspectraSettings.loadSettings();
-        // used by all activities
         mFileFolder = mAspectraSettings.getPrefsSpectraBasePath();
         mFileExt = mAspectraSettings.getPrefsSpectraExt();
-        // the rest is updated local
     }
 
 }

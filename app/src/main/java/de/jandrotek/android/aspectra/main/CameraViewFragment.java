@@ -305,10 +305,10 @@ public class CameraViewFragment extends Fragment {
     public void updateBorderPercents() {
 
         if (mCamPreview != null) {
-            mCamPreview.setStartPercentH(mStartPercentHX);
-            mCamPreview.setEndPercentH(mEndPercentHX);
-            mCamPreview.setStartPercentV(mStartPercentVY);
-            mCamPreview.setEndPercentV(mEndPercentVY);
+//            mCamPreview.setStartPercentH(mStartPercentHX);
+//            mCamPreview.setEndPercentH(mEndPercentHX);
+//            mCamPreview.setStartPercentV(mStartPercentVY);
+//            mCamPreview.setEndPercentV(mEndPercentVY);
         }
         if (mImageProcessing != null) {
             mImageProcessing.setStartPercentX(mStartPercentHX);

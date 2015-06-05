@@ -13,8 +13,6 @@ import android.view.MenuItem;
 
 public class BaseActivity extends ActionBarActivity
 {
-//    private static final boolean D = true;
-//    private static final String TAG = "BaseActivity";
 
     protected static final int ACT_ITEM_LIVE_VIEW   = 0;
     protected static final int ACT_ITEM_VIEW_CONFIG = 1;

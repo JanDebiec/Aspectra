@@ -24,7 +24,6 @@ import java.util.List;
 
 import static android.widget.AbsListView.MultiChoiceModeListener;
 import static android.widget.AbsListView.OnClickListener;
-//import com.jandrotek.aspectra.spectrumviewer.dummy.DummyContent;
 
 /**
  * A list fragment representing a list of Items. This fragment

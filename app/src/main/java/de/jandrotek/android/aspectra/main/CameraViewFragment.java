@@ -33,7 +33,7 @@ public class CameraViewFragment extends Fragment {
     private static final String TAG = "CameraViewFragment";
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
+//    private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
     // TODO: Rename and change types of parameters
@@ -80,12 +80,9 @@ public class CameraViewFragment extends Fragment {
      * @return A new instance of fragment CameraViewFragment.
      */
     // TODO: Rename and change types and number of parameters
-//    public static CameraViewFragment newInstance(String param1, int nParam2) {
         public static CameraViewFragment newInstance(int nParam2) {
         CameraViewFragment fragment = new CameraViewFragment();
         Bundle args = new Bundle();
-        //args.putString(ARG_PARAM1, param1);
-        //args.putString(ARG_PARAM2, param2);
         args.putInt(ARG_PARAM2, nParam2);
         fragment.setArguments(args);
         return fragment;
@@ -100,15 +97,8 @@ public class CameraViewFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         if (getArguments() != null) {
-           // mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getInt(ARG_PARAM2);
         }
-
-//        if (mParam1 == "LiveView") {
-//            mCamPreview = new CameraPreview(this.getActivity(), BaseActivity.NAVDRAWER_ITEM_LIVE_VIEW);
-//        } else if (mParam1 == "ViewConfig") {
-//            mCamPreview = new CameraPreview(this.getActivity(), BaseActivity.NAVDRAWER_ITEM_VIEW_CONFIG);
-//        }
 
         mImageProcessing = new ImageProcessing();
         // Find the total number of cameras available
@@ -174,9 +164,9 @@ public class CameraViewFragment extends Fragment {
 
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                float m_touched_x = event.getX();
-                float m_touched_y = event.getY();
-                boolean m_touched = false;
+//                float m_touched_x = event.getX();
+//                float m_touched_y = event.getY();
+//                boolean m_touched = false;
 
                 if (!mFlagConfigStarted) {
                     mFlagConfigStarted = true;
@@ -248,19 +238,6 @@ public class CameraViewFragment extends Fragment {
         }
     }
 
-    public void getPreviewSize() {
-        mPreviewWidthX = mCamPreview.getPreviewWidthX();
-        mPreviewHeightY = mCamPreview.getPreviewHeightY();
-    }
-
-
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }
-
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
@@ -304,12 +281,6 @@ public class CameraViewFragment extends Fragment {
     }
     public void updateBorderPercents() {
 
-        if (mCamPreview != null) {
-//            mCamPreview.setStartPercentH(mStartPercentHX);
-//            mCamPreview.setEndPercentH(mEndPercentHX);
-//            mCamPreview.setStartPercentV(mStartPercentVY);
-//            mCamPreview.setEndPercentV(mEndPercentVY);
-        }
         if (mImageProcessing != null) {
             mImageProcessing.setStartPercentX(mStartPercentHX);
             mImageProcessing.setEndPercentX(mEndPercentHX);

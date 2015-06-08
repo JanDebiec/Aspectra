@@ -136,7 +136,7 @@ public class CameraViewFragment extends Fragment {
 
         mCamPreview = new CameraPreview(this.getActivity(), mParam2);
 
-        if(mParam2 == BaseActivity.ACT_ITEM_VIEW_CONFIG){
+        if(mParam2 == AspectraGlobals.ACT_ITEM_VIEW_CONFIG){
             //mCamPreview = new CameraPreview(this.getActivity(), BaseActivity.ACT_ITEM_VIEW_CONFIG);
 
             mPreviewWidthX = AspectraGlobals.mPreviewWidthX;
@@ -169,14 +169,14 @@ public class CameraViewFragment extends Fragment {
                     mFlagConfigStarted = true;
                     int action = event.getAction();
 
-                    if(mParam2 == BaseActivity.ACT_ITEM_LIVE_VIEW) { // if we are in LiveView
+                    if(mParam2 == AspectraGlobals.ACT_ITEM_LIVE_VIEW) { // if we are in LiveView
 
                         //create intent and call ConfigActivity
                         Intent intentConfig = new Intent(getActivity(), ViewConfigActivity.class);
 
                         startActivity(intentConfig);
                         getActivity().finish();
-                    } else if (mParam2 == BaseActivity.ACT_ITEM_VIEW_CONFIG) {
+                    } else if (mParam2 == AspectraGlobals.ACT_ITEM_VIEW_CONFIG) {
                         //create intent and call LiveViewActivity
                         Intent intentLiveView = new Intent(getActivity(), LiveViewActivity.class);
 

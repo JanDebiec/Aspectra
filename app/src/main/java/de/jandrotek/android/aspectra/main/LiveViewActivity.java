@@ -16,6 +16,7 @@ import android.widget.Toast;
 import java.io.File;
 import java.lang.ref.WeakReference;
 
+import de.jandrotek.android.aspectra.common.PlotViewFragment;
 import de.jandrotek.android.aspectra.common.SettingsActivity;
 import de.jandrotek.android.aspectra.core.AspectraGlobals;
 //import de.jandrotek.android.aspectra.core.FileUtils;
@@ -58,11 +59,11 @@ public class LiveViewActivity extends BaseActivity
         setContentView(R.layout.activity_live_view);
         if (savedInstanceState == null) {
 //            mCameraViewFragment = CameraViewFragment.newInstance("LiveView", ACT_ITEM_LIVE_VIEW);
-            mCameraViewFragment = CameraViewFragment.newInstance( ACT_ITEM_LIVE_VIEW);
+            mCameraViewFragment = CameraViewFragment.newInstance( AspectraGlobals.ACT_ITEM_LIVE_VIEW);
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.fragmentHolderCameraView, mCameraViewFragment)
                     .commit();
-            mPlotViewFragment = PlotViewFragment.newInstance(ACT_ITEM_LIVE_VIEW);
+            mPlotViewFragment = PlotViewFragment.newInstance(AspectraGlobals.ACT_ITEM_LIVE_VIEW);
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.fvPlotView, mPlotViewFragment)
                     .commit();

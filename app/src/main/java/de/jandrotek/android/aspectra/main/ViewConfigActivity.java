@@ -10,6 +10,7 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import de.jandrotek.android.aspectra.common.SettingsActivity;
+import de.jandrotek.android.aspectra.core.AspectraGlobals;
 import de.jandrotek.android.aspectra.core.ConfigViewSettings;
 
 
@@ -174,7 +175,7 @@ public class ViewConfigActivity extends BaseActivity
         mSeekBarCreated = true;
 
         if (savedInstanceState == null) {
-            mCameraViewFragment = CameraViewFragment.newInstance(ACT_ITEM_VIEW_CONFIG);
+            mCameraViewFragment = CameraViewFragment.newInstance(AspectraGlobals.ACT_ITEM_VIEW_CONFIG);
             getSupportFragmentManager().beginTransaction()
 // from LiveViewAct
                     .add(R.id.fragmentHolderCameraView_vca, mCameraViewFragment)

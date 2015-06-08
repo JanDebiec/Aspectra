@@ -145,13 +145,13 @@ public class PlotViewFragment extends Fragment
 
         //TODO: optional - activate scaling / zooming
         // in liveView is disabled, first in AnalyzeActivity
-        if (mParam2 == BaseActivity.ACT_ITEM_ANALYZE) {
-            mGraphView.setScrollable(true);
-            mGraphView.setScalable(true);
+        if (mParam2 == AspectraGlobals.ACT_ITEM_ANALYZE) {
+            //mGraphView.setScrollable(true);
+            //mGraphView.setScalable(true);
         }
-//        else if(mParam2 == BaseActivity.ACT_ITEM_LIVE_VIEW) {
-//
-//        }
+        else if(mParam2 == AspectraGlobals.ACT_ITEM_LIVE_VIEW) {
+
+        }
         FrameLayout mFrameLayout = (FrameLayout)rootView.findViewById(R.id.flPlotView);
         mFrameLayout.addView(mGraphView);
 

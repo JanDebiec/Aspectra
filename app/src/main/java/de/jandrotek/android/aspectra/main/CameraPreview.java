@@ -62,7 +62,7 @@ public class CameraPreview  extends ViewGroup implements SurfaceHolder.Callback,
         SurfaceView surfaceView;
         //Context mContext = context;
         mActivity = (Activity) context;
-        if(activityId == BaseActivity.ACT_ITEM_LIVE_VIEW) {
+        if(activityId == AspectraGlobals.ACT_ITEM_LIVE_VIEW) {
             LiveViewActivity lvActivity = (LiveViewActivity) context;
             mLVActHandler = lvActivity.getHandler();
 //        } else if(activityId == BaseActivity.ACT_ITEM_VIEW_CONFIG){

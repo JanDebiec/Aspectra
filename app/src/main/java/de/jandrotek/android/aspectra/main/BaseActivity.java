@@ -15,10 +15,10 @@ import de.jandrotek.android.aspectra.common.AspectraSettings;
 public class BaseActivity extends ActionBarActivity
 {
 
-    protected static final int ACT_ITEM_LIVE_VIEW   = 0;
-    protected static final int ACT_ITEM_VIEW_CONFIG = 1;
-    protected static final int ACT_ITEM_VIEW_PLOT   = 2;
-    protected static final int ACT_ITEM_ANALYZE     = 3;
+//    protected static final int ACT_ITEM_LIVE_VIEW   = 0;
+//    protected static final int ACT_ITEM_VIEW_CONFIG = 1;
+//    protected static final int ACT_ITEM_VIEW_PLOT   = 2;
+//    protected static final int ACT_ITEM_ANALYZE     = 3;
 
     protected AspectraSettings mAspectraSettings;
     protected String mFileFolder;

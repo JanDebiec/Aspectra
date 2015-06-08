@@ -18,5 +18,10 @@ public class AspectraGlobals {
     public static final int eTypeInt32      = 2;
     public static final int eTypeInt16      = 3;
 
+    public static final int ACT_ITEM_LIVE_VIEW   = 0;
+    public static final int ACT_ITEM_VIEW_CONFIG = 1;
+    public static final int ACT_ITEM_VIEW_PLOT   = 2;
+    public static final int ACT_ITEM_ANALYZE     = 3;
+
 
 }

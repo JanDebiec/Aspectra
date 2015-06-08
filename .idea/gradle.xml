@@ -14,7 +14,6 @@
             <option value="$PROJECT_DIR$/common" />
             <option value="$PROJECT_DIR$/core" />
             <option value="$PROJECT_DIR$/fileviewer" />
-            <option value="$PROJECT_DIR$/touch_lib" />
             <option value="$PROJECT_DIR$/touchtest" />
           </set>
         </option>

@@ -1,4 +1,4 @@
-package de.jandrotek.android.aspectra.touchtest;
+package de.jandrotek.android.aspectra.common;
 
 import android.content.Context;
 import android.util.AttributeSet;

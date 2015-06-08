@@ -78,19 +78,19 @@ public class ConfigView extends View {
                 Log.e(TAG, "width = " + mConfigWidthX + ", height = " + mConfigHeightY);
             }
             setConfigDimensions(mConfigWidthX, mConfigHeightY);
-            initialzeLines();
+            initializeLines();
 
         }
     }
 
     public void setPreviewDimensions(int widthX, int heightY){
         mViewSettings.setPreviewDimensions(widthX, heightY);
-        initialzeLines();
+        initializeLines();
     }
 
     private void setConfigDimensions(float widthX, float heightY){
         mViewSettings.setConfigDimensions(widthX, heightY);
-        initialzeLines();
+        initializeLines();
     }
 
     private void initialize() {
@@ -157,10 +157,10 @@ public class ConfigView extends View {
 
     public void setPercent(float widthStartX, float widthEndX, float heightStartY, float deltaLinesY) {
         mViewSettings.setPercent(widthStartX, widthEndX, heightStartY,  deltaLinesY);
-            initialzeLines();
+            initializeLines();
     }
 
-    private void initialzeLines(){
+    private void initializeLines(){
         if(mViewSettings.isConfigured()){
             mViewSettings.calcXYPoints();
             mWidthPointsX = mViewSettings.getPointsX();

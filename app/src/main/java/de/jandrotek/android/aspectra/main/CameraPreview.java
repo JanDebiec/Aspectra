@@ -135,7 +135,6 @@ public class CameraPreview  extends ViewGroup implements SurfaceHolder.Callback,
             AspectraGlobals.mPreviewWidthX = mPreviewWidthX;
             AspectraGlobals.mPreviewHeightY = mPreviewHeightY;
             if(BuildConfig.DEBUG) {
-
                 Log.i(TAG, "width = " + mPreviewWidthX + ", height = " + mPreviewHeightY);
             }
             // send message, that size is already known
@@ -175,7 +174,6 @@ public class CameraPreview  extends ViewGroup implements SurfaceHolder.Callback,
             }
         } catch (IOException exception) {
             if(BuildConfig.DEBUG) {
-
                 Log.e(TAG, "IOException caused by setPreviewDisplay()", exception);
             }
         }

@@ -87,8 +87,9 @@ public class ItemDetailFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-        Log.i(TAG, "onViewCreated");
-
+        if(BuildConfig.DEBUG) {
+            Log.i(TAG, "onViewCreated");
+        }
         View rootView = inflater.inflate(R.layout.fragment_item_detail, container, false);
 
         if (mItem != null) {
@@ -122,31 +123,41 @@ public class ItemDetailFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        Log.i(TAG, "onStart");
+        if(BuildConfig.DEBUG) {
+            Log.i(TAG, "onStart");
+        }
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        Log.i(TAG, "onResume");
+        if(BuildConfig.DEBUG) {
+            Log.i(TAG, "onResume");
+        }
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        Log.i(TAG, "onPause");
+        if(BuildConfig.DEBUG) {
+            Log.i(TAG, "onPause");
+        }
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        Log.i(TAG, "onStop");
+        if(BuildConfig.DEBUG) {
+            Log.i(TAG, "onStop");
+        }
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        Log.i(TAG, "onDestroy");
+        if(BuildConfig.DEBUG) {
+            Log.i(TAG, "onDestroy");
+        }
     }
 
 

@@ -94,7 +94,6 @@ public class ItemListActivity extends ActionBarActivity
 //    }
 
 
-
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
         super.onSaveInstanceState(savedInstanceState);

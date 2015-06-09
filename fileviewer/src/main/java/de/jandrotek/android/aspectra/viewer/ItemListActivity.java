@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.MenuItem;
 
 import de.jandrotek.android.aspectra.common.AspectraSettings;
+import de.jandrotek.android.aspectra.common.SpectrumFiles;
 //import de.jandrotek.android.aspectra.common.SettingsActivity;
 
 

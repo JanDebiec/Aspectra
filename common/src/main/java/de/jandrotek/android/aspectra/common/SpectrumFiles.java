@@ -1,4 +1,4 @@
-package de.jandrotek.android.aspectra.viewer;
+package de.jandrotek.android.aspectra.common;
 
 /** android part of SpectraFiles */
 
@@ -10,7 +10,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 
 import de.jandrotek.android.aspectra.core.FileWalker;
@@ -102,14 +101,14 @@ public class SpectrumFiles {
         return mPath  + "/" + currentDateandTime + "." + fileExt;
     }
 
-//    public static void saveStringToFile(String text, File target) throws IOException {
-//        FileOutputStream fos=new FileOutputStream(target);
-//        OutputStreamWriter out=new OutputStreamWriter(fos);
-//
-//        out.write(text);
-//        out.flush();
-//        fos.getFD().sync();
-//        out.close();
-//    }
+    public static void saveStringToFile(String text, File target) throws IOException {
+        FileOutputStream fos=new FileOutputStream(target);
+        OutputStreamWriter out=new OutputStreamWriter(fos);
+
+        out.write(text);
+        out.flush();
+        fos.getFD().sync();
+        out.close();
+    }
 
 }

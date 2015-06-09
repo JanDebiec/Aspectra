@@ -25,7 +25,9 @@ public class ItemDetailActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.d(TAG, "onCreate() called");
+        if(BuildConfig.DEBUG) {
+            Log.d(TAG, "onCreate() called");
+        }
 
         setContentView(R.layout.activity_item_detail);
 

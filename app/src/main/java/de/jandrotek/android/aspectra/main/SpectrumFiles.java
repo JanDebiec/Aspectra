@@ -79,7 +79,9 @@ public class SpectrumFiles {
             mFilelNameListOutput = mFileWalker.search4Files(mFileExt);
         }
         else{
-            Log.w("TAG", "media not availeable !");
+            if(BuildConfig.DEBUG) {
+                Log.w("TAG", "media not availeable !");
+            }
         }
     }
 

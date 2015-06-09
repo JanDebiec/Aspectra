@@ -221,7 +221,9 @@ public class LiveViewActivity extends BaseActivity
             String sFileName = mFullPath + "/" + fileName;
             f = new File(sFileName);
           } else {
-            Log.w("TAG", "media not available !");
+            if(BuildConfig.DEBUG) {
+                Log.w("TAG", "media not available !");
+            }
         }
         Toast.makeText(this, f.toString(), Toast.LENGTH_SHORT)
                 .show();

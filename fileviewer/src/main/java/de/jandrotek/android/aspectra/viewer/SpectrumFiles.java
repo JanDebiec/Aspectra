@@ -18,19 +18,19 @@ import de.jandrotek.android.aspectra.core.FileWalker;
 public class SpectrumFiles {
     private static final String TAG = "SpectraFiles";
 
-    private static ArrayList mFilelNameArrayList;
-    private static String[] mFilelNameListTemp;
+//    private static ArrayList mFilelNameArrayList;
+//    private static String[] mFilelNameListTemp;
     public static String[] mFilelNameListOutput;
     public static String mPath = "";
-    private FileWalker mFileWalker;
+//    private FileWalker mFileWalker;
 
     private static String mFileExt = "";
     private static String mFileFolder;
 
 
-    public String getFileFolder() {
-		return mFileFolder;
-	}
+//    public String getFileFolder() {
+//		return mFileFolder;
+//	}
 
 
 	public void setFileFolder(String fileFolder) {
@@ -38,9 +38,9 @@ public class SpectrumFiles {
 	}
 
 
-	public static String getFileExt() {
-		return mFileExt;
-	}
+//	public static String getFileExt() {
+//		return mFileExt;
+//	}
 
 
 	public void setFileExt (String fileExt) {
@@ -71,20 +71,23 @@ public class SpectrumFiles {
 
     public void searchForFiles(){
 
+        FileWalker fileWalker;
         updateExternalStorageState();
         if((mExternalStorageAvailable)) {
 
-            mFileWalker = new FileWalker(mPath);
-            mFilelNameListOutput = mFileWalker.search4Files(mFileExt);
+            fileWalker = new FileWalker(mPath);
+            mFilelNameListOutput = fileWalker.search4Files(mFileExt);
         }
         else{
-            Log.w("TAG", "media not availeable !");
+            if(BuildConfig.DEBUG) {
+                Log.w("TAG", "media not availeable !");
+            }
         }
     }
 
-    public String[] getFilelList(){
-        return mFilelNameListOutput;
-    }
+//    public String[] getFilelList(){
+//        return mFilelNameListOutput;
+//    }
 
     public int getFileListSize(){
         return mFilelNameListOutput.length;
@@ -99,14 +102,14 @@ public class SpectrumFiles {
         return mPath  + "/" + currentDateandTime + "." + fileExt;
     }
 
-    public static void saveStringToFile(String text, File target) throws IOException {
-        FileOutputStream fos=new FileOutputStream(target);
-        OutputStreamWriter out=new OutputStreamWriter(fos);
-
-        out.write(text);
-        out.flush();
-        fos.getFD().sync();
-        out.close();
-    }
+//    public static void saveStringToFile(String text, File target) throws IOException {
+//        FileOutputStream fos=new FileOutputStream(target);
+//        OutputStreamWriter out=new OutputStreamWriter(fos);
+//
+//        out.write(text);
+//        out.flush();
+//        fos.getFD().sync();
+//        out.close();
+//    }
 
 }

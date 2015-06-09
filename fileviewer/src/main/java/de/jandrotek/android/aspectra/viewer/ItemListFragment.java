@@ -101,7 +101,9 @@ public class ItemListFragment extends ListFragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        Log.i(TAG, "onViewCreated");
+        if(BuildConfig.DEBUG) {
+            Log.i(TAG, "onViewCreated");
+        }
 
         // Restore the previously serialized activated item position.
         if (savedInstanceState != null
@@ -207,7 +209,9 @@ public class ItemListFragment extends ListFragment {
     @Override
     public void onDetach() {
         super.onDetach();
-        Log.i(TAG, "onDetach");
+        if(BuildConfig.DEBUG) {
+            Log.i(TAG, "onDetach");
+        }
 
         // Reset the active callbacks interface to the dummy implementation.
         mCallbacks = sDummyCallbacks;
@@ -217,31 +221,41 @@ public class ItemListFragment extends ListFragment {
     @Override
     public void onStart() {
         super.onStart();
-        Log.i(TAG, "onStart");
+        if(BuildConfig.DEBUG) {
+            Log.i(TAG, "onStart");
+        }
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        Log.i(TAG, "onResume");
+        if(BuildConfig.DEBUG) {
+            Log.i(TAG, "onResume");
+        }
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        Log.i(TAG, "onPause");
+        if(BuildConfig.DEBUG) {
+            Log.i(TAG, "onPause");
+        }
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        Log.i(TAG, "onStop");
+        if(BuildConfig.DEBUG) {
+            Log.i(TAG, "onStop");
+        }
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        Log.i(TAG, "onDestroy");
+        if(BuildConfig.DEBUG) {
+            Log.i(TAG, "onDestroy");
+        }
     }
 
 

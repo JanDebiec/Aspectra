@@ -51,7 +51,9 @@ public class ItemListActivity extends ActionBarActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.d(TAG, "onCreate() called");
+        if(BuildConfig.DEBUG) {
+            Log.d(TAG, "onCreate() called");
+        }
 
         mAspectraSettings = new AspectraSettings();
         Context context = getApplicationContext();

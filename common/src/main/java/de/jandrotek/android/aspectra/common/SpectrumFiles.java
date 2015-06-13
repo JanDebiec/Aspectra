@@ -10,6 +10,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
 
 import de.jandrotek.android.aspectra.core.FileWalker;
@@ -69,6 +70,8 @@ public class SpectrumFiles {
     }
 
     public void searchForFiles(){
+        // for every new search, old content should be cleared
+        Arrays.fill(mFilelNameListOutput, null);
 
         FileWalker fileWalker;
         updateExternalStorageState();
@@ -82,6 +85,13 @@ public class SpectrumFiles {
                 Log.w("TAG", "media not availeable !");
             }
         }
+    }
+
+    public int scanFolderForFiles(String fileFolder, String fileExtension) {
+        setFileFolder(fileFolder);
+        setFileExt(fileExtension);
+        searchForFiles();
+        return(getFileListSize());
     }
 
 //    public String[] getFilelList(){

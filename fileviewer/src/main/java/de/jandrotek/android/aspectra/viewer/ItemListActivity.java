@@ -66,10 +66,7 @@ public class ItemListActivity extends ActionBarActivity
 
         if(mSpectrumFiles == null) {
             mSpectrumFiles = new SpectrumFiles();
-            mSpectrumFiles.setFileFolder(mFileFolder);
-            mSpectrumFiles.setFileExt(mFileExt);
-            mSpectrumFiles.searchForFiles();
-            mFileListSize = mSpectrumFiles.getFileListSize();
+            mFileListSize = mSpectrumFiles.scanFolderForFiles(mFileFolder,mFileExt );
         }
 
         setContentView(R.layout.activity_item_list);
@@ -89,6 +86,13 @@ public class ItemListActivity extends ActionBarActivity
         }
 
     }
+
+//    private int scanFolderForFiles(String fileFolder, String fileExtension) {
+//        mSpectrumFiles.setFileFolder(fileFolder);
+//        mSpectrumFiles.setFileExt(fileExtension);
+//        mSpectrumFiles.searchForFiles();
+//         return(mSpectrumFiles.getFileListSize());
+//    }
 
 //    //@Override
 //    protected void updateFromPreferences(){
@@ -111,10 +115,7 @@ public class ItemListActivity extends ActionBarActivity
     public void onResume() {
         super.onResume();
         updateFromPreferences();
-        mSpectrumFiles.setFileFolder(mFileFolder);
-        mSpectrumFiles.setFileExt(mFileExt);
-        mSpectrumFiles.searchForFiles();
-        mFileListSize = mSpectrumFiles.getFileListSize();
+        mFileListSize = mSpectrumFiles.scanFolderForFiles(mFileFolder,mFileExt );
     }
 
     @Override

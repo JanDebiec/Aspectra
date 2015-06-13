@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/item_analyze"
+        android:showAsAction="ifRoom|withText"
+        android:title="Analyze"
+        android:titleCondensed="Analyze">
+    </item>
+
+    <item
+        android:id="@+id/item_setRef"
+        android:showAsAction="ifRoom|withText"
+        android:title="Set as Reference"
+        android:titleCondensed="Reference">
+    </item>
+
+    <item
+        android:id="@+id/item_delete"
+        android:icon="@android:drawable/ic_menu_delete"
+        android:showAsAction="ifRoom|withText"
+        android:title="Delete"
+        android:titleCondensed="Delete">
+    </item>
+
+</menu>

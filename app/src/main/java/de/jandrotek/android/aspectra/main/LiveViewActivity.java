@@ -204,31 +204,35 @@ public class LiveViewActivity extends BaseActivity
 
     private File getTarget(String fileName) {
         File f = null;
-        if(!mExternalStorageWriteable) {
-            updateExternalStorageState();
-        }
-        if(mExternalStorageWriteable) {
-            //root = this.getExternalFilesDir(null);
-            String mRootPath = Environment.getExternalStoragePublicDirectory(
-                    Environment.DIRECTORY_DOWNLOADS).toString();
-
-            String mFullPath = mRootPath + "/" + mFileFolder;
-            //TODO check if mFileFolder exists, if not create
-            File pathToFolder = new File(mFullPath);
-            if(!pathToFolder.exists()){
-                // create folder
-                pathToFolder.mkdir();
+        try {
+            if(!mExternalStorageWriteable) {
+                updateExternalStorageState();
             }
+            if(mExternalStorageWriteable) {
+                //root = this.getExternalFilesDir(null);
+                String mRootPath = Environment.getExternalStoragePublicDirectory(
+                        Environment.DIRECTORY_DOWNLOADS).toString();
 
-            String sFileName = mFullPath + "/" + fileName;
-            f = new File(sFileName);
-          } else {
-            if(BuildConfig.DEBUG) {
-                Log.w("TAG", "media not available !");
+                String mFullPath = mRootPath + "/" + mFileFolder;
+                //TODO check if mFileFolder exists, if not create
+                File pathToFolder = new File(mFullPath);
+                if(!pathToFolder.exists()){
+                    // create folder
+                    pathToFolder.mkdir();
+                }
+
+                String sFileName = mFullPath + "/" + fileName;
+                f = new File(sFileName);
+              } else {
+                if(BuildConfig.DEBUG) {
+                    Log.w("TAG", "media not available !");
+                }
             }
+            Toast.makeText(this, f.toString(), Toast.LENGTH_SHORT)
+                    .show();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        Toast.makeText(this, f.toString(), Toast.LENGTH_SHORT)
-                .show();
         return (f);
 
     }

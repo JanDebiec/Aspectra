@@ -16,11 +16,13 @@ import android.widget.Toast;
 import java.io.File;
 import java.lang.ref.WeakReference;
 
-import de.jandrotek.android.aspectra.common.PlotViewFragment;
-import de.jandrotek.android.aspectra.common.SettingsActivity;
+import de.jandrotek.android.aspectra.libplotspectra.PlotViewFragment;
+import de.jandrotek.android.aspectra.libprefs.SettingsActivity;
 import de.jandrotek.android.aspectra.core.AspectraGlobals;
 //import de.jandrotek.android.aspectra.core.FileUtils;
 import de.jandrotek.android.aspectra.core.SpectrumAsp;
+import de.jandrotek.android.aspectra.libspectrafiles.SpectrumFiles;
+
 /**
  * here comes the source from MainActivity, handling CameraViewFragment,
  * and PlotViewFragment

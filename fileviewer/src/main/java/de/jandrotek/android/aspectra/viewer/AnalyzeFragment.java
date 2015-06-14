@@ -17,6 +17,7 @@ import com.jjoe64.graphview.GraphViewSeries.GraphViewSeriesStyle;
 import com.jjoe64.graphview.LineGraphView;
 
 import de.jandrotek.android.aspectra.core.SpectrumChr;
+import de.jandrotek.android.aspectra.libspectrafiles.SpectrumFiles;
 
 //import com.jandrotek.aspectra.spectrumviewer.dummy.DummyContent;
 

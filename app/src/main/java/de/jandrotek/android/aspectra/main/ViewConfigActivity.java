@@ -9,7 +9,7 @@ import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
-import de.jandrotek.android.aspectra.common.SettingsActivity;
+import de.jandrotek.android.aspectra.libprefs.SettingsActivity;
 import de.jandrotek.android.aspectra.core.AspectraGlobals;
 import de.jandrotek.android.aspectra.core.ConfigViewSettings;
 

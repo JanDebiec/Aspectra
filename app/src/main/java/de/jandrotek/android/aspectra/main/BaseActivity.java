@@ -10,6 +10,8 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import de.jandrotek.android.aspectra.libprefs.AspectraSettings;
+
 public class BaseActivity extends ActionBarActivity
 {
 

@@ -15,7 +15,6 @@ import com.jjoe64.graphview.GraphViewSeries;
 import com.jjoe64.graphview.GraphViewSeries.GraphViewSeriesStyle;
 import com.jjoe64.graphview.LineGraphView;
 
-import de.jandrotek.android.aspectra.common.SpectrumFiles;
 import de.jandrotek.android.aspectra.core.SpectrumChr;
 
 //import com.jandrotek.aspectra.spectrumviewer.dummy.DummyContent;
@@ -76,6 +75,7 @@ public class ItemDetailFragment extends Fragment {
             } catch (Exception e) {
                 e.printStackTrace();
             }
+            //TODO: here is danger,what is bigger: mFileIntValues or 2048
             int num = 2048;
             mData = new GraphViewData[num];
             for (int i=0; i<num; i++) {
@@ -164,4 +164,9 @@ public class ItemDetailFragment extends Fragment {
     }
 
 
+//    @Override
+//    public void onListItemClick(ListView l, View v, int position, long id) {
+//        // Send the event to the host activity
+//        mCallback.onArticleSelected(position);
+//    }
 }

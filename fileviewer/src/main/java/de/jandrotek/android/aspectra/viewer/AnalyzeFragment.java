@@ -1,5 +1,6 @@
 package de.jandrotek.android.aspectra.viewer;
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,7 +16,6 @@ import com.jjoe64.graphview.GraphViewSeries;
 import com.jjoe64.graphview.GraphViewSeries.GraphViewSeriesStyle;
 import com.jjoe64.graphview.LineGraphView;
 
-import de.jandrotek.android.aspectra.common.SpectrumFiles;
 import de.jandrotek.android.aspectra.core.SpectrumChr;
 
 //import com.jandrotek.aspectra.spectrumviewer.dummy.DummyContent;
@@ -163,5 +163,15 @@ public class AnalyzeFragment extends Fragment {
         }
     }
 
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+//        try {
+//            mListener = (OnFragmentInteractionListener) activity;
+//        } catch (ClassCastException e) {
+//            throw new ClassCastException(activity.toString()
+//                    + " must implement OnFragmentInteractionListener");
+//        }
+    }
 
 }

@@ -8,9 +8,6 @@ import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.MenuItem;
-
-import de.jandrotek.android.aspectra.common.AspectraSettings;
-import de.jandrotek.android.aspectra.common.SpectrumFiles;
 //import de.jandrotek.android.aspectra.common.SettingsActivity;
 
 

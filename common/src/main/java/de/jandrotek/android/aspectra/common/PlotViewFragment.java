@@ -39,7 +39,7 @@ public class PlotViewFragment extends Fragment
 {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
+//    private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
     private static final int PLOT_DATA_SIZE = 1920;
@@ -57,7 +57,7 @@ public class PlotViewFragment extends Fragment
     private GraphViewData[] realData;
 
     private OnFragmentInteractionListener mListener;
-    private boolean mFlagSavinggStarted = false;
+//    private boolean mFlagSavinggStarted = false;
 
     /**
      * Use this factory method to create a new instance of
@@ -119,9 +119,9 @@ public class PlotViewFragment extends Fragment
 
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                float m_touched_x = event.getX();
-                float m_touched_y = event.getY();
-                boolean m_touched = false;
+//                float m_touched_x = event.getX();
+//                float m_touched_y = event.getY();
+//                boolean m_touched = false;
                 int action = event.getAction();
                 if(action == MotionEvent.ACTION_DOWN) {
 
@@ -144,6 +144,7 @@ public class PlotViewFragment extends Fragment
         });
 
         //TODO: optional - activate scaling / zooming
+        // both modi will be handled with Touch-view helper class, not only in viewer
         // in liveView is disabled, first in AnalyzeActivity
         if (mParam2 == AspectraGlobals.ACT_ITEM_ANALYZE) {
             //mGraphView.setScrollable(true);
@@ -186,7 +187,7 @@ public class PlotViewFragment extends Fragment
     public void onResume() {
         super.onResume();
 
-        mFlagSavinggStarted = false;
+//        mFlagSavinggStarted = false;
     }
 
     //TODO will not working

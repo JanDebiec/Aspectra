@@ -6,8 +6,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import de.jandrotek.android.aspectra.common.SpectrumFiles;
-
 /**
  * Helper class for providing sample content for user interfaces created by
  * Android template wizards.

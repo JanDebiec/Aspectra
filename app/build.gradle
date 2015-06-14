@@ -53,7 +53,7 @@ dependencies {
     // new one
     compile 'com.android.support:appcompat-v7:22.0.0'
     compile project(':core')
-    compile project(':common')
+    compile project(':libplotspectra')
     compile files('libs/GraphView-3.1.2.jar')
     //old one
 //    compile 'com.android.support:appcompat-v7:21.+'

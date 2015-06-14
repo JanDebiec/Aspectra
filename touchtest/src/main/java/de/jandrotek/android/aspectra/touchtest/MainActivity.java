@@ -6,7 +6,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
-import de.jandrotek.android.aspectra.common.TouchView;
+import de.jandrotek.android.aspectra.libtouch.TouchView;
 
 
 public class MainActivity extends ActionBarActivity

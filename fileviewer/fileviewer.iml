@@ -96,5 +96,6 @@
     <orderEntry type="module" module-name="libprefs" exported="" />
     <orderEntry type="module" module-name="core" exported="" />
     <orderEntry type="module" module-name="libplotspectra" exported="" />
+    <orderEntry type="module" module-name="libtouch" exported="" />
   </component>
 </module>

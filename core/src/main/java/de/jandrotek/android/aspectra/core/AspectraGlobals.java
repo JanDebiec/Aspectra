@@ -23,5 +23,7 @@ public class AspectraGlobals {
     public static final int ACT_ITEM_VIEW_PLOT   = 2;
     public static final int ACT_ITEM_ANALYZE     = 3;
 
+    public static final int eMaxSpectrumSize = 2048;
+
 
 }

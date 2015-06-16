@@ -20,6 +20,7 @@ import com.jjoe64.graphview.LineGraphView;
 import de.jandrotek.android.aspectra.core.AspectraGlobals;
 import de.jandrotek.android.aspectra.core.SpectrumAsp;
 import de.jandrotek.android.aspectra.core.SpectrumChr;
+import de.jandrotek.android.aspectra.libplotspectra.PlotInterface;
 import de.jandrotek.android.aspectra.libspectrafiles.SpectrumFiles;
 import de.jandrotek.android.aspectra.libtouch.TouchView;
 
@@ -44,11 +45,7 @@ public class AnalyzeFragment extends Fragment
     public static final String ARG_ITEM_ID = "item_id";
     private int mMaxSpectrumSize = AspectraGlobals.eMaxSpectrumSize;
 
-//    private static final int eModeEdit = 1;
-//    private static final int eModeZoom = 2;
-//    private static final int eModeExit = 3;
-    private int mAnalyzeMode = eModeEdit;
-
+    private int mAnalyzeMode = PlotInterface.eModeEdit;
 
     /**
      * The dummy content this fragment is presenting.
@@ -56,12 +53,6 @@ public class AnalyzeFragment extends Fragment
     private ListContent.SpectrumItem mItem;
     private String mFileName;
     private SpectrumChr mSpectrumChr;
-    private static final int eNumHorLabels = 5;
-    private static final int eNumVertLabels = 4;
-    private static final float eGraphTextSize = 20;
-    private static final double ePlotPortStart = 0;
-    private static final double ePlotPortEnd = 800;
-
 
     public void setSpectrum2Analyze(SpectrumAsp spectrum2Analyze) {
         this.mSpectrum2Analyze = mSpectrum2Analyze;
@@ -137,9 +128,9 @@ public class AnalyzeFragment extends Fragment
             ((TextView) rootView.findViewById(R.id.item_detail)).setText(mItem.name);
             // show data from loaded file in ChartView
         }
-        mGraphView = createLineGraphSingle(mData);
+        mGraphView = PlotInterface.createLineGraphSingle(mData, getActivity());
 
-        updateZoomMode(mGraphView);
+        PlotInterface.updateZoomMode(mGraphView, mAnalyzeMode);
         FrameLayout layout = (FrameLayout) rootView.findViewById(R.id.fvPlotAnalyzeView);
         layout.addView(mGraphView);
 
@@ -200,7 +191,7 @@ public class AnalyzeFragment extends Fragment
     }
 
     public void onTouchViewInteraction(int _toolId, float _value){
-        if(mAnalyzeMode == eModeEdit){
+        if(mAnalyzeMode == PlotInterface.eModeEdit){
             // check what a tool; move or stretch
             // recalc the spectrum-copy
             // update plot
@@ -208,24 +199,24 @@ public class AnalyzeFragment extends Fragment
         } // else ignore
     }
 
-    private GraphView createLineGraphSingle(GraphViewData[] _data) {
-        LineGraphView lineGraphView = null;
-        lineGraphView = new LineGraphView( getActivity(), "");
-        // add data
-        GraphViewSeriesStyle style = new GraphViewSeriesStyle();
-        style.thickness = 1;
-        GraphViewSeries dataSeries = new GraphViewSeries("", style,  _data);
-        lineGraphView.addSeries(dataSeries);
-        lineGraphView.getGraphViewStyle().setTextSize(eGraphTextSize);
-        lineGraphView.getGraphViewStyle().setNumHorizontalLabels(eNumHorLabels);
-        lineGraphView.getGraphViewStyle().setNumVerticalLabels(eNumVertLabels);
-
-        GraphViewSeriesStyle getStyle = dataSeries.getStyle();
-        // set view port, start=2, size=40
-        lineGraphView.setViewPort(ePlotPortStart, ePlotPortEnd);
-
-        return lineGraphView;
-    }
+//    private GraphView createLineGraphSingle(GraphViewData[] _data) {
+//        LineGraphView lineGraphView = null;
+//        lineGraphView = new LineGraphView( getActivity(), "");
+//        // add data
+//        GraphViewSeriesStyle style = new GraphViewSeriesStyle();
+//        style.thickness = 1;
+//        GraphViewSeries dataSeries = new GraphViewSeries("", style,  _data);
+//        lineGraphView.addSeries(dataSeries);
+//        lineGraphView.getGraphViewStyle().setTextSize(eGraphTextSize);
+//        lineGraphView.getGraphViewStyle().setNumHorizontalLabels(eNumHorLabels);
+//        lineGraphView.getGraphViewStyle().setNumVerticalLabels(eNumVertLabels);
+//
+//        GraphViewSeriesStyle getStyle = dataSeries.getStyle();
+//        // set view port, start=2, size=40
+//        lineGraphView.setViewPort(ePlotPortStart, ePlotPortEnd);
+//
+//        return lineGraphView;
+//    }
 
 //    private void updateZoomMode(GraphView _graphView) {
 //        if(mAnalyzeMode == eModeZoom) {
@@ -240,11 +231,11 @@ public class AnalyzeFragment extends Fragment
 //        }
 //    }
 
-    private setPlotAnalyzeMode(int _mode){
-        if(_mode == eModeEdit){
+    private void setPlotAnalyzeMode(int _mode){
+        if(_mode == PlotInterface.eModeEdit){
 
         }
-        else if(_mode == eModeZoom){
+        else if(_mode == PlotInterface.eModeZoom){
 
         }
         else {

@@ -44,9 +44,9 @@ public class AnalyzeFragment extends Fragment
     public static final String ARG_ITEM_ID = "item_id";
     private int mMaxSpectrumSize = AspectraGlobals.eMaxSpectrumSize;
 
-    private static final int eModeEdit = 1;
-    private static final int eModeZoom = 2;
-    private static final int eModeExit = 3;
+//    private static final int eModeEdit = 1;
+//    private static final int eModeZoom = 2;
+//    private static final int eModeExit = 3;
     private int mAnalyzeMode = eModeEdit;
 
 
@@ -201,8 +201,11 @@ public class AnalyzeFragment extends Fragment
 
     public void onTouchViewInteraction(int _toolId, float _value){
         if(mAnalyzeMode == eModeEdit){
+            // check what a tool; move or stretch
+            // recalc the spectrum-copy
+            // update plot
 
-        }
+        } // else ignore
     }
 
     private GraphView createLineGraphSingle(GraphViewData[] _data) {
@@ -224,18 +227,29 @@ public class AnalyzeFragment extends Fragment
         return lineGraphView;
     }
 
-    private void updateZoomMode(GraphView _graphView) {
-        if(mAnalyzeMode == eModeZoom) {
-            // optional - activate scaling / zooming
-            _graphView.setScrollable(true);
-            _graphView.setScalable(true);
+//    private void updateZoomMode(GraphView _graphView) {
+//        if(mAnalyzeMode == eModeZoom) {
+//            // optional - activate scaling / zooming
+//            _graphView.setScrollable(true);
+//            _graphView.setScalable(true);
+//        }
+//        else {
+//            _graphView.setScrollable(false);
+//            _graphView.setScalable(false);
+//
+//        }
+//    }
+
+    private setPlotAnalyzeMode(int _mode){
+        if(_mode == eModeEdit){
+
+        }
+        else if(_mode == eModeZoom){
+
         }
         else {
-            _graphView.setScrollable(false);
-            _graphView.setScalable(false);
 
         }
     }
-
 
 }

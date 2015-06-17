@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">AspectraMini</string>
+    <string name="app_name">Aspectra Viewer</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
@@ -38,5 +38,9 @@
     <string name="file_detail">FileDetail</string>
     <string name="title_item_detail">Item detail</string>
 
+    <string-array name="display_list">
+        <item>Edit mode</item>
+        <item>Zoom mode</item>
+    </string-array>
 
 </resources>

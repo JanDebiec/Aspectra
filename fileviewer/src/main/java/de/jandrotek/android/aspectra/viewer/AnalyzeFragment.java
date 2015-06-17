@@ -1,5 +1,6 @@
 package de.jandrotek.android.aspectra.viewer;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
@@ -7,8 +8,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 
 import com.jjoe64.graphview.GraphView;
@@ -29,6 +32,8 @@ import de.jandrotek.android.aspectra.libtouch.TouchView;
 
 /**
  * TODO: load Asp files, if Chr then convert to Asp
+ * TODO: how to add second spectrum to plot
+ * TODO: how to update the plot of mainSpectrum
  * A fragment representing a single Item detail screen.
  * This fragment is either contained in a {@link ItemListActivity}
  * in two-pane mode (on tablets) or a {@link ItemDetailActivity}
@@ -46,6 +51,7 @@ public class AnalyzeFragment extends Fragment
     private int mMaxSpectrumSize = AspectraGlobals.eMaxSpectrumSize;
 
     private int mAnalyzeMode = PlotInterface.eModeEdit;
+    private ActionBar.OnNavigationListener mOnNavigationListener;
 
     /**
      * The dummy content this fragment is presenting.
@@ -128,6 +134,22 @@ public class AnalyzeFragment extends Fragment
             ((TextView) rootView.findViewById(R.id.item_detail)).setText(mItem.name);
             // show data from loaded file in ChartView
         }
+        ActionBar actionbar = getActivity().getActionBar();
+
+        actionbar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
+        actionbar.setDisplayHomeAsUpEnabled(true);
+
+        SpinnerAdapter mSpinnerAdapter = ArrayAdapter.createFromResource(getActivity(), R.array.display_list,
+                android.R.layout.simple_spinner_dropdown_item);
+        mOnNavigationListener = new ActionBar.OnNavigationListener() {
+            String[] strings = getResources().getStringArray(R.array.display_list);
+            @Override
+            public boolean onNavigationItemSelected(int position, long itemID){
+                return true;
+            }
+
+        };
+
         mGraphView = PlotInterface.createLineGraphSingle(mData, getActivity());
 
         PlotInterface.updateZoomMode(mGraphView, mAnalyzeMode);

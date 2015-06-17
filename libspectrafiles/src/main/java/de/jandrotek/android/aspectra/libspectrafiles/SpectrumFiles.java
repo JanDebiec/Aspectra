@@ -20,7 +20,7 @@ public class SpectrumFiles {
 
 //    private static ArrayList mFilelNameArrayList;
 //    private static String[] mFilelNameListTemp;
-    public static String[] mFilelNameListOutput;
+    public static String[] mFilelNameListOutput = null;
     public static String mPath = "";
 //    private FileWalker mFileWalker;
 
@@ -71,7 +71,9 @@ public class SpectrumFiles {
 
     public void searchForFiles(){
         // for every new search, old content should be cleared
-        Arrays.fill(mFilelNameListOutput, null);
+        if(mFilelNameListOutput != null) {
+            Arrays.fill(mFilelNameListOutput, null);
+        }
 
         FileWalker fileWalker;
         updateExternalStorageState();

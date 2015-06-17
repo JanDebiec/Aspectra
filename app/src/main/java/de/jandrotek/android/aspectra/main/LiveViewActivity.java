@@ -24,7 +24,7 @@ import de.jandrotek.android.aspectra.core.SpectrumAsp;
 import de.jandrotek.android.aspectra.libspectrafiles.SpectrumFiles;
 
 /**
- * here comes the source from MainActivity, handling CameraViewFragment,
+ * here comes the source from MainActivity_libprefs, handling CameraViewFragment,
  * and PlotViewFragment
  */
 //public class LiveViewActivity extends ActionBarActivity

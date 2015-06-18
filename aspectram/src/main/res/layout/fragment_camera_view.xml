@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/liveViewFrame"
-    tools:context="de.jandrotek.android.aspectra.main.CameraViewFragment"
+    tools:context="de.jandrotek.android.aspectram.main.CameraViewFragment"
     >
 
     <SurfaceView
@@ -31,13 +31,13 @@
             android:layout_gravity="center"/>
         -->
 
-    <de.jandrotek.android.aspectra.main.ConfigLinesView
+    <de.jandrotek.android.aspectram.main.ConfigLinesView
             android:id="@+id/flConfigOverlay"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:clickable="true"
             android:layout_gravity="center">
-        </de.jandrotek.android.aspectra.main.ConfigLinesView>
+        </de.jandrotek.android.aspectram.main.ConfigLinesView>
     </FrameLayout>
 
 

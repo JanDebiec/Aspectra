@@ -1,15 +1,19 @@
 package de.jandrotek.android.aspectram.main;
 
 import android.app.Activity;
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.hardware.Camera;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+//import android.app.Fragment;
+import android.transition.Explode;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.FrameLayout;
 
 import de.jandrotek.android.aspectra.core.AspectraGlobals;
@@ -98,9 +102,11 @@ public class CameraViewFragment extends Fragment {
             mParam2 = getArguments().getInt(ARG_PARAM2);
         }
 
+
         mImageProcessing = new ImageProcessing();
         // Find the total number of cameras available
         mNumberOfCameras = Camera.getNumberOfCameras();
+
 
         // Find the ID of the rear-facing ("default") camera
         Camera.CameraInfo cameraInfo = new Camera.CameraInfo();
@@ -172,12 +178,19 @@ public class CameraViewFragment extends Fragment {
 
                     if(mParam2 == AspectraGlobals.ACT_ITEM_LIVE_VIEW) { // if we are in LiveView
 
+                        getActivity().getWindow().setExitTransition(new Explode());
                         //create intent and call ConfigActivity
                         Intent intentConfig = new Intent(getActivity(), ViewConfigActivity.class);
+                        Activity a = getActivity();
 
-                        startActivity(intentConfig);
+                        a.startActivity(
+                                intentConfig,
+                                ActivityOptions.makeSceneTransitionAnimation(a).toBundle()
+                        );
                         getActivity().finish();
                     } else if (mParam2 == AspectraGlobals.ACT_ITEM_VIEW_CONFIG) {
+
+
                         //create intent and call LiveViewActivity
                         Intent intentLiveView = new Intent(getActivity(), LiveViewActivity.class);
 

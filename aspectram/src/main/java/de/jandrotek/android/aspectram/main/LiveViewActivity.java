@@ -11,6 +11,7 @@ import android.os.Message;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.Window;
 import android.widget.Toast;
 
 import java.io.File;
@@ -68,16 +69,25 @@ public class LiveViewActivity extends BaseActivity
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        // material enable transitions
+        getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_live_view);
         if (savedInstanceState == null) {
 //            mCameraViewFragment = CameraViewFragment.newInstance("LiveView", ACT_ITEM_LIVE_VIEW);
             mCameraViewFragment = CameraViewFragment.newInstance( AspectraGlobals.ACT_ITEM_LIVE_VIEW);
+
+
+            // material enable transitions
+            //getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
+
             getSupportFragmentManager().beginTransaction()
+//            getFragmentManager().beginTransaction()
                     .add(R.id.fragmentHolderCameraView, mCameraViewFragment)
                     .commit();
             mPlotViewFragment = PlotViewFragment.newInstance(AspectraGlobals.ACT_ITEM_LIVE_VIEW);
             getSupportFragmentManager().beginTransaction()
+            //getFragmentManager().beginTransaction()
                     .add(R.id.fvPlotView, mPlotViewFragment)
                     .commit();
         }

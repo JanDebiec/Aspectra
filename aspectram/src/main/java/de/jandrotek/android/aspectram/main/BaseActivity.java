@@ -1,11 +1,14 @@
 package de.jandrotek.android.aspectram.main;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+//import android.support.v7.app.ActionBarActivity;
+//import android.support.v4.app.Activity;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -13,6 +16,7 @@ import android.view.MenuItem;
 import de.jandrotek.android.aspectra.libprefs.AspectraSettings;
 
 public class BaseActivity extends ActionBarActivity
+//public class BaseActivity extends Activity
 {
 
 //    protected static final int ACT_ITEM_LIVE_VIEW   = 0;

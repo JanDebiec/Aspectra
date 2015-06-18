@@ -31,13 +31,13 @@
             android:layout_gravity="center"/>
         -->
 
-    <de.jandrotek.android.aspectra.main.ConfigView
+    <de.jandrotek.android.aspectra.main.ConfigLinesView
             android:id="@+id/flConfigOverlay"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:clickable="true"
             android:layout_gravity="center">
-        </de.jandrotek.android.aspectra.main.ConfigView>
+        </de.jandrotek.android.aspectra.main.ConfigLinesView>
     </FrameLayout>
 
 

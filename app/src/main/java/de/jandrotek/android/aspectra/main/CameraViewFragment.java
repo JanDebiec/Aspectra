@@ -67,7 +67,7 @@ public class CameraViewFragment extends Fragment {
 
     //    private FrameLayout mOverlayView;
     private FrameLayout mFramePreview;
-    public ConfigView mConfigView; // will be called from activity
+    public ConfigLinesView mConfigLinesView; // will be called from activity
 
     /**
      * Use this factory method to create a new instance of
@@ -131,8 +131,8 @@ public class CameraViewFragment extends Fragment {
         //ver new
         View rootView = inflater.inflate(R.layout.fragment_camera_view, container, false);
 
-        mConfigView = new ConfigView(this.getActivity());
-        mConfigView = (ConfigView) rootView.findViewById(R.id.flConfigOverlay);
+        mConfigLinesView = new ConfigLinesView(this.getActivity());
+        mConfigLinesView = (ConfigLinesView) rootView.findViewById(R.id.flConfigOverlay);
 
         mCamPreview = new CameraPreview(this.getActivity(), mParam2);
 
@@ -141,7 +141,7 @@ public class CameraViewFragment extends Fragment {
 
             mPreviewWidthX = AspectraGlobals.mPreviewWidthX;
             mPreviewHeightY = AspectraGlobals.mPreviewHeightY;
-            mConfigView.setPreviewDimensions(mPreviewWidthX, mPreviewHeightY);
+            mConfigLinesView.setPreviewDimensions(mPreviewWidthX, mPreviewHeightY);
         }
 
         mFramePreview = (FrameLayout) rootView.findViewById(R.id.liveViewFrame);
@@ -157,7 +157,7 @@ public class CameraViewFragment extends Fragment {
 
         mFramePreview.addView(mCamPreview);
 
-        mConfigView.setOnTouchListener(new View.OnTouchListener() {
+        mConfigLinesView.setOnTouchListener(new View.OnTouchListener() {
 
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -270,8 +270,8 @@ public class CameraViewFragment extends Fragment {
 
     public void updateBorderInConfigView(float startPercentX, float endPercentX, float startPercentY, float deltaLinesY) {
 
-        if (mConfigView != null) {
-            mConfigView.setPercent(startPercentX, endPercentX, startPercentY, deltaLinesY);
+        if (mConfigLinesView != null) {
+            mConfigLinesView.setPercent(startPercentX, endPercentX, startPercentY, deltaLinesY);
         }
 
 
@@ -285,8 +285,8 @@ public class CameraViewFragment extends Fragment {
             mImageProcessing.setEndPercentY(mEndPercentVY);
             mImageProcessing.setScanAreaWidth(mScanAreaWidth);
         }
-        if (mConfigView != null) {
-            mConfigView.setPercent((float) mStartPercentHX, (float) mEndPercentHX, (float) mStartPercentVY, (float) mScanAreaWidth);
+        if (mConfigLinesView != null) {
+            mConfigLinesView.setPercent((float) mStartPercentHX, (float) mEndPercentHX, (float) mStartPercentVY, (float) mScanAreaWidth);
         }
     }
 

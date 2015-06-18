@@ -27,6 +27,15 @@ import de.jandrotek.android.aspectra.libspectrafiles.SpectrumFiles;
  * here comes the source from MainActivity_libprefs, handling CameraViewFragment,
  * and PlotViewFragment
  */
+/** TODO: change structure to one activity with various fragments:
+ * CameraView always, second fragment: plot or new configFragment
+ * Use animations
+ * pro: Back button works consistent,
+ *      Activity stack consistent
+ *      Material concept
+ * con: to learn some Materials concept
+ */
+
 //public class LiveViewActivity extends ActionBarActivity
 public class LiveViewActivity extends BaseActivity
         implements CameraViewFragment.OnFragmentInteractionListener,
@@ -88,7 +97,7 @@ public class LiveViewActivity extends BaseActivity
 
     private static void updatePreviewSizeInConfigView() {
 
-        mCameraViewFragment.mConfigView.setPreviewDimensions(mPreviewWidthX, mPreviewHeightY);
+        mCameraViewFragment.mConfigLinesView.setPreviewDimensions(mPreviewWidthX, mPreviewHeightY);
     }
 
 

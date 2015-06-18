@@ -16,7 +16,7 @@ import de.jandrotek.android.aspectra.core.ConfigViewSettings;
 /**
  * Created by jan on 12.01.15.
  */
-public class ConfigView extends View {
+public class ConfigLinesView extends View {
     private static final String TAG = "ConfigView";
 
         private ConfigViewSettings mViewSettings = null;
@@ -47,19 +47,19 @@ public class ConfigView extends View {
     private final Path mPath7 = new Path();
     private final Path mPath8 = new Path();
 
-    public ConfigView(Context context, AttributeSet attrs, int defStyle) {
+    public ConfigLinesView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         mViewSettings = ConfigViewSettings.getInstance();
         initialize();
     }
 
-    public ConfigView(Context context, AttributeSet attrs) {
+    public ConfigLinesView(Context context, AttributeSet attrs) {
         super(context, attrs);
         mViewSettings = ConfigViewSettings.getInstance();
         initialize(); // here we get
     }
 
-    public ConfigView(Context context) {
+    public ConfigLinesView(Context context) {
         super(context);
         mViewSettings = ConfigViewSettings.getInstance();
         initialize(); // here too

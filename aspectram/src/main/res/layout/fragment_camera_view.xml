@@ -1,0 +1,44 @@
+<!-- TODO: Update blank fragment layout -->
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/liveViewFrame"
+    tools:context="de.jandrotek.android.aspectra.main.CameraViewFragment"
+    >
+
+    <SurfaceView
+        android:id="@+id/fvCameraView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center_horizontal"
+        android:clickable="true">
+
+    </SurfaceView>
+
+
+    <FrameLayout android:id="@+id/extLineConfigContainer"
+                 android:layout_width="match_parent"
+                 android:layout_height="match_parent"
+                 android:clickable="true">
+      <!--
+        <ProgressBar
+            style="@android:style/Widget.ProgressBar.Large"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"/>
+        -->
+
+    <de.jandrotek.android.aspectra.main.ConfigLinesView
+            android:id="@+id/flConfigOverlay"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clickable="true"
+            android:layout_gravity="center">
+        </de.jandrotek.android.aspectra.main.ConfigLinesView>
+    </FrameLayout>
+
+
+</FrameLayout>

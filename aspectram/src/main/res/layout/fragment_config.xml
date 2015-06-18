@@ -1,0 +1,58 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="de.jandrotek.android.aspectra.main.ConfigFragment">
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical"
+        android:layout_weight="1">
+
+
+        <include
+            android:id="@+id/sbcWidthStart"
+            layout="@layout/seekbar_custom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/seekbar_separator"
+            android:layout_gravity="center_horizontal"/>
+
+        <include
+            android:id="@+id/sbcWidthEnd"
+            layout="@layout/seekbar_custom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/seekbar_separator"
+            />
+
+        <include
+            android:id="@+id/sbcHeightStart"
+            layout="@layout/seekbar_custom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/seekbar_separator"
+            android:layout_gravity="center_horizontal"/>
+
+        <include
+            android:id="@+id/sbcHeightEnd"
+            layout="@layout/seekbar_custom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+
+    </LinearLayout>
+
+</FrameLayout>

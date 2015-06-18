@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 //import android.app.Fragment;
 import android.transition.Explode;
+import android.transition.Slide;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -176,12 +177,13 @@ public class CameraViewFragment extends Fragment {
                     mFlagConfigStarted = true;
                     int action = event.getAction();
 
+                    getActivity().getWindow().setExitTransition(new Slide());
+                    getActivity().getWindow().setEnterTransition(new Slide());
+                    Activity a = getActivity();
                     if(mParam2 == AspectraGlobals.ACT_ITEM_LIVE_VIEW) { // if we are in LiveView
 
-                        getActivity().getWindow().setExitTransition(new Explode());
                         //create intent and call ConfigActivity
                         Intent intentConfig = new Intent(getActivity(), ViewConfigActivity.class);
-                        Activity a = getActivity();
 
                         a.startActivity(
                                 intentConfig,
@@ -194,7 +196,8 @@ public class CameraViewFragment extends Fragment {
                         //create intent and call LiveViewActivity
                         Intent intentLiveView = new Intent(getActivity(), LiveViewActivity.class);
 
-                        startActivity(intentLiveView);
+                        a.startActivity(intentLiveView,
+                                ActivityOptions.makeSceneTransitionAnimation(a).toBundle());
                         getActivity().finish();
 
                     }

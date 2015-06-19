@@ -15,7 +15,7 @@ import de.jandrotek.android.aspectra.libprefs.SettingsActivity;
 
 
 public class ViewConfigActivity extends BaseActivity
-        implements CameraViewFragment.OnFragmentInteractionListener {
+        implements CameraViewFragment.OnCVFragmentInteractionListener {
 
     private CameraViewFragment mCameraViewFragment;
     private SeekBar mSbStartW;
@@ -264,11 +264,11 @@ public class ViewConfigActivity extends BaseActivity
         }
     }
 
-    @Override
-    public void onFragmentInteraction(Uri uri) {
-
-        // do whatever you wish with the uri
-    }
+//    @Override
+//    public void onFragmentInteraction(Uri uri) {
+//
+//        // do whatever you wish with the uri
+//    }
 
     public void acceptNewPersentSettings() {
 
@@ -329,4 +329,13 @@ public class ViewConfigActivity extends BaseActivity
             mSbAreaYValue.setText(Integer.toString(mDeltaLinesY));
         }
     }
+
+    //dummy, will be removed later
+    @Override
+    public void onCameraViewFragmentInteraction(Uri uri){
+
+        // do whatever you wish with the uri
+      //  switchRightFragment();
+    }
+
 }

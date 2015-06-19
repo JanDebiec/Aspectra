@@ -46,7 +46,7 @@ public class CameraViewFragment extends Fragment {
 
 //    private boolean mFlagConfigStarted = false;
 
-    private OnFragmentInteractionListener mListener;
+    private OnCVFragmentInteractionListener mListener;
 
     /// Model's members, vars
     private ImageProcessing mImageProcessing;
@@ -256,7 +256,7 @@ public class CameraViewFragment extends Fragment {
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         try {
-            mListener = (OnFragmentInteractionListener) activity;
+            mListener = (OnCVFragmentInteractionListener) activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
                     + " must implement OnFragmentInteractionListener");
@@ -280,9 +280,9 @@ public class CameraViewFragment extends Fragment {
      * "http://developer.android.com/training/basics/fragments/communicating.html"
      * >Communicating with Other Fragments</a> for more information.
      */
-    public interface OnFragmentInteractionListener {
+    public interface OnCVFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
+        void onCameraViewFragmentInteraction(Uri uri);
     }
 
     public void updateBorderInConfigView(float startPercentX, float endPercentX, float startPercentY, float deltaLinesY) {

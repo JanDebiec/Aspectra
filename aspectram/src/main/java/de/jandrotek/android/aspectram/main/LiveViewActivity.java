@@ -44,13 +44,13 @@ import de.jandrotek.android.aspectra.libspectrafiles.SpectrumFiles;
 
 //public class LiveViewActivity extends ActionBarActivity
 public class LiveViewActivity extends BaseActivity
-        implements CameraViewFragment.OnFragmentInteractionListener,
+        implements CameraViewFragment.OnCVFragmentInteractionListener,
         PlotViewFragment.OnFragmentInteractionListener
 {
 
     private static CameraViewFragment mCameraViewFragment;
     private static PlotViewFragment mPlotViewFragment;
-
+    private static ConfigFragment mConfigFragment;
     private static int mPreviewWidthX;
     private static int mPreviewHeightY;
     private boolean mExternalStorageAvailable = false;
@@ -81,7 +81,6 @@ public class LiveViewActivity extends BaseActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_live_view);
         if (savedInstanceState == null) {
-//            mCameraViewFragment = CameraViewFragment.newInstance("LiveView", ACT_ITEM_LIVE_VIEW);
             mCameraViewFragment = CameraViewFragment.newInstance( AspectraGlobals.ACT_ITEM_LIVE_VIEW);
 
 
@@ -89,14 +88,15 @@ public class LiveViewActivity extends BaseActivity
             //getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
 
             getSupportFragmentManager().beginTransaction()
-//            getFragmentManager().beginTransaction()
                     .add(R.id.fragmentHolderCameraView, mCameraViewFragment)
                     .commit();
             mPlotViewFragment = PlotViewFragment.newInstance(AspectraGlobals.ACT_ITEM_LIVE_VIEW);
             getSupportFragmentManager().beginTransaction()
-            //getFragmentManager().beginTransaction()
                     .add(R.id.fvPlotView, mPlotViewFragment)
                     .commit();
+
+            //TODO: create config fragment, without commiting
+            mConfigFragment = ConfigFragment.newInstance("a","b");
         }
 
         updateFromPreferences();
@@ -123,24 +123,28 @@ public class LiveViewActivity extends BaseActivity
             getWindow().setEnterTransition(new Slide());
             if(mActRightFragState == eActRightFragPlot) { // if we are in LiveView
 
-                //create intent and call ConfigActivity
-                Intent intentConfig = new Intent(this, ViewConfigActivity.class);
-
-                startActivity(
-                        intentConfig,
-                        ActivityOptions.makeSceneTransitionAnimation(this).toBundle()
-                );
-                finish();
+//                //create intent and call ConfigActivity
+//                Intent intentConfig = new Intent(this, ViewConfigActivity.class);
+//
+//                startActivity(
+//                        intentConfig,
+//                        ActivityOptions.makeSceneTransitionAnimation(this).toBundle()
+//                );
+//                finish();
             } else if (mActRightFragState == eActRightFragConfig) {
 
-
-                //create intent and call LiveViewActivity
-                Intent intentLiveView = new Intent(this, LiveViewActivity.class);
-
-                startActivity(intentLiveView,
-                        ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
-                finish();
-
+                getSupportFragmentManager().beginTransaction()
+                        //getFragmentManager().beginTransaction()
+                        .add(R.id.fvPlotView, mPlotViewFragment)
+                        .commit();
+                mActRightFragState = eActRightFragPlot;
+//                //create intent and call LiveViewActivity
+//                Intent intentLiveView = new Intent(this, LiveViewActivity.class);
+//
+//                startActivity(intentLiveView,
+//                        ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
+//                finish();
+//
             }
         }
 
@@ -180,17 +184,21 @@ public class LiveViewActivity extends BaseActivity
                 startActivity( LaunchIntent );
                 return true;
            }
-
-
-
         return super.onOptionsItemSelected(item);
     }
 
     @Override
-    public void onFragmentInteraction(Uri uri){
+    public void onCameraViewFragmentInteraction(Uri uri){
 
     // do whatever you wish with the uri
         switchRightFragment();
+    }
+
+
+    @Override
+    public void onFragmentInteraction(Uri uri){
+
+        // do whatever you wish with the uri
     }
 
     @Override

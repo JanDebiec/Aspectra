@@ -1,7 +1,5 @@
 package de.jandrotek.android.aspectram.main;
 
-import android.app.Activity;
-import android.app.ActivityOptions;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.net.Uri;
@@ -92,11 +90,13 @@ public class LiveViewActivity extends BaseActivity
                     .commit();
             mPlotViewFragment = PlotViewFragment.newInstance(AspectraGlobals.ACT_ITEM_LIVE_VIEW);
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.fvPlotView, mPlotViewFragment)
+                    .add(R.id.fragmentHolderRightFragmentView, mPlotViewFragment)
                     .commit();
 
-            //TODO: create config fragment, without commiting
             mConfigFragment = ConfigFragment.newInstance("a","b");
+            getSupportFragmentManager().beginTransaction()
+                    .add(R.id.fragmentHolderRightFragmentView, mConfigFragment)
+                    .commit();
         }
 
         updateFromPreferences();
@@ -123,28 +123,16 @@ public class LiveViewActivity extends BaseActivity
             getWindow().setEnterTransition(new Slide());
             if(mActRightFragState == eActRightFragPlot) { // if we are in LiveView
 
-//                //create intent and call ConfigActivity
-//                Intent intentConfig = new Intent(this, ViewConfigActivity.class);
-//
-//                startActivity(
-//                        intentConfig,
-//                        ActivityOptions.makeSceneTransitionAnimation(this).toBundle()
-//                );
-//                finish();
-            } else if (mActRightFragState == eActRightFragConfig) {
+                getSupportFragmentManager().beginTransaction()
+                        .add(R.id.fragmentHolderRightFragmentView, mConfigFragment, "a")
+                        .commit();
+                mActRightFragState = eActRightFragConfig;
+            } else if (mActRightFragState == eActRightFragConfig) { // we are in config view
 
                 getSupportFragmentManager().beginTransaction()
-                        //getFragmentManager().beginTransaction()
-                        .add(R.id.fvPlotView, mPlotViewFragment)
+                        .add(R.id.fragmentHolderRightFragmentView, mPlotViewFragment)
                         .commit();
                 mActRightFragState = eActRightFragPlot;
-//                //create intent and call LiveViewActivity
-//                Intent intentLiveView = new Intent(this, LiveViewActivity.class);
-//
-//                startActivity(intentLiveView,
-//                        ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
-//                finish();
-//
             }
         }
 

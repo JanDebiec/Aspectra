@@ -20,7 +20,7 @@
 
 
             <FrameLayout
-                android:id="@+id/fvPlotView"
+                android:id="@+id/fvRightFragmentView"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:layout_alignParentBottom="true"

@@ -18,29 +18,20 @@
 
     </SurfaceView>
 
-
     <FrameLayout android:id="@+id/extLineConfigContainer"
                  android:layout_width="match_parent"
                  android:layout_height="match_parent"
                  android:clickable="true">
-      <!--
-        <ProgressBar
-            style="@android:style/Widget.ProgressBar.Large"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"/>
-        -->
 
-    <de.jandrotek.android.aspectram.main.ConfigLinesView
+        <de.jandrotek.android.aspectram.main.ConfigLinesView
             android:id="@+id/flConfigOverlay"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:clickable="true"
             android:layout_gravity="center"
-        android:elevation="5dp"
+            android:elevation="5dp"
         >
         </de.jandrotek.android.aspectram.main.ConfigLinesView>
     </FrameLayout>
-
 
 </FrameLayout>

@@ -59,7 +59,7 @@ public class ConfigFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    private OnFragmentInteractionListener mListener;
+    private OnConfigFragmentInteractionListener mListener;
 
     /**
      * Use this factory method to create a new instance of
@@ -219,7 +219,7 @@ public class ConfigFragment extends Fragment {
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
+            mListener.onConfigFragmentInteraction(uri);
         }
     }
 
@@ -227,7 +227,7 @@ public class ConfigFragment extends Fragment {
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         try {
-            mListener = (OnFragmentInteractionListener) activity;
+            mListener = (OnConfigFragmentInteractionListener) activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
                     + " must implement OnFragmentInteractionListener");
@@ -250,9 +250,9 @@ public class ConfigFragment extends Fragment {
      * "http://developer.android.com/training/basics/fragments/communicating.html"
      * >Communicating with Other Fragments</a> for more information.
      */
-    public interface OnFragmentInteractionListener {
+    public interface OnConfigFragmentInteractionListener {
         // TODO: Update argument type and name
-        public void onFragmentInteraction(Uri uri);
+        public void onConfigFragmentInteraction(Uri uri);
     }
 
     private int calcCountLinesY(int progress) {

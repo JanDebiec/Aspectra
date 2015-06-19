@@ -43,7 +43,8 @@ import de.jandrotek.android.aspectra.libspectrafiles.SpectrumFiles;
 //public class LiveViewActivity extends ActionBarActivity
 public class LiveViewActivity extends BaseActivity
         implements CameraViewFragment.OnCVFragmentInteractionListener,
-        PlotViewFragment.OnFragmentInteractionListener
+        PlotViewFragment.OnFragmentInteractionListener,
+        ConfigFragment.OnConfigFragmentInteractionListener
 {
 
     private static CameraViewFragment mCameraViewFragment;
@@ -94,9 +95,9 @@ public class LiveViewActivity extends BaseActivity
                     .commit();
 
             mConfigFragment = ConfigFragment.newInstance("a","b");
-            getSupportFragmentManager().beginTransaction()
-                    .add(R.id.fragmentHolderRightFragmentView, mConfigFragment)
-                    .commit();
+//            getSupportFragmentManager().beginTransaction()
+//                    .add(R.id.fragmentHolderRightFragmentView, mConfigFragment)
+//                    .commit();
         }
 
         updateFromPreferences();
@@ -124,13 +125,13 @@ public class LiveViewActivity extends BaseActivity
             if(mActRightFragState == eActRightFragPlot) { // if we are in LiveView
 
                 getSupportFragmentManager().beginTransaction()
-                        .add(R.id.fragmentHolderRightFragmentView, mConfigFragment, "a")
+                        .replace(R.id.fragmentHolderRightFragmentView, mConfigFragment, "a")
                         .commit();
                 mActRightFragState = eActRightFragConfig;
             } else if (mActRightFragState == eActRightFragConfig) { // we are in config view
 
                 getSupportFragmentManager().beginTransaction()
-                        .add(R.id.fragmentHolderRightFragmentView, mPlotViewFragment)
+                        .replace(R.id.fragmentHolderRightFragmentView, mPlotViewFragment)
                         .commit();
                 mActRightFragState = eActRightFragPlot;
             }
@@ -182,6 +183,14 @@ public class LiveViewActivity extends BaseActivity
         switchRightFragment();
     }
 
+
+
+    @Override
+    public void onConfigFragmentInteraction(Uri uri){
+
+        // do whatever you wish with the uri
+        //switchRightFragment();
+    }
 
     @Override
     public void onFragmentInteraction(Uri uri){

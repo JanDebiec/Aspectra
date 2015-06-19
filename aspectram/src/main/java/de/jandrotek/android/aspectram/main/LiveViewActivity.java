@@ -1,5 +1,7 @@
 package de.jandrotek.android.aspectram.main;
 
+import android.app.Activity;
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.net.Uri;
@@ -8,6 +10,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
+import android.transition.Slide;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -54,6 +57,10 @@ public class LiveViewActivity extends BaseActivity
     private boolean mExternalStorageWriteable = false;
     private String mFileFolder = "aspectra";
     //public static boolean mSavePlotInFile = false;// fragment must change the value
+    private boolean mFlagConfigStarted = false;
+    private static final int eActRightFragPlot = 0;
+    private static final int eActRightFragConfig = 1;
+    private int mActRightFragState = eActRightFragPlot;
 
     public Handler getHandler() {
         return mHandler;
@@ -107,6 +114,39 @@ public class LiveViewActivity extends BaseActivity
     }
 
 
+    private void switchRightFragment(){
+        if (!mFlagConfigStarted) {
+            mFlagConfigStarted = true;
+            //int action = event.getAction();
+
+            getWindow().setExitTransition(new Slide());
+            getWindow().setEnterTransition(new Slide());
+            if(mActRightFragState == eActRightFragPlot) { // if we are in LiveView
+
+                //create intent and call ConfigActivity
+                Intent intentConfig = new Intent(this, ViewConfigActivity.class);
+
+                startActivity(
+                        intentConfig,
+                        ActivityOptions.makeSceneTransitionAnimation(this).toBundle()
+                );
+                finish();
+            } else if (mActRightFragState == eActRightFragConfig) {
+
+
+                //create intent and call LiveViewActivity
+                Intent intentLiveView = new Intent(this, LiveViewActivity.class);
+
+                startActivity(intentLiveView,
+                        ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
+                finish();
+
+            }
+        }
+
+    }
+
+
     private static void updatePreviewSizeInConfigView() {
 
         mCameraViewFragment.mConfigLinesView.setPreviewDimensions(mPreviewWidthX, mPreviewHeightY);
@@ -150,6 +190,7 @@ public class LiveViewActivity extends BaseActivity
     public void onFragmentInteraction(Uri uri){
 
     // do whatever you wish with the uri
+        switchRightFragment();
     }
 
     @Override

@@ -44,7 +44,7 @@ public class CameraViewFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private static int mParam2;
 
-    private boolean mFlagConfigStarted = false;
+//    private boolean mFlagConfigStarted = false;
 
     private OnFragmentInteractionListener mListener;
 
@@ -173,35 +173,35 @@ public class CameraViewFragment extends Fragment {
 //                float m_touched_y = event.getY();
 //                boolean m_touched = false;
 
-                if (!mFlagConfigStarted) {
-                    mFlagConfigStarted = true;
-                    int action = event.getAction();
-
-                    getActivity().getWindow().setExitTransition(new Slide());
-                    getActivity().getWindow().setEnterTransition(new Slide());
-                    Activity a = getActivity();
-                    if(mParam2 == AspectraGlobals.ACT_ITEM_LIVE_VIEW) { // if we are in LiveView
-
-                        //create intent and call ConfigActivity
-                        Intent intentConfig = new Intent(getActivity(), ViewConfigActivity.class);
-
-                        a.startActivity(
-                                intentConfig,
-                                ActivityOptions.makeSceneTransitionAnimation(a).toBundle()
-                        );
-                        getActivity().finish();
-                    } else if (mParam2 == AspectraGlobals.ACT_ITEM_VIEW_CONFIG) {
-
-
-                        //create intent and call LiveViewActivity
-                        Intent intentLiveView = new Intent(getActivity(), LiveViewActivity.class);
-
-                        a.startActivity(intentLiveView,
-                                ActivityOptions.makeSceneTransitionAnimation(a).toBundle());
-                        getActivity().finish();
-
-                    }
-                }
+//                if (!mFlagConfigStarted) {
+//                    mFlagConfigStarted = true;
+//                    int action = event.getAction();
+//
+//                    getActivity().getWindow().setExitTransition(new Slide());
+//                    getActivity().getWindow().setEnterTransition(new Slide());
+//                    Activity a = getActivity();
+//                    if(mParam2 == AspectraGlobals.ACT_ITEM_LIVE_VIEW) { // if we are in LiveView
+//
+//                        //create intent and call ConfigActivity
+//                        Intent intentConfig = new Intent(getActivity(), ViewConfigActivity.class);
+//
+//                        a.startActivity(
+//                                intentConfig,
+//                                ActivityOptions.makeSceneTransitionAnimation(a).toBundle()
+//                        );
+//                        getActivity().finish();
+//                    } else if (mParam2 == AspectraGlobals.ACT_ITEM_VIEW_CONFIG) {
+//
+//
+//                        //create intent and call LiveViewActivity
+//                        Intent intentLiveView = new Intent(getActivity(), LiveViewActivity.class);
+//
+//                        a.startActivity(intentLiveView,
+//                                ActivityOptions.makeSceneTransitionAnimation(a).toBundle());
+//                        getActivity().finish();
+//
+//                    }
+//                }
                 return true; //processed
             }
 
@@ -214,7 +214,7 @@ public class CameraViewFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
-        mFlagConfigStarted = false;
+       // mFlagConfigStarted = false;
         // Use mCurrentCamera to select the camera desired to safely restore
         // the fragment after the camera has been changed
         mCamera = Camera.open(mCurrentCamera);

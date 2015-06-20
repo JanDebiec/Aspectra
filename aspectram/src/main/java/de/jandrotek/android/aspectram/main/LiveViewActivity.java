@@ -124,6 +124,7 @@ public class LiveViewActivity extends BaseActivity
         getWindow().setExitTransition(new Slide());
         getWindow().setEnterTransition(new Slide());
         if(mActRightFragState == eActRightFragPlot) { // if we are in LiveView
+            updateConfigFragmFromPrefs();
 
             mCameraViewFragment.cameraProcessingShouldRun(false);
             getSupportFragmentManager().beginTransaction()
@@ -131,7 +132,6 @@ public class LiveViewActivity extends BaseActivity
                     .commit();
             mActRightFragState = eActRightFragConfig;
             mPrefsChanged = false;
-            updateConfigFragmFromPrefs();
             //acceptNewPersentSettings();
         } else if (mActRightFragState == eActRightFragConfig) { // we are in config view
 
@@ -139,9 +139,7 @@ public class LiveViewActivity extends BaseActivity
                     .replace(R.id.fragmentHolderRightFragmentView, mPlotViewFragment)
                     .commit();
             mActRightFragState = eActRightFragPlot;
-//            if(mPrefsChanged){
                 acceptNewPersentSettings();
-//            }
             updateCamerFragmFromPrefs();
             mCameraViewFragment.cameraProcessingShouldRun(true);
         }
@@ -151,8 +149,8 @@ public class LiveViewActivity extends BaseActivity
 
             mAspectraSettings.setPrefsWidthStart(mPersentStartW);
             mAspectraSettings.setPrefsWidthEnd(mPersentEndW);
-            mAspectraSettings.setPrefsHeightStart(mPersentStartH);
-            mAspectraSettings.setPrefsScanAreaWidth(mDeltaLinesY);
+        mAspectraSettings.setPrefsHeightStart(mPersentStartH);
+        mAspectraSettings.setPrefsScanAreaWidth(mDeltaLinesY);
 
         if (mPrefsChanged) {
             mAspectraSettings.saveSettings();

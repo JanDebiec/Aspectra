@@ -63,6 +63,10 @@ public class ConfigFragment extends Fragment {
     private int mPersentStartH;
     private int mDeltaLinesY;
 
+    private boolean firstConfigStartW;
+    private boolean firstConfigEndW;
+    private boolean firstConfigStartH;
+    private boolean firstConfigWidthH;
     private boolean mSeekBarCreated = false;
 
     // TODO: Rename parameter arguments, choose names that match
@@ -112,7 +116,12 @@ public class ConfigFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView =  inflater.inflate(R.layout.fragment_config, container, false);
-// from old ViewConfigActivity
+
+        firstConfigStartW = true;
+        firstConfigEndW = true;
+        firstConfigStartH = true;
+        firstConfigWidthH = true;
+
         // blocks
         mBlockStartW    = (RelativeLayout) rootView.findViewById(R.id.sbcWidthStart);
         mBlockEndW      = (RelativeLayout) rootView.findViewById(R.id.sbcWidthEnd);
@@ -146,10 +155,19 @@ public class ConfigFragment extends Fragment {
         mSbStartW.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                if (progress < mPersentEndW) {
-                    mPersentStartW = progress;
-                    mSbStartWValue.setText(Integer.toString(mPersentStartW));
-                    updateConfigView();
+                if((fromUser) || (firstConfigStartW)) {
+                    if (progress < mPersentEndW) {
+                        mPersentStartW = progress;
+                        mSbStartWValue.setText(Integer.toString(mPersentStartW));
+                        updateConfigView();
+                        if(firstConfigStartW){
+                            mSbStartW.setProgress(progress);
+
+                        }
+                    }
+                }
+                if(!fromUser){
+                    firstConfigStartW = false;
                 }
             }
 
@@ -167,10 +185,18 @@ public class ConfigFragment extends Fragment {
         mSbEndW.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                if (progress > mPersentStartW) {
-                    mPersentEndW = progress;
-                    mSbEndWValue.setText(Integer.toString(mPersentEndW));
-                    updateConfigView();
+                if((fromUser) || (firstConfigEndW)) {
+                    if (progress > mPersentStartW) {
+                        mPersentEndW = progress;
+                        mSbEndWValue.setText(Integer.toString(mPersentEndW));
+                        updateConfigView();
+                        if(firstConfigEndW){
+                            mSbEndW.setProgress(progress);
+                        }
+                    }
+                }
+                if(!fromUser){
+                    firstConfigEndW = false;
                 }
             }
 
@@ -187,9 +213,17 @@ public class ConfigFragment extends Fragment {
         mSbStartH.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                mPersentStartH = progress;
-                mSbStartHValue.setText(Integer.toString(mPersentStartH));
-                updateConfigView();
+                if((fromUser) || (firstConfigStartH)) {
+                    mPersentStartH = progress;
+                    mSbStartHValue.setText(Integer.toString(mPersentStartH));
+                    updateConfigView();
+                    if(firstConfigStartH){
+                        mSbStartH.setProgress(progress);
+                    }
+                }
+                if(!fromUser){
+                    firstConfigStartH = false;
+                }
             }
 
             @Override
@@ -206,9 +240,17 @@ public class ConfigFragment extends Fragment {
         mSbAreaY.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                mDeltaLinesY = calcCountLinesY(progress);
-                mSbAreaYValue.setText(Integer.toString(mDeltaLinesY));
-                updateConfigView();
+                if((fromUser) || (firstConfigWidthH)) {
+                    mDeltaLinesY = calcCountLinesY(progress);
+                    mSbAreaYValue.setText(Integer.toString(mDeltaLinesY));
+                    updateConfigView();
+                    if(firstConfigWidthH){
+                        mSbAreaY.setProgress(progress);
+                    }
+                }
+                if(!fromUser){
+                    firstConfigWidthH = false;
+                }
             }
 
             @Override
@@ -244,6 +286,11 @@ public class ConfigFragment extends Fragment {
         super.onDetach();
         //mSeekBarCreated = false;
         mListener = null;
+        firstConfigStartW = true;
+        firstConfigEndW = true;
+        firstConfigStartH = true;
+        firstConfigWidthH = true;
+
     }
 
     /**

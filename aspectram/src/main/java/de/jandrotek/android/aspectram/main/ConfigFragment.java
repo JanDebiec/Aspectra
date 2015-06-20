@@ -278,7 +278,7 @@ public class ConfigFragment extends Fragment {
      */
     public interface OnConfigFragmentInteractionListener {
         // TODO: Update argument type and name
-        public void onConfigFragmentInteraction(float startPercentX, float endPercentX, float startPercentY, float deltaLinesY);
+        public void onConfigFragmentInteraction(int startPercentX, int endPercentX, int startPercentY, int deltaLinesY);
     }
 
     private int calcCountLinesY(int progress) {

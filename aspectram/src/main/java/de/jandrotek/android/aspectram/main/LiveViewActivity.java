@@ -64,7 +64,7 @@ public class LiveViewActivity extends BaseActivity
     private int mPersentStartW;
     private int mPersentEndW;
     private int mPersentStartH;
-    private int mPersentEndH;
+    //private int mPersentEndH;
     private int mDeltaLinesY;
     private boolean mPrefsChanged = false;
 
@@ -82,8 +82,10 @@ public class LiveViewActivity extends BaseActivity
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         // material enable transitions
         getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_live_view);
         if (savedInstanceState == null) {
@@ -118,34 +120,45 @@ public class LiveViewActivity extends BaseActivity
 
 
     private void switchRightFragment(){
-        //if (!mFlagConfigStarted) {
-            mFlagConfigStarted = true;
-            //int action = event.getAction();
+        mFlagConfigStarted = true;
 
-            getWindow().setExitTransition(new Slide());
-            getWindow().setEnterTransition(new Slide());
-            if(mActRightFragState == eActRightFragPlot) { // if we are in LiveView
+        getWindow().setExitTransition(new Slide());
+        getWindow().setEnterTransition(new Slide());
+        if(mActRightFragState == eActRightFragPlot) { // if we are in LiveView
 
-                getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.fragmentHolderRightFragmentView, mConfigFragment, "a")
-                        .commit();
-                mActRightFragState = eActRightFragConfig;
-                mPrefsChanged = false;
-                updateConfigFragmFromPrefs();
-            } else if (mActRightFragState == eActRightFragConfig) { // we are in config view
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fragmentHolderRightFragmentView, mConfigFragment, "a")
+                    .commit();
+            mActRightFragState = eActRightFragConfig;
+            mPrefsChanged = false;
+            updateConfigFragmFromPrefs();
+            acceptNewPersentSettings();
+        } else if (mActRightFragState == eActRightFragConfig) { // we are in config view
 
-                getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.fragmentHolderRightFragmentView, mPlotViewFragment)
-                        .commit();
-                mActRightFragState = eActRightFragPlot;
-                if(mPrefsChanged){
-                    mAspectraSettings.saveSettings();
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fragmentHolderRightFragmentView, mPlotViewFragment)
+                    .commit();
+            mActRightFragState = eActRightFragPlot;
+            if(mPrefsChanged){
+                acceptNewPersentSettings();
+                //mAspectraSettings.saveSettings();
 
-                }
-                    updateCamerFragmFromPrefs();
             }
-        //}
+            updateCamerFragmFromPrefs();
+        }
+    }
 
+    public void acceptNewPersentSettings() {
+
+        if (mPrefsChanged) {
+            mAspectraSettings.setPrefsWidthStart(mPersentStartW);
+            mAspectraSettings.setPrefsWidthEnd(mPersentEndW);
+            mAspectraSettings.setPrefsHeightStart(mPersentStartH);
+            //mAspectraSettings.setPrefsHeightEnd(mPersentEndH);
+            mAspectraSettings.setPrefsScanAreaWidth(mDeltaLinesY);
+
+            mAspectraSettings.saveSettings();
+        }
     }
 
 
@@ -195,8 +208,13 @@ public class LiveViewActivity extends BaseActivity
 
 
     @Override
-    public void onConfigFragmentInteraction(float startPercentX, float endPercentX, float startPercentY, float deltaLinesY){
+    public void onConfigFragmentInteraction(int startPercentX, int endPercentX, int startPercentY, int deltaLinesY){
         mPrefsChanged = true;
+        mPersentStartW = startPercentX;
+        mPersentEndW = endPercentX;
+        mPersentStartH = startPercentY;
+        mDeltaLinesY = deltaLinesY;
+
         if (mCameraViewFragment != null) {
             mCameraViewFragment.updateBorderInConfigView(startPercentX, endPercentX, startPercentY, deltaLinesY);
         }

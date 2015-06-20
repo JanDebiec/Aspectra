@@ -42,12 +42,37 @@ public class ConfigFragment extends Fragment {
     private RelativeLayout mBlockStartH;
     private RelativeLayout mBlockAreaY;
 
+    public void setPersentStartW(int mPersentStartW) {
+        this.mPersentStartW = mPersentStartW;
+    }
+
+    public void setPersentEndW(int mPersentEndW) {
+        this.mPersentEndW = mPersentEndW;
+    }
+
+    public void setPersentStartH(int mPersentStartH) {
+        this.mPersentStartH = mPersentStartH;
+    }
+
+    public void setPersentEndH(int mPersentEndH) {
+        this.mPersentEndH = mPersentEndH;
+    }
+
+    public void setDeltaLinesY(int mDeltaLinesY) {
+        this.mDeltaLinesY = mDeltaLinesY;
+    }
+
     private int mPersentStartW;
     private int mPersentEndW;
     private int mPersentStartH;
     private int mPersentEndH;
     private int mDeltaLinesY;
-    private boolean mPrefsChanged = false;
+
+//    public boolean isPrefsChanged() {
+//        return mPrefsChanged;
+//    }
+
+//    private boolean mPrefsChanged = false;
     private boolean mSeekBarCreated = false;
 
     // TODO: Rename parameter arguments, choose names that match
@@ -133,7 +158,7 @@ public class ConfigFragment extends Fragment {
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 if (progress < mPersentEndW) {
                     mPersentStartW = progress;
-                    mPrefsChanged = true;
+//                    mPrefsChanged = true;
                     mSbStartWValue.setText(Integer.toString(mPersentStartW));
                     updateConfigView();
                 }
@@ -155,7 +180,7 @@ public class ConfigFragment extends Fragment {
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 if (progress > mPersentStartW) {
                     mPersentEndW = progress;
-                    mPrefsChanged = true;
+//                    mPrefsChanged = true;
                     mSbEndWValue.setText(Integer.toString(mPersentEndW));
                     updateConfigView();
                 }
@@ -175,7 +200,7 @@ public class ConfigFragment extends Fragment {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 mPersentStartH = progress;
-                mPrefsChanged = true;
+//                mPrefsChanged = true;
                 mSbStartHValue.setText(Integer.toString(mPersentStartH));
                 updateConfigView();
             }
@@ -194,7 +219,7 @@ public class ConfigFragment extends Fragment {
         mSbAreaY.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                mPrefsChanged = true;
+//                mPrefsChanged = true;
                 mDeltaLinesY = calcCountLinesY(progress);
                 mSbAreaYValue.setText(Integer.toString(mDeltaLinesY));
                 updateConfigView();
@@ -213,15 +238,16 @@ public class ConfigFragment extends Fragment {
         mSeekBarCreated = true;
 
 // end from old ViewConfigActivity
+        updateSeekBars();
         return rootView;
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onConfigFragmentInteraction(uri);
-        }
-    }
+//    // TODO: Rename method, update argument and hook method into UI event
+//    public void onButtonPressed(Uri uri) {
+//        if (mListener != null) {
+//            mListener.onConfigFragmentInteraction(uri);
+//        }
+//    }
 
     @Override
     public void onAttach(Activity activity) {
@@ -252,7 +278,7 @@ public class ConfigFragment extends Fragment {
      */
     public interface OnConfigFragmentInteractionListener {
         // TODO: Update argument type and name
-        public void onConfigFragmentInteraction(Uri uri);
+        public void onConfigFragmentInteraction(float startPercentX, float endPercentX, float startPercentY, float deltaLinesY);
     }
 
     private int calcCountLinesY(int progress) {
@@ -279,10 +305,23 @@ public class ConfigFragment extends Fragment {
     }
 
     protected void updateConfigView() {
-//        if (mCameraViewFragment != null) {
-////            mCameraViewFragment.updateBorderInConfigView(mPersentStartW, mPersentEndW, mPersentStartH, mPersentEndH);
-//            mCameraViewFragment.updateBorderInConfigView(mPersentStartW, mPersentEndW, mPersentStartH, mDeltaLinesY);
-//        }
+        if (mListener != null) {
+            mListener.onConfigFragmentInteraction(mPersentStartW, mPersentEndW, mPersentStartH, mDeltaLinesY);
+        }
+    }
+
+    public void updateSeekBars() {
+        // start values for bars
+        if(mSeekBarCreated) {
+            mSbStartW.setProgress(mPersentStartW);
+            mSbEndW.setProgress(mPersentEndW);
+            mSbStartH.setProgress(mPersentStartH);
+            mSbAreaY.setProgress(mDeltaLinesY);
+            mSbStartWValue.setText(Integer.toString(mPersentStartW));
+            mSbEndWValue.setText(Integer.toString(mPersentEndW));
+            mSbStartHValue.setText(Integer.toString(mPersentStartH));
+            mSbAreaYValue.setText(Integer.toString(mDeltaLinesY));
+        }
     }
 
 }

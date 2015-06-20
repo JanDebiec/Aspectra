@@ -61,6 +61,13 @@ public class LiveViewActivity extends BaseActivity
     private static final int eActRightFragConfig = 1;
     private int mActRightFragState = eActRightFragPlot;
 
+    private int mPersentStartW;
+    private int mPersentEndW;
+    private int mPersentStartH;
+    private int mPersentEndH;
+    private int mDeltaLinesY;
+    private boolean mPrefsChanged = false;
+
     public Handler getHandler() {
         return mHandler;
     }
@@ -82,10 +89,6 @@ public class LiveViewActivity extends BaseActivity
         if (savedInstanceState == null) {
             mCameraViewFragment = CameraViewFragment.newInstance( AspectraGlobals.ACT_ITEM_LIVE_VIEW);
 
-
-            // material enable transitions
-            //getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
-
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.fragmentHolderCameraView, mCameraViewFragment)
                     .commit();
@@ -94,13 +97,12 @@ public class LiveViewActivity extends BaseActivity
                     .add(R.id.fragmentHolderRightFragmentView, mPlotViewFragment)
                     .commit();
 
+            // prepare fragment, will be used later
             mConfigFragment = ConfigFragment.newInstance("a","b");
-//            getSupportFragmentManager().beginTransaction()
-//                    .add(R.id.fragmentHolderRightFragmentView, mConfigFragment)
-//                    .commit();
         }
 
         updateFromPreferences();
+        updateCamerFragmFromPrefs();
     }
 
     //TODO: set proper handling of configuration: portrait/landscape
@@ -128,12 +130,19 @@ public class LiveViewActivity extends BaseActivity
                         .replace(R.id.fragmentHolderRightFragmentView, mConfigFragment, "a")
                         .commit();
                 mActRightFragState = eActRightFragConfig;
+                mPrefsChanged = false;
+                updateConfigFragmFromPrefs();
             } else if (mActRightFragState == eActRightFragConfig) { // we are in config view
 
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.fragmentHolderRightFragmentView, mPlotViewFragment)
                         .commit();
                 mActRightFragState = eActRightFragPlot;
+                if(mPrefsChanged){
+                    mAspectraSettings.saveSettings();
+
+                }
+                    updateCamerFragmFromPrefs();
             }
         //}
 
@@ -186,10 +195,11 @@ public class LiveViewActivity extends BaseActivity
 
 
     @Override
-    public void onConfigFragmentInteraction(Uri uri){
-
-        // do whatever you wish with the uri
-        //switchRightFragment();
+    public void onConfigFragmentInteraction(float startPercentX, float endPercentX, float startPercentY, float deltaLinesY){
+        mPrefsChanged = true;
+        if (mCameraViewFragment != null) {
+            mCameraViewFragment.updateBorderInConfigView(startPercentX, endPercentX, startPercentY, deltaLinesY);
+        }
     }
 
     @Override
@@ -227,7 +237,7 @@ public class LiveViewActivity extends BaseActivity
     }
 
     //@Override
-    protected void updateFromPreferences(){
+    protected void updateCamerFragmFromPrefs(){
         super.updateFromPreferences();
         if(mCameraViewFragment != null){
             mCameraViewFragment.setStartPercentHX(mAspectraSettings.getPrefsWidthStart());
@@ -236,6 +246,19 @@ public class LiveViewActivity extends BaseActivity
             mCameraViewFragment.setEndPercentVY(mAspectraSettings.getPrefsHeightEnd());
             mCameraViewFragment.setScanAreaWidth(mAspectraSettings.getPrefsScanAreaWidth());
             mCameraViewFragment.updateBorderPercents();
+        }
+    }
+
+    protected void updateConfigFragmFromPrefs(){
+        super.updateFromPreferences();
+        if(mConfigFragment != null){
+            mConfigFragment.setPersentStartW(mAspectraSettings.getPrefsWidthStart());
+            mConfigFragment.setPersentEndW(mAspectraSettings.getPrefsWidthEnd());
+            mConfigFragment.setPersentStartH(mAspectraSettings.getPrefsHeightStart());
+            mConfigFragment.setPersentEndH(mAspectraSettings.getPrefsHeightEnd());
+            mConfigFragment.setDeltaLinesY(mAspectraSettings.getPrefsScanAreaWidth());
+            mConfigFragment.updateSeekBars();
+
         }
     }
 

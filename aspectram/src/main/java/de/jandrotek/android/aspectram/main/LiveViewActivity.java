@@ -116,7 +116,7 @@ public class LiveViewActivity extends BaseActivity
 
 
     private void switchRightFragment(){
-        if (!mFlagConfigStarted) {
+        //if (!mFlagConfigStarted) {
             mFlagConfigStarted = true;
             //int action = event.getAction();
 
@@ -135,7 +135,7 @@ public class LiveViewActivity extends BaseActivity
                         .commit();
                 mActRightFragState = eActRightFragPlot;
             }
-        }
+        //}
 
     }
 

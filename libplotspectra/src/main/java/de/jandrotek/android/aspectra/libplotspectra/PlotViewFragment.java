@@ -243,8 +243,12 @@ public class PlotViewFragment extends Fragment
             realData[i] = new GraphViewData(i, data[i]);
         }
         //TODO: check in plot act length, and add needed data only for that length
-        for(int i = length; i < PLOT_DATA_SIZE ; i++){
-            realData[i] = new GraphViewData(i, 0);
+        try {
+            for(int i = length; i < PLOT_DATA_SIZE ; i++){
+                realData[i] = new GraphViewData(i, 0);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         return realData;
     }

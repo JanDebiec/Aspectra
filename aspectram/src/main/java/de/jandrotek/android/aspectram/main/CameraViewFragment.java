@@ -169,39 +169,15 @@ public class CameraViewFragment extends Fragment {
 
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-//                float m_touched_x = event.getX();
-//                float m_touched_y = event.getY();
-//                boolean m_touched = false;
+                final int action = event.getAction();
+                switch (action & MotionEvent.ACTION_MASK) {
 
-//                if (!mFlagConfigStarted) {
-//                    mFlagConfigStarted = true;
-//                    int action = event.getAction();
-//
-//                    getActivity().getWindow().setExitTransition(new Slide());
-//                    getActivity().getWindow().setEnterTransition(new Slide());
-//                    Activity a = getActivity();
-//                    if(mParam2 == AspectraGlobals.ACT_ITEM_LIVE_VIEW) { // if we are in LiveView
-//
-//                        //create intent and call ConfigActivity
-//                        Intent intentConfig = new Intent(getActivity(), ViewConfigActivity.class);
-//
-//                        a.startActivity(
-//                                intentConfig,
-//                                ActivityOptions.makeSceneTransitionAnimation(a).toBundle()
-//                        );
-//                        getActivity().finish();
-//                    } else if (mParam2 == AspectraGlobals.ACT_ITEM_VIEW_CONFIG) {
-//
-//
-//                        //create intent and call LiveViewActivity
-//                        Intent intentLiveView = new Intent(getActivity(), LiveViewActivity.class);
-//
-//                        a.startActivity(intentLiveView,
-//                                ActivityOptions.makeSceneTransitionAnimation(a).toBundle());
-//                        getActivity().finish();
-//
-//                    }
-//                }
+                    case MotionEvent.ACTION_DOWN: {
+
+                        Uri uri = null;
+                        mListener.onCameraViewFragmentInteraction(uri);
+                    }
+                }
                 return true; //processed
             }
 

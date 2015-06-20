@@ -64,7 +64,6 @@ public class LiveViewActivity extends BaseActivity
     private int mPersentStartW;
     private int mPersentEndW;
     private int mPersentStartH;
-    //private int mPersentEndH;
     private int mDeltaLinesY;
     private boolean mPrefsChanged = false;
 
@@ -105,7 +104,6 @@ public class LiveViewActivity extends BaseActivity
 
         updateFromPreferences();
         updateCamerFragmFromPrefs();
-//        mCameraViewFragment.cameraProcessingShouldRun(true);
     }
 
     //TODO: set proper handling of configuration: portrait/landscape
@@ -143,8 +141,6 @@ public class LiveViewActivity extends BaseActivity
             mActRightFragState = eActRightFragPlot;
             if(mPrefsChanged){
                 acceptNewPersentSettings();
-                //mAspectraSettings.saveSettings();
-
             }
             updateCamerFragmFromPrefs();
             mCameraViewFragment.cameraProcessingShouldRun(true);
@@ -157,7 +153,6 @@ public class LiveViewActivity extends BaseActivity
             mAspectraSettings.setPrefsWidthStart(mPersentStartW);
             mAspectraSettings.setPrefsWidthEnd(mPersentEndW);
             mAspectraSettings.setPrefsHeightStart(mPersentStartH);
-            //mAspectraSettings.setPrefsHeightEnd(mPersentEndH);
             mAspectraSettings.setPrefsScanAreaWidth(mDeltaLinesY);
 
             mAspectraSettings.saveSettings();
@@ -260,24 +255,34 @@ public class LiveViewActivity extends BaseActivity
     //@Override
     protected void updateCamerFragmFromPrefs(){
         super.updateFromPreferences();
+        updateOwnVarsPrefs();
         if(mCameraViewFragment != null){
-            mCameraViewFragment.setStartPercentHX(mAspectraSettings.getPrefsWidthStart());
-            mCameraViewFragment.setEndPercentHX(mAspectraSettings.getPrefsWidthEnd());
-            mCameraViewFragment.setStartPercentVY(mAspectraSettings.getPrefsHeightStart());
-            mCameraViewFragment.setEndPercentVY(mAspectraSettings.getPrefsHeightEnd());
-            mCameraViewFragment.setScanAreaWidth(mAspectraSettings.getPrefsScanAreaWidth());
+            mCameraViewFragment.setStartPercentHX(mPersentStartW);
+            mCameraViewFragment.setEndPercentHX(mPersentEndW);
+            mCameraViewFragment.setStartPercentVY(mPersentStartH);
+//            mCameraViewFragment.setEndPercentVY(mAspectraSettings.getPrefsHeightEnd());
+            mCameraViewFragment.setScanAreaWidth(mDeltaLinesY);
             mCameraViewFragment.updateBorderPercents();
         }
     }
 
+    protected void updateOwnVarsPrefs() {
+        super.updateFromPreferences();
+        mPersentStartW = mAspectraSettings.getPrefsWidthStart();
+        mPersentEndW = mAspectraSettings.getPrefsWidthEnd();
+        mPersentStartH = mAspectraSettings.getPrefsHeightStart();
+        mDeltaLinesY = mAspectraSettings.getPrefsScanAreaWidth();
+    }
+
     protected void updateConfigFragmFromPrefs(){
         super.updateFromPreferences();
+        updateOwnVarsPrefs();
+
         if(mConfigFragment != null){
-            mConfigFragment.setPersentStartW(mAspectraSettings.getPrefsWidthStart());
-            mConfigFragment.setPersentEndW(mAspectraSettings.getPrefsWidthEnd());
-            mConfigFragment.setPersentStartH(mAspectraSettings.getPrefsHeightStart());
-            mConfigFragment.setPersentEndH(mAspectraSettings.getPrefsHeightEnd());
-            mConfigFragment.setDeltaLinesY(mAspectraSettings.getPrefsScanAreaWidth());
+            mConfigFragment.setPersentStartW(mPersentStartW);
+            mConfigFragment.setPersentEndW(mPersentEndW);
+            mConfigFragment.setPersentStartH(mPersentStartH);
+            mConfigFragment.setDeltaLinesY(mDeltaLinesY);
             mConfigFragment.updateSeekBars();
 
         }

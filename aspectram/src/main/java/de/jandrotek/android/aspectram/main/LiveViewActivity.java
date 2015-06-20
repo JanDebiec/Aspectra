@@ -132,16 +132,16 @@ public class LiveViewActivity extends BaseActivity
             mActRightFragState = eActRightFragConfig;
             mPrefsChanged = false;
             updateConfigFragmFromPrefs();
-            acceptNewPersentSettings();
+            //acceptNewPersentSettings();
         } else if (mActRightFragState == eActRightFragConfig) { // we are in config view
 
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.fragmentHolderRightFragmentView, mPlotViewFragment)
                     .commit();
             mActRightFragState = eActRightFragPlot;
-            if(mPrefsChanged){
+//            if(mPrefsChanged){
                 acceptNewPersentSettings();
-            }
+//            }
             updateCamerFragmFromPrefs();
             mCameraViewFragment.cameraProcessingShouldRun(true);
         }
@@ -149,12 +149,12 @@ public class LiveViewActivity extends BaseActivity
 
     public void acceptNewPersentSettings() {
 
-        if (mPrefsChanged) {
             mAspectraSettings.setPrefsWidthStart(mPersentStartW);
             mAspectraSettings.setPrefsWidthEnd(mPersentEndW);
             mAspectraSettings.setPrefsHeightStart(mPersentStartH);
             mAspectraSettings.setPrefsScanAreaWidth(mDeltaLinesY);
 
+        if (mPrefsChanged) {
             mAspectraSettings.saveSettings();
         }
     }
@@ -283,7 +283,7 @@ public class LiveViewActivity extends BaseActivity
             mConfigFragment.setPersentEndW(mPersentEndW);
             mConfigFragment.setPersentStartH(mPersentStartH);
             mConfigFragment.setDeltaLinesY(mDeltaLinesY);
-            mConfigFragment.updateSeekBars();
+//            mConfigFragment.updateSeekBars();
 
         }
     }
@@ -387,7 +387,11 @@ public class LiveViewActivity extends BaseActivity
                 if(messId == AspectraGlobals.eMessageCompleteLine) {
                     int[] data = (int[])inputMessage.obj;
                     int length = data.length;
-                    mPlotViewFragment.showPlot(data, length);
+                    try {
+                        mPlotViewFragment.showPlot(data, length);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                     if(AspectraGlobals.mSavePlotInFile){
                         AspectraGlobals.mSavePlotInFile = false;
                         String fileName = SpectrumFiles.generateSpectrumAspFileName(mFileExt);

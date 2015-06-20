@@ -238,18 +238,16 @@ public class PlotViewFragment extends Fragment
 
     private GraphViewData[] generateData(int[] data, int length) {
 //  variables as private in fragment, for speed up, GarbageCollection not needed
-        for (int i=0; i<length; i++) {
+            for (int i=0; i<length; i++) {
 
-            realData[i] = new GraphViewData(i, data[i]);
-        }
-        //TODO: check in plot act length, and add needed data only for that length
-        try {
-            for(int i = length; i < PLOT_DATA_SIZE ; i++){
+                realData[i] = new GraphViewData(i, data[i]);
+            }
+            //TODO: check in plot act length, and add needed data only for that length
+
+            //for(int i = length; i < realPlotDataSize ; i++){
+                for(int i = length; i < PLOT_DATA_SIZE ; i++){
                 realData[i] = new GraphViewData(i, 0);
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
         return realData;
     }
 

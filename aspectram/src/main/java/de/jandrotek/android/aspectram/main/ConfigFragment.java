@@ -236,12 +236,13 @@ public class ConfigFragment extends Fragment {
             throw new ClassCastException(activity.toString()
                     + " must implement OnFragmentInteractionListener");
         }
+        //updateSeekBars();
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-        mSeekBarCreated = false;
+        //mSeekBarCreated = false;
         mListener = null;
     }
 

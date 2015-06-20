@@ -182,7 +182,7 @@ public class CameraViewFragment extends Fragment {
             }
 
         });
-
+        cameraProcessingShouldRun(true);
         return rootView;
     }
 
@@ -197,6 +197,7 @@ public class CameraViewFragment extends Fragment {
         mCameraCurrentlyLocked = mCurrentCamera;
         mCamPreview.setCamera(mCamera);
         mCamPreview.setProcessing(mImageProcessing);
+        mCamPreview.setProcessingShouldRun(true);
         updateBorderPercents();
     }
 
@@ -210,6 +211,7 @@ public class CameraViewFragment extends Fragment {
             // trying to stop exploding...
             mCamera.stopPreview();
             mCamera.setPreviewCallback(null);
+            mCamPreview.setProcessingShouldRun(false);
             mCamPreview.setCamera(null);
             mCamera.release();
             mCamera = null;
@@ -223,6 +225,7 @@ public class CameraViewFragment extends Fragment {
             mCamera.stopPreview();
             mCamera.setPreviewCallback(null);
             mCamera.release();
+            mCamPreview.setProcessingShouldRun(false);
             mCamPreview.setCamera(null);
             mCamera = null;
         }
@@ -245,6 +248,10 @@ public class CameraViewFragment extends Fragment {
         mListener = null;
     }
 
+
+    public void cameraProcessingShouldRun(boolean flag){
+        mCamPreview.setProcessingShouldRun(flag);
+    }
 
     /**
      * This interface must be implemented by activities that contain this

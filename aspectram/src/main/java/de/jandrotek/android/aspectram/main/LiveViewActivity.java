@@ -105,6 +105,7 @@ public class LiveViewActivity extends BaseActivity
 
         updateFromPreferences();
         updateCamerFragmFromPrefs();
+//        mCameraViewFragment.cameraProcessingShouldRun(true);
     }
 
     //TODO: set proper handling of configuration: portrait/landscape
@@ -126,6 +127,7 @@ public class LiveViewActivity extends BaseActivity
         getWindow().setEnterTransition(new Slide());
         if(mActRightFragState == eActRightFragPlot) { // if we are in LiveView
 
+            mCameraViewFragment.cameraProcessingShouldRun(false);
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.fragmentHolderRightFragmentView, mConfigFragment, "a")
                     .commit();
@@ -145,6 +147,7 @@ public class LiveViewActivity extends BaseActivity
 
             }
             updateCamerFragmFromPrefs();
+            mCameraViewFragment.cameraProcessingShouldRun(true);
         }
     }
 

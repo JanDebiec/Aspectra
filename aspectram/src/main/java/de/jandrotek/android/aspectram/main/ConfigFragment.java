@@ -152,6 +152,7 @@ public class ConfigFragment extends Fragment {
         mSbStartHValue  = (TextView) mBlockStartH.findViewById(R.id.sbtextValue);
         mSbAreaYValue   = (TextView) mBlockAreaY.findViewById(R.id.sbtextValue);
 
+        // with workaround for value and position. Value is already ok, but position not
         mSbStartW.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {

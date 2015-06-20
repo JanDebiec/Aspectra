@@ -89,7 +89,8 @@ public class PlotViewFragment extends Fragment
 //            mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getInt(ARG_PARAM2);
         }
-        realData = new GraphViewData[realPlotDataSize];
+        //realData = new GraphViewData[realPlotDataSize];
+        realData = new GraphViewData[PLOT_DATA_SIZE];
 
         mData = generateDemoData();
     }
@@ -119,15 +120,11 @@ public class PlotViewFragment extends Fragment
 
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-//                float m_touched_x = event.getX();
-//                float m_touched_y = event.getY();
-//                boolean m_touched = false;
                 int action = event.getAction();
                 if(action == MotionEvent.ACTION_DOWN) {
 
                     if (!AspectraGlobals.mSavePlotInFile) {
                         AspectraGlobals.mSavePlotInFile = true;
-
                     }
                 }
                 return true; //processed
@@ -230,7 +227,7 @@ public class PlotViewFragment extends Fragment
     public void showPlot(int[] data, int length){
         if(mDataSeries != null) {
             realPlotDataSize = length;
-            GraphViewData[] graphdata = generateData(data, length);
+            GraphViewData[] graphdata = generateData(data, length);// here explode
             mGraphView.setViewPort(0, realPlotDataSize);
             mDataSeries.resetData(graphdata);
         }

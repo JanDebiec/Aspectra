@@ -367,31 +367,4 @@ public class CameraPreview  extends ViewGroup implements SurfaceHolder.Callback,
         return mPreviewHeightY;
     }
 
-
-//    public void setStartPercentH(int startPercent) {
-//        mStartPercentH = startPercent;
-////        if(mImageProcessing != null) {
-////            mImageProcessing.setStartPercentX(startPercent);
-////        }
-//    }
-
-//    public void setEndPercentH(int endPercent) {
-//        mEndPercentH = endPercent;
-////        mImageProcessing.setEndPercentX(endPercent);
-//    }
-
-
-//    public void setStartPercentV(int startPercentV) {
-//        mStartPercentV = startPercentV;
-////        mImageProcessing.setStartPercentY(startPercentV);
-//    }
-
-
-
-//    public void setEndPercentV(int endPercentV) {
-//        mEndPercentV = endPercentV;
-////        mImageProcessing.setEndPercentY(endPercentV);
-//    }
-
-
 }

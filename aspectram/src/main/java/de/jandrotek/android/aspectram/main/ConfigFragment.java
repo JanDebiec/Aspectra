@@ -23,6 +23,8 @@ import android.widget.TextView;
  */
 public class ConfigFragment extends Fragment {
 
+    private static ConfigFragment mFragment = null;
+    private static View mRootView = null;
     private SeekBar mSbStartW;
     private SeekBar mSbEndW;
     private SeekBar mSbStartH;
@@ -90,12 +92,14 @@ public class ConfigFragment extends Fragment {
      */
     // TODO: Rename and change types and number of parameters
     public static ConfigFragment newInstance(String param1, String param2) {
-        ConfigFragment fragment = new ConfigFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
+        if(mFragment == null) {
+            mFragment = new ConfigFragment();
+            Bundle args = new Bundle();
+            args.putString(ARG_PARAM1, param1);
+            args.putString(ARG_PARAM2, param2);
+            mFragment.setArguments(args);
+        }
+        return mFragment;
     }
 
     public ConfigFragment() {
@@ -114,160 +118,162 @@ public class ConfigFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View rootView =  inflater.inflate(R.layout.fragment_config, container, false);
+        if(mRootView == null) {
+            // Inflate the layout for this fragment
+            mRootView = inflater.inflate(R.layout.fragment_config, container, false);
 
-        firstConfigStartW = true;
-        firstConfigEndW = true;
-        firstConfigStartH = true;
-        firstConfigWidthH = true;
+            firstConfigStartW = true;
+            firstConfigEndW = true;
+            firstConfigStartH = true;
+            firstConfigWidthH = true;
 
-        // blocks
-        mBlockStartW    = (RelativeLayout) rootView.findViewById(R.id.sbcWidthStart);
-        mBlockEndW      = (RelativeLayout) rootView.findViewById(R.id.sbcWidthEnd);
-        mBlockStartH    = (RelativeLayout) rootView.findViewById(R.id.sbcHeightStart);
-        mBlockAreaY     = (RelativeLayout) rootView.findViewById(R.id.sbcHeightEnd);
+            // blocks
+            mBlockStartW = (RelativeLayout) mRootView.findViewById(R.id.sbcWidthStart);
+            mBlockEndW = (RelativeLayout) mRootView.findViewById(R.id.sbcWidthEnd);
+            mBlockStartH = (RelativeLayout) mRootView.findViewById(R.id.sbcHeightStart);
+            mBlockAreaY = (RelativeLayout) mRootView.findViewById(R.id.sbcHeightEnd);
 
-        // seekbars
-        mSbStartW   = (SeekBar) mBlockStartW.findViewById(R.id.seekBar);
-        mSbEndW     = (SeekBar) mBlockEndW.findViewById(R.id.seekBar);
-        mSbStartH   = (SeekBar) mBlockStartH.findViewById(R.id.seekBar);
-        mSbAreaY    = (SeekBar) mBlockAreaY.findViewById(R.id.seekBar);
+            // seekbars
+            mSbStartW = (SeekBar) mBlockStartW.findViewById(R.id.seekBar);
+            mSbEndW = (SeekBar) mBlockEndW.findViewById(R.id.seekBar);
+            mSbStartH = (SeekBar) mBlockStartH.findViewById(R.id.seekBar);
+            mSbAreaY = (SeekBar) mBlockAreaY.findViewById(R.id.seekBar);
 
 
-        // name text
-        mSbStartWName   = (TextView) mBlockStartW.findViewById(R.id.sbtextName);
-        mSbEndWName     = (TextView) mBlockEndW.findViewById(R.id.sbtextName);
-        mSbStartHName   = (TextView) mBlockStartH.findViewById(R.id.sbtextName);
-        mSbAreaYName    = (TextView) mBlockAreaY.findViewById(R.id.sbtextName);
+            // name text
+            mSbStartWName = (TextView) mBlockStartW.findViewById(R.id.sbtextName);
+            mSbEndWName = (TextView) mBlockEndW.findViewById(R.id.sbtextName);
+            mSbStartHName = (TextView) mBlockStartH.findViewById(R.id.sbtextName);
+            mSbAreaYName = (TextView) mBlockAreaY.findViewById(R.id.sbtextName);
 
-        mSbStartWName.setText(R.string.name_width_start);
-        mSbEndWName.setText(R.string.name_width_end);
-        mSbStartHName.setText(R.string.name_height_start);
-        mSbAreaYName.setText(R.string.name_count_of_lines);
+            mSbStartWName.setText(R.string.name_width_start);
+            mSbEndWName.setText(R.string.name_width_end);
+            mSbStartHName.setText(R.string.name_height_start);
+            mSbAreaYName.setText(R.string.name_count_of_lines);
 
-        // act value text
-        mSbStartWValue  = (TextView) mBlockStartW.findViewById(R.id.sbtextValue);
-        mSbEndWValue    = (TextView) mBlockEndW.findViewById(R.id.sbtextValue);
-        mSbStartHValue  = (TextView) mBlockStartH.findViewById(R.id.sbtextValue);
-        mSbAreaYValue   = (TextView) mBlockAreaY.findViewById(R.id.sbtextValue);
+            // act value text
+            mSbStartWValue = (TextView) mBlockStartW.findViewById(R.id.sbtextValue);
+            mSbEndWValue = (TextView) mBlockEndW.findViewById(R.id.sbtextValue);
+            mSbStartHValue = (TextView) mBlockStartH.findViewById(R.id.sbtextValue);
+            mSbAreaYValue = (TextView) mBlockAreaY.findViewById(R.id.sbtextValue);
 
-        // with workaround for value and position. Value is already ok, but position not
-        mSbStartW.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                if((fromUser) || (firstConfigStartW)) {
-                    if (progress < mPersentEndW) {
-                        mPersentStartW = progress;
-                        mSbStartWValue.setText(Integer.toString(mPersentStartW));
-                        updateConfigView();
-                        if(firstConfigStartW){
-                            mSbStartW.setProgress(progress);
-
+            // with workaround for value and position. Value is already ok, but position not
+            mSbStartW.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+                @Override
+                public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+//                    if ((fromUser) || (firstConfigStartW)) {
+                    if ((fromUser)) {
+                        if (progress < mPersentEndW) {
+                            mPersentStartW = progress;
+                            mSbStartWValue.setText(Integer.toString(mPersentStartW));
+                            updateConfigView();
+//                            if (firstConfigStartW) {
+//                                mSbStartW.setProgress(progress);
+//
+//                            }
                         }
                     }
+//                    if (!fromUser) {
+//                        firstConfigStartW = false;
+//                    }
                 }
-                if(!fromUser){
-                    firstConfigStartW = false;
+
+                @Override
+                public void onStartTrackingTouch(SeekBar seekBar) {
+
                 }
-            }
 
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
+                @Override
+                public void onStopTrackingTouch(SeekBar seekBar) {
 
-            }
+                }
+            });
 
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-
-            }
-        });
-
-        mSbEndW.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                if((fromUser) || (firstConfigEndW)) {
-                    if (progress > mPersentStartW) {
-                        mPersentEndW = progress;
-                        mSbEndWValue.setText(Integer.toString(mPersentEndW));
-                        updateConfigView();
-                        if(firstConfigEndW){
-                            mSbEndW.setProgress(progress);
+            mSbEndW.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+                @Override
+                public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                    if ((fromUser) || (firstConfigEndW)) {
+                        if (progress > mPersentStartW) {
+                            mPersentEndW = progress;
+                            mSbEndWValue.setText(Integer.toString(mPersentEndW));
+                            updateConfigView();
+                            if (firstConfigEndW) {
+                                mSbEndW.setProgress(progress);
+                            }
                         }
                     }
-                }
-                if(!fromUser){
-                    firstConfigEndW = false;
-                }
-            }
-
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-
-            }
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-
-            }
-        });
-        mSbStartH.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                if((fromUser) || (firstConfigStartH)) {
-                    mPersentStartH = progress;
-                    mSbStartHValue.setText(Integer.toString(mPersentStartH));
-                    updateConfigView();
-                    if(firstConfigStartH){
-                        mSbStartH.setProgress(progress);
+                    if (!fromUser) {
+                        firstConfigEndW = false;
                     }
                 }
-                if(!fromUser){
-                    firstConfigStartH = false;
+
+                @Override
+                public void onStartTrackingTouch(SeekBar seekBar) {
+
                 }
-            }
 
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
+                @Override
+                public void onStopTrackingTouch(SeekBar seekBar) {
 
-            }
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-
-            }
-        });
-
-        mSbAreaY.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                if((fromUser) || (firstConfigWidthH)) {
-                    mDeltaLinesY = calcCountLinesY(progress);
-                    mSbAreaYValue.setText(Integer.toString(mDeltaLinesY));
-                    updateConfigView();
-                    if(firstConfigWidthH){
-                        mSbAreaY.setProgress(progress);
+                }
+            });
+            mSbStartH.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+                @Override
+                public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                    if ((fromUser) || (firstConfigStartH)) {
+                        mPersentStartH = progress;
+                        mSbStartHValue.setText(Integer.toString(mPersentStartH));
+                        updateConfigView();
+                        if (firstConfigStartH) {
+                            mSbStartH.setProgress(progress);
+                        }
+                    }
+                    if (!fromUser) {
+                        firstConfigStartH = false;
                     }
                 }
-                if(!fromUser){
-                    firstConfigWidthH = false;
+
+                @Override
+                public void onStartTrackingTouch(SeekBar seekBar) {
+
                 }
-            }
 
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
+                @Override
+                public void onStopTrackingTouch(SeekBar seekBar) {
 
-            }
+                }
+            });
 
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
+            mSbAreaY.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+                @Override
+                public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                    if ((fromUser) || (firstConfigWidthH)) {
+                        mDeltaLinesY = calcCountLinesY(progress);
+                        mSbAreaYValue.setText(Integer.toString(mDeltaLinesY));
+                        updateConfigView();
+                        if (firstConfigWidthH) {
+                            mSbAreaY.setProgress(progress);
+                        }
+                    }
+                    if (!fromUser) {
+                        firstConfigWidthH = false;
+                    }
+                }
 
-            }
-        });
-        mSeekBarCreated = true;
+                @Override
+                public void onStartTrackingTouch(SeekBar seekBar) {
 
-        updateSeekBars();
-        return rootView;
+                }
+
+                @Override
+                public void onStopTrackingTouch(SeekBar seekBar) {
+
+                }
+            });
+            mSeekBarCreated = true;
+            updateSeekBars();
+        }
+        return mRootView;
     }
 
     @Override

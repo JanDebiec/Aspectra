@@ -175,7 +175,8 @@ public class CameraViewFragment extends Fragment {
                         Intent intentConfig = new Intent(getActivity(), ViewConfigActivity.class);
 
                         startActivity(intentConfig);
-                        getActivity().finish();
+                        // after BackButton we want back here
+                        //getActivity().finish();
                     } else if (mParam2 == AspectraGlobals.ACT_ITEM_VIEW_CONFIG) {
                         //create intent and call LiveViewActivity
                         Intent intentLiveView = new Intent(getActivity(), LiveViewActivity.class);

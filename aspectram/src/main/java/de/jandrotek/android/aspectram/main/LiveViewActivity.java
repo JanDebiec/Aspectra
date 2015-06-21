@@ -1,5 +1,6 @@
 package de.jandrotek.android.aspectram.main;
 
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.net.Uri;
@@ -8,6 +9,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.app.Fragment;
 import android.transition.Slide;
 import android.util.Log;
 import android.view.Menu;
@@ -121,26 +123,25 @@ public class LiveViewActivity extends BaseActivity
     private void switchRightFragment(){
         mFlagConfigStarted = true;
 
-        getWindow().setExitTransition(new Slide());
-        getWindow().setEnterTransition(new Slide());
         if(mActRightFragState == eActRightFragPlot) { // if we are in LiveView
             updateConfigFragmFromPrefs();
 
             mCameraViewFragment.cameraProcessingShouldRun(false);
+
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.fragmentHolderRightFragmentView, mConfigFragment, "a")
                     .commit();
             mActRightFragState = eActRightFragConfig;
             mPrefsChanged = false;
-            //acceptNewPersentSettings();
         } else if (mActRightFragState == eActRightFragConfig) { // we are in config view
 
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.fragmentHolderRightFragmentView, mPlotViewFragment)
                     .commit();
             mActRightFragState = eActRightFragPlot;
-                acceptNewPersentSettings();
+            acceptNewPersentSettings();
             updateCamerFragmFromPrefs();
+
             mCameraViewFragment.cameraProcessingShouldRun(true);
         }
     }

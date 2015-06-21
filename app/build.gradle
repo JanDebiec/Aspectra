@@ -2,7 +2,8 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 22
-    buildToolsVersion "22.0.1"
+//    buildToolsVersion "22.0.1"
+    buildToolsVersion "23.0.0 rc2"
 
     defaultConfig {
         applicationId "de.jandrotek.android.aspectra.mini"
@@ -17,32 +18,6 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-//    productFlavors{
-//        vanilla {
-//            applicationId "de.jandrotek.android.aspectra.main.vanilla"
-//        //    buildConfigField 'int', 'flavor_type', '0'
-//           // versionName android.defaultConfig.versionName + "-vanilla"
-//            buildConfigField 'de.jandrotek.android.aspectra.main.FlavorSettings.eFlavorType',
-//                    'flavorType', 'de.jandrotek.android.aspectra.main.FlavorSettings.eFlavorType.typeVanilla'
-//               buildConfigField "String", "flavor", 'vanilla'
-//        }
-//        mini {
-//            applicationId "de.jandrotek.android.aspectra.main.mini"
-//      //      buildConfigField 'int', 'flavor_type', '1'
-//            versionName android.defaultConfig.versionName + "-mini"
-//            buildConfigField 'de.jandrotek.android.aspectra.main.FlavorSettings.eFlavorType',
-//                    'flavorType', 'de.jandrotek.android.aspectra.main.FlavorSettings.eFlavorType.typeMini'
-//        //    buildConfigField "String", "flavor", 'mini'
-//
-//        }
-//        full {
-//            applicationId "de.jandrotek.android.aspectra.main.full"
-////            buildConfigField 'int', 'flavor_type', '2'
-//            buildConfigField 'de.jandrotek.android.aspectra.main.FlavorSettings.eFlavorType',
-//                    'flavorType', 'de.jandrotek.android.aspectra.main.FlavorSettings.eFlavorType.typeFull'
-//
-//        }
-//    }
 
     dexOptions {
         incremental true
@@ -51,15 +26,11 @@ android {
 
 dependencies {
     // new one
-    compile 'com.android.support:appcompat-v7:22.0.0'
+    compile 'com.android.support:appcompat-v7:22.2.0'
     compile project(':libplotspectra')
     compile project(':libspectrafiles')
     compile project(':core')
     compile project(':libprefs')
     compile files('libs/GraphView-3.1.2.jar')
-    //old one
-//    compile 'com.android.support:appcompat-v7:21.+'
-    // added by studio
-//    compile 'com.android.support:support-v4:21.+'
 }
 

@@ -52,6 +52,17 @@ public class CameraPreview  extends ViewGroup implements SurfaceHolder.Callback,
     private int mImageFormat;
     private boolean mbProcessing = false;
 
+
+    public boolean isProcessingShouldRun() {
+        return mbProcessingShouldRun;
+    }
+
+    public void setProcessingShouldRun(boolean mbProcessingShouldRun) {
+        this.mbProcessingShouldRun = mbProcessingShouldRun;
+    }
+
+    private boolean mbProcessingShouldRun = false;
+
     private Activity mActivity = null;
     private Handler mLVActHandler = null;
     //Handler mVCActHandler = null;
@@ -81,18 +92,21 @@ public class CameraPreview  extends ViewGroup implements SurfaceHolder.Callback,
 
     @Override
     public void onPreviewFrame(byte[] arg0, Camera arg1) {
-        // At preview mode, the frame data will push to here.
-        if (mImageFormat == ImageFormat.NV21) {
-            // TODO: check which format can we support                mCamera.setPreviewDisplay(holder);
+        if(mbProcessingShouldRun) {
+            // At preview mode, the frame data will push to here.
+            if (mImageFormat == ImageFormat.NV21) {
+                // TODO: check which format can we support                mCamera.setPreviewDisplay(holder);
 
-            // We only accept the NV21(YUV420) format.
-            if (!mbProcessing) {
-                mFrameData = arg0;
-                if(mLVActHandler != null) {
-                    mLVActHandler.post(doImageProcessing);
+                // We only accept the NV21(YUV420) format.
+                if (!mbProcessing) {
+                    mFrameData = arg0;
+                    if (mLVActHandler != null) {
+                        mLVActHandler.post(doImageProcessing);
+                    }
                 }
             }
         }
+
     }
 
     public void setCamera(Camera camera) {

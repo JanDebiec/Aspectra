@@ -81,6 +81,7 @@ public class LiveViewActivity extends BaseActivity
         }
 
         updateFromPreferences();
+       // mCameraViewFragment.cameraProcessingShouldRun(true);
     }
 
     //TODO: set proper handling of configuration: portrait/landscape

@@ -171,6 +171,7 @@ public class CameraViewFragment extends Fragment {
 
                     if(mParam2 == AspectraGlobals.ACT_ITEM_LIVE_VIEW) { // if we are in LiveView
 
+                        cameraProcessingShouldRun(false);
                         //create intent and call ConfigActivity
                         Intent intentConfig = new Intent(getActivity(), ViewConfigActivity.class);
 
@@ -183,6 +184,7 @@ public class CameraViewFragment extends Fragment {
 
                         startActivity(intentLiveView);
                         getActivity().finish();
+                        cameraProcessingShouldRun(true);
 
                     }
                 }
@@ -190,6 +192,7 @@ public class CameraViewFragment extends Fragment {
             }
 
         });
+        cameraProcessingShouldRun(true);
 
         return rootView;
     }
@@ -253,6 +256,11 @@ public class CameraViewFragment extends Fragment {
         mListener = null;
     }
 
+    public void cameraProcessingShouldRun(boolean flag){
+        if(mCamPreview != null) {
+            mCamPreview.setProcessingShouldRun(flag);
+        }
+    }
 
     /**
      * This interface must be implemented by activities that contain this

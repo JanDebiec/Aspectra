@@ -38,7 +38,7 @@ public class CameraViewFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private static int mParam2;
 
-    private boolean mFlagConfigStarted = false;
+//    private boolean mFlagConfigStarted = false;
 
     private OnFragmentInteractionListener mListener;
 
@@ -161,31 +161,30 @@ public class CameraViewFragment extends Fragment {
 
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-//                float m_touched_x = event.getX();
-//                float m_touched_y = event.getY();
-//                boolean m_touched = false;
 
-                if (!mFlagConfigStarted) {
-                    mFlagConfigStarted = true;
-                    int action = event.getAction();
+                int action = event.getAction();
+                switch (action & MotionEvent.ACTION_MASK) {
 
-                    if(mParam2 == AspectraGlobals.ACT_ITEM_LIVE_VIEW) { // if we are in LiveView
+                    case MotionEvent.ACTION_DOWN: {
 
-                        cameraProcessingShouldRun(false);
-                        //create intent and call ConfigActivity
-                        Intent intentConfig = new Intent(getActivity(), ViewConfigActivity.class);
+                        if (mParam2 == AspectraGlobals.ACT_ITEM_LIVE_VIEW) { // if we are in LiveView
 
-                        startActivity(intentConfig);
-                        // after BackButton we want back here
-                        //getActivity().finish();
-                    } else if (mParam2 == AspectraGlobals.ACT_ITEM_VIEW_CONFIG) {
-                        //create intent and call LiveViewActivity
-                        Intent intentLiveView = new Intent(getActivity(), LiveViewActivity.class);
+                            cameraProcessingShouldRun(false);
+                            //create intent and call ConfigActivity
+                            Intent intentConfig = new Intent(getActivity(), ViewConfigActivity.class);
 
-                        startActivity(intentLiveView);
-                        getActivity().finish();
-                        cameraProcessingShouldRun(true);
+                            startActivity(intentConfig);
+                            // after BackButton we want back here
+                            //getActivity().finish();
+                        } else if (mParam2 == AspectraGlobals.ACT_ITEM_VIEW_CONFIG) {
+                            //create intent and call LiveViewActivity
+                            Intent intentLiveView = new Intent(getActivity(), LiveViewActivity.class);
 
+                            startActivity(intentLiveView);
+                            getActivity().finish();
+                            cameraProcessingShouldRun(true);
+
+                        }
                     }
                 }
                 return true; //processed
@@ -201,7 +200,7 @@ public class CameraViewFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
-        mFlagConfigStarted = false;
+//        mFlagConfigStarted = false;
         // Use mCurrentCamera to select the camera desired to safely restore
         // the fragment after the camera has been changed
         mCamera = Camera.open(mCurrentCamera);

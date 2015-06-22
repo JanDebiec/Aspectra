@@ -40,7 +40,7 @@ public class LiveViewActivity extends BaseActivity
     private static int mPreviewHeightY;
     private boolean mExternalStorageAvailable = false;
     private boolean mExternalStorageWriteable = false;
-    private String mFileFolder = "aspectra";
+    //private String mFileFolder = "aspectra";
     //public static boolean mSavePlotInFile = false;// fragment must change the value
 
     public Handler getHandler() {
@@ -105,13 +105,6 @@ public class LiveViewActivity extends BaseActivity
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
-        // this one is moved to BaseActivity
-//            if (id == R.id.action_settings) {
-//                Intent intent = new Intent(this, SettingsActivity.class);
-//                startActivity(intent);
-//                return true;
-//            } else if (id == R.id.action_save) {
             if (id == R.id.action_save) {
                 AspectraGlobals.mSavePlotInFile = true;
                 return true;
@@ -120,9 +113,6 @@ public class LiveViewActivity extends BaseActivity
                 startActivity( LaunchIntent );
                 return true;
            }
-
-
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -158,6 +148,8 @@ public class LiveViewActivity extends BaseActivity
     public void onResume(){
         super.onResume();
         updateFromPreferences();
+        mSpectrumFiles.setFileFolder(mFileFolder);
+        mSpectrumFiles.setFileExt(mFileExt);
     }
 
     //@Override
@@ -203,40 +195,40 @@ public class LiveViewActivity extends BaseActivity
         }
     }
 
-    private File getTarget(String fileName) {
-        File f = null;
-        try {
-            if(!mExternalStorageWriteable) {
-                updateExternalStorageState();
-            }
-            if(mExternalStorageWriteable) {
-                //root = this.getExternalFilesDir(null);
-                String mRootPath = Environment.getExternalStoragePublicDirectory(
-                        Environment.DIRECTORY_DOWNLOADS).toString();
-
-                String mFullPath = mRootPath + "/" + mFileFolder;
-                //TODO check if mFileFolder exists, if not create
-                File pathToFolder = new File(mFullPath);
-                if(!pathToFolder.exists()){
-                    // create folder
-                    pathToFolder.mkdir();
-                }
-
-                String sFileName = mFullPath + "/" + fileName;
-                f = new File(sFileName);
-              } else {
-                if(BuildConfig.DEBUG) {
-                    Log.w("TAG", "media not available !");
-                }
-            }
-            Toast.makeText(this, f.toString(), Toast.LENGTH_SHORT)
-                    .show();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return (f);
-
-    }
+//    private File getTarget(String fileName) {
+//        File f = null;
+//        try {
+//            if(!mExternalStorageWriteable) {
+//                updateExternalStorageState();
+//            }
+//            if(mExternalStorageWriteable) {
+//                //root = this.getExternalFilesDir(null);
+//                String mRootPath = Environment.getExternalStoragePublicDirectory(
+//                        Environment.DIRECTORY_DOWNLOADS).toString();
+//
+//                String mFullPath = mRootPath + "/" + mFileFolder;
+//                //TODO check if mFileFolder exists, if not create
+//                File pathToFolder = new File(mFullPath);
+//                if(!pathToFolder.exists()){
+//                    // create folder
+//                    pathToFolder.mkdir();
+//                }
+//
+//                String sFileName = mFullPath + "/" + fileName;
+//                f = new File(sFileName);
+//              } else {
+//                if(BuildConfig.DEBUG) {
+//                    Log.w("TAG", "media not available !");
+//                }
+//            }
+//            Toast.makeText(this, f.toString(), Toast.LENGTH_SHORT)
+//                    .show();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        return (f);
+//
+//    }
 
 
     void updateExternalStorageState() {
@@ -274,11 +266,16 @@ public class LiveViewActivity extends BaseActivity
                     int length = data.length;
                     mPlotViewFragment.showPlot(data, length);
                     if(AspectraGlobals.mSavePlotInFile){
+                        File f;
                         AspectraGlobals.mSavePlotInFile = false;
                         String fileName = SpectrumFiles.generateSpectrumAspFileName(mFileExt);
                         SpectrumAsp mSpectrum = new SpectrumAsp(fileName);
                         mSpectrum.setData(data, AspectraGlobals.eNoNormalize);
-                        new SaveSpectrumTask(mSpectrum.toString(), getTarget(fileName)).execute();
+                        f =  mSpectrumFiles.getTarget(fileName);
+                        new SaveSpectrumTask(mSpectrum.toString(),f).execute();
+                        Toast.makeText(activity, f.toString(), Toast.LENGTH_SHORT)
+                                .show();
+
                     }
                 } else  if (messId == AspectraGlobals.eMessagePreviewSize){
                     int[] data = (int[])inputMessage.obj;

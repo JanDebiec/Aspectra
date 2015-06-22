@@ -7,13 +7,15 @@ import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarActivity;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import de.jandrotek.android.aspectra.libprefs.AspectraSettings;
 import de.jandrotek.android.aspectra.libprefs.SettingsActivity;
+import de.jandrotek.android.aspectra.libspectrafiles.SpectrumFiles;
 
-public class BaseActivity extends ActionBarActivity
+public class BaseActivity extends AppCompatActivity //ActionBarActivity
 {
 
 //    protected static final int ACT_ITEM_LIVE_VIEW   = 0;
@@ -24,7 +26,7 @@ public class BaseActivity extends ActionBarActivity
     protected AspectraSettings mAspectraSettings;
     protected String mFileFolder;
     protected String mFileExt;
-
+    protected SpectrumFiles mSpectrumFiles;
 
     protected boolean mCameraPresent = false;
 
@@ -32,6 +34,7 @@ public class BaseActivity extends ActionBarActivity
     protected void onCreate(Bundle savedInstanceState) {
        super.onCreate(savedInstanceState);
        mAspectraSettings = new AspectraSettings();
+       mSpectrumFiles = new SpectrumFiles();
        Context context = getApplicationContext();
        SharedPreferences prefs = PreferenceManager
                .getDefaultSharedPreferences(context);

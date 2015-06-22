@@ -4,6 +4,7 @@ package de.jandrotek.android.aspectra.libspectrafiles;
 
 import android.os.Environment;
 import android.util.Log;
+import android.widget.Toast;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -18,30 +19,15 @@ import de.jandrotek.android.aspectra.core.FileWalker;
 public class SpectrumFiles {
     private static final String TAG = "SpectraFiles";
 
-//    private static ArrayList mFilelNameArrayList;
-//    private static String[] mFilelNameListTemp;
     public static String[] mFilelNameListOutput = null;
     public static String mPath = "";
-//    private FileWalker mFileWalker;
 
     private static String mFileExt = "";
-    private static String mFileFolder;
-
-
-//    public String getFileFolder() {
-//		return mFileFolder;
-//	}
-
+    private static String mFileFolder = "aspectra";
 
 	public void setFileFolder(String fileFolder) {
 		mFileFolder = fileFolder;
 	}
-
-
-//	public static String getFileExt() {
-//		return mFileExt;
-//	}
-
 
 	public void setFileExt (String fileExt) {
 		mFileExt = fileExt;
@@ -64,7 +50,7 @@ public class SpectrumFiles {
             mPath = Environment.getExternalStoragePublicDirectory(
                     Environment.DIRECTORY_DOWNLOADS).toString() + "/" + mFileFolder;
             if(BuildConfig.DEBUG) {
-                Log.d("TAG", "Path: " + mPath.toString());
+                Log.d("TAG", "Path: " + mPath);
             }
         }
     }
@@ -96,10 +82,6 @@ public class SpectrumFiles {
         return(getFileListSize());
     }
 
-//    public String[] getFilelList(){
-//        return mFilelNameListOutput;
-//    }
-
     public int getFileListSize(){
         return mFilelNameListOutput.length;
     }
@@ -121,6 +103,41 @@ public class SpectrumFiles {
         out.flush();
         fos.getFD().sync();
         out.close();
+    }
+
+    public File getTarget(String fileName) {
+        File f = null;
+        try {
+            if(!mExternalStorageWriteable) {
+                updateExternalStorageState();
+            }
+            if(mExternalStorageWriteable) {
+                //root = this.getExternalFilesDir(null);
+                String mRootPath = Environment.getExternalStoragePublicDirectory(
+                        Environment.DIRECTORY_DOWNLOADS).toString();
+
+                String mFullPath = mRootPath + "/" + mFileFolder;
+                //TODO check if mFileFolder exists, if not create
+                File pathToFolder = new File(mFullPath);
+                if(!pathToFolder.exists()){
+                    // create folder
+                    pathToFolder.mkdir();
+                }
+
+                String sFileName = mFullPath + "/" + fileName;
+                f = new File(sFileName);
+            } else {
+                if(BuildConfig.DEBUG) {
+                    Log.w("TAG", "media not available !");
+                }
+            }
+//            Toast.makeText(this, f.toString(), Toast.LENGTH_SHORT)
+//                    .show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return (f);
+
     }
 
 }

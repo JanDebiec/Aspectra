@@ -38,10 +38,6 @@ public class LiveViewActivity extends BaseActivity
 
     private static int mPreviewWidthX;
     private static int mPreviewHeightY;
-    private boolean mExternalStorageAvailable = false;
-    private boolean mExternalStorageWriteable = false;
-    //private String mFileFolder = "aspectra";
-    //public static boolean mSavePlotInFile = false;// fragment must change the value
 
     public Handler getHandler() {
         return mHandler;
@@ -167,8 +163,8 @@ public class LiveViewActivity extends BaseActivity
 
     public class SaveSpectrumTask extends AsyncTask<Void, Void, Void> {
         private Exception e=null;
-        private String text;
-        private File target;
+        private final String text;
+        private final File target;
 
         SaveSpectrumTask(String text, File target) {
             this.text=text;
@@ -183,7 +179,9 @@ public class LiveViewActivity extends BaseActivity
             catch (Exception e) {
                 this.e=e;
             }
-            AspectraGlobals.mSavePlotInFile = false;
+            finally {
+                AspectraGlobals.mSavePlotInFile = false;
+            }
             return(null);
         }
 
@@ -195,53 +193,6 @@ public class LiveViewActivity extends BaseActivity
         }
     }
 
-//    private File getTarget(String fileName) {
-//        File f = null;
-//        try {
-//            if(!mExternalStorageWriteable) {
-//                updateExternalStorageState();
-//            }
-//            if(mExternalStorageWriteable) {
-//                //root = this.getExternalFilesDir(null);
-//                String mRootPath = Environment.getExternalStoragePublicDirectory(
-//                        Environment.DIRECTORY_DOWNLOADS).toString();
-//
-//                String mFullPath = mRootPath + "/" + mFileFolder;
-//                //TODO check if mFileFolder exists, if not create
-//                File pathToFolder = new File(mFullPath);
-//                if(!pathToFolder.exists()){
-//                    // create folder
-//                    pathToFolder.mkdir();
-//                }
-//
-//                String sFileName = mFullPath + "/" + fileName;
-//                f = new File(sFileName);
-//              } else {
-//                if(BuildConfig.DEBUG) {
-//                    Log.w("TAG", "media not available !");
-//                }
-//            }
-//            Toast.makeText(this, f.toString(), Toast.LENGTH_SHORT)
-//                    .show();
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//        return (f);
-//
-//    }
-
-
-    void updateExternalStorageState() {
-        String state = Environment.getExternalStorageState();
-        if (Environment.MEDIA_MOUNTED.equals(state)) {
-            mExternalStorageAvailable = mExternalStorageWriteable = true;
-        } else if (Environment.MEDIA_MOUNTED_READ_ONLY.equals(state)) {
-            mExternalStorageAvailable = true;
-            mExternalStorageWriteable = false;
-        } else {
-            mExternalStorageAvailable = mExternalStorageWriteable = false;
-        }
-    }
 
      private void boom(Exception e) {
         Toast.makeText(this, e.toString(), Toast.LENGTH_LONG)

@@ -208,6 +208,8 @@ public class CameraViewFragment extends Fragment {
         mCamPreview.setCamera(mCamera);
         mCamPreview.setProcessing(mImageProcessing);
         updateBorderPercents();
+        cameraProcessingShouldRun(true);
+
     }
 
     @Override

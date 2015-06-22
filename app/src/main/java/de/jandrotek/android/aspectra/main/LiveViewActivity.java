@@ -27,16 +27,7 @@ import de.jandrotek.android.aspectra.libspectrafiles.SpectrumFiles;
  * here comes the source from MainActivity_libprefs, handling CameraViewFragment,
  * and PlotViewFragment
  */
-/** TODO: change structure to one activity with various fragments:
- * CameraView always, second fragment: plot or new configFragment
- * Use animations
- * pro: Back button works consistent,
- *      Activity stack consistent
- *      Material concept
- * con: to learn some Materials concept
- */
 
-//public class LiveViewActivity extends ActionBarActivity
 public class LiveViewActivity extends BaseActivity
         implements CameraViewFragment.OnFragmentInteractionListener,
         PlotViewFragment.OnFragmentInteractionListener
@@ -69,7 +60,6 @@ public class LiveViewActivity extends BaseActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_live_view);
         if (savedInstanceState == null) {
-//            mCameraViewFragment = CameraViewFragment.newInstance("LiveView", ACT_ITEM_LIVE_VIEW);
             mCameraViewFragment = CameraViewFragment.newInstance( AspectraGlobals.ACT_ITEM_LIVE_VIEW);
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.fragmentHolderCameraView, mCameraViewFragment)
@@ -81,7 +71,6 @@ public class LiveViewActivity extends BaseActivity
         }
 
         updateFromPreferences();
-       // mCameraViewFragment.cameraProcessingShouldRun(true);
     }
 
     //TODO: set proper handling of configuration: portrait/landscape
@@ -117,11 +106,13 @@ public class LiveViewActivity extends BaseActivity
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-            if (id == R.id.action_settings) {
-                Intent intent = new Intent(this, SettingsActivity.class);
-                startActivity(intent);
-                return true;
-            } else if (id == R.id.action_save) {
+        // this one is moved to BaseActivity
+//            if (id == R.id.action_settings) {
+//                Intent intent = new Intent(this, SettingsActivity.class);
+//                startActivity(intent);
+//                return true;
+//            } else if (id == R.id.action_save) {
+            if (id == R.id.action_save) {
                 AspectraGlobals.mSavePlotInFile = true;
                 return true;
             } else if (id == R.id.action_list) {

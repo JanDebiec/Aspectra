@@ -12,7 +12,9 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 tools:context="de.jandrotek.android.aspectra.main.ViewConfigActivity"
-                tools:ignore="MergeRootFrame">
+                tools:ignore="MergeRootFrame"
+                android:elevation="2dp"
+                >
 
             </FrameLayout>
 

@@ -5,9 +5,9 @@ package de.jandrotek.android.aspectra.viewer;
 
 import android.app.Activity;
 import android.app.ListFragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.util.SparseBooleanArray;
 import android.view.ActionMode;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -81,6 +81,7 @@ public class ItemListFragment extends ListFragment {
 
     //JD addsOn
     ListView mPrivateListView;
+    private SpectrumAdapter mAdapter;
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
@@ -92,8 +93,8 @@ public class ItemListFragment extends ListFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        SpectrumAdapter adapter = new SpectrumAdapter(ListContent.ITEMS);
-        setListAdapter(adapter);
+        mAdapter = new SpectrumAdapter(ListContent.ITEMS);
+        setListAdapter(mAdapter);
 
     }
 
@@ -121,13 +122,15 @@ public class ItemListFragment extends ListFragment {
                 // Set the CAB title according to total checked items
                 mode.setTitle(checkedCount + " Selected");
                 // Calls toggleSelection method from ListViewAdapter Class
-                //SpectrumAdapter.toggleSelection(position);
+//                SpectrumAdapter.toggleSelection(position);
+                toggleSelection(position);
+
             }
 
             @Override
             public boolean onCreateActionMode(ActionMode mode, Menu menu) {
                 //: must return true
-                mode.getMenuInflater().inflate(R.menu.global, menu);
+                mode.getMenuInflater().inflate(R.menu.activity_base, menu);
                 mode.getMenuInflater().inflate(R.menu.multi_action_menu, menu);
                 return true;
             }
@@ -158,15 +161,14 @@ public class ItemListFragment extends ListFragment {
                         mode.finish();
                         return true;
                //     }
-                    case R.id.item_compare:
+                    case R.id.item_show:
                         //TODO: show more spectra in plot
                         return true;
-//TODO: in flavor full
-//                    case R.id.item_analyze:
-//                        Intent intent = new Intent(getActivity(), AnalyzeActivity.class);
-//                        startActivity(intent);
-//                        mode.finish();
-//                        return true;
+                    case R.id.item_analyze:
+                        Intent intent = new Intent(getActivity(), AnalyzeActivity.class);
+                        startActivity(intent);
+                        mode.finish();
+                        return true;
                     default:
                         return false;
                 }
@@ -258,6 +260,13 @@ public class ItemListFragment extends ListFragment {
         }
     }
 
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        super.onCreateOptionsMenu(menu);
+//        // Inflate the menu; this adds items to the action bar if it is present.
+//        getActivity().getMenuInflater().inflate(R.menu.activity_base, menu);
+//        return true;
+//    }
 
 
     @Override
@@ -333,8 +342,7 @@ public class ItemListFragment extends ListFragment {
                     @Override
                     public void onClick(View v) {
                         ListContent.SpectrumItem item = (ListContent.SpectrumItem) viewHolder.checkbox.getTag();
-                        //item.setSelected(v.isChecked());
-
+                        item.setSelected(v.isSelected());
                     }
                 });
 
@@ -361,13 +369,19 @@ public class ItemListFragment extends ListFragment {
 
         }
 
-        public void toggleSelection(int position) {
-            ListContent.SpectrumItem spectrum = getItem(position);
-            //boolean actFlag =
-
-        }
+//        public void toggleSelection(int position) {
+//            ListContent.SpectrumItem spectrum = getItem(position);
+//            //boolean actFlag =
+//
+//        }
     }
 
+    public void toggleSelection(int position) {
+        ListContent.SpectrumItem spectrum = mAdapter.getItem(position);
+        boolean actFlag = spectrum.isSelected();
+        spectrum.setSelected(!actFlag);
+
+    }
             void onCbClick(View v){
                 boolean isSelected = v.isSelected();
             }

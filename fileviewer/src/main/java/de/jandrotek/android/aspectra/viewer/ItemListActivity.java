@@ -139,7 +139,8 @@ public class ItemListActivity extends ActionBarActivity
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.activity_base, menu);
+        getMenuInflater().inflate(R.menu.menu_activity_list, menu);
+//        getMenuInflater().inflate(R.menu.action_menu_single, menu);
         return true;
     }
 

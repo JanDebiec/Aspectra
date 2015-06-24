@@ -11,6 +11,7 @@ import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.ActionMode;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +20,8 @@ import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 //import de.jandrotek.android.aspectra.main.ListContent.SpectrumItem;
@@ -36,8 +39,11 @@ import static android.widget.AbsListView.OnClickListener;
  * interface.
  */
 public class ItemListFragment extends ListFragment {
-//  implements  MultiChoiceModeListener{
+    //  implements  MultiChoiceModeListener{
     private static final String TAG = "ListItemsFrag";
+
+    private ArrayList<SpectrumItem> spectra=null;
+    private ArrayAdapter<SpectrumItem> adapter=null;
 
     /**
      * The serialization (saved instance state) Bundle key representing the
@@ -57,7 +63,7 @@ public class ItemListFragment extends ListFragment {
     private int mActivatedPosition = ListView.INVALID_POSITION;
 
 
-            /**
+    /**
      * A callback interface that all activities containing this fragment must
      * implement. This mechanism allows activities to be notified of item
      * selections.
@@ -83,6 +89,7 @@ public class ItemListFragment extends ListFragment {
     //JD addsOn
     ListView mPrivateListView;
     private SpectrumAdapter mAdapter;
+
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
@@ -103,7 +110,7 @@ public class ItemListFragment extends ListFragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        if(BuildConfig.DEBUG) {
+        if (BuildConfig.DEBUG) {
             Log.i(TAG, "onViewCreated");
         }
 
@@ -116,80 +123,36 @@ public class ItemListFragment extends ListFragment {
         mPrivateListView = getListView();
         mPrivateListView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
         mPrivateListView.setMultiChoiceModeListener(new ViewerModeListener(
-                this, getListView())
-        //{
-//        mPrivateListView.setMultiChoiceModeListener(new MultiChoiceModeListener() {
-//            @Override
-//            public void onItemCheckedStateChanged(ActionMode mode, int position, long id, boolean checked) {
-//                // Capture total checked items
-//                final int checkedCount = mPrivateListView.getCheckedItemCount();
-//                // Set the CAB title according to total checked items
-//                mode.setTitle(checkedCount + " Selected");
-//                // Calls toggleSelection method from ListViewAdapter Class
-////                SpectrumAdapter.toggleSelection(position);
-//                toggleSelection(position);
-//
-//            }
-//
-//            @Override
-//            public boolean onCreateActionMode(ActionMode mode, Menu menu) {
-//                //: must return true
-//                mode.getMenuInflater().inflate(R.menu.activity_base, menu);
-//                mode.getMenuInflater().inflate(R.menu.multi_action_menu, menu);
-//                return true;
-//            }
-//
-//            @Override
-//            public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
-//                return false;
-//            }
-//
-//            @Override
-//            public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
-//                switch (item.getItemId()) {
-//                    case R.id.item_delete:
-//
-//// temporary disabled, find getSelectedIds()
-////                        // Calls getSelectedIds method from ListViewAdapter Class
-////                    SparseBooleanArray selected = SpectrumAdapter
-////                            .getSelectedIds();
-////                    // Captures all selected ids with a loop
-////                    for (int i = (selected.size() - 1); i >= 0; i--) {
-////                        if (selected.valueAt(i)) {
-////                            ListContent.SpectrumItem selecteditem = SpectrumAdapter
-////                                    .getItem(selected.keyAt(i));
-////                            // Remove selected items following the ids
-//////                            SpectrumAdapter.remove(selecteditem);
-//             //           }
-//                        // Close CAB
-//                        mode.finish();
-//                        return true;
-//               //     }
-//                    case R.id.item_show:
-//                        //TODO: show more spectra in plot
-//                        return true;
-//                    case R.id.item_analyze:
-//                        Intent intent = new Intent(getActivity(), AnalyzeActivity.class);
-//                        startActivity(intent);
-//                        mode.finish();
-//                        return true;
-//                    default:
-//                        return false;
-//                }
-//            }
-//
-//            @Override
-//            public void onDestroyActionMode(ActionMode mode) {
-//
-//            }
-        //}
+                        this, getListView())
         );
     }
+
 
     public boolean performActions(MenuItem item) {
         SparseBooleanArray checked=getListView().getCheckedItemPositions();
 
         switch (item.getItemId()) {
+            case R.id.item_delete:
+            {
+                ArrayList<ListContent.SpectrumItem> positions=new ArrayList<ListContent.SpectrumItem>();
+
+                for (int i=0; i < checked.size(); i++) {
+                    if (checked.valueAt(i)) {
+                        positions.add(checked.keyAt(i));
+                    }
+                }
+
+                Collections.sort(positions, Collections.reverseOrder());
+
+                for (int position : positions) {
+                   // mAdapter.remove(ListContent.SpectrumItem);
+                    //mAdapter.remove(spectra.get(position));
+                }
+
+                getListView().clearChoices();
+
+                return(true);
+        }
 
         }// switch
         return(false);
@@ -202,8 +165,7 @@ public class ItemListFragment extends ListFragment {
         if (!(activity instanceof Callbacks)) {
             throw new IllegalStateException("Activity must implement fragment's callbacks.");
         }
-
-        mCallbacks = (Callbacks) activity;
+            mCallbacks = (Callbacks) activity;
     }
 
     @Override
@@ -305,100 +267,32 @@ public class ItemListFragment extends ListFragment {
             super(getActivity(), android.R.layout.simple_list_item_activated_1, spectra);
 
         }
+    }
 
-        class ViewHolder {
-            protected TextView notesText;
-            protected TextView nameText;
-            protected CheckBox checkbox;
+
+    private void initAdapter() {
+        spectra=new ArrayList<String>();
+
+        for (int i=0;i<5;i++) {
+            spectra.add(items[i]);
         }
 
-//        @Override
-//        public View getView(int position, View convertView, ViewGroup parent) {
-//            View view = null;
-//            ListContent.SpectrumItem spectrum = getItem(position);
-//            // if we weren't given a view, inflate one
-//            if (null == convertView) {
-//                view = getActivity().getLayoutInflater()
-//                        .inflate(R.layout.list_item_spectrum, null);
-//                final ViewHolder viewHolder = new ViewHolder();
-//                viewHolder.nameText = (TextView) view.findViewById(R.id.tv_spectra_list_item_name);
-//                viewHolder.notesText = (TextView) view.findViewById(R.id.tv_spectra_list_item_notes);
-//                viewHolder.checkbox = (CheckBox) view.findViewById(R.id.cb_spectra_list_item_checked);
-//                viewHolder.checkbox.setOnClickListener(new OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        ListContent.SpectrumItem item = (ListContent.SpectrumItem) viewHolder.checkbox.getTag();
-//                        item.setSelected(v.isSelected());
-//                    }
-//                });
-//
-//
-////                viewHolder.checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-////                    @Override
-////                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-////
-////                        SpectrumItem item = (SpectrumItem)viewHolder.checkbox.getTag();
-////                        item.setSelected(buttonView.isChecked());
-////                    }
-////                });
-//                view.setTag(viewHolder);
-//                viewHolder.checkbox.setTag(spectrum);
-//            } else {
-//                view = convertView;
-//                ((ViewHolder) view.getTag()).checkbox.setTag(spectrum);
-//            }
-//            ViewHolder holder = (ViewHolder) view.getTag();
-//            holder.nameText.setText(spectrum.getName());
-//            holder.notesText.setText(spectrum.getNotes());
-//            holder.checkbox.setChecked(spectrum.isSelected());
-//            return view;
-//
-//        }
-//
-////        public void toggleSelection(int position) {get
-////            ListContent.SpectrumItem spectrum = getItem(position);
-////            //boolean actFlag =
-////
-////        }
+        adapter=
+                new ArrayAdapter<String>(this,
+                        android.R.layout.simple_list_item_activated_1,
+                        spectra);
+
+        setListAdapter(adapter);
     }
 
-    public void toggleSelection(int position) {
-        ListContent.SpectrumItem spectrum = mAdapter.getItem(position);
-        boolean actFlag = spectrum.isSelected();
-        spectrum.setSelected(!actFlag);
-
+    private void addWord() {
+        if (adapter.getCount()<items.length) {
+            adapter.add(items[adapter.getCount()]);
+        }
     }
-            void onCbClick(View v){
-                boolean isSelected = v.isSelected();
-            }
 
-//            private class DummyAdapter extends ArrayAdapter<SpectrumItem> {
-//                public DummyAdapter(List<SpectrumItem> spectra) {
-////            public DummyAdapter(ArrayList<SpectrumItem> spectra) {
-//                    super(getActivity(), android.R.layout.simple_list_item_1, spectra);
-//                }
-//
-//                @Override
-//                public View getView(int position, View convertView, ViewGroup parent) {
-//                    // if we weren't given a view, inflate one
-//                    if (null == convertView) {
-//                        convertView = getActivity().getLayoutInflater()
-//                                .inflate(R.layout.list_item_spectrum, null);
-//                    }
-//
-//                    // configure the view for this Crime
-//                    ListContent.SpectrumItem spectrum = getItem(position);
-//
-//                    TextView nameTextView =
-//                            (TextView)convertView.findViewById(R.id.tv_spectra_list_item_name);
-//                    nameTextView.setText(spectrum.getName());
-//                    TextView notesTextView =
-//                            (TextView)convertView.findViewById(R.id.tv_spectra_list_item_notes);
-//                    notesTextView.setText(spectrum.getNotes());
-//                    CheckBox spectraCheckBox =
-//                            (CheckBox)convertView.findViewById(R.id.cb_spectra_list_item_checked);
-//                    spectraCheckBox.setChecked(false);
-//
-//                    return convertView;
-//                }
+
+
 }
+
+

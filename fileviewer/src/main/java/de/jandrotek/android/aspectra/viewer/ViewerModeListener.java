@@ -28,8 +28,10 @@ public class ViewerModeListener implements
     public boolean onCreateActionMode(ActionMode mode, Menu menu) {
         MenuInflater inflater=host.getActivity().getMenuInflater();
 
-        mode.getMenuInflater().inflate(R.menu.activity_base, menu);
-        mode.getMenuInflater().inflate(R.menu.multi_action_menu, menu);
+//        mode.getMenuInflater().inflate(R.menu.activity_base, menu);
+//        mode.getMenuInflater().inflate(R.menu.multi_action_menu, menu);
+        inflater.inflate(R.menu.activity_base, menu);
+        inflater.inflate(R.menu.multi_action_menu, menu);
 //        inflater.inflate(R.menu.context, menu);
         mode.setTitle(R.string.context_title);
         mode.setSubtitle("(1)");

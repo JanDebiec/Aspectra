@@ -193,7 +193,6 @@ public class ItemListFragment extends ListFragment {
 
         }// switch
         return(false);
-
     }
         @Override
     public void onAttach(Activity activity) {

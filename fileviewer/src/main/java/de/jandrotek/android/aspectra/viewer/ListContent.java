@@ -20,12 +20,12 @@ public class ListContent {
      * An array of spectra items.
      */
 
-    public static List<SpectrumItem> ITEMS = new ArrayList<SpectrumItem>();
+    public static List<SpectrumItem> ITEMS = new ArrayList<>();
 
     /**
      * A map of sample (dummy) items, by ID.
      */
-    public static Map<String, SpectrumItem> ITEM_MAP = new HashMap<String, SpectrumItem>();
+    public static Map<String, SpectrumItem> ITEM_MAP = new HashMap<>();
 
     static {
     	if(SpectrumFiles.mFilelNameListOutput.length > 0){
@@ -45,6 +45,10 @@ public class ListContent {
         ITEMS.add(item);
         ITEM_MAP.put(item.id, item);
     }
+
+	public static SpectrumItem getItem(int location){
+		return ITEMS.get(location);
+	}
 
     public static class SpectrumItem {
     	public String id;

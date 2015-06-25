@@ -42,8 +42,8 @@ public class ItemListFragment extends ListFragment {
     //  implements  MultiChoiceModeListener{
     private static final String TAG = "ListItemsFrag";
 
-    private ArrayList<SpectrumItem> spectra=null;
-    private ArrayAdapter<SpectrumItem> adapter=null;
+    private ArrayList<ListContent.SpectrumItem> spectra=null;
+    private ArrayAdapter<ListContent.SpectrumItem> adapter=null;
 
     /**
      * The serialization (saved instance state) Bundle key representing the
@@ -129,25 +129,27 @@ public class ItemListFragment extends ListFragment {
 
 
     public boolean performActions(MenuItem item) {
-        SparseBooleanArray checked=getListView().getCheckedItemPositions();
+        SparseBooleanArray checked = getListView().getCheckedItemPositions();
 
         switch (item.getItemId()) {
             case R.id.item_delete:
             {
-                ArrayList<ListContent.SpectrumItem> positions=new ArrayList<ListContent.SpectrumItem>();
+                ArrayList<ListContent.SpectrumItem> positions = new ArrayList<>();
 
                 for (int i=0; i < checked.size(); i++) {
                     if (checked.valueAt(i)) {
-                        positions.add(checked.keyAt(i));
+                        int originalPosition = checked.keyAt(i);
+                        positions.add(checked.keyAt(i), ListContent.getItem(originalPosition));
+//                        positions.add(checked.keyAt(i));
                     }
                 }
 
                 Collections.sort(positions, Collections.reverseOrder());
 
-                for (int position : positions) {
-                   // mAdapter.remove(ListContent.SpectrumItem);
-                    //mAdapter.remove(spectra.get(position));
-                }
+//                for (int position : positions) {
+//                   // mAdapter.remove(ListContent.SpectrumItem);
+//                    //mAdapter.remove(spectra.get(position));
+//                }
 
                 getListView().clearChoices();
 
@@ -270,26 +272,26 @@ public class ItemListFragment extends ListFragment {
     }
 
 
-    private void initAdapter() {
-        spectra=new ArrayList<String>();
+//    private void initAdapter() {
+//        spectra=new ArrayList<ListContent.SpectrumItem>();
+//
+////        for (int i=0;i<5;i++) {
+////            spectra.add(items[i]);
+////        }
+//
+//        adapter =
+//                new ArrayAdapter<ListContent.SpectrumItem>(this,
+//                        android.R.layout.simple_list_item_activated_1,
+//                        spectra);
+//
+//        setListAdapter(adapter);
+//    }
 
-        for (int i=0;i<5;i++) {
-            spectra.add(items[i]);
-        }
-
-        adapter=
-                new ArrayAdapter<String>(this,
-                        android.R.layout.simple_list_item_activated_1,
-                        spectra);
-
-        setListAdapter(adapter);
-    }
-
-    private void addWord() {
-        if (adapter.getCount()<items.length) {
-            adapter.add(items[adapter.getCount()]);
-        }
-    }
+//    private void addWord() {
+//        if (adapter.getCount()<items.length) {
+//            adapter.add(items[adapter.getCount()]);
+//        }
+//    }
 
 
 

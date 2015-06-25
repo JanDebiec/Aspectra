@@ -42,9 +42,6 @@ public class ItemListFragment extends ListFragment {
     //  implements  MultiChoiceModeListener{
     private static final String TAG = "ListItemsFrag";
 
-    private ArrayList<ListContent.SpectrumItem> spectra=null;
-    private ArrayAdapter<ListContent.SpectrumItem> adapter=null;
-
     /**
      * The serialization (saved instance state) Bundle key representing the
      * activated item position. Only used on tablets.
@@ -139,19 +136,25 @@ public class ItemListFragment extends ListFragment {
                 for (int i=0; i < checked.size(); i++) {
                     if (checked.valueAt(i)) {
                         int originalPosition = checked.keyAt(i);
-                        positions.add(checked.keyAt(i), ListContent.getItem(originalPosition));
+                        positions.add( ListContent.getItem(originalPosition));
+//                        positions.add(checked.keyAt(i), ListContent.getItem(originalPosition));
 //                        positions.add(checked.keyAt(i));
                     }
                 }
 
-                Collections.sort(positions, Collections.reverseOrder());
+                // here we explode
+                //Collections.sort(positions, Collections.reverseOrder());
 
-//                for (int position : positions) {
+                for (ListContent.SpectrumItem spectrum : positions) {
+//                    ListContent.SpectrumItem item;
+                    Log.d(TAG, spectrum.getName());
 //                   // mAdapter.remove(ListContent.SpectrumItem);
 //                    //mAdapter.remove(spectra.get(position));
-//                }
+                }
 
                 getListView().clearChoices();
+                // if eleted, we don't need to do anything more, but if we don't delete,
+                // then the items are still selected
 
                 return(true);
         }

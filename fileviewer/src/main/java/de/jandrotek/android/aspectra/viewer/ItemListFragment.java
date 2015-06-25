@@ -269,35 +269,10 @@ public class ItemListFragment extends ListFragment {
 
         public SpectrumAdapter(List<ListContent.SpectrumItem> spectra) {
 //            super(getActivity(), R.layout.list_item_spectrum, spectra);
+//            super(getActivity(), android.R.layout.simple_list_item_checked, spectra);
             super(getActivity(), android.R.layout.simple_list_item_activated_1, spectra);
-
         }
     }
-
-
-//    private void initAdapter() {
-//        spectra=new ArrayList<ListContent.SpectrumItem>();
-//
-////        for (int i=0;i<5;i++) {
-////            spectra.add(items[i]);
-////        }
-//
-//        adapter =
-//                new ArrayAdapter<ListContent.SpectrumItem>(this,
-//                        android.R.layout.simple_list_item_activated_1,
-//                        spectra);
-//
-//        setListAdapter(adapter);
-//    }
-
-//    private void addWord() {
-//        if (adapter.getCount()<items.length) {
-//            adapter.add(items[adapter.getCount()]);
-//        }
-//    }
-
-
-
 }
 
 

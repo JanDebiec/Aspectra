@@ -5,11 +5,13 @@ package de.jandrotek.android.aspectra.viewer;
 
 import android.app.Activity;
 import android.app.ListFragment;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.ActionMode;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -19,6 +21,7 @@ import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.TwoLineListItem;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -270,7 +273,45 @@ public class ItemListFragment extends ListFragment {
         public SpectrumAdapter(List<ListContent.SpectrumItem> spectra) {
 //            super(getActivity(), R.layout.list_item_spectrum, spectra);
 //            super(getActivity(), android.R.layout.simple_list_item_checked, spectra);
-            super(getActivity(), android.R.layout.simple_list_item_activated_1, spectra);
+            super(getActivity(), android.R.layout.simple_list_item_activated_2, spectra);
+//            super(getActivity(), android.R.layout.simple_list_item_activated_1, spectra);
+        }
+
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+
+            TwoLineListItem twoLineListItem;
+
+            if (convertView == null) {
+                LayoutInflater inflater = (LayoutInflater) getActivity()
+                        .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                twoLineListItem = (TwoLineListItem) inflater.inflate(
+                        android.R.layout.simple_list_item_activated_2, null);
+            } else {
+                twoLineListItem = (TwoLineListItem) convertView;
+            }
+
+            TextView text1 = twoLineListItem.getText1();
+            TextView text2 = twoLineListItem.getText2();
+
+            text1.setText(ListContent.ITEMS.get(position).getName());
+            text2.setText(ListContent.ITEMS.get(position).getNotes());
+
+            return twoLineListItem;
+
+
+//                //super call to create / recycle the view
+//            TwoLineListItem view = (TwoLineListItem)super.getView(position, convertView, parent);
+//
+//            TextView textView1 = (TextView) view.findViewById(android.R.id.text1);
+//            textView1.setText(ListContent.ITEMS.get(position).getName());
+//
+//            TextView textView2 = (TextView) view.findViewById(android.R.id.text2);
+//            textView2.setText(ListContent.ITEMS.get(position).getNotes());
+//
+//            return view;
+
         }
     }
 }

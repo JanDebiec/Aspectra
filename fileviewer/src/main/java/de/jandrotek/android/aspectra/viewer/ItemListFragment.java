@@ -271,12 +271,8 @@ public class ItemListFragment extends ListFragment {
     private class SpectrumAdapter extends ArrayAdapter<ListContent.SpectrumItem> {
 
         public SpectrumAdapter(List<ListContent.SpectrumItem> spectra) {
-//            super(getActivity(), R.layout.list_item_spectrum, spectra);
-//            super(getActivity(), android.R.layout.simple_list_item_checked, spectra);
             super(getActivity(), android.R.layout.simple_list_item_activated_2, spectra);
-//            super(getActivity(), android.R.layout.simple_list_item_activated_1, spectra);
         }
-
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
@@ -299,18 +295,6 @@ public class ItemListFragment extends ListFragment {
             text2.setText(ListContent.ITEMS.get(position).getNotes());
 
             return twoLineListItem;
-
-
-//                //super call to create / recycle the view
-//            TwoLineListItem view = (TwoLineListItem)super.getView(position, convertView, parent);
-//
-//            TextView textView1 = (TextView) view.findViewById(android.R.id.text1);
-//            textView1.setText(ListContent.ITEMS.get(position).getName());
-//
-//            TextView textView2 = (TextView) view.findViewById(android.R.id.text2);
-//            textView2.setText(ListContent.ITEMS.get(position).getNotes());
-//
-//            return view;
 
         }
     }

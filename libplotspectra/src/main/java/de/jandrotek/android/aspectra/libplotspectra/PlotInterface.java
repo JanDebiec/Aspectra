@@ -21,36 +21,36 @@ public class PlotInterface {
     private static final double ePlotPortStart = 0;
     private static final double ePlotPortEnd = 800;
 
-    public static void updateZoomMode(GraphView _graphView, int _mode) {
-        if(_mode == eModeZoom) {
-            // optional - activate scaling / zooming
-            _graphView.setScrollable(true);
-            _graphView.setScalable(true);
-        }
-        else {
-            _graphView.setScrollable(false);
-            _graphView.setScalable(false);
-
-        }
-    }
-
-    public static GraphView createLineGraphSingle(GraphView.GraphViewData[] _data, Context _context) {
-        LineGraphView lineGraphView = null;
-        lineGraphView = new LineGraphView(_context, "");
-        // add data
-        GraphViewSeries.GraphViewSeriesStyle style = new GraphViewSeries.GraphViewSeriesStyle();
-        style.thickness = 1;
-        GraphViewSeries dataSeries = new GraphViewSeries("", style,  _data);
-        lineGraphView.addSeries(dataSeries);
-        lineGraphView.getGraphViewStyle().setTextSize(eGraphTextSize);
-        lineGraphView.getGraphViewStyle().setNumHorizontalLabels(eNumHorLabels);
-        lineGraphView.getGraphViewStyle().setNumVerticalLabels(eNumVertLabels);
-
-        GraphViewSeries.GraphViewSeriesStyle getStyle = dataSeries.getStyle();
-        // set view port, start=2, size=40
-        lineGraphView.setViewPort(ePlotPortStart, ePlotPortEnd);
-
-        return lineGraphView;
-    }
+//    public static void updateZoomMode(GraphView _graphView, int _mode) {
+//        if(_mode == eModeZoom) {
+//            // optional - activate scaling / zooming
+//            _graphView.setScrollable(true);
+//            _graphView.setScalable(true);
+//        }
+//        else {
+//            _graphView.setScrollable(false);
+//            _graphView.setScalable(false);
+//
+//        }
+//    }
+//
+//    public static GraphView createLineGraphSingle(GraphView.GraphViewData[] _data, Context _context) {
+//        LineGraphView lineGraphView = null;
+//        lineGraphView = new LineGraphView(_context, "");
+//        // add data
+//        GraphViewSeries.GraphViewSeriesStyle style = new GraphViewSeries.GraphViewSeriesStyle();
+//        style.thickness = 1;
+//        GraphViewSeries dataSeries = new GraphViewSeries("", style,  _data);
+//        lineGraphView.addSeries(dataSeries);
+//        lineGraphView.getGraphViewStyle().setTextSize(eGraphTextSize);
+//        lineGraphView.getGraphViewStyle().setNumHorizontalLabels(eNumHorLabels);
+//        lineGraphView.getGraphViewStyle().setNumVerticalLabels(eNumVertLabels);
+//
+//        GraphViewSeries.GraphViewSeriesStyle getStyle = dataSeries.getStyle();
+//        // set view port, start=2, size=40
+//        lineGraphView.setViewPort(ePlotPortStart, ePlotPortEnd);
+//
+//        return lineGraphView;
+//    }
 
 }

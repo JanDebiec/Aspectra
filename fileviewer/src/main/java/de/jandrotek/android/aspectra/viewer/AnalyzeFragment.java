@@ -14,11 +14,16 @@ import android.widget.LinearLayout;
 import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 
+// ver 3
+//import com.jjoe64.graphview.GraphView;
+//import com.jjoe64.graphview.GraphView.GraphViewData;
+//import com.jjoe64.graphview.GraphViewSeries;
+//import com.jjoe64.graphview.GraphViewSeries.GraphViewSeriesStyle;
+//import com.jjoe64.graphview.LineGraphView;
+// ver 4
 import com.jjoe64.graphview.GraphView;
-import com.jjoe64.graphview.GraphView.GraphViewData;
-import com.jjoe64.graphview.GraphViewSeries;
-import com.jjoe64.graphview.GraphViewSeries.GraphViewSeriesStyle;
-import com.jjoe64.graphview.LineGraphView;
+import com.jjoe64.graphview.series.DataPoint;
+import com.jjoe64.graphview.series.LineGraphSeries;
 
 import de.jandrotek.android.aspectra.core.AspectraGlobals;
 import de.jandrotek.android.aspectra.core.SpectrumAsp;
@@ -77,7 +82,7 @@ public class AnalyzeFragment extends Fragment
 
     private int[] mFileIntValues;
     private GraphView mGraphView;
-    private GraphViewData[] mData;
+//    private GraphViewData[] mData;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -112,11 +117,11 @@ public class AnalyzeFragment extends Fragment
                 e.printStackTrace();
             }
             // prepare dummy data
-            mData = new GraphViewData[mMaxSpectrumSize];
-            for (int i=0; i<mMaxSpectrumSize; i++) {
-
-                mData[i] = new GraphViewData(i, mFileIntValues[i]);
-            }
+//            mData = new GraphViewData[mMaxSpectrumSize];
+//            for (int i=0; i<mMaxSpectrumSize; i++) {
+//
+//                mData[i] = new GraphViewData(i, mFileIntValues[i]);
+//            }
 
 
         }
@@ -150,9 +155,9 @@ public class AnalyzeFragment extends Fragment
 
         };
 
-        mGraphView = PlotInterface.createLineGraphSingle(mData, getActivity());
+//        mGraphView = PlotInterface.createLineGraphSingle(mData, getActivity());
 
-        PlotInterface.updateZoomMode(mGraphView, mAnalyzeMode);
+//        PlotInterface.updateZoomMode(mGraphView, mAnalyzeMode);
         FrameLayout layout = (FrameLayout) rootView.findViewById(R.id.fvPlotAnalyzeView);
         layout.addView(mGraphView);
 

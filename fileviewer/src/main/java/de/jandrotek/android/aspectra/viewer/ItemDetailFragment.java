@@ -9,11 +9,20 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+// ver 3
+//import com.jjoe64.graphview.GraphView;
+//import com.jjoe64.graphview.GraphView.GraphViewData;
+//import com.jjoe64.graphview.GraphViewSeries;
+//import com.jjoe64.graphview.GraphViewSeries.GraphViewSeriesStyle;
+//import com.jjoe64.graphview.LineGraphView;
+
+// ver 4
 import com.jjoe64.graphview.GraphView;
-import com.jjoe64.graphview.GraphView.GraphViewData;
-import com.jjoe64.graphview.GraphViewSeries;
-import com.jjoe64.graphview.GraphViewSeries.GraphViewSeriesStyle;
-import com.jjoe64.graphview.LineGraphView;
+import com.jjoe64.graphview.series.DataPoint;
+import com.jjoe64.graphview.series.LineGraphSeries;
+
+
+import java.util.Random;
 
 import de.jandrotek.android.aspectra.core.SpectrumChr;
 
@@ -42,7 +51,10 @@ public class ItemDetailFragment extends Fragment {
     private SpectrumChr mSpectrumFile;
     private int[] mFileIntValues;
     private GraphView mGraphView;
-    private GraphViewData[] mData;
+    private DataPoint[] mData;
+    private LineGraphSeries<DataPoint> mSeries1;
+    private LineGraphSeries<DataPoint> mSeries2;
+    private DataPoint[] realData;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -77,10 +89,10 @@ public class ItemDetailFragment extends Fragment {
             }
             //TODO: here is danger,what is bigger: mFileIntValues or 2048
             int num = 2048;
-            mData = new GraphViewData[num];
+            mData = new DataPoint[num];
             for (int i=0; i<num; i++) {
 
-                mData[i] = new GraphViewData(i, mFileIntValues[i]);
+                mData[i] = new DataPoint(i, mFileIntValues[i]);
             }
 
 
@@ -99,22 +111,25 @@ public class ItemDetailFragment extends Fragment {
             ((TextView) rootView.findViewById(R.id.item_detail)).setText(mItem.name);
             // show data from loaded file in ChartView
         }
-        mGraphView = new LineGraphView( getActivity(), "");
+        mGraphView = new GraphView( getActivity());
         // add data
-        GraphViewSeriesStyle style = new GraphViewSeriesStyle();
-        style.thickness = 1;
-                GraphViewSeries dataSeries = new GraphViewSeries("", style,  mData);
-        mGraphView.addSeries(dataSeries);
-        mGraphView.getGraphViewStyle().setTextSize(20);
-        mGraphView.getGraphViewStyle().setNumHorizontalLabels(5);
-        mGraphView.getGraphViewStyle().setNumVerticalLabels(4);
+//        GraphViewSeriesStyle style = new GraphViewSeriesStyle();
+//        style.thickness = 1;
+        mSeries1  = new LineGraphSeries<DataPoint>(generateData());
+//        GraphViewSeries dataSeries = new GraphViewSeries("", style,  mData);
+        mGraphView.addSeries(mSeries1);
+//        mGraphView.getGraphViewStyle().setTextSize(20);
+//        mGraphView.getGraphViewStyle().setNumHorizontalLabels(5);
+//        mGraphView.getGraphViewStyle().setNumVerticalLabels(4);
 
-        GraphViewSeriesStyle geSstyle = dataSeries.getStyle();
+//        GraphViewSeriesStyle geSstyle = mSeries1.getStyle();
         // set view port, start=2, size=40
-        mGraphView.setViewPort(0, 800);
+//        mGraphView.setViewPort(0, 800);
+        mGraphView.getViewport().setMinX(0);
+        mGraphView.getViewport().setMaxX(80);
         // optional - activate scaling / zooming
-        mGraphView.setScrollable(true);
-        mGraphView.setScalable(true);
+//        mGraphView.setScrollable(true);
+//        mGraphView.setScalable(true);
         LinearLayout layout = (LinearLayout) rootView.findViewById(R.id.graph);
         layout.addView(mGraphView);
 
@@ -122,6 +137,23 @@ public class ItemDetailFragment extends Fragment {
         return rootView;
     }
 
+    private DataPoint[] generateData() {
+        int count = 30;
+        DataPoint[] values = new DataPoint[count];
+        for (int i=0; i<count; i++) {
+            double x = i;
+            double f = mRand.nextDouble()*0.15+0.3;
+            double y = Math.sin(i*f+2) + mRand.nextDouble()*0.3;
+            DataPoint v = new DataPoint(x, y);
+            values[i] = v;
+        }
+        return values;
+    }
+    double mLastRandom = 2;
+    Random mRand = new Random();
+    private double getRandom() {
+        return mLastRandom += mRand.nextDouble()*0.5 - 0.25;
+    }
 
     @Override
     public void onStart() {

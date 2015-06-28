@@ -2,9 +2,9 @@ package de.jandrotek.android.aspectra.libplotspectra;
 
 import android.content.Context;
 
-import com.jjoe64.graphview.GraphView;
-import com.jjoe64.graphview.GraphViewSeries;
-import com.jjoe64.graphview.LineGraphView;
+//import com.jjoe64.graphview.GraphView;
+//import com.jjoe64.graphview.GraphViewSeries;
+//import com.jjoe64.graphview.LineGraphView;
 
 /**
  * Created by jan on 16.06.15.

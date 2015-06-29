@@ -160,7 +160,8 @@ public class PlotViewFragment extends Fragment
 //        mGraphStyle = new GraphViewSeries.GraphViewSeriesStyle();
 //        mGraphStyle.thickness = 1;
 //        mData = generateDemoData();
-        mSeries1 = new LineGraphSeries<DataPoint>(generateDemoData());
+        mSeries1 = new LineGraphSeries<DataPoint>(mData);
+//        mSeries1 = new LineGraphSeries<DataPoint>(generateDemoData());
         mGraphView.addSeries(mSeries1);
 //        mGraphView.getGraphViewStyle().setTextSize(20);
 //        mGraphView.getGraphViewStyle().setNumHorizontalLabels(5);

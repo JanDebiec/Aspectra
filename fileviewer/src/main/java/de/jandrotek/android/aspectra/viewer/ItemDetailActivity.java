@@ -4,10 +4,14 @@ import android.annotation.TargetApi;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
+//import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
+
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import de.jandrotek.android.aspectra.libplotspectra.PlotViewFragment;
 
 
 /**
@@ -19,7 +23,7 @@ import android.view.MenuItem;
  * This activity is mostly just a 'shell' activity containing nothing
  * more than a {@link ItemDetailFragment}.
  */
-public class ItemDetailActivity extends ActionBarActivity {
+public class ItemDetailActivity extends AppCompatActivity {
 //    public class ItemDetailActivity extends BaseActivity {
     private static final String TAG = "DetailItemsAct";
 
@@ -45,11 +49,20 @@ public class ItemDetailActivity extends ActionBarActivity {
             // Create the detail fragment and add it to the activity
             // using a fragment transaction.
             Bundle arguments = new Bundle();
-            arguments.putString(ItemDetailFragment.ARG_ITEM_ID,
-                    getIntent().getStringExtra(ItemDetailFragment.ARG_ITEM_ID));
-            ItemDetailFragment fragment = new ItemDetailFragment();
+
+            // version with separate ItemDetailFragment
+//            arguments.putString(ItemDetailFragment.ARG_ITEM_ID,
+//                    getIntent().getStringExtra(ItemDetailFragment.ARG_ITEM_ID));
+//            ItemDetailFragment fragment = new ItemDetailFragment();
+
+            //version with fragment from library
+            arguments.putString(PlotViewFragment.ARG_ITEM_ID,
+                    getIntent().getStringExtra(PlotViewFragment.ARG_ITEM_ID));
+            PlotViewFragment fragment = new PlotViewFragment();
+
+
             fragment.setArguments(arguments);
-            getFragmentManager().beginTransaction()
+            getSupportFragmentManager().beginTransaction()
                     .add(R.id.item_detail_container, fragment)
                     .commit();
         }//not needed, the lines in manifest work for that

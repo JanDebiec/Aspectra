@@ -126,7 +126,7 @@ public class ItemDetailFragment extends Fragment {
         // set view port, start=2, size=40
 //        mGraphView.setViewPort(0, 800);
         mGraphView.getViewport().setMinX(0);
-        mGraphView.getViewport().setMaxX(80);
+        mGraphView.getViewport().setMaxX(800);
         // optional - activate scaling / zooming
 //        mGraphView.setScrollable(true);
 //        mGraphView.setScalable(true);

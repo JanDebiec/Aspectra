@@ -140,8 +140,6 @@ public class ItemListFragment extends ListFragment {
                     if (checked.valueAt(i)) {
                         int originalPosition = checked.keyAt(i);
                         positions.add( ListContent.getItem(originalPosition));
-//                        positions.add(checked.keyAt(i), ListContent.getItem(originalPosition));
-//                        positions.add(checked.keyAt(i));
                     }
                 }
 
@@ -156,8 +154,12 @@ public class ItemListFragment extends ListFragment {
                 }
 
                 getListView().clearChoices();
-                // if eleted, we don't need to do anything more, but if we don't delete,
-                // then the items are still selected
+
+                // if we want deselect;
+                // for every item selected
+                // Mylistview.setItemChecked(position, false);
+                // it's only neede if we stay in action mode, if we go back;
+                // we don't need it,
 
                 return(true);
         }

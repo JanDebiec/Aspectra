@@ -2,6 +2,7 @@ package de.jandrotek.android.aspectra.viewer;
 
 import android.annotation.TargetApi;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 //import android.support.v7.app.ActionBarActivity;
@@ -23,7 +24,9 @@ import de.jandrotek.android.aspectra.libplotspectra.PlotViewFragment;
  * This activity is mostly just a 'shell' activity containing nothing
  * more than a {@link ItemDetailFragment}.
  */
-public class ItemDetailActivity extends AppCompatActivity {
+public class ItemDetailActivity extends AppCompatActivity
+        implements PlotViewFragment.OnFragmentInteractionListener
+{
 //    public class ItemDetailActivity extends BaseActivity {
     private static final String TAG = "DetailItemsAct";
 
@@ -70,6 +73,11 @@ public class ItemDetailActivity extends AppCompatActivity {
 //        getActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
+    @Override
+    public void onFragmentInteraction(Uri uri){
+
+        // do whatever you wish with the uri
+    }
 
     @Override
     public void onStart() {

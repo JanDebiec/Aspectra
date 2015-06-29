@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import de.jandrotek.android.aspectra.core.AspectraGlobals;
 import de.jandrotek.android.aspectra.libplotspectra.PlotViewFragment;
 
 
@@ -29,6 +30,7 @@ public class ItemDetailActivity extends AppCompatActivity
 {
 //    public class ItemDetailActivity extends BaseActivity {
     private static final String TAG = "DetailItemsAct";
+    private static PlotViewFragment mPlotViewFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,12 +63,11 @@ public class ItemDetailActivity extends AppCompatActivity
             //version with fragment from library
             arguments.putString(PlotViewFragment.ARG_ITEM_ID,
                     getIntent().getStringExtra(PlotViewFragment.ARG_ITEM_ID));
-            PlotViewFragment fragment = new PlotViewFragment();
+            mPlotViewFragment = PlotViewFragment.newInstance(AspectraGlobals.ACT_ITEM_VIEW_PLOT);
 
-
-            fragment.setArguments(arguments);
+            mPlotViewFragment.setArguments(arguments);
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.item_detail_container, fragment)
+                    .add(R.id.item_detail_container, mPlotViewFragment)
                     .commit();
         }//not needed, the lines in manifest work for that
         // Show the Up button in the action bar.

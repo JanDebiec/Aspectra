@@ -154,21 +154,20 @@ public class PlotViewFragment extends Fragment
         View rootView = inflater.inflate(R.layout.fragment_plot_view, container, false);
 
         mGraphView = new GraphView(getActivity());
-//        mGraphView = new GraphView(getActivity(), "");
-        // add data
 
-//        mGraphStyle = new GraphViewSeries.GraphViewSeriesStyle();
-//        mGraphStyle.thickness = 1;
-//        mData = generateDemoData();
-        mSeries1 = new LineGraphSeries<DataPoint>(mData);
-//        mSeries1 = new LineGraphSeries<DataPoint>(generateDemoData());
+        if(mData != null) {
+            mSeries1 = new LineGraphSeries<DataPoint>(mData);
+        } else {
+            mSeries1 = new LineGraphSeries<DataPoint>(generateDemoData());
+        }
+        mSeries1.setThickness(1);
         mGraphView.addSeries(mSeries1);
+
 //        mGraphView.getGraphViewStyle().setTextSize(20);
 //        mGraphView.getGraphViewStyle().setNumHorizontalLabels(5);
 //        mGraphView.getGraphViewStyle().setNumVerticalLabels(4);
 
 //        GraphViewSeries.GraphViewSeriesStyle geSstyle = mDataSeries.getStyle();
-//        mGraphView.setViewPort(0, realPlotDataSize);
         mGraphView.getViewport().setMinX(0);
         mGraphView.getViewport().setMaxX(realPlotDataSize);
         registerForContextMenu(mGraphView);

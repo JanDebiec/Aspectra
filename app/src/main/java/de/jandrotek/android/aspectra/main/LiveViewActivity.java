@@ -5,7 +5,6 @@ import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
@@ -17,7 +16,6 @@ import java.io.File;
 import java.lang.ref.WeakReference;
 
 import de.jandrotek.android.aspectra.libplotspectra.PlotViewFragment;
-import de.jandrotek.android.aspectra.libprefs.SettingsActivity;
 import de.jandrotek.android.aspectra.core.AspectraGlobals;
 //import de.jandrotek.android.aspectra.core.FileUtils;
 import de.jandrotek.android.aspectra.core.SpectrumAsp;
@@ -215,7 +213,7 @@ public class LiveViewActivity extends BaseActivity
                 if(messId == AspectraGlobals.eMessageCompleteLine) {
                     int[] data = (int[])inputMessage.obj;
                     int length = data.length;
-                    mPlotViewFragment.showPlot(data, length);
+                    mPlotViewFragment.showPlotOne(data, length);
                     if(AspectraGlobals.mSavePlotInFile){
                         File f;
                         AspectraGlobals.mSavePlotInFile = false;

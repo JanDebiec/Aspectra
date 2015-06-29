@@ -1,12 +1,10 @@
-package de.jandrotek.android.aspectra.viewer;
+package de.jandrotek.android.aspectra.libspectrafiles;
 
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import de.jandrotek.android.aspectra.libspectrafiles.SpectrumFiles;
 
 /**
  * Helper class for providing sample content for user interfaces created by
@@ -29,9 +27,11 @@ public class ListContent {
 
     static {
     	if(SpectrumFiles.mFilelNameListOutput.length > 0){
-    	for(int i = 0; i < SpectrumFiles.mFilelNameListOutput.length; i++)
-    		addItem(new SpectrumItem(Integer.toString(i), SpectrumFiles.mFilelNameListOutput[i], "some notes"));
-    	}
+	    	for(int i = 0; i < SpectrumFiles.mFilelNameListOutput.length; i++)
+    			addItem(new SpectrumItem(Integer.toString(i), SpectrumFiles.mFilelNameListOutput[i], "some notes"));
+    		// change the order of list, first the newest, then later
+			// add notes from files
+		}
     	else
     	{
     		addItem(new SpectrumItem("1","Unknown Path", "some notes"));

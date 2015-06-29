@@ -29,6 +29,7 @@ import de.jandrotek.android.aspectra.core.AspectraGlobals;
 import de.jandrotek.android.aspectra.core.SpectrumAsp;
 import de.jandrotek.android.aspectra.core.SpectrumChr;
 import de.jandrotek.android.aspectra.libplotspectra.PlotInterface;
+import de.jandrotek.android.aspectra.libspectrafiles.ListContent;
 import de.jandrotek.android.aspectra.libspectrafiles.SpectrumFiles;
 import de.jandrotek.android.aspectra.libtouch.TouchView;
 

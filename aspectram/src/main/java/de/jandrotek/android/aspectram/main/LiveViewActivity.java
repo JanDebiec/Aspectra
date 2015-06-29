@@ -1,6 +1,5 @@
 package de.jandrotek.android.aspectram.main;
 
-import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.net.Uri;
@@ -9,8 +8,6 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v4.app.Fragment;
-import android.transition.Slide;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -387,7 +384,7 @@ public class LiveViewActivity extends BaseActivity
                     int[] data = (int[])inputMessage.obj;
                     int length = data.length;
                     try {
-                        mPlotViewFragment.showPlot(data, length);
+                        mPlotViewFragment.showPlotOne(data, length);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }

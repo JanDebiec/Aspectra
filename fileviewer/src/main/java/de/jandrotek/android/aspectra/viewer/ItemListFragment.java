@@ -29,6 +29,8 @@ import java.util.List;
 
 //import de.jandrotek.android.aspectra.main.ListContent.SpectrumItem;
 
+import de.jandrotek.android.aspectra.libspectrafiles.ListContent;
+
 import static android.widget.AbsListView.MultiChoiceModeListener;
 import static android.widget.AbsListView.OnClickListener;
 

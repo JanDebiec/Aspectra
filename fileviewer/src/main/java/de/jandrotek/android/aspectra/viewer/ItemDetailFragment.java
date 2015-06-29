@@ -26,6 +26,7 @@ import java.util.Random;
 
 import de.jandrotek.android.aspectra.core.SpectrumChr;
 
+import de.jandrotek.android.aspectra.libspectrafiles.ListContent;
 import de.jandrotek.android.aspectra.libspectrafiles.SpectrumFiles;
 
 

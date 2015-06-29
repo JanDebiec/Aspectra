@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import de.jandrotek.android.aspectra.libplotspectra.PlotViewFragment;
 import de.jandrotek.android.aspectra.libprefs.AspectraSettings;
 import de.jandrotek.android.aspectra.libspectrafiles.SpectrumFiles;
 //import de.jandrotek.android.aspectra.common.SettingsActivity;
@@ -187,7 +188,8 @@ public class ItemListActivity extends ActionBarActivity
             // In single-pane mode, simply start the detail activity
             // for the selected item ID.
             Intent detailIntent = new Intent(this, ItemDetailActivity.class);
-            detailIntent.putExtra(ItemDetailFragment.ARG_ITEM_ID, id);
+//            detailIntent.putExtra(ItemDetailFragment.ARG_ITEM_ID, id);
+            detailIntent.putExtra(PlotViewFragment.ARG_ITEM_ID, id);
             startActivity(detailIntent);
         }
     }

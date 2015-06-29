@@ -29,7 +29,9 @@ import com.jjoe64.graphview.series.LineGraphSeries;
 
 
 import de.jandrotek.android.aspectra.core.AspectraGlobals;
-
+import de.jandrotek.android.aspectra.core.SpectrumChr;
+import de.jandrotek.android.aspectra.libspectrafiles.ListContent;
+import de.jandrotek.android.aspectra.libspectrafiles.SpectrumFiles;
 //import android.app.Fragment;
 
 
@@ -71,6 +73,12 @@ public class PlotViewFragment extends Fragment
 
 
     private OnFragmentInteractionListener mListener;
+    private ListContent.SpectrumItem mItem;
+    private String mFileName;
+    private SpectrumChr mSpectrumFile;
+    private int[] mFileIntValues;
+    private DataPoint[] mData;
+
 //    private boolean mFlagSavinggStarted = false;
 
     /**
@@ -99,6 +107,7 @@ public class PlotViewFragment extends Fragment
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        int fileLength;
         if (getArguments() != null) {
 //            mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getInt(ARG_PARAM2);
@@ -109,6 +118,32 @@ public class PlotViewFragment extends Fragment
 //        mData = generateDemoData();
         // ver 4
         realData = new DataPoint[PLOT_DATA_SIZE];
+        if (getArguments().containsKey(ARG_ITEM_ID)) {
+            // Load the dummy content specified by the fragment
+            // arguments. In a real-world scenario, use a Loader
+            // to load content from a content provider.
+            mItem = ListContent.ITEM_MAP.get(getArguments().getString(ARG_ITEM_ID));
+
+            // load file specified in mItem.content
+            mFileName = SpectrumFiles.mPath +"/" + mItem.name;
+            mSpectrumFile = new SpectrumChr(mFileName);
+            try{
+                fileLength = mSpectrumFile.readValuesChr();
+                mFileIntValues = mSpectrumFile.getValues();
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            //TODO: here is danger,what is bigger: mFileIntValues or 2048
+            int num = 2048;
+            mData = new DataPoint[num];
+            for (int i=0; i<num; i++) {
+
+                mData[i] = new DataPoint(i, mFileIntValues[i]);
+            }
+
+
+        }
 
     }
 
@@ -169,6 +204,9 @@ public class PlotViewFragment extends Fragment
             //mGraphView.setScalable(true);
         }
         else if(mParam2 == AspectraGlobals.ACT_ITEM_LIVE_VIEW) {
+
+        }
+        else if(mParam2 == AspectraGlobals.ACT_ITEM_VIEW_PLOT) {
 
         }
         FrameLayout mFrameLayout = (FrameLayout)rootView.findViewById(R.id.flPlotView);
@@ -245,7 +283,7 @@ public class PlotViewFragment extends Fragment
         void onFragmentInteraction(Uri uri);
     }
 // ver 4
-    public void showPlot(int[] data, int length){
+    public void showPlotOne(int[] data, int length){
         if(mSeries1 != null) {
             realPlotDataSize = length;
             DataPoint[] graphdata = generateData(data, length);// here explode
@@ -258,7 +296,7 @@ public class PlotViewFragment extends Fragment
     }
 
     // ver 3
-//    public void showPlot(int[] data, int length){
+//    public void showPlotOne(int[] data, int length){
 //        if(mDataSeries != null) {
 //            realPlotDataSize = length;
 //            GraphViewData[] graphdata = generateData(data, length);// here explode

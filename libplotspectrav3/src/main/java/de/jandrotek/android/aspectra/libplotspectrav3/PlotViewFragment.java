@@ -1,13 +1,12 @@
 /**
  * 14.03.2015 source in Github
  */
-package de.jandrotek.android.aspectra.libplotspectra;
+package de.jandrotek.android.aspectra.libplotspectrav3;
 
 import android.app.Activity;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-//import android.support.v7.app.AppCompatActivity;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
@@ -17,22 +16,22 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
+import com.jjoe64.graphview.GraphView;
+import com.jjoe64.graphview.series.DataPointJan;
+import com.jjoe64.graphview.series.LineGraphSeries;
+
+import de.jandrotek.android.aspectra.core.AspectraGlobals;
+import de.jandrotek.android.aspectra.core.SpectrumChr;
+import de.jandrotek.android.aspectra.libspectrafiles.ListContent;
+import de.jandrotek.android.aspectra.libspectrafiles.SpectrumFiles;
+
+//import android.support.v7.app.AppCompatActivity;
 // lib ver 3.
 //import com.jjoe64.graphview.GraphView;
 //import com.jjoe64.graphview.GraphView.GraphViewData;
 //import com.jjoe64.graphview.GraphViewSeries;
 //import com.jjoe64.graphview.LineGraphView;
 //lib ver 4.
-import com.jjoe64.graphview.GraphView;
-import com.jjoe64.graphview.series.DataPoint;
-import com.jjoe64.graphview.series.DataPointJan;
-import com.jjoe64.graphview.series.LineGraphSeries;
-
-
-import de.jandrotek.android.aspectra.core.AspectraGlobals;
-import de.jandrotek.android.aspectra.core.SpectrumChr;
-import de.jandrotek.android.aspectra.libspectrafiles.ListContent;
-import de.jandrotek.android.aspectra.libspectrafiles.SpectrumFiles;
 //import android.app.Fragment;
 
 
@@ -63,14 +62,14 @@ public class PlotViewFragment extends Fragment
     private GraphView mGraphView;
     private int[] mPlotIntValues;
     //ver 3
-//    private GraphViewData[] mData;
-//    private GraphViewSeries mDataSeries;
-//    private GraphViewSeries.GraphViewSeriesStyle mGraphStyle;
-//    private GraphViewData[] realData;
+    private GraphViewData[] mData;
+    private GraphViewSeries mDataSeries;
+    private GraphViewSeries.GraphViewSeriesStyle mGraphStyle;
+    private GraphViewData[] realData;
     // ver 4
-    private LineGraphSeries<DataPointJan> mSeries1;
-    private LineGraphSeries<DataPointJan> mSeries2;
-    private DataPointJan[] realData;
+//    private LineGraphSeries<DataPointJan> mSeries1;
+//    private LineGraphSeries<DataPointJan> mSeries2;
+//    private DataPointJan[] realData;
 
 
     private OnFragmentInteractionListener mListener;
@@ -78,7 +77,6 @@ public class PlotViewFragment extends Fragment
     private String mFileName;
     private SpectrumChr mSpectrumFile;
     private int[] mFileIntValues;
-    private DataPointJan[] mData;
 
 //    private boolean mFlagSavinggStarted = false;
 
@@ -115,10 +113,10 @@ public class PlotViewFragment extends Fragment
         }
         //ver 3
         //realData = new GraphViewData[realPlotDataSize];
-//        realData = new GraphViewData[PLOT_DATA_SIZE];
-//        mData = generateDemoData();
+        realData = new GraphViewData[PLOT_DATA_SIZE];
+        mData = generateDemoData();
         // ver 4
-        realData = new DataPointJan[PLOT_DATA_SIZE];
+//        realData = new DataPointJan[PLOT_DATA_SIZE];
         if (getArguments().containsKey(ARG_ITEM_ID)) {
             // Load the dummy content specified by the fragment
             // arguments. In a real-world scenario, use a Loader
@@ -164,13 +162,13 @@ public class PlotViewFragment extends Fragment
         mSeries1.setThickness(1);
         mGraphView.addSeries(mSeries1);
 
-//        mGraphView.getGraphViewStyle().setTextSize(20);
-//        mGraphView.getGraphViewStyle().setNumHorizontalLabels(5);
-//        mGraphView.getGraphViewStyle().setNumVerticalLabels(4);
+        mGraphView.getGraphViewStyle().setTextSize(20);
+        mGraphView.getGraphViewStyle().setNumHorizontalLabels(5);
+        mGraphView.getGraphViewStyle().setNumVerticalLabels(4);
 
 //        GraphViewSeries.GraphViewSeriesStyle geSstyle = mDataSeries.getStyle();
-        mGraphView.getViewport().setMinX(0);
-        mGraphView.getViewport().setMaxX(realPlotDataSize);
+//        mGraphView.getViewport().setMinX(0);
+//        mGraphView.getViewport().setMaxX(realPlotDataSize);
         registerForContextMenu(mGraphView);
 
         mGraphView.setOnTouchListener(new View.OnTouchListener() {
@@ -284,101 +282,101 @@ public class PlotViewFragment extends Fragment
         void onFragmentInteraction(Uri uri);
     }
 // ver 4
-    public void showPlotOne(int[] data, int length){
-        if(mSeries1 != null) {
-            realPlotDataSize = length;
-            DataPointJan[] graphdata = generateData(data, length);// here explode
-
-            mGraphView.getViewport().setXAxisBoundsManual(true);
-            mGraphView.getViewport().setMinX(0);
-            mGraphView.getViewport().setMaxX(realPlotDataSize);
-            mSeries1.resetData(graphdata);
-        }
-    }
-
-    // ver 3
 //    public void showPlotOne(int[] data, int length){
-//        if(mDataSeries != null) {
+//        if(mSeries1 != null) {
 //            realPlotDataSize = length;
-//            GraphViewData[] graphdata = generateData(data, length);// here explode
-//            mGraphView.setViewPort(0, realPlotDataSize);
-//            mDataSeries.resetData(graphdata);
+//            DataPointJan[] graphdata = generateData(data, length);// here explode
+//
+//            mGraphView.getViewport().setXAxisBoundsManual(true);
+//            mGraphView.getViewport().setMinX(0);
+//            mGraphView.getViewport().setMaxX(realPlotDataSize);
+//            mSeries1.resetData(graphdata);
 //        }
 //    }
 
+    // ver 3
+    public void showPlotOne(int[] data, int length){
+        if(mDataSeries != null) {
+            realPlotDataSize = length;
+            GraphViewData[] graphdata = generateData(data, length);// here explode
+            mGraphView.setViewPort(0, realPlotDataSize);
+            mDataSeries.resetData(graphdata);
+        }
+    }
+
     //ver 4
-    private DataPointJan[] generateData(int[] data, int length) {
-        DataPointJan baseDataPoint = new DataPointJan();
-        // TODO:  variables as private in fragment, for speed up, GarbageCollection not needed
-        for (int i=0; i<length; i++) {
+//    private DataPointJan[] generateData(int[] data, int length) {
+//        DataPointJan baseDataPoint = new DataPointJan();
+//        // TODO:  variables as private in fragment, for speed up, GarbageCollection not needed
+//        for (int i=0; i<length; i++) {
+//
+//            baseDataPoint.setX(i);
+//            baseDataPoint.setY(data[i]);
+////            DataPointJan v = new DataPointJan(i, data[i]);
+//            realData[i] = baseDataPoint;
+//        }
+//        //TODO: check in plot act length, and add needed data only for that length
+//
+//        //for(int i = length; i < realPlotDataSize ; i++){
+//        for(int i = length; i < PLOT_DATA_SIZE ; i++){
+////            DataPointJan v = new DataPointJan(i, 0);
+//            baseDataPoint.setX(i);
+//            baseDataPoint.setY(0);
+//            realData[i] = baseDataPoint;
+//        }
+//        return realData;
+//    }
 
-            baseDataPoint.setX(i);
-            baseDataPoint.setY(data[i]);
-//            DataPointJan v = new DataPointJan(i, data[i]);
-            realData[i] = baseDataPoint;
-        }
-        //TODO: check in plot act length, and add needed data only for that length
+// ver 3
+        private GraphViewData[] generateData(int[] data, int length) {
+//  variables as private in fragment, for speed up, GarbageCollection not needed
+            for (int i=0; i<length; i++) {
 
-        //for(int i = length; i < realPlotDataSize ; i++){
-        for(int i = length; i < PLOT_DATA_SIZE ; i++){
-//            DataPointJan v = new DataPointJan(i, 0);
-            baseDataPoint.setX(i);
-            baseDataPoint.setY(0);
-            realData[i] = baseDataPoint;
-        }
+                realData[i] = new GraphViewData(i, data[i]);
+            }
+            //TODO: check in plot act length, and add needed data only for that length
+
+            //for(int i = length; i < realPlotDataSize ; i++){
+                for(int i = length; i < PLOT_DATA_SIZE ; i++){
+                realData[i] = new GraphViewData(i, 0);
+            }
         return realData;
     }
 
-// ver 3
-    //    private GraphViewData[] generateData(int[] data, int length) {
-////  variables as private in fragment, for speed up, GarbageCollection not needed
-//            for (int i=0; i<length; i++) {
-//
-//                realData[i] = new GraphViewData(i, data[i]);
-//            }
-//            //TODO: check in plot act length, and add needed data only for that length
-//
-//            //for(int i = length; i < realPlotDataSize ; i++){
-//                for(int i = length; i < PLOT_DATA_SIZE ; i++){
-//                realData[i] = new GraphViewData(i, 0);
-//            }
-//        return realData;
-//    }
-//
 
     // ver 4
-    private DataPointJan[] generateDemoData(){
-        DataPointJan[] demoData;
-        mPlotIntValues = new int[PLOT_DATA_SIZE];
-        for (int i = 0; i < PLOT_DATA_SIZE/2; i++)
-            mPlotIntValues[i] = i;
-        for (int i = PLOT_DATA_SIZE/2; i < PLOT_DATA_SIZE; i++)
-            mPlotIntValues[i] = PLOT_DATA_SIZE - i;
-
-        demoData = new DataPointJan[PLOT_DATA_SIZE];
-        for (int i=0; i<PLOT_DATA_SIZE; i++) {
-
-            demoData[i] = new DataPointJan(i, mPlotIntValues[i]);
-        }
-        return demoData;
-    }
-
-    //ver 3
-//    private GraphViewData[] generateDemoData(){
-//        GraphViewData[] demoData;
+//    private DataPointJan[] generateDemoData(){
+//        DataPointJan[] demoData;
 //        mPlotIntValues = new int[PLOT_DATA_SIZE];
 //        for (int i = 0; i < PLOT_DATA_SIZE/2; i++)
 //            mPlotIntValues[i] = i;
 //        for (int i = PLOT_DATA_SIZE/2; i < PLOT_DATA_SIZE; i++)
 //            mPlotIntValues[i] = PLOT_DATA_SIZE - i;
 //
-//        demoData = new GraphViewData[PLOT_DATA_SIZE];
+//        demoData = new DataPointJan[PLOT_DATA_SIZE];
 //        for (int i=0; i<PLOT_DATA_SIZE; i++) {
 //
-//            demoData[i] = new GraphViewData(i, mPlotIntValues[i]);
+//            demoData[i] = new DataPointJan(i, mPlotIntValues[i]);
 //        }
 //        return demoData;
 //    }
+
+    //ver 3
+    private GraphViewData[] generateDemoData(){
+        GraphViewData[] demoData;
+        mPlotIntValues = new int[PLOT_DATA_SIZE];
+        for (int i = 0; i < PLOT_DATA_SIZE/2; i++)
+            mPlotIntValues[i] = i;
+        for (int i = PLOT_DATA_SIZE/2; i < PLOT_DATA_SIZE; i++)
+            mPlotIntValues[i] = PLOT_DATA_SIZE - i;
+
+        demoData = new GraphViewData[PLOT_DATA_SIZE];
+        for (int i=0; i<PLOT_DATA_SIZE; i++) {
+
+            demoData[i] = new GraphViewData(i, mPlotIntValues[i]);
+        }
+        return demoData;
+    }
 }
 
 

@@ -95,7 +95,7 @@
     <orderEntry type="library" exported="" name="appcompat-v7-22.2.0" level="project" />
     <orderEntry type="module" module-name="libspectrafiles" exported="" />
     <orderEntry type="module" module-name="libprefs" exported="" />
+    <orderEntry type="module" module-name="libplotspectrav3" exported="" />
     <orderEntry type="module" module-name="core" exported="" />
-    <orderEntry type="module" module-name="libplotspectra" exported="" />
   </component>
 </module>

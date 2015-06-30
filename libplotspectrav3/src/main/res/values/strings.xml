@@ -1,3 +1,5 @@
 <resources>
-    <string name="app_name">libplotspectrav3</string>
+    <string name="app_name">libplotspectra</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
 </resources>

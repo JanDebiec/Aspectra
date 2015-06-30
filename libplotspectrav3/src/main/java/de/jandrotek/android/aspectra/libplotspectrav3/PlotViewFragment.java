@@ -16,10 +16,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
-import com.jjoe64.graphview.GraphView;
-import com.jjoe64.graphview.series.DataPointJan;
-import com.jjoe64.graphview.series.LineGraphSeries;
-
 import de.jandrotek.android.aspectra.core.AspectraGlobals;
 import de.jandrotek.android.aspectra.core.SpectrumChr;
 import de.jandrotek.android.aspectra.libspectrafiles.ListContent;
@@ -27,12 +23,10 @@ import de.jandrotek.android.aspectra.libspectrafiles.SpectrumFiles;
 
 //import android.support.v7.app.AppCompatActivity;
 // lib ver 3.
-//import com.jjoe64.graphview.GraphView;
-//import com.jjoe64.graphview.GraphView.GraphViewData;
-//import com.jjoe64.graphview.GraphViewSeries;
-//import com.jjoe64.graphview.LineGraphView;
-//lib ver 4.
-//import android.app.Fragment;
+import com.jjoe64.graphview.GraphView;
+import com.jjoe64.graphview.GraphView.GraphViewData;
+import com.jjoe64.graphview.GraphViewSeries;
+import com.jjoe64.graphview.LineGraphView;
 
 
 /**
@@ -135,11 +129,11 @@ public class PlotViewFragment extends Fragment
             }
             //TODO: here is danger,what is bigger: mFileIntValues or 2048
             int num = 2048;
-            mData = new DataPointJan[num];
-            for (int i=0; i<num; i++) {
-
-                mData[i] = new DataPointJan(i, mFileIntValues[i]);
-            }
+//            mData = new DataPointJan[num];
+//            for (int i=0; i<num; i++) {
+//
+//                mData[i] = new DataPointJan(i, mFileIntValues[i]);
+//            }
 
 
         }
@@ -152,23 +146,20 @@ public class PlotViewFragment extends Fragment
 
         View rootView = inflater.inflate(R.layout.fragment_plot_view, container, false);
 
-        mGraphView = new GraphView(getActivity());
-
-        if(mData != null) {
-            mSeries1 = new LineGraphSeries<DataPointJan>(mData);
-        } else {
-            mSeries1 = new LineGraphSeries<DataPointJan>(generateDemoData());
-        }
-        mSeries1.setThickness(1);
-        mGraphView.addSeries(mSeries1);
-
+//        mGraphView = new GraphView(getActivity());
+        mGraphView = new LineGraphView(getActivity(), "");
+        // add data
+        mGraphStyle = new GraphViewSeries.GraphViewSeriesStyle();
+        mGraphStyle.thickness = 1;
+        mData = generateDemoData();
+        mDataSeries = new GraphViewSeries("", mGraphStyle, mData);
+        mGraphView.addSeries(mDataSeries);
         mGraphView.getGraphViewStyle().setTextSize(20);
         mGraphView.getGraphViewStyle().setNumHorizontalLabels(5);
         mGraphView.getGraphViewStyle().setNumVerticalLabels(4);
 
-//        GraphViewSeries.GraphViewSeriesStyle geSstyle = mDataSeries.getStyle();
-//        mGraphView.getViewport().setMinX(0);
-//        mGraphView.getViewport().setMaxX(realPlotDataSize);
+        GraphViewSeries.GraphViewSeriesStyle geSstyle = mDataSeries.getStyle();
+        mGraphView.setViewPort(0, realPlotDataSize);
         registerForContextMenu(mGraphView);
 
         mGraphView.setOnTouchListener(new View.OnTouchListener() {

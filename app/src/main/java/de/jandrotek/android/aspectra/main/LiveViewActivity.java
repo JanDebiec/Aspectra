@@ -15,7 +15,8 @@ import android.widget.Toast;
 import java.io.File;
 import java.lang.ref.WeakReference;
 
-import de.jandrotek.android.aspectra.libplotspectra.PlotViewFragment;
+//import de.jandrotek.android.aspectra.libplotspectra.PlotViewFragment;
+import de.jandrotek.android.aspectra.libplotspectrav3.PlotViewFragment;
 import de.jandrotek.android.aspectra.core.AspectraGlobals;
 //import de.jandrotek.android.aspectra.core.FileUtils;
 import de.jandrotek.android.aspectra.core.SpectrumAsp;

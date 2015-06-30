@@ -28,11 +28,9 @@ android {
 dependencies {
     // new one
     compile 'com.android.support:appcompat-v7:22.2.0'
-    compile project(':libplotspectra')
+    compile project(':libplotspectrav3')
     compile project(':libspectrafiles')
     compile project(':core')
     compile project(':libprefs')
-//    compile files('libs/GraphView-3.1.2.jar')
-//    compile files('libs/GraphView-4.0.1.jar')
 }
 

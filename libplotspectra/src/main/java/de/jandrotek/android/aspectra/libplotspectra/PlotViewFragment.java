@@ -308,23 +308,30 @@ public class PlotViewFragment extends Fragment
 
     //ver 4
     private DataPointJan[] generateData(int[] data, int length) {
-        DataPointJan baseDataPoint = new DataPointJan();
+//        DataPointJan baseDataPoint = new DataPointJan();
+        int x;
+        int y;
+        if(realData == null){
+            realData = new DataPointJan[PLOT_DATA_SIZE];
+
+        }
+
         // TODO:  variables as private in fragment, for speed up, GarbageCollection not needed
         for (int i=0; i<length; i++) {
 
-            baseDataPoint.setX(i);
-            baseDataPoint.setY(data[i]);
-//            DataPointJan v = new DataPointJan(i, data[i]);
-            realData[i] = baseDataPoint;
+//            baseDataPoint.setX(i);
+//            baseDataPoint.setY(data[i]);
+            DataPointJan v = new DataPointJan(i, data[i]);
+            realData[i] = v;
         }
         //TODO: check in plot act length, and add needed data only for that length
 
         //for(int i = length; i < realPlotDataSize ; i++){
         for(int i = length; i < PLOT_DATA_SIZE ; i++){
-//            DataPointJan v = new DataPointJan(i, 0);
-            baseDataPoint.setX(i);
-            baseDataPoint.setY(0);
-            realData[i] = baseDataPoint;
+            DataPointJan v = new DataPointJan(i, 0);
+//            baseDataPoint.setX(i);
+//            baseDataPoint.setY(0);
+            realData[i] = v;
         }
         return realData;
     }

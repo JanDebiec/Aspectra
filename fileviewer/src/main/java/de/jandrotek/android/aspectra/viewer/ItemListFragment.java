@@ -75,7 +75,7 @@ public class ItemListFragment extends ListFragment {
         /**
          * Callback for when an item has been selected.
          */
-        void onItemSelected(String id);
+        void onItemSelected(ArrayList<String> filesNames);
     }
 
     /**
@@ -84,7 +84,7 @@ public class ItemListFragment extends ListFragment {
      */
     private static Callbacks sDummyCallbacks = new Callbacks() {
         @Override
-        public void onItemSelected(String id) {
+        public void onItemSelected(ArrayList<String> filesNames) {
         }
     };
 

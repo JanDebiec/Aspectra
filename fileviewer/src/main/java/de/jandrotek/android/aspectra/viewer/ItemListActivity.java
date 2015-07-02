@@ -10,6 +10,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import java.util.ArrayList;
+
 import de.jandrotek.android.aspectra.libplotspectrav3.PlotViewFragment;
 import de.jandrotek.android.aspectra.libprefs.AspectraSettings;
 import de.jandrotek.android.aspectra.libspectrafiles.SpectrumFiles;
@@ -172,7 +174,7 @@ public class ItemListActivity extends ActionBarActivity
      * indicating that the item(s) with the given ID was selected.
      */
     @Override
-    public void onItemSelected(String[] filesNames) {
+    public void onItemSelected(ArrayList<String> filesNames) {
         if (mTwoPane) {
             // t will be fixed later, first we go with single pane
 
@@ -180,7 +182,7 @@ public class ItemListActivity extends ActionBarActivity
             // adding or replacing the detail fragment using a
             // fragment transaction.
             Bundle arguments = new Bundle();
-            arguments.putString(PlotViewFragment.ARG_ITEM_IDS, filesNames);
+            arguments.putStringArrayList(PlotViewFragment.ARG_ITEM_IDS, filesNames);
             PlotViewFragment fragment = new PlotViewFragment();
             fragment.setArguments(arguments);
             getFragmentManager().beginTransaction()
@@ -190,8 +192,11 @@ public class ItemListActivity extends ActionBarActivity
         } else {
             // In single-pane mode, simply start the detail activity
             // for the selected item ID.
+            Bundle arguments = new Bundle();
+            arguments.putStringArrayList(PlotViewFragment.ARG_ITEM_IDS, filesNames);
             Intent detailIntent = new Intent(this, ItemDetailActivity.class);
-            detailIntent.putExtra(PlotViewFragment.ARG_ITEM_IDS, filesNames);
+            detailIntent.putExtras(arguments);
+//            detailIntent.putExtra(PlotViewFragment.ARG_ITEM_IDS, filesNames);
             startActivity(detailIntent);
         }
     }

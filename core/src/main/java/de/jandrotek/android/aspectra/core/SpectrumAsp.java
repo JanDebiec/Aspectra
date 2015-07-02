@@ -46,6 +46,13 @@ public class SpectrumAsp  extends SpectrumBase {
 		mHeader.dataLength = dataSize;
 	}
 
+    public String getNotes(){
+        if (mHeader != null)
+            return mHeader.notes;
+        else
+            return "any";
+
+    }
 	public SpectrumAsp(){
         mFileName = "";
 	}
@@ -183,6 +190,7 @@ public class SpectrumAsp  extends SpectrumBase {
      */
     public class Header{
 
+        public int notesLength;
         public int dataType;
         public int dataLength;
         public int normalizedToSize;
@@ -190,6 +198,7 @@ public class SpectrumAsp  extends SpectrumBase {
         public float waveLength1;
         public int index2;
         public float waveLength2;
+        public String notes;
 
     	public Header(){
             normalizedToSize = -1;
@@ -198,6 +207,8 @@ public class SpectrumAsp  extends SpectrumBase {
 
         public String toString(){
             StringBuilder buffer = new StringBuilder();
+            buffer.append(Integer.toString(notesLength));
+            buffer.append("\n");
             buffer.append(Integer.toString(dataType));
             buffer.append("\n");
             buffer.append(Integer.toString(dataLength));
@@ -211,6 +222,8 @@ public class SpectrumAsp  extends SpectrumBase {
             buffer.append(Integer.toString(index2));
             buffer.append("\n");
             buffer.append(Float.toString(waveLength2));
+            buffer.append("\n");
+            buffer.append(notes);
             buffer.append("\n");
 
             return buffer.toString();

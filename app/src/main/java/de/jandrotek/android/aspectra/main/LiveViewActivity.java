@@ -59,7 +59,7 @@ public class LiveViewActivity extends BaseActivity
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.fragmentHolderCameraView, mCameraViewFragment)
                     .commit();
-            mPlotViewFragment = PlotViewFragment.newInstance(AspectraGlobals.ACT_ITEM_LIVE_VIEW);
+            mPlotViewFragment = PlotViewFragment.newInstance(AspectraGlobals.ACT_ITEM_LIVE_VIEW, 1);
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.fvPlotView, mPlotViewFragment)
                     .commit();

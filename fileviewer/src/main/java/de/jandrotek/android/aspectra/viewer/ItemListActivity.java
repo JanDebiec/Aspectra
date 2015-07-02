@@ -10,7 +10,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import de.jandrotek.android.aspectra.libplotspectra.PlotViewFragment;
+import de.jandrotek.android.aspectra.libplotspectrav3.PlotViewFragment;
 import de.jandrotek.android.aspectra.libprefs.AspectraSettings;
 import de.jandrotek.android.aspectra.libspectrafiles.SpectrumFiles;
 //import de.jandrotek.android.aspectra.common.SettingsActivity;
@@ -45,6 +45,7 @@ public class ItemListActivity extends ActionBarActivity
     private int mFileListSize = 0;
     private String[] mFiles;
     private int mChartLength;
+    public int mPlotsCount = 1;// default = 1, can be changed in ListFragment
     /**
      * Whether or not the activity is in two-pane mode, i.e. running on a tablet
      * device.
@@ -168,17 +169,19 @@ public class ItemListActivity extends ActionBarActivity
 
     /**
      * Callback method from {@link ItemListFragment.Callbacks}
-     * indicating that the item with the given ID was selected.
+     * indicating that the item(s) with the given ID was selected.
      */
     @Override
-    public void onItemSelected(String id) {
+    public void onItemSelected(String[] filesNames) {
         if (mTwoPane) {
+            // t will be fixed later, first we go with single pane
+
             // In two-pane mode, show the detail view in this activity by
             // adding or replacing the detail fragment using a
             // fragment transaction.
             Bundle arguments = new Bundle();
-            arguments.putString(ItemDetailFragment.ARG_ITEM_ID, id);
-            ItemDetailFragment fragment = new ItemDetailFragment();
+            arguments.putString(PlotViewFragment.ARG_ITEM_IDS, filesNames);
+            PlotViewFragment fragment = new PlotViewFragment();
             fragment.setArguments(arguments);
             getFragmentManager().beginTransaction()
                     .replace(R.id.item_detail_container, fragment)
@@ -188,8 +191,7 @@ public class ItemListActivity extends ActionBarActivity
             // In single-pane mode, simply start the detail activity
             // for the selected item ID.
             Intent detailIntent = new Intent(this, ItemDetailActivity.class);
-//            detailIntent.putExtra(ItemDetailFragment.ARG_ITEM_ID, id);
-            detailIntent.putExtra(PlotViewFragment.ARG_ITEM_ID, id);
+            detailIntent.putExtra(PlotViewFragment.ARG_ITEM_ID, filesNames);
             startActivity(detailIntent);
         }
     }

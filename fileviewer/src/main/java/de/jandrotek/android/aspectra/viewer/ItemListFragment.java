@@ -8,6 +8,7 @@ import android.app.ListFragment;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Config;
 import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.ActionMode;
@@ -134,8 +135,7 @@ public class ItemListFragment extends ListFragment {
         SparseBooleanArray checked = getListView().getCheckedItemPositions();
 
         switch (item.getItemId()) {
-            case R.id.item_delete:
-            {
+            case R.id.item_delete: {
                 ArrayList<ListContent.SpectrumItem> positions = new ArrayList<>();
 
                 for (int i=0; i < checked.size(); i++) {
@@ -164,7 +164,44 @@ public class ItemListFragment extends ListFragment {
                 // we don't need it,
 
                 return(true);
-        }
+            }
+            case R.id.item_show: {
+                ArrayList<ListContent.SpectrumItem> positions = new ArrayList<>();
+                ArrayList<String> filesNames = new ArrayList<>();
+                int nPlotsCount = checked.size();
+                ItemListActivity activity = (ItemListActivity) getActivity();
+                activity.mPlotsCount = nPlotsCount;
+
+                for (int i=0; i < nPlotsCount; i++) {
+                    if (checked.valueAt(i)) {
+                        int originalPosition = checked.keyAt(i);
+                        positions.add( ListContent.getItem(originalPosition));
+                    }
+                }
+
+                // here we explode
+                //Collections.sort(positions, Collections.reverseOrder());
+
+                for (ListContent.SpectrumItem spectrum : positions) {
+                    String fileName = spectrum.getName();
+                    if(BuildConfig.DEBUG) {
+                        Log.d(TAG, fileName);
+                    }
+                    filesNames.add(fileName);
+                }
+
+                getListView().clearChoices();
+
+                // call MultiPlotViewer
+
+                // if we want deselect;
+                // for every item selected
+                // Mylistview.setItemChecked(position, false);
+                // it's only neede if we stay in action mode, if we go back;
+                // we don't need it,
+
+                return(true);
+            }
 
         }// switch
         return(false);

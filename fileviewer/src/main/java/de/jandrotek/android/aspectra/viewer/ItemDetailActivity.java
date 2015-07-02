@@ -13,7 +13,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import de.jandrotek.android.aspectra.core.AspectraGlobals;
-import de.jandrotek.android.aspectra.libplotspectra.PlotViewFragment;
+import de.jandrotek.android.aspectra.libplotspectrav3.PlotViewFragment;
 
 
 /**
@@ -31,6 +31,7 @@ public class ItemDetailActivity extends AppCompatActivity
 //    public class ItemDetailActivity extends BaseActivity {
     private static final String TAG = "DetailItemsAct";
     private static PlotViewFragment mPlotViewFragment;
+    public int mPlotsCount = 1;// default = 1, can be changed in ListFragment
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,7 +64,7 @@ public class ItemDetailActivity extends AppCompatActivity
             //version with fragment from library
             arguments.putString(PlotViewFragment.ARG_ITEM_ID,
                     getIntent().getStringExtra(PlotViewFragment.ARG_ITEM_ID));
-            mPlotViewFragment = PlotViewFragment.newInstance(AspectraGlobals.ACT_ITEM_VIEW_PLOT);
+            mPlotViewFragment = PlotViewFragment.newInstance(AspectraGlobals.ACT_ITEM_VIEW_PLOT, mPlotsCount);
 
             mPlotViewFragment.setArguments(arguments);
             getSupportFragmentManager().beginTransaction()

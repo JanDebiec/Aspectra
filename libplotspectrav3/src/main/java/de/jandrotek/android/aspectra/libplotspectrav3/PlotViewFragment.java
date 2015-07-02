@@ -28,6 +28,8 @@ import com.jjoe64.graphview.GraphView.GraphViewData;
 import com.jjoe64.graphview.GraphViewSeries;
 import com.jjoe64.graphview.LineGraphView;
 
+import java.util.ArrayList;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -40,17 +42,17 @@ import com.jjoe64.graphview.LineGraphView;
 public class PlotViewFragment extends Fragment
     implements         View.OnCreateContextMenuListener
 {
-    public static final String ARG_ITEM_ID = "item_id";
+    public static final String ARG_ITEM_IDS = "item_ids";
         // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-//    private static final String ARG_PARAM1 = "param1";
+    private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
     private static final int PLOT_DATA_SIZE = 1920;
     private int realPlotDataSize = PLOT_DATA_SIZE;
 
     // TODO: Rename and change types of parameters
-//    private String mParam1;
+    private int mParam1;
     private int mParam2;
 
     private GraphView mGraphView;
@@ -67,7 +69,7 @@ public class PlotViewFragment extends Fragment
 
 
     private OnFragmentInteractionListener mListener;
-    private ListContent.SpectrumItem mItem;
+    private ArrayList<ListContent.SpectrumItem> mItems;
     private String mFileName;
     private SpectrumChr mSpectrumFile;
     private int[] mFileIntValues;
@@ -78,17 +80,16 @@ public class PlotViewFragment extends Fragment
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
+     * @param param1 Type of calling activity.
+     * @param param2 count of plots to draw.
      * @return A new instance of fragment PlotViewFragment.
      */
     // TODO: Rename and change types and number of parameters
-//    public static PlotViewFragment newInstance(String param1, String param2) {
-        public static PlotViewFragment newInstance(int param2) {
+        public static PlotViewFragment newInstance(int param1, int param2) {
         PlotViewFragment fragment = new PlotViewFragment();
         Bundle args = new Bundle();
-        //args.putString(ARG_PARAM1, param1);
-            args.putInt(ARG_PARAM2, param2);
+        args.putInt(ARG_PARAM1, param1);
+        args.putInt(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -102,7 +103,7 @@ public class PlotViewFragment extends Fragment
         super.onCreate(savedInstanceState);
         int fileLength;
         if (getArguments() != null) {
-//            mParam1 = getArguments().getString(ARG_PARAM1);
+            mParam1 = getArguments().getInt(ARG_PARAM1);
             mParam2 = getArguments().getInt(ARG_PARAM2);
         }
         //ver 3
@@ -111,14 +112,16 @@ public class PlotViewFragment extends Fragment
         mData = generateDemoData();
         // ver 4
 //        realData = new DataPointJan[PLOT_DATA_SIZE];
-        if (getArguments().containsKey(ARG_ITEM_ID)) {
+        if (getArguments().containsKey(ARG_ITEM_IDS)) {
             // Load the dummy content specified by the fragment
             // arguments. In a real-world scenario, use a Loader
             // to load content from a content provider.
-            mItem = ListContent.ITEM_MAP.get(getArguments().getString(ARG_ITEM_ID));
+            mItems = getArguments().getStringArrayList(ARG_ITEM_IDS));
+//            mItems = ListContent.ITEM_MAP.get(getArguments().getStringArrayList(ARG_ITEM_IDS));
+
 
             // load file specified in mItem.content
-            mFileName = SpectrumFiles.mPath +"/" + mItem.name;
+            mFileName = SpectrumFiles.mPath +"/" + mItems[0].name;
             mSpectrumFile = new SpectrumChr(mFileName);
             try{
                 fileLength = mSpectrumFile.readValuesChr();
@@ -189,14 +192,14 @@ public class PlotViewFragment extends Fragment
         //TODO: optional - activate scaling / zooming
         // both modi will be handled with Touch-view helper class, not only in viewer
         // in liveView is disabled, first in AnalyzeActivity
-        if (mParam2 == AspectraGlobals.ACT_ITEM_ANALYZE) {
+        if (mParam1 == AspectraGlobals.ACT_ITEM_ANALYZE) {
             //mGraphView.setScrollable(true);
             //mGraphView.setScalable(true);
         }
-        else if(mParam2 == AspectraGlobals.ACT_ITEM_LIVE_VIEW) {
+        else if(mParam1 == AspectraGlobals.ACT_ITEM_LIVE_VIEW) {
 
         }
-        else if(mParam2 == AspectraGlobals.ACT_ITEM_VIEW_PLOT) {
+        else if(mParam1 == AspectraGlobals.ACT_ITEM_VIEW_PLOT) {
 
         }
         FrameLayout mFrameLayout = (FrameLayout)rootView.findViewById(R.id.flPlotView);

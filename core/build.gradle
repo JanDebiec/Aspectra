@@ -28,5 +28,5 @@ test {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
 // temp disabled
-    testCompile 'junit:junit:4.+'
+//    testCompile 'junit:junit:4.+'
 }

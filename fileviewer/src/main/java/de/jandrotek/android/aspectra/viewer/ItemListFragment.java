@@ -168,8 +168,11 @@ public class ItemListFragment extends ListFragment {
             case R.id.item_show: {
                 ArrayList<ListContent.SpectrumItem> positions = new ArrayList<>();
                 ArrayList<String> filesNames = new ArrayList<>();
+                int nPlotsCount = checked.size();
+                ItemListActivity activity = (ItemListActivity) getActivity();
+                activity.mPlotsCount = nPlotsCount;
 
-                for (int i=0; i < checked.size(); i++) {
+                for (int i=0; i < nPlotsCount; i++) {
                     if (checked.valueAt(i)) {
                         int originalPosition = checked.keyAt(i);
                         positions.add( ListContent.getItem(originalPosition));

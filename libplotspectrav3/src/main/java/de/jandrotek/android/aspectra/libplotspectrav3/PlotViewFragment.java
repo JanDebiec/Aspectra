@@ -69,7 +69,7 @@ public class PlotViewFragment extends Fragment
 
 
     private OnFragmentInteractionListener mListener;
-    private ArrayList<ListContent.SpectrumItem> mItems;
+    private ArrayList<String> mItems;
     private String mFileName;
     private SpectrumChr mSpectrumFile;
     private int[] mFileIntValues;
@@ -116,12 +116,13 @@ public class PlotViewFragment extends Fragment
             // Load the dummy content specified by the fragment
             // arguments. In a real-world scenario, use a Loader
             // to load content from a content provider.
-            mItems = getArguments().getStringArrayList(ARG_ITEM_IDS));
+            mItems = getArguments().getStringArrayList(ARG_ITEM_IDS);
 //            mItems = ListContent.ITEM_MAP.get(getArguments().getStringArrayList(ARG_ITEM_IDS));
 
 
             // load file specified in mItem.content
-            mFileName = SpectrumFiles.mPath +"/" + mItems[0].name;
+            String fileName = mItems.get(0);
+            mFileName = SpectrumFiles.mPath +"/" + fileName;
             mSpectrumFile = new SpectrumChr(mFileName);
             try{
                 fileLength = mSpectrumFile.readValuesChr();
@@ -137,10 +138,7 @@ public class PlotViewFragment extends Fragment
 //
 //                mData[i] = new DataPointJan(i, mFileIntValues[i]);
 //            }
-
-
         }
-
     }
 
     @Override
@@ -149,7 +147,6 @@ public class PlotViewFragment extends Fragment
 
         View rootView = inflater.inflate(R.layout.fragment_plot_view, container, false);
 
-//        mGraphView = new GraphView(getActivity());
         mGraphView = new LineGraphView(getActivity(), "");
         // add data
         mGraphStyle = new GraphViewSeries.GraphViewSeriesStyle();
@@ -169,14 +166,14 @@ public class PlotViewFragment extends Fragment
 
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                int action = event.getAction();
-                if(action == MotionEvent.ACTION_DOWN) {
+            int action = event.getAction();
+            if(action == MotionEvent.ACTION_DOWN) {
 
-                    if (!AspectraGlobals.mSavePlotInFile) {
-                        AspectraGlobals.mSavePlotInFile = true;
-                    }
+                if (!AspectraGlobals.mSavePlotInFile) {
+                    AspectraGlobals.mSavePlotInFile = true;
                 }
-                return true; //processed
+            }
+            return true; //processed
             }
 
         });
@@ -235,8 +232,6 @@ public class PlotViewFragment extends Fragment
     @Override
     public void onResume() {
         super.onResume();
-
-//        mFlagSavinggStarted = false;
     }
 
     //TODO will not working

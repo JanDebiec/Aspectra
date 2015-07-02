@@ -191,7 +191,7 @@ public class ItemListActivity extends ActionBarActivity
             // In single-pane mode, simply start the detail activity
             // for the selected item ID.
             Intent detailIntent = new Intent(this, ItemDetailActivity.class);
-            detailIntent.putExtra(PlotViewFragment.ARG_ITEM_ID, filesNames);
+            detailIntent.putExtra(PlotViewFragment.ARG_ITEM_IDS, filesNames);
             startActivity(detailIntent);
         }
     }

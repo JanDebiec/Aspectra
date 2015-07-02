@@ -92,6 +92,7 @@ public class ItemListFragment extends ListFragment {
     //JD addsOn
     ListView mPrivateListView;
     private SpectrumAdapter mAdapter;
+    ArrayList<String> filesNames;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -104,6 +105,7 @@ public class ItemListFragment extends ListFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        filesNames = new ArrayList<>();
         mAdapter = new SpectrumAdapter(ListContent.ITEMS);
         setListAdapter(mAdapter);
 
@@ -167,8 +169,9 @@ public class ItemListFragment extends ListFragment {
             }
             case R.id.item_show: {
                 ArrayList<ListContent.SpectrumItem> positions = new ArrayList<>();
-                ArrayList<String> filesNames = new ArrayList<>();
+
                 int nPlotsCount = checked.size();
+                filesNames.clear();
                 ItemListActivity activity = (ItemListActivity) getActivity();
                 activity.mPlotsCount = nPlotsCount;
 
@@ -193,6 +196,7 @@ public class ItemListFragment extends ListFragment {
                 getListView().clearChoices();
 
                 // call MultiPlotViewer
+                mCallbacks.onItemSelected(filesNames);
 
                 // if we want deselect;
                 // for every item selected
@@ -272,10 +276,11 @@ public class ItemListFragment extends ListFragment {
     @Override
     public void onListItemClick(ListView listView, View view, int position, long id) {
         super.onListItemClick(listView, view, position, id);
-
-        // Notify the active callbacks interface (the activity, if the
-        // fragment is attached to one) that an item has been selected.
-        mCallbacks.onItemSelected(ListContent.ITEMS.get(position).id);
+//        String[] filesNames = new String[1];
+        filesNames.clear();
+        String fileName = ListContent.ITEM_MAP.get(id).getName();
+        filesNames.add(fileName);
+        mCallbacks.onItemSelected(filesNames);
     }
 
     @Override

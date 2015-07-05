@@ -62,8 +62,8 @@ public class ItemDetailActivity extends AppCompatActivity
 //            ItemDetailFragment fragment = new ItemDetailFragment();
 
             //version with fragment from library
-            arguments.putString(PlotViewFragment.ARG_ITEM_ID,
-                    getIntent().getStringExtra(PlotViewFragment.ARG_ITEM_ID));
+            arguments.putString(PlotViewFragment.ARG_ITEM_IDS,
+                    getIntent().getStringExtra(PlotViewFragment.ARG_ITEM_IDS));
             mPlotViewFragment = PlotViewFragment.newInstance(AspectraGlobals.ACT_ITEM_VIEW_PLOT, mPlotsCount);
 
             mPlotViewFragment.setArguments(arguments);

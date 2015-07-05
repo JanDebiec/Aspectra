@@ -15,20 +15,20 @@ import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 
 // ver 3
-//import com.jjoe64.graphview.GraphView;
-//import com.jjoe64.graphview.GraphView.GraphViewData;
-//import com.jjoe64.graphview.GraphViewSeries;
-//import com.jjoe64.graphview.GraphViewSeries.GraphViewSeriesStyle;
-//import com.jjoe64.graphview.LineGraphView;
-// ver 4
 import com.jjoe64.graphview.GraphView;
-import com.jjoe64.graphview.series.DataPoint;
-import com.jjoe64.graphview.series.LineGraphSeries;
+import com.jjoe64.graphview.GraphView.GraphViewData;
+import com.jjoe64.graphview.GraphViewSeries;
+import com.jjoe64.graphview.GraphViewSeries.GraphViewSeriesStyle;
+import com.jjoe64.graphview.LineGraphView;
+// ver 4
+//import com.jjoe64.graphview.GraphView;
+//import com.jjoe64.graphview.series.DataPoint;
+//import com.jjoe64.graphview.series.LineGraphSeries;
 
 import de.jandrotek.android.aspectra.core.AspectraGlobals;
 import de.jandrotek.android.aspectra.core.SpectrumAsp;
 import de.jandrotek.android.aspectra.core.SpectrumChr;
-import de.jandrotek.android.aspectra.libplotspectra.PlotInterface;
+import de.jandrotek.android.aspectra.libplotspectrav3.PlotInterface;
 import de.jandrotek.android.aspectra.libspectrafiles.ListContent;
 import de.jandrotek.android.aspectra.libspectrafiles.SpectrumFiles;
 import de.jandrotek.android.aspectra.libtouch.TouchView;

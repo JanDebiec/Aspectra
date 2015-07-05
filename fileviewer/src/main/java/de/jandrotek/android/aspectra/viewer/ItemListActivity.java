@@ -175,22 +175,22 @@ public class ItemListActivity extends ActionBarActivity
      */
     @Override
     public void onItemSelected(ArrayList<String> filesNames) {
-        if (mTwoPane) {
-            // t will be fixed later, first we go with single pane
-
-            // In two-pane mode, show the detail view in this activity by
-            // adding or replacing the detail fragment using a
-            // fragment transaction.
-            Bundle arguments = new Bundle();
-            arguments.putStringArrayList(PlotViewFragment.ARG_ITEM_IDS, filesNames);
-            PlotViewFragment fragment = new PlotViewFragment();
-            fragment.setArguments(arguments);
-            getFragmentManager().beginTransaction()
-                    .replace(R.id.item_detail_container, fragment)
-                    .commit();
-
-        } else {
-            // In single-pane mode, simply start the detail activity
+//        if (mTwoPane) {
+//            // t will be fixed later, first we go with single pane
+//
+//            // In two-pane mode, show the detail view in this activity by
+//            // adding or replacing the detail fragment using a
+//            // fragment transaction.
+//            Bundle arguments = new Bundle();
+//            arguments.putStringArrayList(PlotViewFragment.ARG_ITEM_IDS, filesNames);
+//            PlotViewFragment fragment = new PlotViewFragment();
+//            fragment.setArguments(arguments);
+//            getFragmentManager().beginTransaction()
+//                    .replace(R.id.item_detail_container, fragment)
+//                    .commit();
+//
+//        } else {
+//            // In single-pane mode, simply start the detail activity
             // for the selected item ID.
             Bundle arguments = new Bundle();
             arguments.putStringArrayList(PlotViewFragment.ARG_ITEM_IDS, filesNames);
@@ -198,7 +198,7 @@ public class ItemListActivity extends ActionBarActivity
             detailIntent.putExtras(arguments);
 //            detailIntent.putExtra(PlotViewFragment.ARG_ITEM_IDS, filesNames);
             startActivity(detailIntent);
-        }
+//        }
     }
 
     protected void updateFromPreferences() {

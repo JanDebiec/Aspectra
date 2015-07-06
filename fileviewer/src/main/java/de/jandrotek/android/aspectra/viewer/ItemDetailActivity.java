@@ -64,11 +64,10 @@ public class ItemDetailActivity extends AppCompatActivity
 //            ItemDetailFragment fragment = new ItemDetailFragment();
 
             //version with fragment from library
-            ArrayList<String> names = arguments.putString(PlotViewFragment.ARG_ITEM_IDS,
-                    getIntent().getExtras().getStringArray();
-            (PlotViewFragment.ARG_ITEM_IDS));
-//                    getIntent().getStringExtra(PlotViewFragment.ARG_ITEM_IDS));getStringArrayList
-            mPlotViewFragment = PlotViewFragment.newInstance(AspectraGlobals.ACT_ITEM_VIEW_PLOT, mPlotsCount);
+            ArrayList<String> names = getIntent().getExtras().getStringArrayList(PlotViewFragment.ARG_ITEM_IDS);
+            //arguments.putStringArrayList(PlotViewFragment.ARG_ITEM_IDS, names);
+            mPlotViewFragment = PlotViewFragment.newInstance(AspectraGlobals.ACT_ITEM_VIEW_PLOT, 1);
+            arguments.putStringArrayList(PlotViewFragment.ARG_ITEM_IDS, names);
 
             mPlotViewFragment.setArguments(arguments);
             getSupportFragmentManager().beginTransaction()

@@ -196,7 +196,6 @@ public class ItemListActivity extends ActionBarActivity
             arguments.putStringArrayList(PlotViewFragment.ARG_ITEM_IDS, filesNames);
             Intent detailIntent = new Intent(this, ItemDetailActivity.class);
             detailIntent.putExtras(arguments);
-//            detailIntent.putExtra(PlotViewFragment.ARG_ITEM_IDS, filesNames);
             startActivity(detailIntent);
 //        }
     }

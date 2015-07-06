@@ -12,6 +12,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import java.util.ArrayList;
+
 import de.jandrotek.android.aspectra.core.AspectraGlobals;
 import de.jandrotek.android.aspectra.libplotspectrav3.PlotViewFragment;
 
@@ -62,8 +64,10 @@ public class ItemDetailActivity extends AppCompatActivity
 //            ItemDetailFragment fragment = new ItemDetailFragment();
 
             //version with fragment from library
-            arguments.putString(PlotViewFragment.ARG_ITEM_IDS,
-                    getIntent().getStringExtra(PlotViewFragment.ARG_ITEM_IDS));
+            ArrayList<String> names = arguments.putString(PlotViewFragment.ARG_ITEM_IDS,
+                    getIntent().getExtras().getStringArray();
+            (PlotViewFragment.ARG_ITEM_IDS));
+//                    getIntent().getStringExtra(PlotViewFragment.ARG_ITEM_IDS));getStringArrayList
             mPlotViewFragment = PlotViewFragment.newInstance(AspectraGlobals.ACT_ITEM_VIEW_PLOT, mPlotsCount);
 
             mPlotViewFragment.setArguments(arguments);

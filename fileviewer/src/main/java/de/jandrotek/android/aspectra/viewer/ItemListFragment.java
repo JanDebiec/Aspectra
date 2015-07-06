@@ -278,7 +278,9 @@ public class ItemListFragment extends ListFragment {
         super.onListItemClick(listView, view, position, id);
 //        String[] filesNames = new String[1];
         filesNames.clear();
-        String fileName = ListContent.ITEM_MAP.get(id).getName();
+        ListContent.SpectrumItem spectrum = ListContent.getItem(position);
+        String fileName = spectrum.getName();
+//        String fileName = ListContent.ITEM_MAP.get(id).getName();
         filesNames.add(fileName);
         mCallbacks.onItemSelected(filesNames);
     }

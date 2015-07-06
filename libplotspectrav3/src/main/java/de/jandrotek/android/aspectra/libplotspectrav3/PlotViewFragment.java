@@ -87,11 +87,13 @@ public class PlotViewFragment extends Fragment
      * @return A new instance of fragment PlotViewFragment.
      */
     // TODO: Rename and change types and number of parameters
-        public static PlotViewFragment newInstance(int param1, int param2) {
+        public static PlotViewFragment newInstance(int param1, ArrayList<String> items) {
+//        public static PlotViewFragment newInstance(int param1, int param2) {
         PlotViewFragment fragment = new PlotViewFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_PARAM1, param1);
-        args.putInt(ARG_PARAM2, param2);
+        args.putStringArrayList(ARG_PARAM2,items );
+//        args.putInt(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -106,7 +108,8 @@ public class PlotViewFragment extends Fragment
         int fileLength;
         if (getArguments() != null) {
             mParam1 = getArguments().getInt(ARG_PARAM1);
-            mParam2 = getArguments().getInt(ARG_PARAM2);
+            mItems = getArguments().getStringArrayList(ARG_PARAM2);
+//            mParam2 = getArguments().getInt(ARG_PARAM2);
         }
         //ver 3
         //realData = new GraphViewData[realPlotDataSize];
@@ -118,9 +121,11 @@ public class PlotViewFragment extends Fragment
             // Load the dummy content specified by the fragment
             // arguments. In a real-world scenario, use a Loader
             // to load content from a content provider.
-            mItems = getArguments().getStringArrayList(ARG_ITEM_IDS);
-//            mItems = ListContent.ITEM_MAP.get(getArguments().getStringArrayList(ARG_ITEM_IDS));
 
+
+//            mItems = getArguments().getStringArrayList(ARG_ITEM_IDS);
+//            mItems = ListContent.ITEM_MAP.get(getArguments().getStringArrayList(ARG_ITEM_IDS));
+            int listSize = mItems.size();
 
             // load file specified in mItem.content
             String fileName = mItems.get(0);

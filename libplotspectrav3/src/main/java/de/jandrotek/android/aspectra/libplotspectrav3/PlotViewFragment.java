@@ -64,11 +64,6 @@ public class PlotViewFragment extends Fragment
     private GraphViewSeries mDataSeries;
     private GraphViewSeries.GraphViewSeriesStyle mGraphStyle;
     private GraphViewData[] realData;
-    // ver 4
-//    private LineGraphSeries<DataPointJan> mSeries1;
-//    private LineGraphSeries<DataPointJan> mSeries2;
-//    private DataPointJan[] realData;
-
 
     private OnFragmentInteractionListener mListener;
     private ArrayList<String> mItems;

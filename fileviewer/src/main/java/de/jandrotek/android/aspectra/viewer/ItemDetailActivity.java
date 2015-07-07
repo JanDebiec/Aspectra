@@ -58,19 +58,9 @@ public class ItemDetailActivity extends AppCompatActivity
             // using a fragment transaction.
             Bundle arguments = new Bundle();
 
-            // version with separate ItemDetailFragment
-//            arguments.putString(ItemDetailFragment.ARG_ITEM_ID,
-//                    getIntent().getStringExtra(ItemDetailFragment.ARG_ITEM_ID));
-//            ItemDetailFragment fragment = new ItemDetailFragment();
-
-            //version with fragment from library
             // comunication with plot fragment throught call parameters, not arguments
             ArrayList<String> names = getIntent().getExtras().getStringArrayList(PlotViewFragment.ARG_ITEM_IDS);
-            //arguments.putStringArrayList(PlotViewFragment.ARG_ITEM_IDS, names);
             mPlotViewFragment = PlotViewFragment.newInstance(AspectraGlobals.ACT_ITEM_VIEW_PLOT, names);
-//            arguments.putStringArrayList(PlotViewFragment.ARG_ITEM_IDS, names);
-
-//            mPlotViewFragment.setArguments(arguments);
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.item_detail_container, mPlotViewFragment)
                     .commit();

@@ -75,6 +75,7 @@ public class PlotViewFragment extends Fragment
     private String mFileName;
     private SpectrumChr mSpectrumFile;
     private int[] mFileIntValues;
+    private int fileLength;
 
 //    private boolean mFlagSavinggStarted = false;
 
@@ -87,12 +88,15 @@ public class PlotViewFragment extends Fragment
      * @return A new instance of fragment PlotViewFragment.
      */
     // TODO: Rename and change types and number of parameters
-//        public static PlotViewFragment newInstance(int param1, ArrayList<String> items) {
-        public static PlotViewFragment newInstance(int param1, int param2) {
+        public static PlotViewFragment newInstance(int param1, ArrayList<String> items) {
+//        public static PlotViewFragment newInstance(int param1, int param2) {
         PlotViewFragment fragment = new PlotViewFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_PARAM1, param1);
-        args.putInt(ARG_PARAM2, param2);
+         if(param1 == AspectraGlobals.ACT_ITEM_VIEW_PLOT) {
+             args.putStringArrayList(ARG_ITEM_IDS, items);
+         }
+//        args.putInt(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -104,11 +108,11 @@ public class PlotViewFragment extends Fragment
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        int fileLength;
         if (getArguments() != null) {
             mParam1 = getArguments().getInt(ARG_PARAM1);
-//            mItems = getArguments().getStringArrayList(ARG_ITEM_IDS);
-            mParam2 = getArguments().getInt(ARG_PARAM2);
+            if (getArguments().containsKey(ARG_ITEM_IDS)) {
+                mItems = getArguments().getStringArrayList(ARG_ITEM_IDS);
+            }
         }
         realData = new GraphViewData[PLOT_DATA_SIZE];
         mData = generateDemoData();
@@ -152,7 +156,11 @@ public class PlotViewFragment extends Fragment
         // add data
         mGraphStyle = new GraphViewSeries.GraphViewSeriesStyle();
         mGraphStyle.thickness = 1;
-        mData = generateDemoData();
+        if(mItems != null) {
+            mData = generateData(mFileIntValues, fileLength);
+        } else {
+            mData = generateDemoData();
+        }
         mDataSeries = new GraphViewSeries("", mGraphStyle, mData);
         mGraphView.addSeries(mDataSeries);
         mGraphView.getGraphViewStyle().setTextSize(20);
@@ -271,18 +279,6 @@ public class PlotViewFragment extends Fragment
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
-// ver 4
-//    public void showPlotOne(int[] data, int length){
-//        if(mSeries1 != null) {
-//            realPlotDataSize = length;
-//            DataPointJan[] graphdata = generateData(data, length);// here explode
-//
-//            mGraphView.getViewport().setXAxisBoundsManual(true);
-//            mGraphView.getViewport().setMinX(0);
-//            mGraphView.getViewport().setMaxX(realPlotDataSize);
-//            mSeries1.resetData(graphdata);
-//        }
-//    }
 
     // ver 3
     public void showPlotOne(int[] data, int length){
@@ -294,28 +290,6 @@ public class PlotViewFragment extends Fragment
         }
     }
 
-    //ver 4
-//    private DataPointJan[] generateData(int[] data, int length) {
-//        DataPointJan baseDataPoint = new DataPointJan();
-//        // TODO:  variables as private in fragment, for speed up, GarbageCollection not needed
-//        for (int i=0; i<length; i++) {
-//
-//            baseDataPoint.setX(i);
-//            baseDataPoint.setY(data[i]);
-////            DataPointJan v = new DataPointJan(i, data[i]);
-//            realData[i] = baseDataPoint;
-//        }
-//        //TODO: check in plot act length, and add needed data only for that length
-//
-//        //for(int i = length; i < realPlotDataSize ; i++){
-//        for(int i = length; i < PLOT_DATA_SIZE ; i++){
-////            DataPointJan v = new DataPointJan(i, 0);
-//            baseDataPoint.setX(i);
-//            baseDataPoint.setY(0);
-//            realData[i] = baseDataPoint;
-//        }
-//        return realData;
-//    }
 
 // ver 3
         private GraphViewData[] generateData(int[] data, int length) {
@@ -332,24 +306,6 @@ public class PlotViewFragment extends Fragment
             }
         return realData;
     }
-
-
-    // ver 4
-//    private DataPointJan[] generateDemoData(){
-//        DataPointJan[] demoData;
-//        mPlotIntValues = new int[PLOT_DATA_SIZE];
-//        for (int i = 0; i < PLOT_DATA_SIZE/2; i++)
-//            mPlotIntValues[i] = i;
-//        for (int i = PLOT_DATA_SIZE/2; i < PLOT_DATA_SIZE; i++)
-//            mPlotIntValues[i] = PLOT_DATA_SIZE - i;
-//
-//        demoData = new DataPointJan[PLOT_DATA_SIZE];
-//        for (int i=0; i<PLOT_DATA_SIZE; i++) {
-//
-//            demoData[i] = new DataPointJan(i, mPlotIntValues[i]);
-//        }
-//        return demoData;
-//    }
 
     //ver 3
     private GraphViewData[] generateDemoData(){

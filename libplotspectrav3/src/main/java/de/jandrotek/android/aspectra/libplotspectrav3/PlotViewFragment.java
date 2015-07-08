@@ -20,7 +20,6 @@ import android.widget.FrameLayout;
 
 import de.jandrotek.android.aspectra.core.AspectraGlobals;
 import de.jandrotek.android.aspectra.core.SpectrumChr;
-import de.jandrotek.android.aspectra.libspectrafiles.ListContent;
 import de.jandrotek.android.aspectra.libspectrafiles.SpectrumFiles;
 
 //import android.support.v7.app.AppCompatActivity;
@@ -70,7 +69,7 @@ public class PlotViewFragment extends Fragment
     private String mFileName;
     private SpectrumChr mSpectrumFile;
     private int[] mFileIntValues;
-    private int fileLength;
+    private int mFileDataLength;
 
 //    private boolean mFlagSavinggStarted = false;
 
@@ -109,8 +108,8 @@ public class PlotViewFragment extends Fragment
                 mItems = getArguments().getStringArrayList(ARG_ITEM_IDS);
             }
         }
-        realData = new GraphViewData[PLOT_DATA_SIZE];
-        mData = generateDemoData();
+//        realData = new GraphViewData[PLOT_DATA_SIZE];
+//        mData = generateDemoData();
         if (getArguments().containsKey(ARG_ITEM_IDS)) {
             // Load the dummy content specified by the fragment
             // arguments. In a real-world scenario, use a Loader
@@ -125,8 +124,10 @@ public class PlotViewFragment extends Fragment
             mFileName = SpectrumFiles.mPath +"/" + fileName;
             mSpectrumFile = new SpectrumChr(mFileName);
             try{
-                fileLength = mSpectrumFile.readValuesChr();
+                mFileDataLength = mSpectrumFile.readValuesChr();
                 mFileIntValues = mSpectrumFile.getValues();
+                realData = new GraphViewData[mFileDataLength];
+                //mData = generateData();
 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -152,7 +153,7 @@ public class PlotViewFragment extends Fragment
         mGraphStyle = new GraphViewSeries.GraphViewSeriesStyle();
         mGraphStyle.thickness = 1;
         if(mItems != null) {
-            mData = generateData(mFileIntValues, fileLength);
+            mData = generateData(mFileIntValues, mFileDataLength);
         } else {
             mData = generateDemoData();
         }
@@ -163,7 +164,7 @@ public class PlotViewFragment extends Fragment
         mGraphView.getGraphViewStyle().setNumVerticalLabels(4);
 
         GraphViewSeries.GraphViewSeriesStyle geSstyle = mDataSeries.getStyle();
-        mGraphView.setViewPort(0, realPlotDataSize);
+        mGraphView.setViewPort(0, mFileDataLength);
         registerForContextMenu(mGraphView);
 
         mGraphView.setOnTouchListener(new View.OnTouchListener() {
@@ -296,7 +297,7 @@ public class PlotViewFragment extends Fragment
             //TODO: check in plot act length, and add needed data only for that length
 
             //for(int i = length; i < realPlotDataSize ; i++){
-                for(int i = length; i < PLOT_DATA_SIZE ; i++){
+                for(int i = length; i < mFileDataLength ; i++){
                 realData[i] = new GraphViewData(i, 0);
             }
         return realData;

@@ -108,13 +108,7 @@ public class PlotViewFragment extends Fragment
                 mItems = getArguments().getStringArrayList(ARG_ITEM_IDS);
             }
         }
-//        realData = new GraphViewData[PLOT_DATA_SIZE];
-//        mData = generateDemoData();
         if (getArguments().containsKey(ARG_ITEM_IDS)) {
-            // Load the dummy content specified by the fragment
-            // arguments. In a real-world scenario, use a Loader
-            // to load content from a content provider.
-
 
             mItems = getArguments().getStringArrayList(ARG_ITEM_IDS);
             int listSize = mItems.size();
@@ -132,13 +126,6 @@ public class PlotViewFragment extends Fragment
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            //TODO: here is danger,what is bigger: mFileIntValues or 2048
-            int num = 2048;
-//            mData = new DataPointJan[num];
-//            for (int i=0; i<num; i++) {
-//
-//                mData[i] = new DataPointJan(i, mFileIntValues[i]);
-//            }
         }
     }
 

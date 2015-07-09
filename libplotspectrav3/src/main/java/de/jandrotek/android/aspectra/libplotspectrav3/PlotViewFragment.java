@@ -82,7 +82,7 @@ public class PlotViewFragment extends Fragment
      * this fragment using the provided parameters.
      *
      * @param param1 Type of calling activity.
-     * @param param2 count of plots to draw.
+     * @param items Araylist of spectrumFiles names.
      * @return A new instance of fragment PlotViewFragment.
      */
     // TODO: Rename and change types and number of parameters
@@ -187,7 +187,7 @@ public class PlotViewFragment extends Fragment
             realData[0] = generateDemoData();
             mDataSeries[0] = new GraphViewSeries(
                     "",
-                    new GraphViewSeries.GraphViewSeriesStyle(mColor[i], 1),
+                    new GraphViewSeries.GraphViewSeriesStyle(mColor[0], 1),
                     realData[0]);
             mGraphView.addSeries(mDataSeries[0]);
         }
@@ -195,7 +195,6 @@ public class PlotViewFragment extends Fragment
         mGraphView.getGraphViewStyle().setNumHorizontalLabels(5);
         mGraphView.getGraphViewStyle().setNumVerticalLabels(4);
 
-//        GraphViewSeries.GraphViewSeriesStyle geSstyle = mDataSeries[0].getStyle();
         mGraphView.setViewPort(0, mDataLengthMax);
         registerForContextMenu(mGraphView);
 

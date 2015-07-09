@@ -45,7 +45,7 @@ public class ItemListActivity extends ActionBarActivity
 
     private SpectrumFiles mSpectrumFiles = null;
     private int mFileListSize = 0;
-    private String[] mFiles;
+//    private String[] mFiles;
     private int mChartLength;
     public int mPlotsCount = 1;// default = 1, can be changed in ListFragment
     /**
@@ -144,7 +144,6 @@ public class ItemListActivity extends ActionBarActivity
         super.onCreateOptionsMenu(menu);
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_activity_list, menu);
-//        getMenuInflater().inflate(R.menu.action_menu_single, menu);
         return true;
     }
 
@@ -193,7 +192,6 @@ public class ItemListActivity extends ActionBarActivity
 //            // In single-pane mode, simply start the detail activity
             // for the selected item ID.
             Bundle arguments = new Bundle();
-//        arguments.putInt(PlotViewFragment.ARG_PARAM1, );
             arguments.putStringArrayList(PlotViewFragment.ARG_ITEM_IDS, filesNames);
             Intent detailIntent = new Intent(this, ItemDetailActivity.class);
             detailIntent.putExtras(arguments);

@@ -93,7 +93,7 @@ public class ItemListFragment extends ListFragment {
     ListView mPrivateListView;
     private SpectrumAdapter mAdapter;
     ArrayList<String> filesNames;
-
+    ViewerModeListener mModeListener;
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
@@ -127,9 +127,14 @@ public class ItemListFragment extends ListFragment {
 
         mPrivateListView = getListView();
         mPrivateListView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
-        mPrivateListView.setMultiChoiceModeListener(new ViewerModeListener(
-                        this, getListView())
-        );
+        mModeListener = new ViewerModeListener(
+                this, getListView());
+        mPrivateListView.setMultiChoiceModeListener(mModeListener        );
+//        mPrivateListView.setMultiChoiceModeListener(new ViewerModeListener(
+//                        this, getListView())
+//        );
+        mPrivateListView.clearChoices();
+
     }
 
 
@@ -239,6 +244,9 @@ public class ItemListFragment extends ListFragment {
         if(BuildConfig.DEBUG) {
             Log.i(TAG, "onStart");
         }
+        if(mModeListener.activeMode != null) {
+            mModeListener.activeMode.finish();
+        }
     }
 
     @Override
@@ -246,6 +254,9 @@ public class ItemListFragment extends ListFragment {
         super.onResume();
         if(BuildConfig.DEBUG) {
             Log.i(TAG, "onResume");
+        }
+        if(mModeListener.activeMode != null) {
+            mModeListener.activeMode.finish();
         }
     }
 
@@ -263,6 +274,9 @@ public class ItemListFragment extends ListFragment {
         if(BuildConfig.DEBUG) {
             Log.i(TAG, "onStop");
         }
+        if(mModeListener.activeMode != null) {
+            mModeListener.activeMode.finish();
+        }
     }
 
     @Override
@@ -276,11 +290,9 @@ public class ItemListFragment extends ListFragment {
     @Override
     public void onListItemClick(ListView listView, View view, int position, long id) {
         super.onListItemClick(listView, view, position, id);
-//        String[] filesNames = new String[1];
         filesNames.clear();
         ListContent.SpectrumItem spectrum = ListContent.getItem(position);
         String fileName = spectrum.getName();
-//        String fileName = ListContent.ITEM_MAP.get(id).getName();
         filesNames.add(fileName);
         mCallbacks.onItemSelected(filesNames);
     }

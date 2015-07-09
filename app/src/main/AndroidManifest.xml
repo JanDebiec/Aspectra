@@ -35,12 +35,6 @@
             android:name="de.jandrotek.android.aspectra.main.ViewConfigActivity"
             android:label="@string/title_activity_view_config" >
         </activity>
-        <!-- not as separate activity
-        <activity
-            android:name="de.jandrotek.android.aspectra.mini.BaseActivity"
-            android:label="@string/title_activity_base" >
-        </activity>
-        -->
     </application>
 
 </manifest>

@@ -216,7 +216,7 @@ public class LiveViewActivity extends BaseActivity
                 if(messId == AspectraGlobals.eMessageCompleteLine) {
                     int[] data = (int[])inputMessage.obj;
                     int length = data.length;
-                    mPlotViewFragment.showPlotOne(data, length);
+                    mPlotViewFragment.showPlot(0, data, length);
                     if(AspectraGlobals.mSavePlotInFile){
                         File f;
                         AspectraGlobals.mSavePlotInFile = false;

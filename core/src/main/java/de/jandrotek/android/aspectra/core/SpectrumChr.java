@@ -33,7 +33,7 @@ public class SpectrumChr  extends SpectrumBase{
         int i = 0;
         int k = 0;
         int value;
-        mValues = new int[2048];
+        mValues = new int[AspectraGlobals.eMaxSpectrumSize];
         try {
             File file;
             file = new File(mFileName);// TODO:here we need the whole name with path

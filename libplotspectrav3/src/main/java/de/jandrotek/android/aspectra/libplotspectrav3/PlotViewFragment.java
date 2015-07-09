@@ -62,7 +62,7 @@ public class PlotViewFragment extends Fragment
     private GraphViewData[] mData;
     private GraphViewSeries mDataSeries;
     private GraphViewSeries.GraphViewSeriesStyle mGraphStyle;
-    private GraphViewData[] realData;
+    private GraphViewData[] realData = null;
 
     private OnFragmentInteractionListener mListener;
     private ArrayList<String> mItems;
@@ -277,6 +277,9 @@ public class PlotViewFragment extends Fragment
 // ver 3
         private GraphViewData[] generateData(int[] data, int length) {
 //  variables as private in fragment, for speed up, GarbageCollection not needed
+            if(realData == null){
+                realData = new GraphViewData[length];
+            }
             for (int i=0; i<length; i++) {
 
                 realData[i] = new GraphViewData(i, data[i]);

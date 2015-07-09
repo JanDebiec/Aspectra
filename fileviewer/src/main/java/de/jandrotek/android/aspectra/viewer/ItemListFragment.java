@@ -197,17 +197,10 @@ public class ItemListFragment extends ListFragment {
                     }
                     filesNames.add(fileName);
                 }
-
-                getListView().clearChoices();
+//                 getListView().clearChoices();
 
                 // call MultiPlotViewer
                 mCallbacks.onItemSelected(filesNames);
-
-                // if we want deselect;
-                // for every item selected
-                // Mylistview.setItemChecked(position, false);
-                // it's only neede if we stay in action mode, if we go back;
-                // we don't need it,
 
                 return(true);
             }

@@ -4,7 +4,6 @@ package de.jandrotek.android.aspectra.libspectrafiles;
 
 import android.os.Environment;
 import android.util.Log;
-import android.widget.Toast;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -20,6 +19,7 @@ public class SpectrumFiles {
     private static final String TAG = "SpectraFiles";
 
     public static String[] mFilelNameListOutput = null;
+    public static String[] mFilelNameListOutputUnsorted = null;
     public static String mPath = "";
 
     private static String mFileExt = "";
@@ -66,7 +66,14 @@ public class SpectrumFiles {
         if((mExternalStorageAvailable)) {
 
             fileWalker = new FileWalker(mPath);
-            mFilelNameListOutput = fileWalker.search4Files(mFileExt);
+            mFilelNameListOutputUnsorted = fileWalker.search4Files(mFileExt);
+            Arrays.sort( mFilelNameListOutputUnsorted );
+            int arraySize = mFilelNameListOutputUnsorted.length;
+            mFilelNameListOutput = new String[arraySize];
+            for(int i = 0; i < arraySize; i++){
+                mFilelNameListOutput[arraySize - 1 - i] = mFilelNameListOutputUnsorted[i];
+            }
+
         }
         else{
             if(BuildConfig.DEBUG) {

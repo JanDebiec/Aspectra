@@ -3,41 +3,31 @@ package de.jandrotek.android.aspectra.viewer;
 import android.app.Activity;
 import android.app.ListFragment;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
-import android.util.Config;
 import android.util.Log;
 import android.util.SparseBooleanArray;
-import android.view.ActionMode;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.TwoLineListItem;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 //import de.jandrotek.android.aspectra.main.ListContent.SpectrumItem;
 
 import de.jandrotek.android.aspectra.libspectrafiles.ListContent;
 
-import static android.widget.AbsListView.MultiChoiceModeListener;
-import static android.widget.AbsListView.OnClickListener;
-
 public class ItemListFragment extends ListFragment {
     private static final String TAG = "ListItemsFrag";
     ListView mPrivateListView;
     private SpectrumAdapter mAdapter;
     ArrayList<String> filesNames;
-    ViewerModeListener mModeListener;
+    ListViewerModeListener mModeListener;
 
     private static final String STATE_ACTIVATED_POSITION = "activated_position";
     private Callbacks mCallbacks = sDummyCallbacks;
@@ -79,7 +69,7 @@ public class ItemListFragment extends ListFragment {
 
         mPrivateListView = getListView();
         mPrivateListView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
-        mModeListener = new ViewerModeListener(
+        mModeListener = new ListViewerModeListener(
                 this, getListView());
         mPrivateListView.setMultiChoiceModeListener(mModeListener        );
         mPrivateListView.clearChoices();

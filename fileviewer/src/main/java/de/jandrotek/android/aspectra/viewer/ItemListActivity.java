@@ -129,6 +129,7 @@ public class ItemListActivity extends ActionBarActivity
 
     @Override
     public void onItemSelected(ArrayList<String> filesNames) {
+//TODO: activate the twoPane display
 //        if (mTwoPane) {
 //            // t will be fixed later, first we go with single pane
 //
@@ -144,8 +145,6 @@ public class ItemListActivity extends ActionBarActivity
 //                    .commit();
 //
 //        } else {
-//            // In single-pane mode, simply start the detail activity
-            // for the selected item ID.
             Bundle arguments = new Bundle();
             arguments.putStringArrayList(PlotViewFragment.ARG_ITEM_IDS, filesNames);
             Intent detailIntent = new Intent(this, ItemDetailActivity.class);

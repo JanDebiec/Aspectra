@@ -23,71 +23,27 @@ import java.util.List;
 
 import de.jandrotek.android.aspectra.libspectrafiles.ListContent;
 
-//import de.jandrotek.android.aspectra.main.ListContent.SpectrumItem;
-
-/**
- * A list fragment representing a list of Items. This fragment
- * also supports tablet devices by allowing list items to be given an
- * 'activated' state upon selection. This helps indicate which item is
- * currently being viewed in a {@link ItemDetailFragment}.
- * <p>
- * Activities containing this fragment MUST implement the {@link Callbacks}
- * interface.
- */
 public class AnalyzeListFragment extends ListFragment {
     //  implements  MultiChoiceModeListener{
     private static final String TAG = "ListItemsFrag";
-
-    /**
-     * The serialization (saved instance state) Bundle key representing the
-     * activated item position. Only used on tablets.
-     */
     private static final String STATE_ACTIVATED_POSITION = "activated_position";
-
-    /**
-     * The fragment's current callback object, which is notified of list item
-     * clicks.
-     */
+    ListView mPrivateListView;
+    private SpectrumAdapter mAdapter;
+    ArrayList<String> filesNames;
+    ViewerModeListener mModeListener;
     private Callbacks mCallbacks = sDummyCallbacks;
-
-    /**
-     * The current activated item position. Only used on tablets.
-     */
     private int mActivatedPosition = ListView.INVALID_POSITION;
 
-
-    /**
-     * A callback interface that all activities containing this fragment must
-     * implement. This mechanism allows activities to be notified of item
-     * selections.
-     */
     public interface Callbacks {
-        /**
-         * Callback for when an item has been selected.
-         */
         void onItemSelected(ArrayList<String> filesNames);
     }
 
-    /**
-     * A dummy implementation of the {@link Callbacks} interface that does
-     * nothing. Used only when this fragment is not attached to an activity.
-     */
     private static Callbacks sDummyCallbacks = new Callbacks() {
         @Override
         public void onItemSelected(ArrayList<String> filesNames) {
         }
     };
 
-
-    //JD addsOn
-    ListView mPrivateListView;
-    private SpectrumAdapter mAdapter;
-    ArrayList<String> filesNames;
-    ViewerModeListener mModeListener;
-    /**
-     * Mandatory empty constructor for the fragment manager to instantiate the
-     * fragment (e.g. upon screen orientation changes).
-     */
     public AnalyzeListFragment() {
     }
 
@@ -98,7 +54,6 @@ public class AnalyzeListFragment extends ListFragment {
         filesNames = new ArrayList<>();
         mAdapter = new SpectrumAdapter(ListContent.ITEMS);
         setListAdapter(mAdapter);
-
     }
 
     @Override
@@ -109,7 +64,6 @@ public class AnalyzeListFragment extends ListFragment {
             Log.i(TAG, "onViewCreated");
         }
 
-        // Restore the previously serialized activated item position.
         if (savedInstanceState != null
                 && savedInstanceState.containsKey(STATE_ACTIVATED_POSITION)) {
             setActivatedPosition(savedInstanceState.getInt(STATE_ACTIVATED_POSITION));
@@ -120,13 +74,8 @@ public class AnalyzeListFragment extends ListFragment {
         mModeListener = new ViewerModeListener(
                 this, getListView());
         mPrivateListView.setMultiChoiceModeListener(mModeListener        );
-//        mPrivateListView.setMultiChoiceModeListener(new ViewerModeListener(
-//                        this, getListView())
-//        );
         mPrivateListView.clearChoices();
-
     }
-
 
     public boolean performActions(MenuItem item) {
         SparseBooleanArray checked = getListView().getCheckedItemPositions();
@@ -141,10 +90,6 @@ public class AnalyzeListFragment extends ListFragment {
                         positions.add( ListContent.getItem(originalPosition));
                     }
                 }
-
-                // here we explode
-                //Collections.sort(positions, Collections.reverseOrder());
-
                 for (ListContent.SpectrumItem spectrum : positions) {
 //                    ListContent.SpectrumItem item;
                     Log.d(TAG, spectrum.getName());
@@ -153,13 +98,6 @@ public class AnalyzeListFragment extends ListFragment {
                 }
 
                 getListView().clearChoices();
-
-                // if we want deselect;
-                // for every item selected
-                // Mylistview.setItemChecked(position, false);
-                // it's only neede if we stay in action mode, if we go back;
-                // we don't need it,
-
                 return(true);
             }
             case R.id.item_show: {
@@ -168,7 +106,7 @@ public class AnalyzeListFragment extends ListFragment {
                 int nPlotsCount = checked.size();
                 filesNames.clear();
                 AnalyzeListActivity activity = (AnalyzeListActivity) getActivity();
-                activity.mPlotsCount = nPlotsCount;
+                //activity.mPlotsCount = nPlotsCount;
 
                 for (int i=0; i < nPlotsCount; i++) {
                     if (checked.valueAt(i)) {
@@ -176,10 +114,6 @@ public class AnalyzeListFragment extends ListFragment {
                         positions.add( ListContent.getItem(originalPosition));
                     }
                 }
-
-                // here we explode
-                //Collections.sort(positions, Collections.reverseOrder());
-
                 for (ListContent.SpectrumItem spectrum : positions) {
                     String fileName = spectrum.getName();
                     if(BuildConfig.DEBUG) {
@@ -202,7 +136,6 @@ public class AnalyzeListFragment extends ListFragment {
     public void onAttach(Activity activity) {
         super.onAttach(activity);
 
-        // Activities containing this fragment must implement its callbacks.
         if (!(activity instanceof Callbacks)) {
             throw new IllegalStateException("Activity must implement fragment's callbacks.");
         }

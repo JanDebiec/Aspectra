@@ -1,8 +1,5 @@
 package de.jandrotek.android.aspectra.viewer;
 
-//TODO: 02.06.2015 do we need that file???
-// seems yes, if we have two pane layout
-
 import android.app.Activity;
 import android.app.ListFragment;
 import android.content.Context;
@@ -35,69 +32,25 @@ import de.jandrotek.android.aspectra.libspectrafiles.ListContent;
 import static android.widget.AbsListView.MultiChoiceModeListener;
 import static android.widget.AbsListView.OnClickListener;
 
-/**
- * A list fragment representing a list of Items. This fragment
- * also supports tablet devices by allowing list items to be given an
- * 'activated' state upon selection. This helps indicate which item is
- * currently being viewed in a {@link ItemDetailFragment}.
- * <p>
- * Activities containing this fragment MUST implement the {@link Callbacks}
- * interface.
- */
 public class ItemListFragment extends ListFragment {
-    //  implements  MultiChoiceModeListener{
     private static final String TAG = "ListItemsFrag";
+    ListView mPrivateListView;
+    private SpectrumAdapter mAdapter;
+    ArrayList<String> filesNames;
+    ViewerModeListener mModeListener;
 
-    /**
-     * The serialization (saved instance state) Bundle key representing the
-     * activated item position. Only used on tablets.
-     */
     private static final String STATE_ACTIVATED_POSITION = "activated_position";
-
-    /**
-     * The fragment's current callback object, which is notified of list item
-     * clicks.
-     */
     private Callbacks mCallbacks = sDummyCallbacks;
-
-    /**
-     * The current activated item position. Only used on tablets.
-     */
     private int mActivatedPosition = ListView.INVALID_POSITION;
-
-
-    /**
-     * A callback interface that all activities containing this fragment must
-     * implement. This mechanism allows activities to be notified of item
-     * selections.
-     */
     public interface Callbacks {
-        /**
-         * Callback for when an item has been selected.
-         */
         void onItemSelected(ArrayList<String> filesNames);
     }
-
-    /**
-     * A dummy implementation of the {@link Callbacks} interface that does
-     * nothing. Used only when this fragment is not attached to an activity.
-     */
     private static Callbacks sDummyCallbacks = new Callbacks() {
         @Override
         public void onItemSelected(ArrayList<String> filesNames) {
         }
     };
 
-
-    //JD addsOn
-    ListView mPrivateListView;
-    private SpectrumAdapter mAdapter;
-    ArrayList<String> filesNames;
-    ViewerModeListener mModeListener;
-    /**
-     * Mandatory empty constructor for the fragment manager to instantiate the
-     * fragment (e.g. upon screen orientation changes).
-     */
     public ItemListFragment() {
     }
 
@@ -119,7 +72,6 @@ public class ItemListFragment extends ListFragment {
             Log.i(TAG, "onViewCreated");
         }
 
-        // Restore the previously serialized activated item position.
         if (savedInstanceState != null
                 && savedInstanceState.containsKey(STATE_ACTIVATED_POSITION)) {
             setActivatedPosition(savedInstanceState.getInt(STATE_ACTIVATED_POSITION));
@@ -130,13 +82,8 @@ public class ItemListFragment extends ListFragment {
         mModeListener = new ViewerModeListener(
                 this, getListView());
         mPrivateListView.setMultiChoiceModeListener(mModeListener        );
-//        mPrivateListView.setMultiChoiceModeListener(new ViewerModeListener(
-//                        this, getListView())
-//        );
         mPrivateListView.clearChoices();
-
     }
-
 
     public boolean performActions(MenuItem item) {
         SparseBooleanArray checked = getListView().getCheckedItemPositions();
@@ -144,32 +91,18 @@ public class ItemListFragment extends ListFragment {
         switch (item.getItemId()) {
             case R.id.item_delete: {
                 ArrayList<ListContent.SpectrumItem> positions = new ArrayList<>();
-
                 for (int i=0; i < checked.size(); i++) {
                     if (checked.valueAt(i)) {
                         int originalPosition = checked.keyAt(i);
                         positions.add( ListContent.getItem(originalPosition));
                     }
                 }
-
-                // here we explode
-                //Collections.sort(positions, Collections.reverseOrder());
-
                 for (ListContent.SpectrumItem spectrum : positions) {
 //                    ListContent.SpectrumItem item;
                     Log.d(TAG, spectrum.getName());
 //                   // mAdapter.remove(ListContent.SpectrumItem);
 //                    //mAdapter.remove(spectra.get(position));
                 }
-
-                getListView().clearChoices();
-
-                // if we want deselect;
-                // for every item selected
-                // Mylistview.setItemChecked(position, false);
-                // it's only neede if we stay in action mode, if we go back;
-                // we don't need it,
-
                 return(true);
             }
             case R.id.item_show: {
@@ -186,10 +119,6 @@ public class ItemListFragment extends ListFragment {
                         positions.add( ListContent.getItem(originalPosition));
                     }
                 }
-
-                // here we explode
-                //Collections.sort(positions, Collections.reverseOrder());
-
                 for (ListContent.SpectrumItem spectrum : positions) {
                     String fileName = spectrum.getName();
                     if(BuildConfig.DEBUG) {
@@ -197,8 +126,6 @@ public class ItemListFragment extends ListFragment {
                     }
                     filesNames.add(fileName);
                 }
-//                 getListView().clearChoices();
-
                 // call MultiPlotViewer
                 mCallbacks.onItemSelected(filesNames);
 

@@ -15,26 +15,7 @@ import java.util.ArrayList;
 import de.jandrotek.android.aspectra.libplotspectrav3.PlotViewFragment;
 import de.jandrotek.android.aspectra.libprefs.AspectraSettings;
 import de.jandrotek.android.aspectra.libspectrafiles.SpectrumFiles;
-//import de.jandrotek.android.aspectra.common.SettingsActivity;
 
-
-/**
- * An activity representing a list of Items. This activity
- * has different presentations for handset and tablet-size devices. On
- * handsets, the activity presents a list of items, which when touched,
- * lead to a {@link ItemDetailActivity} representing
- * item details. On tablets, the activity presents the list of items and
- * item details side-by-side using two vertical panes.
- * <p>
- * The activity makes heavy use of fragments. The list of items is a
- * {@link ItemListFragment} and the item details
- * (if present) is a {@link ItemDetailFragment}.
- * <p>
- * This activity also implements the required
- * {@link ItemListFragment.Callbacks} interface
- * to listen for item selections.
- */
-//public class ItemListActivity extends BaseActivity
 public class ItemListActivity extends ActionBarActivity
         implements ItemListFragment.Callbacks {
 
@@ -45,13 +26,8 @@ public class ItemListActivity extends ActionBarActivity
 
     private SpectrumFiles mSpectrumFiles = null;
     private int mFileListSize = 0;
-//    private String[] mFiles;
     private int mChartLength;
     public int mPlotsCount = 1;// default = 1, can be changed in ListFragment
-    /**
-     * Whether or not the activity is in two-pane mode, i.e. running on a tablet
-     * device.
-     */
     private boolean mTwoPane;
 
     @Override
@@ -91,20 +67,6 @@ public class ItemListActivity extends ActionBarActivity
         }
 
     }
-
-//    private int scanFolderForFiles(String fileFolder, String fileExtension) {
-//        mSpectrumFiles.setFileFolder(fileFolder);
-//        mSpectrumFiles.setFileExt(fileExtension);
-//        mSpectrumFiles.searchForFiles();
-//         return(mSpectrumFiles.getFileListSize());
-//    }
-
-//    //@Override
-//    protected void updateFromPreferences(){
-//        super.updateFromPreferences();
-//       	mChartLength = mAspectraSettings.getPrefsSpectraLength();
-//    }
-
 
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
@@ -149,9 +111,6 @@ public class ItemListActivity extends ActionBarActivity
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
         if (id == R.id.action_settings) {
@@ -168,10 +127,6 @@ public class ItemListActivity extends ActionBarActivity
         return false;
     }
 
-    /**
-     * Callback method from {@link ItemListFragment.Callbacks}
-     * indicating that the item(s) with the given ID was selected.
-     */
     @Override
     public void onItemSelected(ArrayList<String> filesNames) {
 //        if (mTwoPane) {
@@ -204,5 +159,4 @@ public class ItemListActivity extends ActionBarActivity
         mFileFolder = mAspectraSettings.getPrefsSpectraBasePath();
         mFileExt = mAspectraSettings.getPrefsSpectraExt();
     }
-
 }

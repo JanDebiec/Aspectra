@@ -3,7 +3,7 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 22
  //   buildToolsVersion "22.0.1"
-    buildToolsVersion "23.0.0 rc2"
+    buildToolsVersion '23.0.0 rc3'
 
     defaultConfig {
         applicationId "de.jandrotek.android.aspectra.viewer"
@@ -24,8 +24,8 @@ dependencies {
     compile 'com.android.support:appcompat-v7:22.2.0'
     compile project(':core')
     compile project(':libprefs')
-    compile project(':libtouch')
+    //    compile project(':libtouch')
     compile project(':libplotspectrav3')
     compile project(':libspectrafiles')
-//    compile files('libs/GraphView-3.1.2.jar')
+    //    compile files('libs/GraphView-3.1.2.jar')
 }

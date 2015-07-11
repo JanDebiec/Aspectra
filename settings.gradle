@@ -1,1 +1,1 @@
-include ':app', ':core', ':touchtest', ':fileviewer', ':libtouch', ':libprefs', ':libspectrafiles', ':libplotspectra', ':aspectram', ':libplotspectrav3'
+include ':app', ':core', ':touchtest', ':fileviewer', ':libtouch', ':libprefs', ':libspectrafiles', ':libplotspectra', ':libplotspectrav3', ':analyze'

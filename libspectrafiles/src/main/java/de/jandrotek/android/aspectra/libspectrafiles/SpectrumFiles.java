@@ -57,8 +57,8 @@ public class SpectrumFiles {
 
     public void searchForFiles(){
         // for every new search, old content should be cleared
-        if(mFilelNameListOutput != null) {
-            Arrays.fill(mFilelNameListOutput, null);
+        if(mFilelNameListOutputUnsorted != null) {
+            Arrays.fill(mFilelNameListOutputUnsorted, null);
         }
 
         FileWalker fileWalker;
@@ -67,12 +67,7 @@ public class SpectrumFiles {
 
             fileWalker = new FileWalker(mPath);
             mFilelNameListOutputUnsorted = fileWalker.search4Files(mFileExt);
-            Arrays.sort( mFilelNameListOutputUnsorted );
-            int arraySize = mFilelNameListOutputUnsorted.length;
-            mFilelNameListOutput = new String[arraySize];
-            for(int i = 0; i < arraySize; i++){
-                mFilelNameListOutput[arraySize - 1 - i] = mFilelNameListOutputUnsorted[i];
-            }
+            mFilelNameListOutput = sortArrayFromNewest(mFilelNameListOutputUnsorted);
 
         }
         else{
@@ -80,6 +75,16 @@ public class SpectrumFiles {
                 Log.w("TAG", "media not availeable !");
             }
         }
+    }
+
+    private String[] sortArrayFromNewest(String[] unsortedArray) {
+        Arrays.sort(unsortedArray);
+        int arraySize = unsortedArray.length;
+        String[] outputArray = new String[arraySize];
+        for(int i = 0; i < arraySize; i++){
+            outputArray[arraySize - 1 - i] = unsortedArray[i];
+        }
+        return outputArray;
     }
 
     public int scanFolderForFiles(String fileFolder, String fileExtension) {

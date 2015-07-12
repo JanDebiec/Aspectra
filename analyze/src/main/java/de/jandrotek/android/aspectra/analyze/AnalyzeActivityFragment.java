@@ -11,6 +11,9 @@ import android.view.ViewGroup;
  */
 public class AnalyzeActivityFragment extends Fragment {
 
+    public static final String ARG_ITEM_REFERENCE = "item_reference";
+    public static final String ARG_ITEM_EDIT = "item_edit";
+
     public AnalyzeActivityFragment() {
     }
 

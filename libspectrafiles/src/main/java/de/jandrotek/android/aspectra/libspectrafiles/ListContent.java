@@ -28,9 +28,11 @@ public class ListContent {
     static {
     	if(SpectrumFiles.mFilelNameListOutput.length > 0){
 	    	for(int i = 0; i < SpectrumFiles.mFilelNameListOutput.length; i++)
-    			addItem(new SpectrumItem(Integer.toString(i), SpectrumFiles.mFilelNameListOutput[i], "some notes"));
-    		// change the order of list, first the newest, then later
-			// add notes from files
+    			addItem(new SpectrumItem(
+						Integer.toString(i),
+						SpectrumFiles.mFilelNameListOutput[i],
+						"some notes" //TODO: extract notes
+						));
 		}
     	else
     	{

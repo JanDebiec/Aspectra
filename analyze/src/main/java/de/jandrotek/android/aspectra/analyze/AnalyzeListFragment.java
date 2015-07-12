@@ -20,6 +20,7 @@ import android.widget.TwoLineListItem;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import de.jandrotek.android.aspectra.libspectrafiles.ListContent;
 
@@ -36,12 +37,12 @@ public class AnalyzeListFragment extends ListFragment {
     private ActionMode mActionMode;
 
     public interface Callbacks {
-        void onItemSelected(ArrayList<String> filesNames);
+        void onItemSelected(Map<String, String> spectraNames);
     }
 
     private static Callbacks sDummyCallbacks = new Callbacks() {
         @Override
-        public void onItemSelected(ArrayList<String> filesNames) {
+        public void onItemSelected(Map<String, String> spectraNames) {
         }
     };
 
@@ -95,61 +96,62 @@ public class AnalyzeListFragment extends ListFragment {
 //        });
     }
 
-    public boolean performActions(MenuItem item) {
-        SparseBooleanArray checked = getListView().getCheckedItemPositions();
-
-        switch (item.getItemId()) {
-            case R.id.item_delete: {
-                ArrayList<ListContent.SpectrumItem> positions = new ArrayList<>();
-
-                for (int i=0; i < checked.size(); i++) {
-                    if (checked.valueAt(i)) {
-                        int originalPosition = checked.keyAt(i);
-                        positions.add( ListContent.getItem(originalPosition));
-                    }
-                }
-                for (ListContent.SpectrumItem spectrum : positions) {
-//                    ListContent.SpectrumItem item;
-                    Log.d(TAG, spectrum.getName());
-//                   // mAdapter.remove(ListContent.SpectrumItem);
-//                    //mAdapter.remove(spectra.get(position));
-                }
-
-                getListView().clearChoices();
-                return(true);
-            }
-//            case R.id.item_show: {
+//    public boolean performActions(MenuItem item) {
+//        SparseBooleanArray checked = getListView().getCheckedItemPositions();
+//
+//        switch (item.getItemId()) {
+//            case R.id.item_delete: {
 //                ArrayList<ListContent.SpectrumItem> positions = new ArrayList<>();
 //
-//                int nPlotsCount = checked.size();
-//                filesNames.clear();
-//                AnalyzeListActivity activity = (AnalyzeListActivity) getActivity();
-//                //activity.mPlotsCount = nPlotsCount;
-//
-//                for (int i=0; i < nPlotsCount; i++) {
+//                for (int i=0; i < checked.size(); i++) {
 //                    if (checked.valueAt(i)) {
 //                        int originalPosition = checked.keyAt(i);
 //                        positions.add( ListContent.getItem(originalPosition));
 //                    }
 //                }
 //                for (ListContent.SpectrumItem spectrum : positions) {
-//                    String fileName = spectrum.getName();
-//                    if(BuildConfig.DEBUG) {
-//                        Log.d(TAG, fileName);
-//                    }
-//                    filesNames.add(fileName);
+////                    ListContent.SpectrumItem item;
+//                    Log.d(TAG, spectrum.getName());
+////                   // mAdapter.remove(ListContent.SpectrumItem);
+////                    //mAdapter.remove(spectra.get(position));
 //                }
-////                 getListView().clearChoices();
 //
-//                // call MultiPlotViewer
-//                mCallbacks.onItemSelected(filesNames);
-//
+//                getListView().clearChoices();
 //                return(true);
 //            }
+////            case R.id.item_show: {
+////                ArrayList<ListContent.SpectrumItem> positions = new ArrayList<>();
+////
+////                int nPlotsCount = checked.size();
+////                filesNames.clear();
+////                AnalyzeListActivity activity = (AnalyzeListActivity) getActivity();
+////                //activity.mPlotsCount = nPlotsCount;
+////
+////                for (int i=0; i < nPlotsCount; i++) {
+////                    if (checked.valueAt(i)) {
+////                        int originalPosition = checked.keyAt(i);
+////                        positions.add( ListContent.getItem(originalPosition));
+////                    }
+////                }
+////                for (ListContent.SpectrumItem spectrum : positions) {
+////                    String fileName = spectrum.getName();
+////                    if(BuildConfig.DEBUG) {
+////                        Log.d(TAG, fileName);
+////                    }
+////                    filesNames.add(fileName);
+////                }
+//////                 getListView().clearChoices();
+////
+////                // call MultiPlotViewer
+////                mCallbacks.onItemSelected(filesNames);
+////
+////                return(true);
+////            }
+//
+//        }// switch
+//        return(false);
+//    }
 
-        }// switch
-        return(false);
-    }
         @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
@@ -178,9 +180,6 @@ public class AnalyzeListFragment extends ListFragment {
         if(BuildConfig.DEBUG) {
             Log.i(TAG, "onStart");
         }
-//        if(mModeListener.activeMode != null) {
-//            mModeListener.activeMode.finish();
-//        }
     }
 
     @Override
@@ -189,9 +188,6 @@ public class AnalyzeListFragment extends ListFragment {
         if(BuildConfig.DEBUG) {
             Log.i(TAG, "onResume");
         }
-//        if(mModeListener.activeMode != null) {
-//            mModeListener.activeMode.finish();
-//        }
     }
 
     @Override
@@ -208,9 +204,6 @@ public class AnalyzeListFragment extends ListFragment {
         if(BuildConfig.DEBUG) {
             Log.i(TAG, "onStop");
         }
-//        if(mModeListener.activeMode != null) {
-//            mModeListener.activeMode.finish();
-//        }
     }
 
     @Override
@@ -227,8 +220,8 @@ public class AnalyzeListFragment extends ListFragment {
         filesNames.clear();
         ListContent.SpectrumItem spectrum = ListContent.getItem(position);
         String fileName = spectrum.getName();
-        filesNames.add(fileName);
-        mCallbacks.onItemSelected(filesNames);
+        //TODO: call edit
+//        mCallbacks.onItemSelected(filesNames);
     }
 
     @Override
@@ -330,8 +323,13 @@ public class AnalyzeListFragment extends ListFragment {
         @Override
         public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
             switch (item.getItemId()) {
+                case R.id.item_set_reference:
+                    mode.finish(); // Action picked, so close the CAB
+                    return true;
+                case R.id.item_delete:
+                    mode.finish(); // Action picked, so close the CAB
+                    return true;
                 case R.id.item_edit:
-//                    shareCurrentItem();
                     mode.finish(); // Action picked, so close the CAB
                     return true;
                 default:

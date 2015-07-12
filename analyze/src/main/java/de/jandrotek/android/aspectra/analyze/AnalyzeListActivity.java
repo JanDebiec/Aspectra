@@ -11,6 +11,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import de.jandrotek.android.aspectra.core.SpectrumAsp;
 import de.jandrotek.android.aspectra.libplotspectrav3.PlotViewFragment;
@@ -128,7 +129,7 @@ public class AnalyzeListActivity extends ActionBarActivity
     }
 
     @Override
-    public void onItemSelected(ArrayList<String> filesNames) {
+    public void onItemSelected(Map<String, String> spectraNames) {
 //        if (mTwoPane) {
 //            // t will be fixed later, first we go with single pane
 //
@@ -145,7 +146,12 @@ public class AnalyzeListActivity extends ActionBarActivity
 //
 //        } else {
             Bundle arguments = new Bundle();
-            //arguments.putStringArrayList(PlotViewFragment.ARG_ITEM_IDS, filesNames);
+            if(spectraNames.containsKey(AnalyzeActivityFragment.ARG_ITEM_EDIT)){
+                arguments.putString(AnalyzeActivityFragment.ARG_ITEM_EDIT, spectraNames.get(AnalyzeActivityFragment.ARG_ITEM_EDIT));
+            }
+            if (spectraNames.containsKey(AnalyzeActivityFragment.ARG_ITEM_REFERENCE)){
+                arguments.putString(AnalyzeActivityFragment.ARG_ITEM_REFERENCE, spectraNames.get(AnalyzeActivityFragment.ARG_ITEM_REFERENCE));
+            }
             Intent detailIntent = new Intent(this, AnalyzeActivity.class);
             detailIntent.putExtras(arguments);
             startActivity(detailIntent);

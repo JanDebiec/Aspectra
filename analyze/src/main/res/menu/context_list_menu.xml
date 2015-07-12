@@ -2,10 +2,16 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/item_show"
+        android:id="@+id/item_set_reference"
         android:showAsAction="ifRoom|withText"
-        android:title="Show"
-        android:titleCondensed="Show">
+        android:title="Reference"
+        android:titleCondensed="Ref">
+    </item>
+    <item
+        android:id="@+id/item_edit"
+        android:showAsAction="ifRoom|withText"
+        android:title="Edit"
+        android:titleCondensed="Edit">
     </item>
     <item
         android:id="@+id/item_delete"

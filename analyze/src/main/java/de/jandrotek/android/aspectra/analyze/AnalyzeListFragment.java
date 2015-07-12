@@ -30,7 +30,7 @@ public class AnalyzeListFragment extends ListFragment {
     ListView mPrivateListView;
     private SpectrumAdapter mAdapter;
     ArrayList<String> filesNames;
-    AnalyzeListModeListener mModeListener;
+//    AnalyzeListModeListener mModeListener;
     private Callbacks mCallbacks = sDummyCallbacks;
     private int mActivatedPosition = ListView.INVALID_POSITION;
     private ActionMode mActionMode;
@@ -71,27 +71,28 @@ public class AnalyzeListFragment extends ListFragment {
         }
 
         mPrivateListView = getListView();
-//        mPrivateListView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
-////        mPrivateListView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
+        mPrivateListView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+//        mPrivateListView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
 //        mModeListener = new AnalyzeListModeListener(
 //                this, getListView());
 //        mPrivateListView.setMultiChoiceModeListener(mModeListener);
 ////        mPrivateListView.setMultiChoiceModeListener(mModeListener        );
 //        mPrivateListView.clearChoices();
+        mPrivateListView.setLongClickable(true);
 
-        mPrivateListView.setOnLongClickListener(new View.OnLongClickListener() {
-            // Called when the user long-clicks on someView
-            public boolean onLongClick(View view) {
-                if (mActionMode != null) {
-                    return false;
-                }
-
-                // Start the CAB using the ActionMode.Callback defined above
-                mActionMode = getActivity().startActionMode(mActionModeCallback);
-                view.setSelected(true);
-                return true;
-            }
-        });
+//        mPrivateListView.setOnLongClickListener(new View.OnLongClickListener() {
+//            // Called when the user long-clicks on someView
+//            public boolean onLongClick(View view) {
+//                if (mActionMode != null) {
+//                    return false;
+//                }
+//
+//                // Start the CAB using the ActionMode.Callback defined above
+//                mActionMode = getActivity().startActionMode(mActionModeCallback);
+//                view.setSelected(true);
+//                return true;
+//            }
+//        });
     }
 
     public boolean performActions(MenuItem item) {
@@ -117,34 +118,34 @@ public class AnalyzeListFragment extends ListFragment {
                 getListView().clearChoices();
                 return(true);
             }
-            case R.id.item_show: {
-                ArrayList<ListContent.SpectrumItem> positions = new ArrayList<>();
-
-                int nPlotsCount = checked.size();
-                filesNames.clear();
-                AnalyzeListActivity activity = (AnalyzeListActivity) getActivity();
-                //activity.mPlotsCount = nPlotsCount;
-
-                for (int i=0; i < nPlotsCount; i++) {
-                    if (checked.valueAt(i)) {
-                        int originalPosition = checked.keyAt(i);
-                        positions.add( ListContent.getItem(originalPosition));
-                    }
-                }
-                for (ListContent.SpectrumItem spectrum : positions) {
-                    String fileName = spectrum.getName();
-                    if(BuildConfig.DEBUG) {
-                        Log.d(TAG, fileName);
-                    }
-                    filesNames.add(fileName);
-                }
-//                 getListView().clearChoices();
-
-                // call MultiPlotViewer
-                mCallbacks.onItemSelected(filesNames);
-
-                return(true);
-            }
+//            case R.id.item_show: {
+//                ArrayList<ListContent.SpectrumItem> positions = new ArrayList<>();
+//
+//                int nPlotsCount = checked.size();
+//                filesNames.clear();
+//                AnalyzeListActivity activity = (AnalyzeListActivity) getActivity();
+//                //activity.mPlotsCount = nPlotsCount;
+//
+//                for (int i=0; i < nPlotsCount; i++) {
+//                    if (checked.valueAt(i)) {
+//                        int originalPosition = checked.keyAt(i);
+//                        positions.add( ListContent.getItem(originalPosition));
+//                    }
+//                }
+//                for (ListContent.SpectrumItem spectrum : positions) {
+//                    String fileName = spectrum.getName();
+//                    if(BuildConfig.DEBUG) {
+//                        Log.d(TAG, fileName);
+//                    }
+//                    filesNames.add(fileName);
+//                }
+////                 getListView().clearChoices();
+//
+//                // call MultiPlotViewer
+//                mCallbacks.onItemSelected(filesNames);
+//
+//                return(true);
+//            }
 
         }// switch
         return(false);
@@ -177,9 +178,9 @@ public class AnalyzeListFragment extends ListFragment {
         if(BuildConfig.DEBUG) {
             Log.i(TAG, "onStart");
         }
-        if(mModeListener.activeMode != null) {
-            mModeListener.activeMode.finish();
-        }
+//        if(mModeListener.activeMode != null) {
+//            mModeListener.activeMode.finish();
+//        }
     }
 
     @Override
@@ -188,9 +189,9 @@ public class AnalyzeListFragment extends ListFragment {
         if(BuildConfig.DEBUG) {
             Log.i(TAG, "onResume");
         }
-        if(mModeListener.activeMode != null) {
-            mModeListener.activeMode.finish();
-        }
+//        if(mModeListener.activeMode != null) {
+//            mModeListener.activeMode.finish();
+//        }
     }
 
     @Override
@@ -207,9 +208,9 @@ public class AnalyzeListFragment extends ListFragment {
         if(BuildConfig.DEBUG) {
             Log.i(TAG, "onStop");
         }
-        if(mModeListener.activeMode != null) {
-            mModeListener.activeMode.finish();
-        }
+//        if(mModeListener.activeMode != null) {
+//            mModeListener.activeMode.finish();
+//        }
     }
 
     @Override
@@ -287,6 +288,19 @@ public class AnalyzeListFragment extends ListFragment {
             text1.setText(ListContent.ITEMS.get(position).getName());
             text2.setText(ListContent.ITEMS.get(position).getNotes());
 
+            twoLineListItem.setOnLongClickListener(new View.OnLongClickListener() {
+                // Called when the user long-clicks on someView
+                public boolean onLongClick(View view) {
+                    if (mActionMode != null) {
+                        return false;
+                    }
+
+                    // Start the CAB using the ActionMode.Callback defined above
+                    mActionMode = getActivity().startActionMode(mActionModeCallback);
+                    view.setSelected(true);
+                    return true;
+                }
+            });
             return twoLineListItem;
 
         }
@@ -301,7 +315,7 @@ public class AnalyzeListFragment extends ListFragment {
         public boolean onCreateActionMode(ActionMode mode, Menu menu) {
             // Inflate a menu resource providing context menu items
             MenuInflater inflater = mode.getMenuInflater();
-            inflater.inflate(R.menu.context_menu, menu);
+            inflater.inflate(R.menu.context_list_menu, menu);
             return true;
         }
 
@@ -316,8 +330,8 @@ public class AnalyzeListFragment extends ListFragment {
         @Override
         public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
             switch (item.getItemId()) {
-                case R.id.menu_share:
-                    shareCurrentItem();
+                case R.id.item_edit:
+//                    shareCurrentItem();
                     mode.finish(); // Action picked, so close the CAB
                     return true;
                 default:

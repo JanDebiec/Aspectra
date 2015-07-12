@@ -1,26 +1,26 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <item
-        android:id="@+id/item_analyze"
-        android:showAsAction="always|withText"
-        android:title="Analyze"
-        android:titleCondensed="Analyze" >
-    </item>
+    <!--<item-->
+        <!--android:id="@+id/item_analyze"-->
+        <!--android:showAsAction="always|withText"-->
+        <!--android:title="Analyze"-->
+        <!--android:titleCondensed="Analyze" >-->
+    <!--</item>-->
 
-    <item
-        android:id="@+id/item_show"
-        android:showAsAction="always|withText"
-        android:title="Show"
-        android:titleCondensed="Show" >
-    </item>
+    <!--<item-->
+        <!--android:id="@+id/item_show"-->
+        <!--android:showAsAction="always|withText"-->
+        <!--android:title="Show"-->
+        <!--android:titleCondensed="Show" >-->
+    <!--</item>-->
 
-    <item
-        android:id="@+id/item_delete"
-        android:icon="@android:drawable/ic_menu_delete"
-        android:showAsAction="always|withText"
-        android:title="Delete"
-        android:titleCondensed="Delete" >
-    </item>
+    <!--<item-->
+        <!--android:id="@+id/item_delete"-->
+        <!--android:icon="@android:drawable/ic_menu_delete"-->
+        <!--android:showAsAction="always|withText"-->
+        <!--android:title="Delete"-->
+        <!--android:titleCondensed="Delete" >-->
+    <!--</item>-->
 
     <item
         android:id="@+id/action_settings"

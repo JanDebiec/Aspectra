@@ -29,7 +29,7 @@ public class AnalyzeListModeListener implements
         MenuInflater inflater=host.getActivity().getMenuInflater();
 
         inflater.inflate(R.menu.menu_activity_base, menu);
-        inflater.inflate(R.menu.action_menu_multi, menu);
+        inflater.inflate(R.menu.context_list_menu, menu);
 //        inflater.inflate(R.menu.context, menu);
         mode.setTitle(R.string.context_title);
         mode.setSubtitle("(1)");

@@ -1,5 +1,6 @@
 package de.jandrotek.android.aspectra.analyze;
 
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -15,12 +16,17 @@ import de.jandrotek.android.aspectra.libplotspectrav3.PlotViewFragment;
 public class AnalyzeActivity extends AppCompatActivity {
 
     private AnalyzeFragment mAnalyzeFragment;
+    private Fragment mContent;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_analyze);
         if (savedInstanceState == null) {
 //            Bundle arguments = new Bundle();
+            //Restore the fragment's instance
+//            mContent = getSupportFragmentManager().getFragment(
+//                    savedInstanceState, "mContent");
 
             Map<String, String> spectra = new HashMap<>();
 
@@ -38,6 +44,16 @@ public class AnalyzeActivity extends AppCompatActivity {
         }
     }
 
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+//Save the fragment's instance
+        getSupportFragmentManager().putFragment(outState, "mContent", mContent);
+
+
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

@@ -36,8 +36,8 @@ public class AnalyzeFragment extends Fragment {
     private int mSpectrumToEditLength;
     private int mSpectrumReferenceLength;
     private int mSpectrumLengthMax;
-    private SpectrumAsp mSpectrumToEdit;
-    private SpectrumAsp mSpectrumReference;
+    private SpectrumChr mSpectrumToEdit;
+    private SpectrumChr mSpectrumReference;
     private int[] mSpectrumToEditValues = null;
     private int[] mSpectrumReferenceValues = null;
     private int mColorEdit = Color.rgb(255, 0, 0);
@@ -70,24 +70,28 @@ public class AnalyzeFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            if (getArguments().containsKey(ARG_ITEM_EDIT)) {
-                mSpectrumNameToEdit = getArguments().getString(ARG_ITEM_EDIT);
-            } else if (mStaticSpectra.containsKey(ARG_ITEM_EDIT)) {
-                mSpectrumNameToEdit = mStaticSpectra.get(ARG_ITEM_EDIT);
+            if (getArguments().containsKey(ARG_ITEM_REFERENCE)) {
+                mSpectrumNameReference = getArguments().getString(ARG_ITEM_REFERENCE);
             }
+        }
+        if (mStaticSpectra.containsKey(ARG_ITEM_REFERENCE)) {
+                mSpectrumNameToEdit = mStaticSpectra.get(ARG_ITEM_REFERENCE);
+        }
 
+        if (getArguments() != null) {
             if (getArguments().containsKey(ARG_ITEM_EDIT)) {
-                mSpectrumNameToEdit = getArguments().getString(ARG_ITEM_EDIT);
-            } else if (mStaticSpectra.containsKey(ARG_ITEM_EDIT)) {
-                mSpectrumNameToEdit = mStaticSpectra.get(ARG_ITEM_EDIT);
+                mSpectrumNameReference = getArguments().getString(ARG_ITEM_EDIT);
             }
+        }
+        if (mStaticSpectra.containsKey(ARG_ITEM_EDIT)) {
+                mSpectrumNameToEdit = mStaticSpectra.get(ARG_ITEM_EDIT);
         }
         if (mSpectrumNameToEdit != null) {
             mSpectrumAbsNameToEdit = SpectrumFiles.mPath + "/" + mSpectrumNameToEdit;
-            mSpectrumToEdit = new SpectrumAsp(mSpectrumAbsNameToEdit);
+            mSpectrumToEdit = new SpectrumChr(mSpectrumAbsNameToEdit);
             try {
                 GraphView.GraphViewData[] realDataEdit;
-                mSpectrumToEditLength = mSpectrumToEdit.readFile();
+                mSpectrumToEditLength = mSpectrumToEdit.readValuesChr();
                 mSpectrumToEditValues = mSpectrumToEdit.getValues();
                 realDataToEdit = new GraphView.GraphViewData[mSpectrumToEditLength];
 
@@ -99,10 +103,10 @@ public class AnalyzeFragment extends Fragment {
         if (mSpectrumNameReference != null) {
 
             mSpectrumNameAbsReference = SpectrumFiles.mPath + "/" + mSpectrumNameReference;
-            mSpectrumReference = new SpectrumAsp(mSpectrumAbsNameToEdit);
+            mSpectrumReference = new SpectrumChr(mSpectrumAbsNameToEdit);
             try {
                 GraphView.GraphViewData[] realDataEdit;
-                mSpectrumToEditLength = mSpectrumToEdit.readFile();
+                mSpectrumToEditLength = mSpectrumToEdit.readValuesChr();
                 mSpectrumToEditValues = mSpectrumToEdit.getValues();
                 realDataReference = new GraphView.GraphViewData[mSpectrumToEditLength];
 

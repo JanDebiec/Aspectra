@@ -4,11 +4,16 @@ import android.graphics.Color;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 
 import com.jjoe64.graphview.GraphView;
+import com.jjoe64.graphview.GraphViewSeries;
+import com.jjoe64.graphview.LineGraphView;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import de.jandrotek.android.aspectra.core.AspectraGlobals;
@@ -33,33 +38,32 @@ public class AnalyzeFragment extends Fragment {
     private int mSpectrumLengthMax;
     private SpectrumAsp mSpectrumToEdit;
     private SpectrumAsp mSpectrumReference;
-    private int[] mSpectrumToEditValues;
-    private int[] mSpectrumReferenceValues;
+    private int[] mSpectrumToEditValues = null;
+    private int[] mSpectrumReferenceValues = null;
     private int mColorEdit = Color.rgb(255, 0, 0);
     private int mColorRef = Color.rgb(0, 0, 255);
     private GraphView.GraphViewData[] realDataReference;
     private GraphView.GraphViewData[] realDataToEdit;
     private static Map<String, String> mStaticSpectra;
+    private GraphViewSeries mDataSeriesEdit;
+    private GraphViewSeries mDataSeriesRef;
+
+    private LineGraphView mGraphView;
 
     public static AnalyzeFragment newInstance(Map<String, String> spectra) {
         AnalyzeFragment fragment = new AnalyzeFragment();
-//        Bundle args = new Bundle();
-//        mStaticSectra
-
         if (spectra.containsKey(AnalyzeFragment.ARG_ITEM_EDIT)) {
-//            args.putString(AnalyzeFragment.ARG_ITEM_EDIT, spectra.get(AnalyzeFragment.ARG_ITEM_EDIT));
             mStaticSpectra.put(ARG_ITEM_EDIT, spectra.get(ARG_ITEM_EDIT));
         }
         if (spectra.containsKey(AnalyzeFragment.ARG_ITEM_REFERENCE)) {
-//            args.putString(AnalyzeFragment.ARG_ITEM_REFERENCE, spectra.get(AnalyzeFragment.ARG_ITEM_REFERENCE));
             mStaticSpectra.put(ARG_ITEM_REFERENCE, spectra.get(ARG_ITEM_REFERENCE));
         }
-//        fragment.setArguments(args);
         return fragment;
     }
 
 
     public AnalyzeFragment() {
+        mStaticSpectra = new HashMap<>();
     }
 
     @Override
@@ -85,7 +89,7 @@ public class AnalyzeFragment extends Fragment {
                 GraphView.GraphViewData[] realDataEdit;
                 mSpectrumToEditLength = mSpectrumToEdit.readFile();
                 mSpectrumToEditValues = mSpectrumToEdit.getValues();
-                realDataEdit = new GraphView.GraphViewData[mSpectrumToEditLength];
+                realDataToEdit = new GraphView.GraphViewData[mSpectrumToEditLength];
 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -128,6 +132,71 @@ public class AnalyzeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_analyze, container, false);
+        View rootView = inflater.inflate(de.jandrotek.android.aspectra.libplotspectrav3.R.layout.fragment_plot_view, container, false);
+
+        mGraphView = new LineGraphView(getActivity(), "");
+
+        if(mSpectrumToEditValues != null) {
+            realDataToEdit = generateData(mSpectrumToEditValues, mSpectrumLengthMax);
+            GraphViewSeries mDataSeriesEdit = new GraphViewSeries(
+                    "",
+                    new GraphViewSeries.GraphViewSeriesStyle(mColorEdit, 1),
+                    realDataToEdit);
+            mGraphView.addSeries(mDataSeriesEdit);
+        }
+
+        if(mSpectrumReferenceValues != null) {
+            realDataReference = generateData(mSpectrumReferenceValues, mSpectrumLengthMax);
+            GraphViewSeries mDataSeriesEdit = new GraphViewSeries(
+                    "",
+                    new GraphViewSeries.GraphViewSeriesStyle(mColorRef, 1),
+                    realDataReference);
+            mGraphView.addSeries(mDataSeriesEdit);
+        }
+
+        mGraphView.getGraphViewStyle().setTextSize(20);
+        mGraphView.getGraphViewStyle().setNumHorizontalLabels(5);
+        mGraphView.getGraphViewStyle().setNumVerticalLabels(4);
+
+        mGraphView.setViewPort(0, mSpectrumLengthMax);
+        registerForContextMenu(mGraphView);
+
+//        mGraphView.setOnTouchListener(new View.OnTouchListener() {
+//
+//            @Override
+//            public boolean onTouch(View v, MotionEvent event) {
+//                int action = event.getAction();
+//                if(action == MotionEvent.ACTION_DOWN) {
+//
+//                    if (!AspectraGlobals.mSavePlotInFile) {
+//                        AspectraGlobals.mSavePlotInFile = true;
+//                    }
+//                }
+//                return true; //processed
+//            }
+//
+//        });
+
+        //TODO: optional - activate scaling / zooming
+        // both modi will be handled with Touch-view helper class, not only in viewer
+        // in liveView is disabled, first in AnalyzeActivity
+        FrameLayout mFrameLayout = (FrameLayout)rootView.findViewById(de.jandrotek.android.aspectra.libplotspectrav3.R.id.flPlotView);
+        mFrameLayout.addView(mGraphView);
+
+        return rootView;
     }
+    private GraphView.GraphViewData[] generateData(int[] data, int length) {
+        GraphView.GraphViewData[]    realData = new GraphView.GraphViewData[length];
+        for (int i=0; i<length; i++) {
+
+            realData[i] = new GraphView.GraphViewData(i, data[i]);
+        }
+        //TODO: check in plot act length, and add needed data only for that length
+
+        for(int i = length; i < mSpectrumLengthMax ; i++){
+            realData[i] = new GraphView.GraphViewData(i, 0);
+        }
+        return realData;
+    }
+
 }

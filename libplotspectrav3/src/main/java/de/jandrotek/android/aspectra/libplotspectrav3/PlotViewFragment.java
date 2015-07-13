@@ -169,9 +169,6 @@ public class PlotViewFragment extends Fragment
         View rootView = inflater.inflate(R.layout.fragment_plot_view, container, false);
 
         mGraphView = new LineGraphView(getActivity(), "");
-        // add data
-        //        GraphViewSeries seriesSin =
-        // new GraphViewSeries("Sinus curve", new GraphViewSeriesStyle(Color.rgb(200, 50, 00), 3), data);
 
         if(mItems != null) {
             for(int i = 0; i < mItems.size(); i++) {

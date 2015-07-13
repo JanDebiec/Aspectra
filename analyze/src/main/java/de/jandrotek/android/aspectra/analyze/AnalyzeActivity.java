@@ -20,7 +20,7 @@ public class AnalyzeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_analyze);
         if (savedInstanceState == null) {
-            Bundle arguments = new Bundle();
+//            Bundle arguments = new Bundle();
 
             Map<String, String> spectra = new HashMap<>();
 

@@ -5,12 +5,37 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
+import de.jandrotek.android.aspectra.core.AspectraGlobals;
+import de.jandrotek.android.aspectra.libplotspectrav3.PlotViewFragment;
+
 public class AnalyzeActivity extends AppCompatActivity {
 
+    private AnalyzeFragment mAnalyzeFragment;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_analyze);
+        if (savedInstanceState == null) {
+            Bundle arguments = new Bundle();
+
+            Map<String, String> spectra = new HashMap<>();
+
+            if(getIntent().getExtras().containsKey(AnalyzeFragment.ARG_ITEM_REFERENCE)){
+                spectra.put(AnalyzeFragment.ARG_ITEM_REFERENCE, getIntent().getExtras().getString(AnalyzeFragment.ARG_ITEM_REFERENCE));
+            }
+            if(getIntent().getExtras().containsKey(AnalyzeFragment.ARG_ITEM_EDIT)){
+                spectra.put(AnalyzeFragment.ARG_ITEM_EDIT, getIntent().getExtras().getString(AnalyzeFragment.ARG_ITEM_EDIT));
+            }
+
+            mAnalyzeFragment = AnalyzeFragment.newInstance(AspectraGlobals.ACT_ITEM_VIEW_PLOT, spectra);
+            getSupportFragmentManager().beginTransaction()
+                    .add(R.id.item_detail_container, mAnalyzeFragment)
+                    .commit();
+        }
     }
 
 

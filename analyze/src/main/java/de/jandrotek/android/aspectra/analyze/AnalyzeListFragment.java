@@ -73,84 +73,9 @@ public class AnalyzeListFragment extends ListFragment {
 
         mPrivateListView = getListView();
         mPrivateListView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
-//        mPrivateListView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
-//        mModeListener = new AnalyzeListModeListener(
-//                this, getListView());
-//        mPrivateListView.setMultiChoiceModeListener(mModeListener);
-////        mPrivateListView.setMultiChoiceModeListener(mModeListener        );
-//        mPrivateListView.clearChoices();
         mPrivateListView.setLongClickable(true);
 
-//        mPrivateListView.setOnLongClickListener(new View.OnLongClickListener() {
-//            // Called when the user long-clicks on someView
-//            public boolean onLongClick(View view) {
-//                if (mActionMode != null) {
-//                    return false;
-//                }
-//
-//                // Start the CAB using the ActionMode.Callback defined above
-//                mActionMode = getActivity().startActionMode(mActionModeCallback);
-//                view.setSelected(true);
-//                return true;
-//            }
-//        });
     }
-
-//    public boolean performActions(MenuItem item) {
-//        SparseBooleanArray checked = getListView().getCheckedItemPositions();
-//
-//        switch (item.getItemId()) {
-//            case R.id.item_delete: {
-//                ArrayList<ListContent.SpectrumItem> positions = new ArrayList<>();
-//
-//                for (int i=0; i < checked.size(); i++) {
-//                    if (checked.valueAt(i)) {
-//                        int originalPosition = checked.keyAt(i);
-//                        positions.add( ListContent.getItem(originalPosition));
-//                    }
-//                }
-//                for (ListContent.SpectrumItem spectrum : positions) {
-////                    ListContent.SpectrumItem item;
-//                    Log.d(TAG, spectrum.getName());
-////                   // mAdapter.remove(ListContent.SpectrumItem);
-////                    //mAdapter.remove(spectra.get(position));
-//                }
-//
-//                getListView().clearChoices();
-//                return(true);
-//            }
-////            case R.id.item_show: {
-////                ArrayList<ListContent.SpectrumItem> positions = new ArrayList<>();
-////
-////                int nPlotsCount = checked.size();
-////                filesNames.clear();
-////                AnalyzeListActivity activity = (AnalyzeListActivity) getActivity();
-////                //activity.mPlotsCount = nPlotsCount;
-////
-////                for (int i=0; i < nPlotsCount; i++) {
-////                    if (checked.valueAt(i)) {
-////                        int originalPosition = checked.keyAt(i);
-////                        positions.add( ListContent.getItem(originalPosition));
-////                    }
-////                }
-////                for (ListContent.SpectrumItem spectrum : positions) {
-////                    String fileName = spectrum.getName();
-////                    if(BuildConfig.DEBUG) {
-////                        Log.d(TAG, fileName);
-////                    }
-////                    filesNames.add(fileName);
-////                }
-//////                 getListView().clearChoices();
-////
-////                // call MultiPlotViewer
-////                mCallbacks.onItemSelected(filesNames);
-////
-////                return(true);
-////            }
-//
-//        }// switch
-//        return(false);
-//    }
 
         @Override
     public void onAttach(Activity activity) {

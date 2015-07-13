@@ -85,7 +85,6 @@ public class PlotViewFragment extends Fragment
      * @param items Araylist of spectrumFiles names.
      * @return A new instance of fragment PlotViewFragment.
      */
-    // TODO: Rename and change types and number of parameters
         public static PlotViewFragment newInstance(int param1, ArrayList<String> items) {
         PlotViewFragment fragment = new PlotViewFragment();
         Bundle args = new Bundle();

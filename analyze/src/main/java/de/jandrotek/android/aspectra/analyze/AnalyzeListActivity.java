@@ -10,11 +10,9 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import java.util.ArrayList;
 import java.util.Map;
 
 import de.jandrotek.android.aspectra.core.SpectrumAsp;
-import de.jandrotek.android.aspectra.libplotspectrav3.PlotViewFragment;
 import de.jandrotek.android.aspectra.libprefs.AspectraSettings;
 import de.jandrotek.android.aspectra.libspectrafiles.SpectrumFiles;
 
@@ -146,11 +144,11 @@ public class AnalyzeListActivity extends ActionBarActivity
 //
 //        } else {
             Bundle arguments = new Bundle();
-            if(spectraNames.containsKey(AnalyzeActivityFragment.ARG_ITEM_EDIT)){
-                arguments.putString(AnalyzeActivityFragment.ARG_ITEM_EDIT, spectraNames.get(AnalyzeActivityFragment.ARG_ITEM_EDIT));
+            if(spectraNames.containsKey(AnalyzeFragment.ARG_ITEM_EDIT)){
+                arguments.putString(AnalyzeFragment.ARG_ITEM_EDIT, spectraNames.get(AnalyzeFragment.ARG_ITEM_EDIT));
             }
-            if (spectraNames.containsKey(AnalyzeActivityFragment.ARG_ITEM_REFERENCE)){
-                arguments.putString(AnalyzeActivityFragment.ARG_ITEM_REFERENCE, spectraNames.get(AnalyzeActivityFragment.ARG_ITEM_REFERENCE));
+            if (spectraNames.containsKey(AnalyzeFragment.ARG_ITEM_REFERENCE)){
+                arguments.putString(AnalyzeFragment.ARG_ITEM_REFERENCE, spectraNames.get(AnalyzeFragment.ARG_ITEM_REFERENCE));
             }
             Intent detailIntent = new Intent(this, AnalyzeActivity.class);
             detailIntent.putExtras(arguments);

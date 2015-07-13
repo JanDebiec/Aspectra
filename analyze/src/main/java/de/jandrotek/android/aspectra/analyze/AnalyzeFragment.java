@@ -25,13 +25,22 @@ public class AnalyzeFragment extends Fragment {
     public static final String ARG_ITEM_EDIT = "item_edit";
 
     private String mSpectrumNameToEdit;
+    private String mSpectrumAbsNameToEdit;
     private String mSpectrumNameReference;
     private String mSpectrumNameAbsReference;
-    private String mSpectrumAbsNameToEdit;
+    private int mSpectrumToEditLength;
+    private int mSpectrumReferenceLength;
+    private int mSpectrumLengthMax;
     private SpectrumAsp mSpectrumToEdit;
     private SpectrumAsp mSpectrumReference;
+    private int[] mSpectrumToEditValues;
+    private int[] mSpectrumReferenceValues;
+    private int mColorEdit = Color.rgb(255, 0, 0);
+    private int mColorRef = Color.rgb(0, 0, 255);
+    private GraphView.GraphViewData[] realDataReference;
+    private GraphView.GraphViewData[] realDataToEdit;
 
-    public static AnalyzeFragment newInstance(int param1, Map<String, String> spectra) {
+    public static AnalyzeFragment newInstance(Map<String, String> spectra) {
         AnalyzeFragment fragment = new AnalyzeFragment();
         Bundle args = new Bundle();
 
@@ -54,55 +63,34 @@ public class AnalyzeFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             if (getArguments().containsKey(ARG_ITEM_EDIT)) {
-                mSpectrumNameToEdit = getArguments().getStringArrayList(ARG_ITEM_EDIT);
+                mSpectrumNameToEdit = getArguments().getString(ARG_ITEM_EDIT);
                 mSpectrumAbsNameToEdit = SpectrumFiles.mPath +"/" + mSpectrumNameToEdit;
                 mSpectrumToEdit = new SpectrumAsp(mSpectrumAbsNameToEdit);
                 try{
                     GraphView.GraphViewData[] realDataEdit;
-                    mFileDataLength[i] = mSpectrumToEdit.readFile();
-                    mFileIntValues[i] = mSpectrumToEdit.getValues();
-                    realDataEdit = new GraphView.GraphViewData[mFileDataLength[i]];
+                    mSpectrumToEditLength = mSpectrumToEdit.readFile();
+                    mSpectrumToEditValues = mSpectrumToEdit.getValues();
+                    realDataEdit = new GraphView.GraphViewData[mSpectrumToEditLength];
 
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
             if (getArguments().containsKey(ARG_ITEM_REFERENCE)) {
-                mSpectrumNameReference = getArguments().getStringArrayList(ARG_ITEM_REFERENCE);
+                mSpectrumNameReference = getArguments().getString(ARG_ITEM_REFERENCE);
                 mSpectrumNameAbsReference = SpectrumFiles.mPath +"/" + mSpectrumNameReference;
                 mSpectrumReference = new SpectrumAsp(mSpectrumAbsNameToEdit);
-            }
-        }
-        if (getArguments().containsKey(ARG_ITEM_IDS)) {
-
-            mFileIntValues = new int[mItemlistSize][AspectraGlobals.eMaxSpectrumSize];
-            realData = new GraphView.GraphViewData[mItemlistSize][AspectraGlobals.eMaxSpectrumSize];
-            mFileDataLength = new int[mItemlistSize];
-            int i = 0;
-
-            for(String item : mItems){
-
                 try{
-                    GraphView.GraphViewData[] tempRealData;
-                    mFileDataLength[i] = mSpectrumFile[i].readValuesChr();
-                    mFileIntValues[i] = mSpectrumFile[i].getValues();
-                    tempRealData = new GraphView.GraphViewData[mFileDataLength[i]];
-                    realData[i] = tempRealData;
+                    GraphView.GraphViewData[] realDataEdit;
+                    mSpectrumToEditLength = mSpectrumToEdit.readFile();
+                    mSpectrumToEditValues = mSpectrumToEdit.getValues();
+                    realDataReference = new GraphView.GraphViewData[mSpectrumToEditLength];
 
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                i++;
             }
-            mDataLengthMax = findMaxDataLength();
-        } else {
-
         }
-        mColor = new int[3];
-        mColor[0] = Color.rgb(255, 0, 0);
-        mColor[1] = Color.rgb(0, 255, 0);
-        mColor[2] = Color.rgb(0,0,255);
-
     }
 
 

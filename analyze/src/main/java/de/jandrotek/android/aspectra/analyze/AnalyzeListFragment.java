@@ -19,6 +19,7 @@ import android.widget.TextView;
 import android.widget.TwoLineListItem;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -35,7 +36,7 @@ public class AnalyzeListFragment extends ListFragment {
     private Callbacks mCallbacks = sDummyCallbacks;
     private int mActivatedPosition = ListView.INVALID_POSITION;
     private ActionMode mActionMode;
-
+    private String mFileName;
     public interface Callbacks {
         void onItemSelected(Map<String, String> spectraNames);
     }
@@ -144,7 +145,7 @@ public class AnalyzeListFragment extends ListFragment {
         super.onListItemClick(listView, view, position, id);
         filesNames.clear();
         ListContent.SpectrumItem spectrum = ListContent.getItem(position);
-        String fileName = spectrum.getName();
+        mFileName = spectrum.getName();
         //TODO: call edit
 //        mCallbacks.onItemSelected(filesNames);
     }
@@ -189,6 +190,7 @@ public class AnalyzeListFragment extends ListFragment {
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
 
+            final int PositionInList = position;
             TwoLineListItem twoLineListItem;
 
             if (convertView == null) {
@@ -212,6 +214,7 @@ public class AnalyzeListFragment extends ListFragment {
                     if (mActionMode != null) {
                         return false;
                     }
+                    mFileName = ListContent.ITEMS.get(PositionInList).getName();
 
                     // Start the CAB using the ActionMode.Callback defined above
                     mActionMode = getActivity().startActionMode(mActionModeCallback);
@@ -247,15 +250,20 @@ public class AnalyzeListFragment extends ListFragment {
         // Called when the user selects a contextual menu item
         @Override
         public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+            Map<String, String> spectraNames = new HashMap<>();
             switch (item.getItemId()) {
                 case R.id.item_set_reference:
+                    spectraNames.put(AnalyzeFragment.ARG_ITEM_REFERENCE, mFileName);
                     mode.finish(); // Action picked, so close the CAB
+                    mCallbacks.onItemSelected(spectraNames);
                     return true;
                 case R.id.item_delete:
                     mode.finish(); // Action picked, so close the CAB
                     return true;
                 case R.id.item_edit:
+                    spectraNames.put(AnalyzeFragment.ARG_ITEM_EDIT, mFileName);
                     mode.finish(); // Action picked, so close the CAB
+                    mCallbacks.onItemSelected(spectraNames);
                     return true;
                 default:
                     return false;

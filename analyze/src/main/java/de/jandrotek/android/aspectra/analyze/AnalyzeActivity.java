@@ -31,9 +31,9 @@ public class AnalyzeActivity extends AppCompatActivity {
                 spectra.put(AnalyzeFragment.ARG_ITEM_EDIT, getIntent().getExtras().getString(AnalyzeFragment.ARG_ITEM_EDIT));
             }
 
-            mAnalyzeFragment = AnalyzeFragment.newInstance(AspectraGlobals.ACT_ITEM_VIEW_PLOT, spectra);
+            mAnalyzeFragment = AnalyzeFragment.newInstance(spectra);
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.item_detail_container, mAnalyzeFragment)
+                    .add(R.id.fragment_analyze_container, mAnalyzeFragment)
                     .commit();
         }
     }

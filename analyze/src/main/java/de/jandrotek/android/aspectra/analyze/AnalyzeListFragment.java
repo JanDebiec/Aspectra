@@ -76,6 +76,7 @@ public class AnalyzeListFragment extends ListFragment {
         mPrivateListView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
         mPrivateListView.setLongClickable(true);
 
+
     }
 
         @Override
@@ -214,6 +215,8 @@ public class AnalyzeListFragment extends ListFragment {
                     if (mActionMode != null) {
                         return false;
                     }
+                    //TODO: can't get item back unchecked
+//                    getListView().setItemChecked(PositionInList, true);
                     mFileName = ListContent.ITEMS.get(PositionInList).getName();
 
                     // Start the CAB using the ActionMode.Callback defined above

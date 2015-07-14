@@ -75,7 +75,7 @@ public class AnalyzeFragment extends Fragment {
             }
         }
         if (mStaticSpectra.containsKey(ARG_ITEM_REFERENCE)) {
-                mSpectrumNameToEdit = mStaticSpectra.get(ARG_ITEM_REFERENCE);
+            mSpectrumNameReference = mStaticSpectra.get(ARG_ITEM_REFERENCE);
         }
 
         if (getArguments() != null) {

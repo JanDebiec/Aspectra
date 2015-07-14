@@ -6,12 +6,8 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-
-import de.jandrotek.android.aspectra.core.AspectraGlobals;
-import de.jandrotek.android.aspectra.libplotspectrav3.PlotViewFragment;
 
 public class AnalyzeActivity extends AppCompatActivity {
 

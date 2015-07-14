@@ -45,16 +45,22 @@ public class AnalyzeActivity extends AppCompatActivity {
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
 
-//Save the fragment's instance
-//        getSupportFragmentManager().putFragment(outState, "mContent", mContent);
+        //Save the fragment's instance
+        getSupportFragmentManager().putFragment(outState, "mContent", mAnalyzeFragment);
 
 
     }
 
     @Override
+    public void onRestoreInstanceState(Bundle inState){
+        mAnalyzeFragment = (AnalyzeFragment)getSupportFragmentManager().getFragment(inState,"mContent");
+    }
+
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_analyze, menu);
+        getMenuInflater().inflate(R.menu.menu_analyze_not_used, menu);
         return true;
     }
 

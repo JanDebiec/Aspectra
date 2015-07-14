@@ -10,4 +10,15 @@
         android:layout_height="match_parent">
 
     </FrameLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        android:id="@+id/touchview_container"
+        <de.jandrotek.android.aspectra.libtouch.TouchView
+            android:id="@+id/touchOverlay"
+            android:layout_height="match_parent"
+            android:layout_width="match_parent" />
+
+    </FrameLayout>
 </FrameLayout>

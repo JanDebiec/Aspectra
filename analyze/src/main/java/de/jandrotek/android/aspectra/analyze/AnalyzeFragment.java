@@ -1,5 +1,7 @@
 package de.jandrotek.android.aspectra.analyze;
 
+import android.app.ActionBar;
+import android.app.FragmentTransaction;
 import android.graphics.Color;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
@@ -49,6 +51,8 @@ public class AnalyzeFragment extends Fragment {
     private GraphViewSeries mDataSeriesRef;
 
     private LineGraphView mGraphView;
+
+    private ActionBar.OnNavigationListener mOnNavigationListener;
 
     public static AnalyzeFragment newInstance(Map<String, String> spectra) {
         AnalyzeFragment fragment = new AnalyzeFragment();
@@ -102,11 +106,11 @@ public class AnalyzeFragment extends Fragment {
         if (mSpectrumNameReference != null) {
 
             mSpectrumNameAbsReference = SpectrumFiles.mPath + "/" + mSpectrumNameReference;
-            mSpectrumReference = new SpectrumChr(mSpectrumAbsNameToEdit);
+            mSpectrumReference = new SpectrumChr(mSpectrumNameAbsReference);
             try {
                 GraphView.GraphViewData[] realDataEdit;
-                mSpectrumToEditLength = mSpectrumToEdit.readValuesChr();
-                mSpectrumToEditValues = mSpectrumToEdit.getValues();
+                mSpectrumReferenceLength = mSpectrumReference.readValuesChr();
+                mSpectrumReferenceValues= mSpectrumReference.getValues();
 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -138,6 +142,8 @@ public class AnalyzeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(de.jandrotek.android.aspectra.libplotspectrav3.R.layout.fragment_plot_view, container, false);
+        ActionBar actionbar = getActivity().getActionBar();
+        actionbar.setDisplayHomeAsUpEnabled(true);
 
         mGraphView = new LineGraphView(getActivity(), "");
 
@@ -166,28 +172,58 @@ public class AnalyzeFragment extends Fragment {
         mGraphView.setViewPort(0, mSpectrumLengthMax);
         registerForContextMenu(mGraphView);
 
-//        mGraphView.setOnTouchListener(new View.OnTouchListener() {
-//
-//            @Override
-//            public boolean onTouch(View v, MotionEvent event) {
-//                int action = event.getAction();
-//                if(action == MotionEvent.ACTION_DOWN) {
-//
-//                    if (!AspectraGlobals.mSavePlotInFile) {
-//                        AspectraGlobals.mSavePlotInFile = true;
-//                    }
-//                }
-//                return true; //processed
-//            }
-//
-//        });
-
         //TODO: optional - activate scaling / zooming
         // both modi will be handled with Touch-view helper class, not only in viewer
         // in liveView is disabled, first in AnalyzeActivity
         FrameLayout mFrameLayout = (FrameLayout)rootView.findViewById(de.jandrotek.android.aspectra.libplotspectrav3.R.id.flPlotView);
         mFrameLayout.addView(mGraphView);
-    setRetainInstance(true);
+        setRetainInstance(true);
+        actionbar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
+        mOnNavigationListener = new ActionBar.OnNavigationListener() {
+            String[] strings = getResources().getStringArray(R.array.analyze_actionbar_list);
+
+            @Override
+            public boolean onNavigationItemSelected(int position, long itemID){
+                mSelectedChildFragmentID = position;
+                FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
+                // check if one child already exists, not yet
+                if((mAsciiViewer == null) && (mTiltViewer == null) && (mLRViewer == null)){
+//					if (position == SELECTED_LEFTRIGHT_CHILD){
+//						mLRViewer = new LeftRightViewFragment();
+//						transaction.add(R.id.child_fragment, mLRViewer).commit();
+//					}
+                    if(position == SELECTED_ASCIIDATA_CHILD){
+                        mAsciiViewer = new AsciiViewFragment();
+                        transaction.add(R.id.child_fragment, mAsciiViewer).commit();
+                    }
+                    else if(position == SELECTED_TILTVIEW_CHILD){ // if child == tiltView
+                        mTiltViewer = new TiltViewFragment();
+                        transaction.add(R.id.child_fragment, mTiltViewer).commit();
+                    }
+                } else { // one child alredy exists
+//					if (position == SELECTED_LEFTRIGHT_CHILD){
+//						if(mLRViewer == null){
+//							mLRViewer = new LeftRightViewFragment();
+//												}
+//						transaction.replace(R.id.child_fragment, mLRViewer).commit();
+//					}
+                    if(position == SELECTED_ASCIIDATA_CHILD){
+                        if(mAsciiViewer == null){
+                            mAsciiViewer = new AsciiViewFragment();
+                        }
+                        transaction.replace(R.id.child_fragment, mAsciiViewer).commit();
+                    }
+                    else if(position == SELECTED_TILTVIEW_CHILD){ // if
+                        if(mTiltViewer == null){
+                            mTiltViewer = new TiltViewFragment();
+                        }
+                        transaction.replace(R.id.child_fragment, mTiltViewer).commit();
+                    }
+                }
+                return true;
+            }
+        };
+        actionbar.setListNavigationCallbacks(mSpinnerAdapter, mOnNavigationListener);
         return rootView;
     }
     private GraphView.GraphViewData[] generateData(int[] data, int length) {

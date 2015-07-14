@@ -4,4 +4,9 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="context_title">Action:</string>
+    <string-array name="analyze_actionbar_list">
+        <item>graphic_view</item>
+        <item>pure_data</item>
+    </string-array>
+
 </resources>

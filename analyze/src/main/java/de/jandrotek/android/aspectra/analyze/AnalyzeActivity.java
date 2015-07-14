@@ -50,7 +50,7 @@ public class AnalyzeActivity extends AppCompatActivity {
         super.onSaveInstanceState(outState);
 
 //Save the fragment's instance
-        getSupportFragmentManager().putFragment(outState, "mContent", mContent);
+//        getSupportFragmentManager().putFragment(outState, "mContent", mContent);
 
 
     }

@@ -93,7 +93,6 @@ public class AnalyzeFragment extends Fragment {
                 GraphView.GraphViewData[] realDataEdit;
                 mSpectrumToEditLength = mSpectrumToEdit.readValuesChr();
                 mSpectrumToEditValues = mSpectrumToEdit.getValues();
-                realDataToEdit = new GraphView.GraphViewData[mSpectrumToEditLength];
 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -108,12 +107,14 @@ public class AnalyzeFragment extends Fragment {
                 GraphView.GraphViewData[] realDataEdit;
                 mSpectrumToEditLength = mSpectrumToEdit.readValuesChr();
                 mSpectrumToEditValues = mSpectrumToEdit.getValues();
-                realDataReference = new GraphView.GraphViewData[mSpectrumToEditLength];
 
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
+        mSpectrumLengthMax = Math.max(mSpectrumToEditLength, mSpectrumReferenceLength);
+        realDataToEdit = new GraphView.GraphViewData[mSpectrumLengthMax];
+        realDataReference = new GraphView.GraphViewData[mSpectrumLengthMax];
     }
 
 
@@ -186,7 +187,7 @@ public class AnalyzeFragment extends Fragment {
         // in liveView is disabled, first in AnalyzeActivity
         FrameLayout mFrameLayout = (FrameLayout)rootView.findViewById(de.jandrotek.android.aspectra.libplotspectrav3.R.id.flPlotView);
         mFrameLayout.addView(mGraphView);
-
+    setRetainInstance(true);
         return rootView;
     }
     private GraphView.GraphViewData[] generateData(int[] data, int length) {

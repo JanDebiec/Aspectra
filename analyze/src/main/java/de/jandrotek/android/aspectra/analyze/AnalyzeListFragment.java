@@ -32,7 +32,6 @@ public class AnalyzeListFragment extends ListFragment {
     ListView mPrivateListView;
     private SpectrumAdapter mAdapter;
     ArrayList<String> filesNames;
-//    AnalyzeListModeListener mModeListener;
     private Callbacks mCallbacks = sDummyCallbacks;
     private int mActivatedPosition = ListView.INVALID_POSITION;
     private ActionMode mActionMode;
@@ -144,11 +143,15 @@ public class AnalyzeListFragment extends ListFragment {
     @Override
     public void onListItemClick(ListView listView, View view, int position, long id) {
         super.onListItemClick(listView, view, position, id);
-        filesNames.clear();
+        execOnClick(position);
+    }
+
+    private void execOnClick(int position) {
+        Map<String, String> spectraNames = new HashMap<>();
         ListContent.SpectrumItem spectrum = ListContent.getItem(position);
         mFileName = spectrum.getName();
-        //TODO: call edit
-//        mCallbacks.onItemSelected(filesNames);
+        spectraNames.put(AnalyzeFragment.ARG_ITEM_EDIT, mFileName);
+        mCallbacks.onItemSelected(spectraNames);
     }
 
     @Override
@@ -225,6 +228,14 @@ public class AnalyzeListFragment extends ListFragment {
                     return true;
                 }
             });
+            twoLineListItem.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    execOnClick(PositionInList);
+
+
+                }
+            });
             return twoLineListItem;
 
         }
@@ -255,19 +266,19 @@ public class AnalyzeListFragment extends ListFragment {
         public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
             Map<String, String> spectraNames = new HashMap<>();
             switch (item.getItemId()) {
-                case R.id.item_set_reference:
-                    spectraNames.put(AnalyzeFragment.ARG_ITEM_REFERENCE, mFileName);
-                    mode.finish(); // Action picked, so close the CAB
-                    mCallbacks.onItemSelected(spectraNames);
-                    return true;
+//                case R.id.item_set_reference:
+//                    spectraNames.put(AnalyzeFragment.ARG_ITEM_REFERENCE, mFileName);
+//                    mode.finish(); // Action picked, so close the CAB
+//                    mCallbacks.onItemSelected(spectraNames);
+//                    return true;
                 case R.id.item_delete:
                     mode.finish(); // Action picked, so close the CAB
                     return true;
-                case R.id.item_edit:
-                    spectraNames.put(AnalyzeFragment.ARG_ITEM_EDIT, mFileName);
-                    mode.finish(); // Action picked, so close the CAB
-                    mCallbacks.onItemSelected(spectraNames);
-                    return true;
+//                case R.id.item_edit:
+//                    spectraNames.put(AnalyzeFragment.ARG_ITEM_EDIT, mFileName);
+//                    mode.finish(); // Action picked, so close the CAB
+//                    mCallbacks.onItemSelected(spectraNames);
+//                    return true;
                 default:
                     return false;
             }

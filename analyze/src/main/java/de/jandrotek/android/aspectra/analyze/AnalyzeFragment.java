@@ -148,7 +148,6 @@ public class AnalyzeFragment extends Fragment {
         View rootView = inflater.inflate(de.jandrotek.android.aspectra.libplotspectrav3.R.layout.fragment_plot_view, container, false);
 
         ActionBar actionbar = ((AnalyzeActivity)getActivity()).getSupportActionBar();
-//        ActionBar actionbar = getSuActivity().getSupportActionBar();
         actionbar.setDisplayHomeAsUpEnabled(true);
         SpinnerAdapter mSpinnerAdapter = ArrayAdapter.createFromResource(getActivity(), R.array.analyze_actionbar_list,
                 android.R.layout.simple_spinner_dropdown_item);

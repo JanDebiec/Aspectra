@@ -5,8 +5,12 @@
     <string name="action_settings">Settings</string>
     <string name="context_title">Action:</string>
     <string-array name="analyze_actionbar_list">
-        <item>graphic_view</item>
-        <item>pure_data</item>
+        <item>move/stretch</item>
+        <item>crop</item>
+        <item>edit notes</item>
+        <item>markers</item>
+        <item>set as reference</item>
+        <item>undo</item>
     </string-array>
 
 </resources>

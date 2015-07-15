@@ -35,6 +35,13 @@ public class AnalyzeFragment extends Fragment {
     public static final String ARG_ITEM_REFERENCE = "item_reference";
     public static final String ARG_ITEM_EDIT = "item_edit";
 
+    private static final int ITEM_SELECTED_STRETCH = 0;
+    private static final int ITEM_SELECTED_CROP = 1;
+    private static final int ITEM_SELECTED_EDIT_NOTES = 2;
+    private static final int ITEM_SELECTED_MARKERS = 3;
+    private static final int ITEM_SELECTED_SET_REFERENCE = 4;
+
+
     private String mSpectrumNameToEdit;
     private String mSpectrumAbsNameToEdit;
     private String mSpectrumNameReference;

@@ -21,11 +21,6 @@ public class AnalyzeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_analyze);
 
         if (savedInstanceState == null) {
-//            Bundle arguments = new Bundle();
-            //Restore the fragment's instance
-//            mContent = getSupportFragmentManager().getFragment(
-//                    savedInstanceState, "mContent");
-
             Map<String, String> spectra = new HashMap<>();
 
             if(getIntent().getExtras().containsKey(AnalyzeFragment.ARG_ITEM_REFERENCE)){
@@ -62,7 +57,7 @@ public class AnalyzeActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_analyze_not_used, menu);
+        getMenuInflater().inflate(R.menu.menu_analyze_edit, menu);
         return true;
     }
 

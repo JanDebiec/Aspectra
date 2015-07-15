@@ -4,8 +4,8 @@
     <item
         android:id="@+id/item_get_reference"
         android:showAsAction="ifRoom|withText"
-        android:title="Reference"
-        android:titleCondensed="Ref">
+        android:title="get Reference"
+        android:titleCondensed="getRef">
     </item>
     <item
         android:id="@+id/item_delete"

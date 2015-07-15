@@ -1,6 +1,7 @@
 package de.jandrotek.android.aspectra.analyze;
 
 import android.support.v4.app.Fragment;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -18,6 +19,7 @@ public class AnalyzeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_analyze);
+
         if (savedInstanceState == null) {
 //            Bundle arguments = new Bundle();
             //Restore the fragment's instance

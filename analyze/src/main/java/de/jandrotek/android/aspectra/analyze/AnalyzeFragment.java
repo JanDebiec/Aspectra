@@ -1,9 +1,11 @@
 package de.jandrotek.android.aspectra.analyze;
 
-import android.app.ActionBar;
+import android.support.v4.app.Fragment;
+//import android.app.Fragment;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
 import android.app.FragmentTransaction;
 import android.graphics.Color;
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -145,7 +147,8 @@ public class AnalyzeFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(de.jandrotek.android.aspectra.libplotspectrav3.R.layout.fragment_plot_view, container, false);
 
-        ActionBar actionbar = getActivity().getActionBar();
+        ActionBar actionbar = ((AnalyzeActivity)getActivity()).getSupportActionBar();
+//        ActionBar actionbar = getSuActivity().getSupportActionBar();
         actionbar.setDisplayHomeAsUpEnabled(true);
         SpinnerAdapter mSpinnerAdapter = ArrayAdapter.createFromResource(getActivity(), R.array.analyze_actionbar_list,
                 android.R.layout.simple_spinner_dropdown_item);

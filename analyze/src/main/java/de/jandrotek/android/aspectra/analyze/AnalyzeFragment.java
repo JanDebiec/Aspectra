@@ -9,7 +9,9 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
+import android.widget.SpinnerAdapter;
 
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.GraphViewSeries;
@@ -142,8 +144,11 @@ public class AnalyzeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(de.jandrotek.android.aspectra.libplotspectrav3.R.layout.fragment_plot_view, container, false);
+
         ActionBar actionbar = getActivity().getActionBar();
         actionbar.setDisplayHomeAsUpEnabled(true);
+        SpinnerAdapter mSpinnerAdapter = ArrayAdapter.createFromResource(getActivity(), R.array.analyze_actionbar_list,
+                android.R.layout.simple_spinner_dropdown_item);
 
         mGraphView = new LineGraphView(getActivity(), "");
 
@@ -184,42 +189,42 @@ public class AnalyzeFragment extends Fragment {
 
             @Override
             public boolean onNavigationItemSelected(int position, long itemID){
-                mSelectedChildFragmentID = position;
-                FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
-                // check if one child already exists, not yet
-                if((mAsciiViewer == null) && (mTiltViewer == null) && (mLRViewer == null)){
-//					if (position == SELECTED_LEFTRIGHT_CHILD){
-//						mLRViewer = new LeftRightViewFragment();
-//						transaction.add(R.id.child_fragment, mLRViewer).commit();
-//					}
-                    if(position == SELECTED_ASCIIDATA_CHILD){
-                        mAsciiViewer = new AsciiViewFragment();
-                        transaction.add(R.id.child_fragment, mAsciiViewer).commit();
-                    }
-                    else if(position == SELECTED_TILTVIEW_CHILD){ // if child == tiltView
-                        mTiltViewer = new TiltViewFragment();
-                        transaction.add(R.id.child_fragment, mTiltViewer).commit();
-                    }
-                } else { // one child alredy exists
-//					if (position == SELECTED_LEFTRIGHT_CHILD){
-//						if(mLRViewer == null){
-//							mLRViewer = new LeftRightViewFragment();
-//												}
-//						transaction.replace(R.id.child_fragment, mLRViewer).commit();
-//					}
-                    if(position == SELECTED_ASCIIDATA_CHILD){
-                        if(mAsciiViewer == null){
-                            mAsciiViewer = new AsciiViewFragment();
-                        }
-                        transaction.replace(R.id.child_fragment, mAsciiViewer).commit();
-                    }
-                    else if(position == SELECTED_TILTVIEW_CHILD){ // if
-                        if(mTiltViewer == null){
-                            mTiltViewer = new TiltViewFragment();
-                        }
-                        transaction.replace(R.id.child_fragment, mTiltViewer).commit();
-                    }
-                }
+//                mSelectedChildFragmentID = position;
+//                FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
+//                // check if one child already exists, not yet
+//                if((mAsciiViewer == null) && (mTiltViewer == null) && (mLRViewer == null)){
+////					if (position == SELECTED_LEFTRIGHT_CHILD){
+////						mLRViewer = new LeftRightViewFragment();
+////						transaction.add(R.id.child_fragment, mLRViewer).commit();
+////					}
+//                    if(position == SELECTED_ASCIIDATA_CHILD){
+//                        mAsciiViewer = new AsciiViewFragment();
+//                        transaction.add(R.id.child_fragment, mAsciiViewer).commit();
+//                    }
+//                    else if(position == SELECTED_TILTVIEW_CHILD){ // if child == tiltView
+//                        mTiltViewer = new TiltViewFragment();
+//                        transaction.add(R.id.child_fragment, mTiltViewer).commit();
+//                    }
+//                } else { // one child alredy exists
+////					if (position == SELECTED_LEFTRIGHT_CHILD){
+////						if(mLRViewer == null){
+////							mLRViewer = new LeftRightViewFragment();
+////												}
+////						transaction.replace(R.id.child_fragment, mLRViewer).commit();
+////					}
+//                    if(position == SELECTED_ASCIIDATA_CHILD){
+//                        if(mAsciiViewer == null){
+//                            mAsciiViewer = new AsciiViewFragment();
+//                        }
+//                        transaction.replace(R.id.child_fragment, mAsciiViewer).commit();
+//                    }
+//                    else if(position == SELECTED_TILTVIEW_CHILD){ // if
+//                        if(mTiltViewer == null){
+//                            mTiltViewer = new TiltViewFragment();
+//                        }
+//                        transaction.replace(R.id.child_fragment, mTiltViewer).commit();
+//                    }
+//                }
                 return true;
             }
         };

@@ -13,14 +13,17 @@ import android.view.MenuItem;
 import java.util.Map;
 
 import de.jandrotek.android.aspectra.core.SpectrumAsp;
-import de.jandrotek.android.aspectra.libprefs.AspectraSettings;
+import de.jandrotek.android.aspectra.libprefs.AspectraAnalyzePrefs;
+import de.jandrotek.android.aspectra.libprefs.AspectraLiveViewPrefs;
 import de.jandrotek.android.aspectra.libspectrafiles.SpectrumFiles;
+
+import static de.jandrotek.android.aspectra.analyze.R.string.PREFS_KEY_EXTENSION_NAME;
 
 public class AnalyzeListActivity extends ActionBarActivity
         implements AnalyzeListFragment.Callbacks {
 
     private static final String TAG = "ListItemsAct";
-    private AspectraSettings mAspectraSettings;
+    private AspectraAnalyzePrefs mAnalyzeSettings;
     private String mFileFolder;
     private String mFileExt;
     private SpectrumAsp mSpectrumWork = null;
@@ -36,11 +39,11 @@ public class AnalyzeListActivity extends ActionBarActivity
             Log.d(TAG, "onCreate() called");
         }
 
-        mAspectraSettings = new AspectraSettings();
+        mAnalyzeSettings = new AspectraAnalyzePrefs();
         Context context = getApplicationContext();
         SharedPreferences prefs = PreferenceManager
                 .getDefaultSharedPreferences(context);
-        mAspectraSettings.connectPrefs(context, prefs);
+        mAnalyzeSettings.connectPrefs(context, prefs);
 
         updateFromPreferences();
 
@@ -157,8 +160,15 @@ public class AnalyzeListActivity extends ActionBarActivity
     }
 
     protected void updateFromPreferences() {
-        mAspectraSettings.loadSettings();
-        mFileFolder = mAspectraSettings.getPrefsSpectraBasePath();
-        mFileExt = mAspectraSettings.getPrefsSpectraExt();
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+       String folderNameKey = this.getResources().getString(R.string.PREFS_KEY_FOLDER_NAME);
+        String folderNameDefault = this.getResources().getString(R.string.DEFAULT_FOLDER_NAME);
+        mFileFolder = prefs.getString(folderNameKey, folderNameDefault);
+        String extensionKey = this.getResources().getString(R.string.PREFS_KEY_EXTENSION_NAME);
+        String extensionDefault = this.getResources().getString(R.string.DEFAULT_EXTENSION_NAME);
+        mFileExt = prefs.getString(extensionKey, extensionDefault);
+        mAnalyzeSettings.loadSettings();
+//        mFileFolder = mAnalyzeSettings.getPrefsSpectraBasePath();
+//        mFileExt = mAnalyzeSettings.getPrefsSpectraExt();
     }
 }

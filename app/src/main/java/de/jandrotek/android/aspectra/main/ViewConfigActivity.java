@@ -1,6 +1,5 @@
 package de.jandrotek.android.aspectra.main;
 
-import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
@@ -9,7 +8,6 @@ import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
-import de.jandrotek.android.aspectra.libprefs.SettingsActivity;
 import de.jandrotek.android.aspectra.core.AspectraGlobals;
 import de.jandrotek.android.aspectra.core.ConfigViewSettings;
 
@@ -233,7 +231,7 @@ public class ViewConfigActivity extends BaseActivity
 
 //        //noinspection SimplifiableIfStatement
 //        if (id == R.id.action_settings) {
-//            Intent intent = new Intent(this, SettingsActivity.class);
+//            Intent intent = new Intent(this, AspectraGlobalPrefsActivity.class);
 //            startActivity(intent);
 //            return true;
 //        }

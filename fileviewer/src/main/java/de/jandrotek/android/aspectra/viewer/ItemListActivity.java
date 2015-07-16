@@ -13,14 +13,14 @@ import android.view.MenuItem;
 import java.util.ArrayList;
 
 import de.jandrotek.android.aspectra.libplotspectrav3.PlotViewFragment;
-import de.jandrotek.android.aspectra.libprefs.AspectraSettings;
+import de.jandrotek.android.aspectra.libprefs.AspectraLiveViewPrefs;
 import de.jandrotek.android.aspectra.libspectrafiles.SpectrumFiles;
 
 public class ItemListActivity extends ActionBarActivity
         implements ItemListFragment.Callbacks {
 
     private static final String TAG = "ListItemsAct";
-    private AspectraSettings mAspectraSettings;
+    private AspectraLiveViewPrefs mAspectraSettings;
     private String mFileFolder;
     private String mFileExt;
 
@@ -37,7 +37,7 @@ public class ItemListActivity extends ActionBarActivity
             Log.d(TAG, "onCreate() called");
         }
 
-        mAspectraSettings = new AspectraSettings();
+        mAspectraSettings = new AspectraLiveViewPrefs();
         Context context = getApplicationContext();
         SharedPreferences prefs = PreferenceManager
                 .getDefaultSharedPreferences(context);

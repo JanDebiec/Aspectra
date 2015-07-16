@@ -148,10 +148,18 @@ public class AnalyzeListActivity extends ActionBarActivity
 //        } else {
             Bundle arguments = new Bundle();
             if(spectraNames.containsKey(AnalyzeFragment.ARG_ITEM_EDIT)){
+                mAnalyzeSettings.setPrefsSpectrumEdited(spectraNames.get(AnalyzeFragment.ARG_ITEM_EDIT));
+                mAnalyzeSettings.saveSettings();
                 arguments.putString(AnalyzeFragment.ARG_ITEM_EDIT, spectraNames.get(AnalyzeFragment.ARG_ITEM_EDIT));
+            } else{
+                arguments.putString(AnalyzeFragment.ARG_ITEM_EDIT, mSpectrumWork);
             }
             if (spectraNames.containsKey(AnalyzeFragment.ARG_ITEM_REFERENCE)){
+                mAnalyzeSettings.setPrefsSpectrumReference(spectraNames.get(AnalyzeFragment.ARG_ITEM_REFERENCE));
+                mAnalyzeSettings.saveSettings();
                 arguments.putString(AnalyzeFragment.ARG_ITEM_REFERENCE, spectraNames.get(AnalyzeFragment.ARG_ITEM_REFERENCE));
+            } else {
+                arguments.putString(AnalyzeFragment.ARG_ITEM_REFERENCE, mSpectrumRef);
             }
             Intent detailIntent = new Intent(this, AnalyzeActivity.class);
             detailIntent.putExtras(arguments);
@@ -168,7 +176,7 @@ public class AnalyzeListActivity extends ActionBarActivity
         String extensionDefault = this.getResources().getString(R.string.DEFAULT_EXTENSION_NAME);
         mFileExt = prefs.getString(extensionKey, extensionDefault);
         mAnalyzeSettings.loadSettings();
-//        mFileFolder = mAnalyzeSettings.getPrefsSpectraBasePath();
-//        mFileExt = mAnalyzeSettings.getPrefsSpectraExt();
+        mSpectrumRef = mAnalyzeSettings.getPrefsSpectrumReference();
+        mSpectrumWork = mAnalyzeSettings.getPrefsSpectrumEdited();
     }
 }

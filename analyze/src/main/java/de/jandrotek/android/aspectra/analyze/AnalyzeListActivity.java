@@ -26,8 +26,8 @@ public class AnalyzeListActivity extends ActionBarActivity
     private AspectraAnalyzePrefs mAnalyzeSettings;
     private String mFileFolder;
     private String mFileExt;
-    private SpectrumAsp mSpectrumWork = null;
-    private SpectrumAsp mSpectrumRef = null;
+    private String mSpectrumWork = null;
+    private String mSpectrumRef = null;
     private SpectrumFiles mSpectrumFiles = null;
     private int mFileListSize = 0;
     private boolean mTwoPane;
@@ -148,19 +148,17 @@ public class AnalyzeListActivity extends ActionBarActivity
 //        } else {
             Bundle arguments = new Bundle();
             if(spectraNames.containsKey(AnalyzeFragment.ARG_ITEM_EDIT)){
-                mAnalyzeSettings.setPrefsSpectrumEdited(spectraNames.get(AnalyzeFragment.ARG_ITEM_EDIT));
+                mSpectrumWork = spectraNames.get(AnalyzeFragment.ARG_ITEM_EDIT);
+                mAnalyzeSettings.setPrefsSpectrumEdited(mSpectrumWork);
                 mAnalyzeSettings.saveSettings();
-                arguments.putString(AnalyzeFragment.ARG_ITEM_EDIT, spectraNames.get(AnalyzeFragment.ARG_ITEM_EDIT));
-            } else{
-                arguments.putString(AnalyzeFragment.ARG_ITEM_EDIT, mSpectrumWork);
             }
             if (spectraNames.containsKey(AnalyzeFragment.ARG_ITEM_REFERENCE)){
-                mAnalyzeSettings.setPrefsSpectrumReference(spectraNames.get(AnalyzeFragment.ARG_ITEM_REFERENCE));
+                mSpectrumRef = spectraNames.get(AnalyzeFragment.ARG_ITEM_REFERENCE);
+                mAnalyzeSettings.setPrefsSpectrumReference(mSpectrumRef);
                 mAnalyzeSettings.saveSettings();
-                arguments.putString(AnalyzeFragment.ARG_ITEM_REFERENCE, spectraNames.get(AnalyzeFragment.ARG_ITEM_REFERENCE));
-            } else {
-                arguments.putString(AnalyzeFragment.ARG_ITEM_REFERENCE, mSpectrumRef);
             }
+            arguments.putString(AnalyzeFragment.ARG_ITEM_EDIT, mSpectrumWork);
+            arguments.putString(AnalyzeFragment.ARG_ITEM_REFERENCE, mSpectrumRef);
             Intent detailIntent = new Intent(this, AnalyzeActivity.class);
             detailIntent.putExtras(arguments);
             startActivity(detailIntent);

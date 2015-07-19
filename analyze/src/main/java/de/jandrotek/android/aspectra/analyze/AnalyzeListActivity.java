@@ -14,6 +14,7 @@ import java.util.Map;
 
 import de.jandrotek.android.aspectra.core.SpectrumAsp;
 import de.jandrotek.android.aspectra.libprefs.AspectraAnalyzePrefs;
+import de.jandrotek.android.aspectra.libprefs.AspectraGlobalPrefsActivity;
 import de.jandrotek.android.aspectra.libprefs.AspectraLiveViewPrefs;
 import de.jandrotek.android.aspectra.libspectrafiles.SpectrumFiles;
 
@@ -116,7 +117,7 @@ public class AnalyzeListActivity extends ActionBarActivity
         int id = item.getItemId();
 
         if (id == R.id.action_settings) {
-            Intent intent = new Intent(this, SettingsActivity.class);
+            Intent intent = new Intent(this, AspectraGlobalPrefsActivity.class);
             startActivity(intent);
             return true;
         }

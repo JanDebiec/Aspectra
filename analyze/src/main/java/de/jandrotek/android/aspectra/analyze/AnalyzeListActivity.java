@@ -148,18 +148,18 @@ public class AnalyzeListActivity extends ActionBarActivity
 //
 //        } else {
             Bundle arguments = new Bundle();
-            if(spectraNames.containsKey(AnalyzeFragment.ARG_ITEM_EDIT)){
-                mSpectrumWork = spectraNames.get(AnalyzeFragment.ARG_ITEM_EDIT);
+            if(spectraNames.containsKey(AnalyzeActivity.ARG_ITEM_EDIT)){
+                mSpectrumWork = spectraNames.get(AnalyzeActivity.ARG_ITEM_EDIT);
                 mAnalyzeSettings.setPrefsSpectrumEdited(mSpectrumWork);
                 mAnalyzeSettings.saveSettings();
             }
-            if (spectraNames.containsKey(AnalyzeFragment.ARG_ITEM_REFERENCE)){
-                mSpectrumRef = spectraNames.get(AnalyzeFragment.ARG_ITEM_REFERENCE);
+            if (spectraNames.containsKey(AnalyzeActivity.ARG_ITEM_REFERENCE)){
+                mSpectrumRef = spectraNames.get(AnalyzeActivity.ARG_ITEM_REFERENCE);
                 mAnalyzeSettings.setPrefsSpectrumReference(mSpectrumRef);
                 mAnalyzeSettings.saveSettings();
             }
-            arguments.putString(AnalyzeFragment.ARG_ITEM_EDIT, mSpectrumWork);
-            arguments.putString(AnalyzeFragment.ARG_ITEM_REFERENCE, mSpectrumRef);
+            arguments.putString(AnalyzeActivity.ARG_ITEM_EDIT, mSpectrumWork);
+            arguments.putString(AnalyzeActivity.ARG_ITEM_REFERENCE, mSpectrumRef);
             Intent detailIntent = new Intent(this, AnalyzeActivity.class);
             detailIntent.putExtras(arguments);
             startActivity(detailIntent);

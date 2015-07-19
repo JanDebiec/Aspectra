@@ -150,7 +150,7 @@ public class AnalyzeListFragment extends ListFragment {
         Map<String, String> spectraNames = new HashMap<>();
         ListContent.SpectrumItem spectrum = ListContent.getItem(position);
         mFileName = spectrum.getName();
-        spectraNames.put(AnalyzeFragment.ARG_ITEM_EDIT, mFileName);
+        spectraNames.put(AnalyzeActivity.ARG_ITEM_EDIT, mFileName);
         mCallbacks.onItemSelected(spectraNames);
     }
 

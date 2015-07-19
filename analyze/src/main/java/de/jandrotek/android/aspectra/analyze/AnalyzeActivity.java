@@ -71,11 +71,12 @@ public class AnalyzeActivity extends AppCompatActivity
         }
 
         generateGraphViewData();
-        updateSpectraInFragment();
+        updateSpectraInFragment(mSpectrumLengthMax);
     }
 
-    private void updateSpectraInFragment() {
+    private void updateSpectraInFragment(int mSpectrumLengthMax) {
         if (mAnalyzeFragment != null) {
+            mAnalyzeFragment.setSpectrumLengthMax(mSpectrumLengthMax);
             mAnalyzeFragment.setSpectrumReferenceValues(mSpectrumReferenceValues);
             mAnalyzeFragment.setSpectrumToEditValues(mSpectrumToEditValues);
         }

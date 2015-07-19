@@ -42,7 +42,11 @@ public class AnalyzeFragment extends Fragment {
     private static final int ITEM_SELECTED_SET_REFERENCE = 4;
 
 
-//    private String mSpectrumNameToEdit;
+    public void setSpectrumLengthMax(int mSpectrumLengthMax) {
+        this.mSpectrumLengthMax = mSpectrumLengthMax;
+    }
+
+    //    private String mSpectrumNameToEdit;
 //    private String mSpectrumAbsNameToEdit;
 //    private String mSpectrumNameReference;
 //    private String mSpectrumNameAbsReference;
@@ -149,22 +153,22 @@ public class AnalyzeFragment extends Fragment {
     }
 
 
-    @Override
-    public void onSaveInstanceState(final Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putString(ARG_ITEM_EDIT, mSpectrumNameToEdit);
-        outState.putString(ARG_ITEM_REFERENCE, mSpectrumNameReference);
-    }
-
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-
-        if (savedInstanceState != null) {
-            mSpectrumNameReference = savedInstanceState.getString(ARG_ITEM_REFERENCE);
-            mSpectrumNameToEdit = savedInstanceState.getString(ARG_ITEM_EDIT);
-        }
-    }
+//    @Override
+//    public void onSaveInstanceState(final Bundle outState) {
+//        super.onSaveInstanceState(outState);
+//        outState.putString(ARG_ITEM_EDIT, mSpectrumNameToEdit);
+//        outState.putString(ARG_ITEM_REFERENCE, mSpectrumNameReference);
+//    }
+//
+//    @Override
+//    public void onActivityCreated(Bundle savedInstanceState) {
+//        super.onActivityCreated(savedInstanceState);
+//
+//        if (savedInstanceState != null) {
+//            mSpectrumNameReference = savedInstanceState.getString(ARG_ITEM_REFERENCE);
+//            mSpectrumNameToEdit = savedInstanceState.getString(ARG_ITEM_EDIT);
+//        }
+//    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

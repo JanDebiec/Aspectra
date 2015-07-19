@@ -45,9 +45,7 @@ public class AnalyzeActivity extends AppCompatActivity
         setContentView(R.layout.activity_analyze);
 
         if (savedInstanceState == null) {
-//            Map<String, String> spectra = new HashMap<>();
             mSpectraMap = new HashMap<>();
-
 
             // spectrum reference
             if(getIntent().getExtras().containsKey(ARG_ITEM_REFERENCE)){
@@ -55,17 +53,13 @@ public class AnalyzeActivity extends AppCompatActivity
                 mSpectraMap.put(ARG_ITEM_REFERENCE, mSpectrumNameReference);
             }
 
-
-
             // spectrum to edit
             if(getIntent().getExtras().containsKey(ARG_ITEM_EDIT)){
                 mSpectrumNameToEdit = getIntent().getExtras().getString(ARG_ITEM_EDIT);
                 mSpectraMap.put(ARG_ITEM_EDIT, mSpectrumNameToEdit);
             }
 
-
             mAnalyzeFragment = AnalyzeFragment.newInstance();
-//            mAnalyzeFragment = AnalyzeFragment.newInstance(spectra);
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.fragment_analyze_plot_container, mAnalyzeFragment)
                     .commit();
@@ -128,7 +122,6 @@ public class AnalyzeActivity extends AppCompatActivity
         mAnalyzeFragment = (AnalyzeFragment)getSupportFragmentManager().getFragment(inState,"mContent");
     }
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -150,6 +143,8 @@ public class AnalyzeActivity extends AppCompatActivity
 
         return super.onOptionsItemSelected(item);
     }
+
+    //TODO: interaction with TouchView
     public void onTouchViewInteraction(int _toolId, float _value){
 //        mToolName.setText(Integer.toHexString(_toolId));
 //        mToolValue.setText(Float.toString(_value));

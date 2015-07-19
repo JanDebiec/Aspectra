@@ -32,8 +32,8 @@ import de.jandrotek.android.aspectra.libspectrafiles.SpectrumFiles;
  */
 public class AnalyzeFragment extends Fragment {
 
-    public static final String ARG_ITEM_REFERENCE = "item_reference";
-    public static final String ARG_ITEM_EDIT = "item_edit";
+//    public static final String ARG_ITEM_REFERENCE = "item_reference";
+//    public static final String ARG_ITEM_EDIT = "item_edit";
 
     private static final int ITEM_SELECTED_STRETCH = 0;
     private static final int ITEM_SELECTED_CROP = 1;
@@ -42,15 +42,24 @@ public class AnalyzeFragment extends Fragment {
     private static final int ITEM_SELECTED_SET_REFERENCE = 4;
 
 
-    private String mSpectrumNameToEdit;
-    private String mSpectrumAbsNameToEdit;
-    private String mSpectrumNameReference;
-    private String mSpectrumNameAbsReference;
-    private int mSpectrumToEditLength;
-    private int mSpectrumReferenceLength;
+//    private String mSpectrumNameToEdit;
+//    private String mSpectrumAbsNameToEdit;
+//    private String mSpectrumNameReference;
+//    private String mSpectrumNameAbsReference;
+//    private int mSpectrumToEditLength;
+//    private int mSpectrumReferenceLength;
     private int mSpectrumLengthMax;
-    private SpectrumChr mSpectrumToEdit;
-    private SpectrumChr mSpectrumReference;
+
+    public void setSpectrumToEditValues(int[] mSpectrumToEditValues) {
+        this.mSpectrumToEditValues = mSpectrumToEditValues;
+    }
+
+    public void setSpectrumReferenceValues(int[] mSpectrumReferenceValues) {
+        this.mSpectrumReferenceValues = mSpectrumReferenceValues;
+    }
+
+    //    private SpectrumChr mSpectrumToEdit;
+//    private SpectrumChr mSpectrumReference;
     private int[] mSpectrumToEditValues = null;
     private int[] mSpectrumReferenceValues = null;
     private int mColorEdit = Color.rgb(255, 0, 0);
@@ -65,14 +74,19 @@ public class AnalyzeFragment extends Fragment {
 
     private ActionBar.OnNavigationListener mOnNavigationListener;
 
-    public static AnalyzeFragment newInstance(Map<String, String> spectra) {
+//    public static AnalyzeFragment newInstance(Map<String, String> spectra) {
+//        AnalyzeFragment fragment = new AnalyzeFragment();
+//        if (spectra.containsKey(AnalyzeFragment.ARG_ITEM_EDIT)) {
+//            mStaticSpectra.put(ARG_ITEM_EDIT, spectra.get(ARG_ITEM_EDIT));
+//        }
+//        if (spectra.containsKey(AnalyzeFragment.ARG_ITEM_REFERENCE)) {
+//            mStaticSpectra.put(ARG_ITEM_REFERENCE, spectra.get(ARG_ITEM_REFERENCE));
+//        }
+//        return fragment;
+//    }
+
+    public static AnalyzeFragment newInstance() {
         AnalyzeFragment fragment = new AnalyzeFragment();
-        if (spectra.containsKey(AnalyzeFragment.ARG_ITEM_EDIT)) {
-            mStaticSpectra.put(ARG_ITEM_EDIT, spectra.get(ARG_ITEM_EDIT));
-        }
-        if (spectra.containsKey(AnalyzeFragment.ARG_ITEM_REFERENCE)) {
-            mStaticSpectra.put(ARG_ITEM_REFERENCE, spectra.get(ARG_ITEM_REFERENCE));
-        }
         return fragment;
     }
 
@@ -84,50 +98,52 @@ public class AnalyzeFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            if (getArguments().containsKey(ARG_ITEM_REFERENCE)) {
-                mSpectrumNameReference = getArguments().getString(ARG_ITEM_REFERENCE);
-            }
-        }
-        if (mStaticSpectra.containsKey(ARG_ITEM_REFERENCE)) {
-            mSpectrumNameReference = mStaticSpectra.get(ARG_ITEM_REFERENCE);
-        }
+//        if (getArguments() != null) {
+//            if (getArguments().containsKey(ARG_ITEM_REFERENCE)) {
+//                mSpectrumNameReference = getArguments().getString(ARG_ITEM_REFERENCE);
+//            }
+//        }
+//        if (mStaticSpectra.containsKey(ARG_ITEM_REFERENCE)) {
+//            mSpectrumNameReference = mStaticSpectra.get(ARG_ITEM_REFERENCE);
+//        }
+//
+//        if (getArguments() != null) {
+//            if (getArguments().containsKey(ARG_ITEM_EDIT)) {
+//                mSpectrumNameReference = getArguments().getString(ARG_ITEM_EDIT);
+//            }
+//        }
+//        if (mStaticSpectra.containsKey(ARG_ITEM_EDIT)) {
+//                mSpectrumNameToEdit = mStaticSpectra.get(ARG_ITEM_EDIT);
+//        }
 
-        if (getArguments() != null) {
-            if (getArguments().containsKey(ARG_ITEM_EDIT)) {
-                mSpectrumNameReference = getArguments().getString(ARG_ITEM_EDIT);
-            }
-        }
-        if (mStaticSpectra.containsKey(ARG_ITEM_EDIT)) {
-                mSpectrumNameToEdit = mStaticSpectra.get(ARG_ITEM_EDIT);
-        }
-        if (mSpectrumNameToEdit != null) {
-            mSpectrumAbsNameToEdit = SpectrumFiles.mPath + "/" + mSpectrumNameToEdit;
-            mSpectrumToEdit = new SpectrumChr(mSpectrumAbsNameToEdit);
-            try {
-                GraphView.GraphViewData[] realDataEdit;
-                mSpectrumToEditLength = mSpectrumToEdit.readValuesChr();
-                mSpectrumToEditValues = mSpectrumToEdit.getValues();
 
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-
-        if (mSpectrumNameReference != null) {
-
-            mSpectrumNameAbsReference = SpectrumFiles.mPath + "/" + mSpectrumNameReference;
-            mSpectrumReference = new SpectrumChr(mSpectrumNameAbsReference);
-            try {
-                GraphView.GraphViewData[] realDataEdit;
-                mSpectrumReferenceLength = mSpectrumReference.readValuesChr();
-                mSpectrumReferenceValues= mSpectrumReference.getValues();
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-        mSpectrumLengthMax = Math.max(mSpectrumToEditLength, mSpectrumReferenceLength);
+//        if (mSpectrumNameToEdit != null) {
+//            mSpectrumAbsNameToEdit = SpectrumFiles.mPath + "/" + mSpectrumNameToEdit;
+//            mSpectrumToEdit = new SpectrumChr(mSpectrumAbsNameToEdit);
+//            try {
+//                GraphView.GraphViewData[] realDataEdit;
+//                mSpectrumToEditLength = mSpectrumToEdit.readValuesChr();
+//                mSpectrumToEditValues = mSpectrumToEdit.getValues();
+//
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+//        }
+//
+//        if (mSpectrumNameReference != null) {
+//
+//            mSpectrumNameAbsReference = SpectrumFiles.mPath + "/" + mSpectrumNameReference;
+//            mSpectrumReference = new SpectrumChr(mSpectrumNameAbsReference);
+//            try {
+//                GraphView.GraphViewData[] realDataEdit;
+//                mSpectrumReferenceLength = mSpectrumReference.readValuesChr();
+//                mSpectrumReferenceValues= mSpectrumReference.getValues();
+//
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+//        }
+//        mSpectrumLengthMax = Math.max(mSpectrumToEditLength, mSpectrumReferenceLength);
         realDataToEdit = new GraphView.GraphViewData[mSpectrumLengthMax];
         realDataReference = new GraphView.GraphViewData[mSpectrumLengthMax];
     }

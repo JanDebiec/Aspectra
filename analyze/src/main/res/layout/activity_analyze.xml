@@ -4,21 +4,20 @@
     android:layout_height="match_parent">
 
     <FrameLayout
-        android:id="@+id/fragment_analyze_container"
+        android:id="@+id/fragment_analyze_plot_container"
 
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
     </FrameLayout>
 
-    <!--<FrameLayout-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent">-->
-        <!--android:id="@+id/touchview_container"-->
-        <!--<de.jandrotek.android.aspectra.libtouch.TouchView-->
-            <!--android:id="@+id/touchOverlay"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:layout_width="match_parent" />-->
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <de.jandrotek.android.aspectra.libtouch.TouchView
+            android:id="@+id/analyze_touchview_overlay"
+            android:layout_height="match_parent"
+            android:layout_width="match_parent" />
 
-    <!--</FrameLayout>-->
+    </FrameLayout>
 </FrameLayout>

@@ -51,14 +51,16 @@ public class AnalyzeActivity extends AppCompatActivity
 
             // spectrum reference
             if(getIntent().getExtras().containsKey(ARG_ITEM_REFERENCE)){
-                mSpectraMap.put(ARG_ITEM_REFERENCE, getIntent().getExtras().getString(ARG_ITEM_REFERENCE));
+                mSpectrumNameReference = getIntent().getExtras().getString(ARG_ITEM_REFERENCE);
+                mSpectraMap.put(ARG_ITEM_REFERENCE, mSpectrumNameReference);
             }
 
 
 
             // spectrum to edit
             if(getIntent().getExtras().containsKey(ARG_ITEM_EDIT)){
-                mSpectraMap.put(ARG_ITEM_EDIT, getIntent().getExtras().getString(ARG_ITEM_EDIT));
+                mSpectrumNameToEdit = getIntent().getExtras().getString(ARG_ITEM_EDIT);
+                mSpectraMap.put(ARG_ITEM_EDIT, mSpectrumNameToEdit);
             }
 
 

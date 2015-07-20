@@ -6,12 +6,10 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.jjoe64.graphview.GraphView;
-
 import java.util.HashMap;
 import java.util.Map;
 
-import de.jandrotek.android.aspectra.core.SpectrumChr;
+import de.jandrotek.android.aspectra.core.SpectrumAsp;
 import de.jandrotek.android.aspectra.libspectrafiles.SpectrumFiles;
 import de.jandrotek.android.aspectra.libtouch.TouchView;
 
@@ -34,8 +32,8 @@ public class AnalyzeActivity extends AppCompatActivity
     private int[] mSpectrumToEditValues = null;
     private int[] mSpectrumReferenceValues = null;
     private int mSpectrumLengthMax;
-    private SpectrumChr mSpectrumToEdit;
-    private SpectrumChr mSpectrumReference;
+    private SpectrumAsp mSpectrumToEdit;
+    private SpectrumAsp mSpectrumReference;
     private Map<String, String> mSpectraMap;
 
 
@@ -81,9 +79,9 @@ public class AnalyzeActivity extends AppCompatActivity
     private void generateGraphViewData(){
         if (mSpectrumNameToEdit != null) {
             mSpectrumAbsNameToEdit = SpectrumFiles.mPath + "/" + mSpectrumNameToEdit;
-            mSpectrumToEdit = new SpectrumChr(mSpectrumAbsNameToEdit);
+            mSpectrumToEdit = new SpectrumAsp(mSpectrumAbsNameToEdit);
             try {
-                mSpectrumToEditLength = mSpectrumToEdit.readValuesChr();
+                mSpectrumToEditLength = mSpectrumToEdit.readValuesFromFile();
                 mSpectrumToEditValues = mSpectrumToEdit.getValues();
 
             } catch (Exception e) {
@@ -94,9 +92,9 @@ public class AnalyzeActivity extends AppCompatActivity
         if (mSpectrumNameReference != null) {
 
             mSpectrumNameAbsReference = SpectrumFiles.mPath + "/" + mSpectrumNameReference;
-            mSpectrumReference = new SpectrumChr(mSpectrumNameAbsReference);
+            mSpectrumReference = new SpectrumAsp(mSpectrumNameAbsReference);
             try {
-                mSpectrumReferenceLength = mSpectrumReference.readValuesChr();
+                mSpectrumReferenceLength = mSpectrumReference.readValuesFromFile();
                 mSpectrumReferenceValues= mSpectrumReference.getValues();
 
             } catch (Exception e) {

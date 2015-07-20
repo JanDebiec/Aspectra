@@ -45,7 +45,7 @@ public abstract class SpectrumBase {
         return mValues;
     }
 
-
+    public abstract int readValuesFromFile() ;
 
 //    /*
 //    Whereas you can have DateFormat patterns such as:

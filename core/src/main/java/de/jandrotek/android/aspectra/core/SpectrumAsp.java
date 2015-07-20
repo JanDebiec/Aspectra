@@ -1,12 +1,14 @@
 package de.jandrotek.android.aspectra.core;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+
 /**
  * class for saving,reading Aspectra-Spectra files.
  * Aspectra files:
  * 		header + data
- *
- * class will be moved to external JAVA library
- * for testing with JUnit from IntelliJ
  * @author jan
  *
  * changes:
@@ -97,6 +99,54 @@ public class SpectrumAsp  extends SpectrumBase {
 
     }
 
+    /**
+     * function to read Chroc *.spk files
+     * @return size of read spectrum
+     * @throws Exception
+     */
+    public int readValuesFromFile() {
+//    public int readValuesFromFile() throws Exception {
+        int i = 0;
+        int k = 0;
+        int value;
+        mValues = new int[AspectraGlobals.eMaxSpectrumSize];
+        try {
+            File file;
+            file = new File(mFileName);// TODO:here we need the whole name with path
+            FileReader fileReader = new FileReader(file);
+            BufferedReader bufferedReader = new BufferedReader(fileReader);
+            //StringBuffer stringBuffer = new StringBuffer();
+            String line;
+
+            // read data, first header
+            while ((line = bufferedReader.readLine()) != null && (i < 5)) {
+                i++;
+            }
+
+            //read real data
+            while (((line = bufferedReader.readLine()) != null) && (k < SPK_CHR_FILE_DEFAULT_SIZE)) {
+
+                try {
+                    value = Integer.parseInt(line);
+                    if(value < 0)
+                        value = 0;
+                } catch (NumberFormatException e) {
+                    //Will Throw exception!
+                    //do something! anything to handle the exception.
+                    value = 0;
+                }
+
+                mValues[k] = value;
+
+                i++;
+                k++;
+            }
+            fileReader.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return k;
+    }
 
 //    /**
 //     * prepare content pf spectrum as String to saveStringToFile

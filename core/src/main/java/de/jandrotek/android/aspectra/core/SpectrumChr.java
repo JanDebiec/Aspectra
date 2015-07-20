@@ -29,7 +29,8 @@ public class SpectrumChr  extends SpectrumBase{
      * @return size of read spectrum
      * @throws Exception
      */
-    public int readValuesChr() throws Exception {
+    public int readValuesFromFile() {
+//    public int readValuesFromFile() throws Exception {
         int i = 0;
         int k = 0;
         int value;
@@ -79,5 +80,22 @@ public class SpectrumChr  extends SpectrumBase{
         mSize = dataSize;
     }
 
+    public int[] moveData(int offset) {
+        int[] newData;
+        if(offset >= 0) {
+            newData = ArrayFunctions.moveArrayRight(mValues, offset);
+        } else {
+            newData = ArrayFunctions.moveArrayRight(mValues, - offset);
+        }
+        mValues = newData;
+        return mValues;
+    }
+
+    public int[] stretchData(int offset, float factor) {
+        int[] newData;
+        newData = ArrayFunctions.stretchArray(mValues, offset, factor);
+        mValues = newData;
+        return mValues;
+    }
 
 }

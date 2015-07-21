@@ -1,5 +1,6 @@
 package de.jandrotek.android.aspectra.analyze;
 
+import android.os.AsyncTask;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -38,6 +39,7 @@ public class AnalyzeActivity extends AppCompatActivity
     private boolean mSpectrumAlreadyEdited = false;
     private SpectrumChr mSpectrumReference;
     private Map<String, String> mSpectraMap;
+    public static boolean mCalcBusy = false;
 
 
     @Override
@@ -151,11 +153,14 @@ public class AnalyzeActivity extends AppCompatActivity
             mSpectrumAlreadyEdited = true;
             mSpectrumToEditBackup = mSpectrumToEdit;
         }
-        if(_toolId == TouchView.ePlotAction_Move){
-            mSpectrumToEdit.moveData((int) _value);
-            updateEditedSpectrumInFragment();
+        if(mCalcBusy != true) {
+            if (_toolId == TouchView.ePlotAction_Move) {
+                new CalcTask(_toolId,_value, 0f).execute();
+                updateEditedSpectrumInFragment();
+            }
         }
     }
+
 
     private void updateEditedSpectrumInFragment() {
         mSpectrumToEditLength = mSpectrumToEdit.getDataSize();
@@ -163,5 +168,33 @@ public class AnalyzeActivity extends AppCompatActivity
         mSpectrumToEditValues = mSpectrumToEdit.getValues();
         updateSpectraInFragment(mSpectrumLengthMax);
         mAnalyzeFragment.updateEditedPlot();
+    }
+
+    public class CalcTask extends AsyncTask<Void, Void, Void> {
+        private final int action;
+        private final float factor;
+        private final float staticPoint;
+
+        CalcTask(int action, float factor, float staticPoint){
+            this.action = action;
+            this.factor = factor;
+            this.staticPoint = staticPoint;
+        }
+
+        @Override
+        protected Void doInBackground(Void... params) {
+            mCalcBusy = true;
+            if (action == TouchView.ePlotAction_Move) {
+                mSpectrumToEdit.moveData((int) factor);
+//                updateEditedSpectrumInFragment();
+            }
+            return(null);
+        }
+
+        @Override
+        protected void onPostExecute(Void arg0) {
+            mCalcBusy = false;
+        }
+
     }
 }

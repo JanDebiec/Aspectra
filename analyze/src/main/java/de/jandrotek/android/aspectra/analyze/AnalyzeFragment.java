@@ -85,19 +85,19 @@ public class AnalyzeFragment extends Fragment {
     }
 
     public void updateEditedPlot(){
-        mGraphView.setViewPort(0, mSpectrumLengthMax);
         realDataToEdit = generateData(mSpectrumToEditValues, mSpectrumLengthMax);
         if(mDataSeriesEdit == null){
             GraphViewSeries mDataSeriesEdit = new GraphViewSeries(
                     "",
                     new GraphViewSeries.GraphViewSeriesStyle(mColorEdit, 1),
                     realDataToEdit);
-//            mGraphView.addSeries(mDataSeriesEdit);
-            mDataSeriesEdit.resetData(realDataToEdit);
+            mGraphView.addSeries(mDataSeriesEdit);
+//            mDataSeriesEdit.resetData(realDataToEdit);
 
         } else {
             mDataSeriesEdit.resetData(realDataToEdit);
         }
+        mGraphView.setViewPort(0, mSpectrumLengthMax);
     }
 
 

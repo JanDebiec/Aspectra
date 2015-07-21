@@ -128,7 +128,7 @@ public class PlotViewFragment extends Fragment
                 mSpectrumFile[i] = new SpectrumChr(mFileName[i]);
                 try{
                     GraphViewData[] tempRealData;
-                    mFileDataLength[i] = mSpectrumFile[i].readValuesChr();
+                    mFileDataLength[i] = mSpectrumFile[i].readValuesFromFile();
                     mFileIntValues[i] = mSpectrumFile[i].getValues();
                     tempRealData = new GraphViewData[mFileDataLength[i]];
                     realData[i] = tempRealData;

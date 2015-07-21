@@ -19,7 +19,10 @@ public class TouchView extends View {
 
     private int plotAction = ePlotAction_Idle;
     // Hold data for active touch pointer IDs
-    private SparseArray<TouchHistory> mTouches;
+    private SparseArray<TouchHistory> mTouchesHistory;
+
+    private int mMeasureX;
+    private int mMeasureY;
 
     // Is there an active touch?
     private boolean mHasTouch = false;
@@ -30,11 +33,20 @@ public class TouchView extends View {
         super(context, attrs);
 
         // SparseArray for touch events, indexed by touch id
-        mTouches = new SparseArray<TouchHistory>(10);
+        mTouchesHistory = new SparseArray<TouchHistory>(10);
         mCallback = (OnTouchViewInteractionListener)context;
 
        // initialisePaint();
     }
+
+//    @Override
+//    protected void onMeasure (int widthMeasureSpec, int heightMeasureSpec){
+//        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+//        mMeasureX = getMeasuredWidth();
+//        mMeasureY = getMeasuredHeight();
+//
+//        setMeasuredDimension (mMeasureX, mMeasureY);
+//    }
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
@@ -46,6 +58,7 @@ public class TouchView extends View {
         //float deltaMove = 0f;
         float x0 = 0;
         float x1 = 0;
+        int viewWidthX = getWidth();
 
         /*
          * Switch on the action. The action is extracted from the event by
@@ -73,7 +86,7 @@ public class TouchView extends View {
                  * number stays consistent for the duration of a gesture,
                  * accounting for other pointers going up or down.
                  */
-                mTouches.put(id, data);
+                mTouchesHistory.put(id, data);
 
                 mHasTouch = true;
                 deltaXStart = 0f;
@@ -117,7 +130,7 @@ public class TouchView extends View {
 
                     // defining x0 and deltaStart
                     // get the data stored externally about this pointer.
-                    TouchHistory data0 = mTouches.get(0);
+                    TouchHistory data0 = mTouchesHistory.get(0);
                     x0 = data0.getLastX();
 
                     x1 = event.getX(index);
@@ -125,7 +138,7 @@ public class TouchView extends View {
                     deltaXStart = x1 - x0;
 
                 }
-                mTouches.put(id, data);
+                mTouchesHistory.put(id, data);
                 plotAction = ePlotAction_Idle;
                 break;
             }
@@ -142,8 +155,8 @@ public class TouchView extends View {
                  * touches.
                  */
                 int id = event.getPointerId(0);
-                TouchHistory data = mTouches.get(id);
-                mTouches.remove(id);
+                TouchHistory data = mTouchesHistory.get(id);
+                mTouchesHistory.remove(id);
                 data.recycle();
 
                 mHasTouch = false;
@@ -168,8 +181,8 @@ public class TouchView extends View {
                 int index = event.getActionIndex();
                 int id = event.getPointerId(index);
 
-                TouchHistory data = mTouches.get(id);
-                mTouches.remove(id);
+                TouchHistory data = mTouchesHistory.get(id);
+                mTouchesHistory.remove(id);
                 data.recycle();
 
                 if(pointersCount == 2) {
@@ -212,7 +225,7 @@ public class TouchView extends View {
                     int id = event.getPointerId(index);
 
                     // get the data stored externally about this pointer.
-                    TouchHistory data = mTouches.get(id);
+                    TouchHistory data = mTouchesHistory.get(id);
 
                     // add previous position to history and add new values
                     data.addHistory(data.x, data.y);
@@ -233,6 +246,8 @@ public class TouchView extends View {
             }
         }
 
+        //TODO: calculate callback paramterers
+        //viewWidthX
         mCallback.onTouchViewInteraction(plotAction, deltaXAbs);
         return true;
     }

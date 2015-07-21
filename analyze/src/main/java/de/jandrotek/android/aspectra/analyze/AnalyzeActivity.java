@@ -152,7 +152,7 @@ public class AnalyzeActivity extends AppCompatActivity
             mSpectrumToEditBackup = mSpectrumToEdit;
         }
         if(_toolId == TouchView.ePlotAction_Move){
-            mSpectrumToEdit.moveData((int)_value);
+            mSpectrumToEdit.moveData((int) _value);
             updateEditedSpectrumInFragment();
         }
     }
@@ -161,10 +161,7 @@ public class AnalyzeActivity extends AppCompatActivity
         mSpectrumToEditLength = mSpectrumToEdit.getDataSize();
         mSpectrumLengthMax = Math.max(mSpectrumToEditLength, mSpectrumReferenceLength);
         mSpectrumToEditValues = mSpectrumToEdit.getValues();
-        if (mAnalyzeFragment != null) {
-            mAnalyzeFragment.setSpectrumLengthMax(mSpectrumLengthMax);
-            mAnalyzeFragment.setSpectrumReferenceValues(mSpectrumReferenceValues);
-            mAnalyzeFragment.setSpectrumToEditValues(mSpectrumToEditValues);
-        }
+        updateSpectraInFragment(mSpectrumLengthMax);
+        mAnalyzeFragment.updateEditedPlot();
     }
 }

@@ -84,6 +84,24 @@ public class AnalyzeFragment extends Fragment {
         realDataReference = new GraphView.GraphViewData[mSpectrumLengthMax];
     }
 
+    public void updateEditedPlot(){
+        mGraphView.setViewPort(0, mSpectrumLengthMax);
+        realDataToEdit = generateData(mSpectrumToEditValues, mSpectrumLengthMax);
+        if(mDataSeriesEdit == null){
+            GraphViewSeries mDataSeriesEdit = new GraphViewSeries(
+                    "",
+                    new GraphViewSeries.GraphViewSeriesStyle(mColorEdit, 1),
+                    realDataToEdit);
+//            mGraphView.addSeries(mDataSeriesEdit);
+            mDataSeriesEdit.resetData(realDataToEdit);
+
+        } else {
+            mDataSeriesEdit.resetData(realDataToEdit);
+        }
+    }
+
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -107,11 +125,11 @@ public class AnalyzeFragment extends Fragment {
 
         if(mSpectrumReferenceValues != null) {
             realDataReference = generateData(mSpectrumReferenceValues, mSpectrumLengthMax);
-            GraphViewSeries mDataSeriesEdit = new GraphViewSeries(
+            GraphViewSeries mDataSeriesRef = new GraphViewSeries(
                     "",
                     new GraphViewSeries.GraphViewSeriesStyle(mColorRef, 1),
                     realDataReference);
-            mGraphView.addSeries(mDataSeriesEdit);
+            mGraphView.addSeries(mDataSeriesRef);
         }
 
         mGraphView.getGraphViewStyle().setTextSize(20);

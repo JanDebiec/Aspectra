@@ -85,7 +85,7 @@ public class SpectrumChr  extends SpectrumBase{
         if(offset >= 0) {
             newData = ArrayFunctions.moveArrayRight(mValues, offset);
         } else {
-            newData = ArrayFunctions.moveArrayRight(mValues, - offset);
+            newData = ArrayFunctions.moveArrayLeft(mValues, - offset);
         }
         mValues = newData;
         return mValues;

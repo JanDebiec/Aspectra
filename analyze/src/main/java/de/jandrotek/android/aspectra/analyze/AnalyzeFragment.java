@@ -38,6 +38,8 @@ public class AnalyzeFragment extends Fragment {
     private static final int ITEM_SELECTED_MARKERS = 3;
     private static final int ITEM_SELECTED_SET_REFERENCE = 4;
 
+    private static final int SPECTRUM_TO_EDIT = 0;
+    private static final int SPECTRUM_REFERENCE = 1;
 
     public void setSpectrumLengthMax(int mSpectrumLengthMax) {
         this.mSpectrumLengthMax = mSpectrumLengthMax;
@@ -60,8 +62,9 @@ public class AnalyzeFragment extends Fragment {
     private GraphViewData[] realDataReference = null;
     private GraphViewData[] realDataToEdit = null;
     private static Map<String, String> mStaticSpectra;
-    private GraphViewSeries mDataSeriesEdit;
-    private GraphViewSeries mDataSeriesRef;
+    private GraphViewSeries mDataSeriesToEdit;
+    private GraphViewSeries mDataSeriesReference;
+    private GraphViewData[][] realData = null;
 
     private LineGraphView mGraphView;
 
@@ -80,6 +83,8 @@ public class AnalyzeFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+//        mDataSeries = new GraphViewSeries(2);
+        realData = new GraphViewData[2][AspectraGlobals.eMaxSpectrumSize];
         realDataToEdit = new GraphViewData[AspectraGlobals.eMaxSpectrumSize];
         realDataReference = new GraphViewData[AspectraGlobals.eMaxSpectrumSize];
     }
@@ -99,21 +104,21 @@ public class AnalyzeFragment extends Fragment {
         mGraphView = new LineGraphView(getActivity(), "");
 
         if(mSpectrumToEditValues != null) {
-            realDataToEdit = generateData(mSpectrumToEditValues, mSpectrumLengthMax);
-            GraphViewSeries mDataSeriesEdit = new GraphViewSeries(
+            generateData(SPECTRUM_TO_EDIT, mSpectrumToEditValues, mSpectrumLengthMax);
+            mDataSeriesToEdit = new GraphViewSeries(
                     "",
                     new GraphViewSeries.GraphViewSeriesStyle(mColorEdit, 1),
-                    realDataToEdit);
-            mGraphView.addSeries(mDataSeriesEdit);
+                    realData[SPECTRUM_TO_EDIT]);
+            mGraphView.addSeries(mDataSeriesToEdit);
         }
 
         if(mSpectrumReferenceValues != null) {
-            realDataReference = generateData(mSpectrumReferenceValues, mSpectrumLengthMax);
-            GraphViewSeries mDataSeriesRef = new GraphViewSeries(
+            generateData(SPECTRUM_REFERENCE, mSpectrumReferenceValues, mSpectrumLengthMax);
+            mDataSeriesReference = new GraphViewSeries(
                     "",
                     new GraphViewSeries.GraphViewSeriesStyle(mColorRef, 1),
-                    realDataReference);
-            mGraphView.addSeries(mDataSeriesRef);
+                    realData[SPECTRUM_REFERENCE]);
+            mGraphView.addSeries(mDataSeriesReference);
         }
 
         mGraphView.getGraphViewStyle().setTextSize(20);
@@ -178,32 +183,33 @@ public class AnalyzeFragment extends Fragment {
         return rootView;
     }
 
-    private GraphView.GraphViewData[] generateData(int[] data, int length) {
-        GraphView.GraphViewData[]    realData = new GraphView.GraphViewData[length];
+    private void generateData(int index, int[] data, int length) {
+        if(realData[index] == null){
+            realData[index] = new GraphViewData[length];
+        }
         for (int i=0; i<length; i++) {
 
-            realData[i] = new GraphViewData(i, data[i]);
+            realData[index][i] = new GraphViewData(i, data[i]);
         }
         //TODO: check in plot act length, and add needed data only for that length
 
         for(int i = length; i < mSpectrumLengthMax ; i++){
-            realData[i] = new GraphViewData(i, 0);
+            realData[index][i] = new GraphViewData(i, 0);
         }
-        return realData;
+//        return realData;
     }
 
     public void updateEditedPlot(){
-        realDataToEdit = generateData(mSpectrumToEditValues, mSpectrumLengthMax);
-        if(mDataSeriesEdit == null){
-            GraphViewSeries mDataSeriesEdit = new GraphViewSeries(
-                    "",
-                    new GraphViewSeries.GraphViewSeriesStyle(mColorEdit, 1),
-                    realDataToEdit);
-            mGraphView.addSeries(mDataSeriesEdit);
-//            mDataSeriesEdit.resetData(realDataToEdit);
+        generateData(SPECTRUM_TO_EDIT, mSpectrumToEditValues, mSpectrumLengthMax);
+        if(mDataSeriesToEdit != null){
+            mDataSeriesToEdit.resetData(realDataToEdit);
 
-        } else {
-            mDataSeriesEdit.resetData(realDataToEdit);
+//        } else {
+//            mDataSeriesToEdit = new GraphViewSeries(
+//                    "",
+//                    new GraphViewSeries.GraphViewSeriesStyle(mColorEdit, 1),
+//                    realData[SPECTRUM_TO_EDIT]);
+//            mGraphView.addSeries(mDataSeriesToEdit);
         }
         mGraphView.setViewPort(0, mSpectrumLengthMax);
     }

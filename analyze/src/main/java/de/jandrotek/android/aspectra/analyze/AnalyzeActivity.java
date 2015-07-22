@@ -71,6 +71,7 @@ public class AnalyzeActivity extends AppCompatActivity
 
         generateGraphViewData();
         updateSpectraInFragment(mSpectrumLengthMax);
+        mCalcBusy = false;
     }
 
     private void updateSpectraInFragment(int mSpectrumLengthMax) {
@@ -155,8 +156,11 @@ public class AnalyzeActivity extends AppCompatActivity
         }
         if(mCalcBusy != true) {
             if (_toolId == TouchView.ePlotAction_Move) {
+                mCalcBusy = true;
                 new CalcTask(_toolId,_value, 0f).execute();
-                updateEditedSpectrumInFragment();
+//                while(mCalcBusy)// add timeout
+//                    ;
+//                updateEditedSpectrumInFragment();
             }
         }
     }
@@ -183,7 +187,7 @@ public class AnalyzeActivity extends AppCompatActivity
 
         @Override
         protected Void doInBackground(Void... params) {
-            mCalcBusy = true;
+//            mCalcBusy = true;
             if (action == TouchView.ePlotAction_Move) {
                 if(factor < 0){
                     mSpectrumReference.moveData((int) factor);
@@ -195,6 +199,7 @@ public class AnalyzeActivity extends AppCompatActivity
 
         @Override
         protected void onPostExecute(Void arg0) {
+            updateEditedSpectrumInFragment();
             mCalcBusy = false;
         }
 

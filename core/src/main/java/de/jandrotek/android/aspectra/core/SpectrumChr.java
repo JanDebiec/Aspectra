@@ -68,12 +68,13 @@ public class SpectrumChr  extends SpectrumBase{
         } catch (IOException e) {
             e.printStackTrace();
         }
+        mSize = k;
         return k;
     }
 
     // getters, setters
     public int getDataSize() {
-        return mSize;
+        return mSize;//mValues.length;
     }
 
     public void setDataSize(int dataSize) {
@@ -88,6 +89,7 @@ public class SpectrumChr  extends SpectrumBase{
             newData = ArrayFunctions.moveArrayLeft(mValues, - offset);
         }
         mValues = newData;
+        mSize += offset;
         return mValues;
     }
 
@@ -95,6 +97,7 @@ public class SpectrumChr  extends SpectrumBase{
         int[] newData;
         newData = ArrayFunctions.stretchArray(mValues, offset, factor);
         mValues = newData;
+        mSize += offset;
         return mValues;
     }
 

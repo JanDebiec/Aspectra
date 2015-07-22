@@ -52,10 +52,8 @@ public class AspectraAnalyzePrefs {
 
     public void loadSettings() {
 
-
-
         mDefaultSpectrumEdited = mContext.getResources().getString(R.string.PREFS_EDITED_SPECTRUM_DEFAULT);
-        mPREFS_EDITED_SPECTRUM_KEY =  mContext.getResources().getString(R.string.PREFS_KEY_SPECTRA_BASEPATH);
+        mPREFS_EDITED_SPECTRUM_KEY =  mContext.getResources().getString(R.string.PREFS_EDITED_SPECTRUM_KEY);
         this.mPrefsSpectrumEdited = mPrefs.getString(mPREFS_EDITED_SPECTRUM_KEY, mDefaultSpectrumEdited);
 
 

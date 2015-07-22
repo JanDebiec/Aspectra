@@ -190,7 +190,10 @@ public class AnalyzeActivity extends AppCompatActivity
 //            mCalcBusy = true;
             if (action == TouchView.ePlotAction_Move) {
                 if(factor < 0){
-                    mSpectrumReference.moveData((int) factor);
+                    int startIndex = mSpectrumToEdit.getStartIndex();
+                    if(startIndex < -factor) {
+                        mSpectrumReference.moveData((int) factor + startIndex );
+                    }
                 }
                 mSpectrumToEdit.moveData((int) factor);
             }

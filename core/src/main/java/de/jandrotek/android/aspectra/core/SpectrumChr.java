@@ -68,36 +68,35 @@ public class SpectrumChr  extends SpectrumBase{
         } catch (IOException e) {
             e.printStackTrace();
         }
-        mSize = k;
+        mStartIndex = 0;
+        mEndIndex = k;
         return k;
     }
 
     // getters, setters
-    public int getDataSize() {
-        return mSize;//mValues.length;
-    }
-
     public void setDataSize(int dataSize) {
-        mSize = dataSize;
+        mEndIndex = dataSize;
     }
 
     public int[] moveData(int offset) {
         int[] newData;
         if(offset >= 0) {
             newData = ArrayFunctions.moveArrayRight(mValues, offset);
+            mStartIndex += offset;
         } else {
             newData = ArrayFunctions.moveArrayLeft(mValues, - offset);
         }
         mValues = newData;
-        mSize += offset;
+        mEndIndex += offset;
         return mValues;
     }
 
+    //TODO: check working and update indexies
     public int[] stretchData(int offset, float factor) {
         int[] newData;
         newData = ArrayFunctions.stretchArray(mValues, offset, factor);
         mValues = newData;
-        mSize += offset;
+        mEndIndex += offset;
         return mValues;
     }
 

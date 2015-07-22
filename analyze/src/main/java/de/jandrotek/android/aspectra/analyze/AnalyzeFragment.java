@@ -193,7 +193,7 @@ public class AnalyzeFragment extends Fragment {
         }
         //TODO: check in plot act length, and add needed data only for that length
 
-        for(int i = length; i < mSpectrumLengthMax ; i++){
+        for(int i = length; i < AspectraGlobals.eMaxSpectrumSize ; i++){
             realData[index][i] = new GraphViewData(i, 0);
         }
 //        return realData;
@@ -202,7 +202,7 @@ public class AnalyzeFragment extends Fragment {
     public void updateEditedPlot(){
         generateData(SPECTRUM_TO_EDIT, mSpectrumToEditValues, mSpectrumLengthMax);
         if(mDataSeriesToEdit != null){
-            mDataSeriesToEdit.resetData(realDataToEdit);
+            mDataSeriesToEdit.resetData(realData[SPECTRUM_TO_EDIT]);
 
 //        } else {
 //            mDataSeriesToEdit = new GraphViewSeries(

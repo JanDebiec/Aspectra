@@ -1,7 +1,6 @@
 package de.jandrotek.android.aspectra.analyze;
 
 import android.support.v4.app.Fragment;
-//import android.app.Fragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.app.FragmentTransaction;
@@ -16,6 +15,7 @@ import android.widget.FrameLayout;
 import android.widget.SpinnerAdapter;
 
 import com.jjoe64.graphview.GraphView;
+import com.jjoe64.graphview.GraphView.GraphViewData;
 import com.jjoe64.graphview.GraphViewSeries;
 import com.jjoe64.graphview.LineGraphView;
 
@@ -57,8 +57,8 @@ public class AnalyzeFragment extends Fragment {
     private int[] mSpectrumReferenceValues = null;
     private int mColorEdit = Color.rgb(255, 0, 0);
     private int mColorRef = Color.rgb(0, 0, 255);
-    private GraphView.GraphViewData[] realDataReference;
-    private GraphView.GraphViewData[] realDataToEdit;
+    private GraphViewData[] realDataReference = null;
+    private GraphViewData[] realDataToEdit = null;
     private static Map<String, String> mStaticSpectra;
     private GraphViewSeries mDataSeriesEdit;
     private GraphViewSeries mDataSeriesRef;
@@ -80,24 +80,8 @@ public class AnalyzeFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        realDataToEdit = new GraphView.GraphViewData[mSpectrumLengthMax];
-        realDataReference = new GraphView.GraphViewData[mSpectrumLengthMax];
-    }
-
-    public void updateEditedPlot(){
-        realDataToEdit = generateData(mSpectrumToEditValues, mSpectrumLengthMax);
-        if(mDataSeriesEdit == null){
-            GraphViewSeries mDataSeriesEdit = new GraphViewSeries(
-                    "",
-                    new GraphViewSeries.GraphViewSeriesStyle(mColorEdit, 1),
-                    realDataToEdit);
-            mGraphView.addSeries(mDataSeriesEdit);
-//            mDataSeriesEdit.resetData(realDataToEdit);
-
-        } else {
-            mDataSeriesEdit.resetData(realDataToEdit);
-        }
-        mGraphView.setViewPort(0, mSpectrumLengthMax);
+        realDataToEdit = new GraphViewData[AspectraGlobals.eMaxSpectrumSize];
+        realDataReference = new GraphViewData[AspectraGlobals.eMaxSpectrumSize];
     }
 
 
@@ -193,18 +177,35 @@ public class AnalyzeFragment extends Fragment {
         actionbar.setListNavigationCallbacks(mSpinnerAdapter, mOnNavigationListener);
         return rootView;
     }
+
     private GraphView.GraphViewData[] generateData(int[] data, int length) {
         GraphView.GraphViewData[]    realData = new GraphView.GraphViewData[length];
         for (int i=0; i<length; i++) {
 
-            realData[i] = new GraphView.GraphViewData(i, data[i]);
+            realData[i] = new GraphViewData(i, data[i]);
         }
         //TODO: check in plot act length, and add needed data only for that length
 
         for(int i = length; i < mSpectrumLengthMax ; i++){
-            realData[i] = new GraphView.GraphViewData(i, 0);
+            realData[i] = new GraphViewData(i, 0);
         }
         return realData;
+    }
+
+    public void updateEditedPlot(){
+        realDataToEdit = generateData(mSpectrumToEditValues, mSpectrumLengthMax);
+        if(mDataSeriesEdit == null){
+            GraphViewSeries mDataSeriesEdit = new GraphViewSeries(
+                    "",
+                    new GraphViewSeries.GraphViewSeriesStyle(mColorEdit, 1),
+                    realDataToEdit);
+            mGraphView.addSeries(mDataSeriesEdit);
+//            mDataSeriesEdit.resetData(realDataToEdit);
+
+        } else {
+            mDataSeriesEdit.resetData(realDataToEdit);
+        }
+        mGraphView.setViewPort(0, mSpectrumLengthMax);
     }
 
 }

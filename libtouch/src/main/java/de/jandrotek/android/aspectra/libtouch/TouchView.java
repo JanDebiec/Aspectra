@@ -234,7 +234,8 @@ public class TouchView extends View {
                     if(id == 0){
                         x0 = event.getX(index);
                         deltaX = data.getDeltaX();
-                        deltaXAbs = deltaX;
+//                        deltaXAbs = deltaX;
+                        deltaXAbs = deltaX - deltaXStart;
                     }else if(id == 1){
                         x1 = event.getX(index);
                         deltaX = x1 - x0;

@@ -61,7 +61,8 @@ public class PlotViewFragment extends Fragment
     private int[] mPlotIntValues;
     //ver 3
 //    private GraphViewData[][] mData;
-    private GraphViewSeries[] mDataSeries;
+//    private GraphViewSeries[] mDataSeries;
+    GraphViewSeries mDataSeries;
     private GraphViewSeries.GraphViewSeriesStyle[] mGraphStyle;
     private GraphViewData[][] realData = null;
 
@@ -140,6 +141,34 @@ public class PlotViewFragment extends Fragment
             }
             mDataLengthMax = findMaxDataLength();
         } else {
+//            mItems = getArguments().getStringArrayList(ARG_ITEM_IDS);
+            mItemlistSize = 1;
+//            mFileName = new String[mItemlistSize];
+//            mSpectrumFile = new SpectrumChr[mItemlistSize];
+//            mFileIntValues = new int[mItemlistSize][AspectraGlobals.eMaxSpectrumSize];
+            realData = new GraphViewData[mItemlistSize][AspectraGlobals.eMaxSpectrumSize];
+            mFileDataLength = new int[mItemlistSize];
+            int i = 0;
+
+//            for(String item : mItems){
+
+                // load file specified in mItem.content
+//                String fileName = item;
+//                mFileName[i] = SpectrumFiles.mPath +"/" + fileName;
+//                mSpectrumFile[i] = new SpectrumChr(mFileName[i]);
+//                try{
+//                    GraphViewData[] tempRealData;
+//                    mFileDataLength[i] = mSpectrumFile[i].readValuesFromFile();
+//                    mFileIntValues[i] = mSpectrumFile[i].getValues();
+//                    tempRealData = new GraphViewData[mFileDataLength[i]];
+//                    realData[i] = tempRealData;
+//
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                }
+//                i++;
+//            }
+            mDataLengthMax = PLOT_DATA_SIZE;
 
         }
         mColor = new int[3];
@@ -181,11 +210,18 @@ public class PlotViewFragment extends Fragment
             }
         } else {
             realData[0] = generateDemoData();
-            mDataSeries[0] = new GraphViewSeries(
+//            mDataSeries[0] = new GraphViewSeries(
+//                    "",
+//                    new GraphViewSeries.GraphViewSeriesStyle(mColor[0], 1),
+//                    realData[0]);
+//            mGraphView.addSeries(mDataSeries[0]);
+
+            mDataSeries = new GraphViewSeries(
                     "",
                     new GraphViewSeries.GraphViewSeriesStyle(mColor[0], 1),
                     realData[0]);
-            mGraphView.addSeries(mDataSeries[0]);
+            mGraphView.addSeries(mDataSeries);
+
         }
         mGraphView.getGraphViewStyle().setTextSize(20);
         mGraphView.getGraphViewStyle().setNumHorizontalLabels(5);
@@ -305,11 +341,11 @@ public class PlotViewFragment extends Fragment
 
     // ver 3
     public void showPlot(int index, int[] data, int length){
-        if(mDataSeries[index] != null) {
+        if(mDataSeries != null) {
             realPlotDataSize = length;
             generateData(index, data, length);
             mGraphView.setViewPort(0, realPlotDataSize);
-            mDataSeries[index].resetData(realData[index]);
+            mDataSeries.resetData(realData[index]);
         }
     }
 

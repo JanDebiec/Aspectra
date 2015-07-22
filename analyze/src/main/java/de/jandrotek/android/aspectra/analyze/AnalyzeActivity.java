@@ -185,8 +185,10 @@ public class AnalyzeActivity extends AppCompatActivity
         protected Void doInBackground(Void... params) {
             mCalcBusy = true;
             if (action == TouchView.ePlotAction_Move) {
+                if(factor < 0){
+                    mSpectrumReference.moveData((int) factor);
+                }
                 mSpectrumToEdit.moveData((int) factor);
-//                updateEditedSpectrumInFragment();
             }
             return(null);
         }

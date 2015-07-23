@@ -38,6 +38,7 @@
     <string name="file_detail">FileDetail</string>
     <string name="title_item_detail">Item detail</string>
     <string name="context_title">Selected:</string>
+    <string name="title_activity_global_prefs">global preferences</string>
 
     <string-array name="display_list">
         <item>Edit mode</item>

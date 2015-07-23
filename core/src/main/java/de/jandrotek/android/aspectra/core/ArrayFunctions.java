@@ -5,6 +5,7 @@ import org.apache.commons.lang3.ArrayUtils;
 
 /**
  * Created by jan on 14.04.15.
+ * 23.07.2015   added handling from ArrayUtils
  */
 public class ArrayFunctions {
 
@@ -36,39 +37,18 @@ public class ArrayFunctions {
     }
 
     public static int[] moveArrayRight(int[] data, int move){
-//        int[] newArray = new int[data.length + move];
 
         int[] zeroArray = new int[move];
-
-//        int[] combinedIntArray = ArrayUtils.addAll(intArray, intArray2);
-//        int i = 0;
-//        for(int j = 0; j < move; j++){
-//            newArray[i++] = 0;
-//        }
-//        for(int j = 0; j < data.length; j++){
-//            newArray[i] = data[j];
-//            i++;
-//        }
 
         int[] newArray = ArrayUtils.addAll(zeroArray, data);
         return newArray;
     }
 
     public static int[] moveArrayLeft(int[] data, int move){
-//        int[] newArray = new int[data.length + move];
-//        int i = 0;
-//        int k = move;
 
         int[] zeroArray = new int[move];
 
         int[] leftArray = ArrayUtils.subarray(data, move, data.length - move);
-
-//        for(int j = 0; j < data.length - move; j++){
-//            newArray[i++] = data[k++];
-//        }
-//        for(int j = 0; j < move; j++){
-//            newArray[i++] = 0;
-//        }
 
         int[] newArray = ArrayUtils.addAll(leftArray, zeroArray);
         return newArray;

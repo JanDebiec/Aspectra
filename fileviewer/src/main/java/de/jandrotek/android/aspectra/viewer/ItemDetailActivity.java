@@ -16,6 +16,7 @@ import java.util.ArrayList;
 
 import de.jandrotek.android.aspectra.core.AspectraGlobals;
 import de.jandrotek.android.aspectra.libplotspectrav3.PlotViewFragment;
+import de.jandrotek.android.aspectra.libprefs.AspectraGlobalPrefsActivity;
 
 public class ItemDetailActivity extends AppCompatActivity
         implements PlotViewFragment.OnFragmentInteractionListener
@@ -90,7 +91,7 @@ public class ItemDetailActivity extends AppCompatActivity
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.action_settings) {
-            Intent intent = new Intent(this, SettingsActivity.class);
+            Intent intent = new Intent(this, AspectraGlobalPrefsActivity.class);
             startActivity(intent);
             return true;
         }

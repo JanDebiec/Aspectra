@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import java.util.ArrayList;
 
 import de.jandrotek.android.aspectra.libplotspectrav3.PlotViewFragment;
+import de.jandrotek.android.aspectra.libprefs.AspectraGlobalPrefsActivity;
 import de.jandrotek.android.aspectra.libprefs.AspectraLiveViewPrefs;
 import de.jandrotek.android.aspectra.libspectrafiles.SpectrumFiles;
 
@@ -114,7 +115,7 @@ public class ItemListActivity extends ActionBarActivity
         int id = item.getItemId();
 
         if (id == R.id.action_settings) {
-            Intent intent = new Intent(this, SettingsActivity.class);
+            Intent intent = new Intent(this, AspectraGlobalPrefsActivity.class);
             startActivity(intent);
             return true;
         }

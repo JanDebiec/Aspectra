@@ -35,6 +35,10 @@
             android:name="de.jandrotek.android.aspectra.main.ViewConfigActivity"
             android:label="@string/title_activity_view_config" >
         </activity>
+        <activity
+            android:name="de.jandrotek.android.aspectra.libprefs.AspectraGlobalPrefsActivity"
+            android:label="@string/title_activity_global_prefs" >
+        </activity>
     </application>
-
+    AspectraGlobalPrefsActivity
 </manifest>

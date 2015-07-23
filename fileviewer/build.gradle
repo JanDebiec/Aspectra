@@ -24,8 +24,6 @@ dependencies {
     compile 'com.android.support:appcompat-v7:22.2.0'
     compile project(':core')
     compile project(':libprefs')
-    //    compile project(':libtouch')
     compile project(':libplotspectrav3')
     compile project(':libspectrafiles')
-    //    compile files('libs/GraphView-3.1.2.jar')
 }

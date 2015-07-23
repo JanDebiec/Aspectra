@@ -27,6 +27,10 @@
             android:name="android.support.PARENT_ACTIVITY"
             android:value="de.jandrotek.android.aspectra.viewer.ItemListActivity" />
         </activity>
+        <activity
+            android:name="de.jandrotek.android.aspectra.libprefs.AspectraGlobalPrefsActivity"
+            android:label="@string/title_activity_global_prefs" >
+        </activity>
     </application>
 
 </manifest>

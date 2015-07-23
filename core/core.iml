@@ -31,6 +31,7 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" exported="" name="common-lang3" level="project" />
     <orderEntry type="library" exported="" name="core.core" level="project" />
   </component>
 </module>

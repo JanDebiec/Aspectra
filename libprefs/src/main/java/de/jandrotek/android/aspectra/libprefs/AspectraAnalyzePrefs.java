@@ -56,16 +56,13 @@ public class AspectraAnalyzePrefs {
         mPREFS_EDITED_SPECTRUM_KEY =  mContext.getResources().getString(R.string.PREFS_EDITED_SPECTRUM_KEY);
         this.mPrefsSpectrumEdited = mPrefs.getString(mPREFS_EDITED_SPECTRUM_KEY, mDefaultSpectrumEdited);
 
-
         mDefaultSpectrumReference = mContext.getResources().getString(R.string.PREFS_REFERENCE_SPECTRUM_DEFAULT);
         mPREFS_REFERENCE_SPECTRUM_KEY =  mContext.getResources().getString(R.string.PREFS_REFERENCE_SPECTRUM_KEY);
         this.mPrefsSpectrumReference = mPrefs.getString(mPREFS_REFERENCE_SPECTRUM_KEY, mDefaultSpectrumReference);
-
     }
 
     public void saveSettings(){
         SharedPreferences.Editor editor = mPrefs.edit();
-
 
         mPREFS_REFERENCE_SPECTRUM_KEY =  mContext.getResources().getString(R.string.PREFS_REFERENCE_SPECTRUM_KEY);
         editor.putString(mPREFS_REFERENCE_SPECTRUM_KEY, mPrefsSpectrumReference);

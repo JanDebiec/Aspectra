@@ -59,8 +59,6 @@ public class AnalyzeFragment extends Fragment {
     private int[] mSpectrumReferenceValues = null;
     private int mColorEdit = Color.rgb(255, 0, 0);
     private int mColorRef = Color.rgb(0, 0, 255);
-//    private GraphViewData[] realDataReference = null;
-//    private GraphViewData[] realDataToEdit = null;
     private static Map<String, String> mStaticSpectra;
     private GraphViewSeries mDataSeriesToEdit;
     private GraphViewSeries mDataSeriesReference;
@@ -83,10 +81,7 @@ public class AnalyzeFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-//        mDataSeries = new GraphViewSeries(2);
         realData = new GraphViewData[2][AspectraGlobals.eMaxSpectrumSize];
-//        realDataToEdit = new GraphViewData[AspectraGlobals.eMaxSpectrumSize];
-//        realDataReference = new GraphViewData[AspectraGlobals.eMaxSpectrumSize];
     }
 
 

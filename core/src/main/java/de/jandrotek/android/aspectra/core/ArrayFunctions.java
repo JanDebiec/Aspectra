@@ -49,10 +49,10 @@ public class ArrayFunctions {
     public static int[] moveArrayLeft(int[] data, int move){
         int[] newArray = new int[data.length + move];
         int i = 0;
-        int k = 0;
-//        int k = move;
+//        int k = 0;
+        int k = move;
 
-        for(int j = 0; j < data.length; j++){
+        for(int j = 0; j < data.length - move; j++){
             newArray[i++] = data[k++];
         }
         for(int j = 0; j < move; j++){

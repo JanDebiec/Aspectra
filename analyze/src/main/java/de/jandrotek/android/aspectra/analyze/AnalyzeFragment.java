@@ -62,7 +62,9 @@ public class AnalyzeFragment extends Fragment {
     private static Map<String, String> mStaticSpectra;
     private GraphViewSeries mDataSeriesToEdit;
     private GraphViewSeries mDataSeriesReference;
-    private GraphViewData[][] realData = null;
+//    private GraphViewData[][] realData = null;
+    private GraphViewData[] realDataEdit = null;
+    private GraphViewData[] realDataRef = null;
 
     private LineGraphView mGraphView;
 
@@ -81,7 +83,8 @@ public class AnalyzeFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        realData = new GraphViewData[2][AspectraGlobals.eMaxSpectrumSize];
+        realDataEdit = new GraphViewData[AspectraGlobals.eMaxSpectrumSize];
+        realDataRef = new GraphViewData[AspectraGlobals.eMaxSpectrumSize];
     }
 
 
@@ -103,7 +106,8 @@ public class AnalyzeFragment extends Fragment {
             mDataSeriesToEdit = new GraphViewSeries(
                     "",
                     new GraphViewSeries.GraphViewSeriesStyle(mColorEdit, 1),
-                    realData[SPECTRUM_TO_EDIT]);
+                    realDataEdit);
+//                    realData[SPECTRUM_TO_EDIT]);
             mGraphView.addSeries(mDataSeriesToEdit);
         }
 
@@ -112,13 +116,15 @@ public class AnalyzeFragment extends Fragment {
             mDataSeriesReference = new GraphViewSeries(
                     "",
                     new GraphViewSeries.GraphViewSeriesStyle(mColorRef, 1),
-                    realData[SPECTRUM_REFERENCE]);
+                    realDataRef);
+//                    realData[SPECTRUM_REFERENCE]);
             mGraphView.addSeries(mDataSeriesReference);
         }
 
         mGraphView.getGraphViewStyle().setTextSize(20);
         mGraphView.getGraphViewStyle().setNumHorizontalLabels(5);
-        mGraphView.getGraphViewStyle().setNumVerticalLabels(4);
+        mGraphView.getGraphViewStyle().setNumVerticalLabels(5);
+        mGraphView.setManualYAxisBounds(4000, 0);
 
         mGraphView.setViewPort(0, mSpectrumLengthMax);
         registerForContextMenu(mGraphView);
@@ -179,17 +185,37 @@ public class AnalyzeFragment extends Fragment {
     }
 
     private void generateData(int index, int[] data, int length) {
-        if(realData[index] == null){
-            realData[index] = new GraphViewData[length];
-        }
-        for (int i=0; i<length; i++) {
+        if(index  == 1) { // reference
+            if (realDataRef == null) {
+                realDataRef = new GraphViewData[length];
+            }
+            for (int i = 0; i < length; i++) {
+                GraphViewData tempData = new GraphViewData(i, data[i]);
 
-            realData[index][i] = new GraphViewData(i, data[i]);
-        }
-        //TODO: check in plot act length, and add needed data only for that length
+                realDataRef[i] = tempData;
+//            realData[index][i] = new GraphViewData(i, data[i]);
+            }
+            //TODO: check in plot act length, and add needed data only for that length
 
-        for(int i = length; i < AspectraGlobals.eMaxSpectrumSize ; i++){
-            realData[index][i] = new GraphViewData(i, 0);
+            for (int i = length; i < AspectraGlobals.eMaxSpectrumSize; i++) {
+                realDataRef[i] = new GraphViewData(i, 0);
+            }
+        } else {
+            if (realDataEdit == null) {
+                realDataEdit = new GraphViewData[length];
+            }
+            for (int i = 0; i < length; i++) {
+                GraphViewData tempData = new GraphViewData(i, data[i]);
+
+                realDataEdit[i] = tempData;
+//            realData[index][i] = new GraphViewData(i, data[i]);
+            }
+            //TODO: check in plot act length, and add needed data only for that length
+
+            for (int i = length; i < AspectraGlobals.eMaxSpectrumSize; i++) {
+                realDataEdit[i] = new GraphViewData(i, 0);
+            }
+
         }
 //        return realData;
     }
@@ -197,7 +223,7 @@ public class AnalyzeFragment extends Fragment {
     public void updateEditedPlot(){
         generateData(SPECTRUM_TO_EDIT, mSpectrumToEditValues, mSpectrumLengthMax);
         if(mDataSeriesToEdit != null){
-            mDataSeriesToEdit.resetData(realData[SPECTRUM_TO_EDIT]);
+            mDataSeriesToEdit.resetData(realDataEdit);
 
 //        } else {
 //            mDataSeriesToEdit = new GraphViewSeries(
@@ -206,7 +232,8 @@ public class AnalyzeFragment extends Fragment {
 //                    realData[SPECTRUM_TO_EDIT]);
 //            mGraphView.addSeries(mDataSeriesToEdit);
         }
-        mGraphView.setViewPort(0, mSpectrumLengthMax);
+// check port influence on dynamic
+//        mGraphView.setViewPort(0, mSpectrumLengthMax);
     }
 
 }

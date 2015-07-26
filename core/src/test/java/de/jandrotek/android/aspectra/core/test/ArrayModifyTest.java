@@ -105,7 +105,7 @@ public class ArrayModifyTest extends TestCase {
         int[] newData = ArrayFunctions.moveArrayRight(inputData, 64);
         int maxPos = findMaxInArray(newData);
         int size = newData.length;
-        assertEquals(size, nInputDataSizeMinusOne + 1);
+        assertEquals(size, nInputDataSizeMinusOne + 1 + 64);
         assertEquals(nInputDataSizeMinusOne/2 + 64, maxPos);
     }
 
@@ -121,7 +121,7 @@ public class ArrayModifyTest extends TestCase {
         int[] newData = ArrayFunctions.moveArrayRight(inputData, 3);
         int maxPos = findMaxInArray(newData);
         int size = newData.length;
-        assertEquals(size, nInputDataSizeMinusOne + 1);
+        assertEquals(size, nInputDataSizeMinusOne + 1 + 3);
         assertEquals(nInputDataSizeMinusOne/2 + 3, maxPos);
     }
 
@@ -129,7 +129,7 @@ public class ArrayModifyTest extends TestCase {
         int[] newData = ArrayFunctions.moveArrayLeft(inputData, 3);
         int maxPos = findMaxInArray(newData);
         int size = newData.length;
-        assertEquals(size, nInputDataSizeMinusOne + 1);
+        assertEquals(size, nInputDataSizeMinusOne + 1 + 3);
         assertEquals(nInputDataSizeMinusOne/2 - 3, maxPos);
     }
 

@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-
-    <string name="title_item_detail">Item Detail</string>
-    <string name="file_name">spectrum name</string>
-    <string name="file_detail">spectrum path</string>
-
-</resources>

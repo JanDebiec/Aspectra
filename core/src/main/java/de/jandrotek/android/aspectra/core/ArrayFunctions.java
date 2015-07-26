@@ -6,6 +6,9 @@ import org.apache.commons.lang3.ArrayUtils;
 /**
  * Created by jan on 14.04.15.
  * 23.07.2015   added handling from ArrayUtils
+ * 26.06.2015   move function will be not used (only indexies in spectrumFile)
+ *              stretch, only data != 0 will be considered
+ *              new stretch = stretch from index 0, plus move data in spectrum
  */
 public class ArrayFunctions {
 

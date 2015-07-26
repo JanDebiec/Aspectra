@@ -25,14 +25,14 @@ public abstract class SpectrumBase {
     protected static final String mExtensionChr = "spk";
     //private String mFileNameWithPath;
     protected int[] mValues;
+    protected int mStartIndex;
+    protected int mEndIndex;
+    protected int mDataSize;
 
     public int getStartIndex() {
         return mStartIndex;
     }
 
-    protected int mStartIndex;
-    protected int mEndIndex;
-//    protected int mSize;
     protected static final int SPK_CHR_FILE_DEFAULT_SIZE = 800;
 
 //    public abstract int getDataSize();
@@ -55,6 +55,11 @@ public abstract class SpectrumBase {
     public int[] getValues(){
 
         return mValues;
+    }
+
+    public void setValues(int[] data){
+        this.mValues = data;
+        this.mEndIndex = data.length;
     }
 
     public abstract int readValuesFromFile() ;

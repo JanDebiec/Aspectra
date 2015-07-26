@@ -16,6 +16,8 @@ import java.io.IOException;
  *
  */
 public class SpectrumChr  extends SpectrumBase{
+    }
+
     private int mSize = SPK_CHR_FILE_DEFAULT_SIZE;
 
 

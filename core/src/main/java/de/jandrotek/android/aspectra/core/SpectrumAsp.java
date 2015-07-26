@@ -20,7 +20,7 @@ import java.io.IOException;
  */
 public class SpectrumAsp  extends SpectrumBase {
 	private Header mHeader = null;
-    private int[] mData;
+//    private int[] mValues;
     private static final String eSep = "|";
 
     public int getDataSize() {
@@ -77,7 +77,7 @@ public class SpectrumAsp  extends SpectrumBase {
             //TODO normalize to 1024
         } else {
             mHeader.dataType = AspectraGlobals.eTypeInt32;
-            mData = data;
+            mValues = data;
         }
 	}
 
@@ -86,12 +86,12 @@ public class SpectrumAsp  extends SpectrumBase {
         buffer.append(mHeader.toString());
         if(mHeader.dataType == AspectraGlobals.eTypeInt32) {
             for (int i = 0; i < mHeader.dataLength; i++) {
-                buffer.append(Integer.toString(mData[i]));
+                buffer.append(Integer.toString(mValues[i]));
                 buffer.append("\n");
             }
         } else if (mHeader.dataType == AspectraGlobals.eTypeFloat32) {
             for (int i = 0; i < mHeader.dataLength; i++) {
-                buffer.append(Float.toString(mData[i]));
+                buffer.append(Float.toString(mValues[i]));
                 buffer.append("\n");
             }
         }

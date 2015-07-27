@@ -147,35 +147,35 @@ public class ArrayModifyTest extends TestCase {
             assertEquals(nInputDataSizeMinusOne/2, maxPos);
         }
 
-    /**
-     * test:
-     * input data size 513, maximum in 128
-     * stretch: um fixedPoint 0 factor 2.0
-     * new maximum should be placed at 64
-     */
-    public void testStretch2(){
-        int[] newDataA = ArrayFunctions.appendArrayBack(inputData, nInputDataSizeMinusOne);
-        int[] newData = ArrayFunctions.stretchArray(newDataA, 0, (float) 2.0);
-        int maxPos = findMaxInArray(newData);
-        int size = newData.length;
-        assertEquals(size, nInputDataSizeMinusOne * 2 + 1);
-        assertEquals(nInputDataSizeMinusOne / 4, maxPos);
-    }
-
-    /**
-     * test:
-     * input data size 513, maximum in 128 + 257
-     * stretch: um fixedPoint 512 factor 2.0
-     * new maximum should be placed at 512 - 64
-     */
-    public void testStretch3(){
-        int[] newDataA = ArrayFunctions.appendArrayFront(inputData, nInputDataSizeMinusOne);
-        int[] newData = ArrayFunctions.stretchArray(newDataA, 512, (float) 2.0);
-        int maxPos = findMaxInArray(newData);
-        int size = newData.length;
-        assertEquals(size, nInputDataSizeMinusOne * 2 + 1);
-        assertEquals(nInputDataSizeMinusOne * 2 - 64, maxPos);
-    }
+//    /**
+//     * test:
+//     * input data size 513, maximum in 128
+//     * stretch: um fixedPoint 0 factor 2.0
+//     * new maximum should be placed at 64
+//     */
+//    public void testStretch2(){
+//        int[] newDataA = ArrayFunctions.appendArrayBack(inputData, nInputDataSizeMinusOne);
+//        int[] newData = ArrayFunctions.stretchArray(newDataA, 0, (float) 2.0);
+//        int maxPos = findMaxInArray(newData);
+//        int size = newData.length;
+//        assertEquals(size, nInputDataSizeMinusOne * 2 + 1);
+//        assertEquals(nInputDataSizeMinusOne / 4, maxPos);
+//    }
+//
+//    /**
+//     * test:
+//     * input data size 513, maximum in 128 + 257
+//     * stretch: um fixedPoint 512 factor 2.0
+//     * new maximum should be placed at 512 - 64
+//     */
+//    public void testStretch3(){
+//        int[] newDataA = ArrayFunctions.appendArrayFront(inputData, nInputDataSizeMinusOne);
+//        int[] newData = ArrayFunctions.stretchArray(newDataA, 512, (float) 2.0);
+//        int maxPos = findMaxInArray(newData);
+//        int size = newData.length;
+//        assertEquals(size, nInputDataSizeMinusOne * 2 + 1);
+//        assertEquals(nInputDataSizeMinusOne * 2 - 64, maxPos);
+//    }
 
 
 

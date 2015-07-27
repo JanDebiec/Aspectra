@@ -18,8 +18,12 @@ import java.util.Date;
  * for testing with JUnit from IntelliJ
  * @author jan
  *
+ * 27.07.2015   class changed from abstract to normal class,
+ *              can be used directly, f.i.as CHR spectrum
+ *              Asp spectrumwill be ectended from Base
+ *
  */
-public abstract class SpectrumBase {
+public class SpectrumBase {
     protected String mFileName;
     protected static final String mExtensionAsp = "asp";
     protected static final String mExtensionChr = "spk";
@@ -37,7 +41,7 @@ public abstract class SpectrumBase {
 
 //    public abstract int getDataSize();
 
-	public abstract void setDataSize(int dataSize);
+//	public void setDataSize(int dataSize)
 
     public int getDataSize() {
         return mEndIndex;//mValues.length;
@@ -60,39 +64,97 @@ public abstract class SpectrumBase {
     public void setValues(int[] data){
         this.mValues = data;
         this.mEndIndex = data.length;
+        this.mStartIndex = 0;
     }
 
-    public abstract int readValuesFromFile() ;
+//    public abstract int readValuesFromFile() ;
 
-//    /*
-//    Whereas you can have DateFormat patterns such as:
-//
-//    "yyyy.MM.dd G 'at' HH:mm:ss z" ---- 2001.07.04 AD at 12:08:56 PDT
-//    "hh 'o''clock' a, zzzz" ----------- 12 o'clock PM, Pacific Daylight Time
-//    "EEE, d MMM yyyy HH:mm:ss Z"------- Wed, 4 Jul 2001 12:08:56 -0700
-//    "yyyy-MM-dd'T'HH:mm:ss.SSSZ"------- 2001-07-04T12:08:56.235-0700
-//    "yyMMddHHmmssZ"-------------------- 010704120856-0700
-//    "K:mm a, z" ----------------------- 0:08 PM, PDT
-//    "h:mm a" -------------------------- 12:08 PM
-//    "EEE, MMM d, ''yy" ---------------- Wed, Jul 4, '01
-//     */
-//    public static String generateSpectrumAspFileName(){
-//
-//        // prepare date as string
-//        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss");
-//        String currentDateandTime = sdf.format(new Date());
-//
-//        return currentDateandTime + "." + mExtensionAsp;
-//    }
-//
-//    public static void saveStringToFile(String text, File target) throws IOException {
-//        FileOutputStream fos=new FileOutputStream(target);
-//        OutputStreamWriter out=new OutputStreamWriter(fos);
-//
-//        out.write(text);
-//        out.flush();
-//        fos.getFD().sync();
-//        out.close();
-//    }
+    private int mSize = SPK_CHR_FILE_DEFAULT_SIZE;
+
+
+    public SpectrumBase(String fileName){
+        mFileName = fileName;
+    }
+    public SpectrumBase(){
+
+    }
+
+
+    /**
+     * function to read Chroc *.spk files
+     * @return size of read spectrum
+     * @throws Exception
+     */
+    public int readValuesFromFile() {
+//    public int readValuesFromFile() throws Exception {
+        int i = 0;
+        int k = 0;
+        int value;
+        mValues = new int[AspectraGlobals.eMaxSpectrumSize];
+        try {
+            File file;
+            file = new File(mFileName);// TODO:here we need the whole name with path
+            FileReader fileReader = new FileReader(file);
+            BufferedReader bufferedReader = new BufferedReader(fileReader);
+            //StringBuffer stringBuffer = new StringBuffer();
+            String line;
+
+            // go to real date, first some lines are not important
+            while ((line = bufferedReader.readLine()) != null && (i < 5)) {
+                i++;
+            }
+            while (((line = bufferedReader.readLine()) != null) && (k < SPK_CHR_FILE_DEFAULT_SIZE)) {
+
+                try {
+                    value = Integer.parseInt(line);
+                    if(value < 0)
+                        value = 0;
+                } catch (NumberFormatException e) {
+                    //Will Throw exception!
+                    //do something! anything to handle the exception.
+                    value = 0;
+                }
+
+                mValues[k] = value;
+
+                i++;
+                k++;
+            }
+            fileReader.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        mStartIndex = 0;
+        mEndIndex = k;
+        return k;
+    }
+
+    // getters, setters
+    public void setDataSize(int dataSize) {
+        mEndIndex = dataSize;
+    }
+
+    public int[] moveData(int offset) {
+        int[] newData;
+        if(offset >= 0) { // move to the right
+            newData = ArrayFunctions.moveArrayRight(mValues, offset);
+            mStartIndex += offset;
+        } else { // move to the left
+            newData = ArrayFunctions.moveArrayLeft(mValues, - offset);
+        }
+        mValues = newData;
+        mStartIndex += offset;
+        mEndIndex += offset;
+        return mValues;
+    }
+
+    //TODO: check working and update indexies
+    public int[] stretchData(int offset, float factor) {
+        int[] newData;
+        newData = ArrayFunctions.stretchArray(mValues, offset, factor);
+        mValues = newData;
+        mEndIndex += offset;
+        return mValues;
+    }
 
 }

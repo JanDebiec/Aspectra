@@ -53,53 +53,53 @@ public class ArrayModifyTest extends TestCase {
         assertEquals(nInputDataSizeMinusOne/2, maxPos);
     }
 
-    public void testAppendFront128(){
-        int[] newData = ArrayFunctions.appendArrayFront(inputData, 128);
-        int maxPos = findMaxInArray(newData);
-        int size = newData.length;
-        assertEquals(size, nInputDataSizeMinusOne + 1 + 128);
-        assertEquals(nInputDataSizeMinusOne/2 + 128, maxPos);
-    }
+//    public void testAppendFront128(){
+//        int[] newData = ArrayFunctions.appendArrayFront(inputData, 128);
+//        int maxPos = findMaxInArray(newData);
+//        int size = newData.length;
+//        assertEquals(size, nInputDataSizeMinusOne + 1 + 128);
+//        assertEquals(nInputDataSizeMinusOne/2 + 128, maxPos);
+//    }
+//
+//    public void testAppendBack128(){
+//        int[] newData = ArrayFunctions.appendArrayBack(inputData, 128);
+//        int maxPos = findMaxInArray(newData);
+//        int size = newData.length;
+//        assertEquals(size, nInputDataSizeMinusOne + 1 + 128);
+//        assertEquals(nInputDataSizeMinusOne/2, maxPos);
+//    }
+//
+//    public void testAppendFront256(){
+//        int[] newData = ArrayFunctions.appendArrayFront(inputData, 256);
+//        int maxPos = findMaxInArray(newData);
+//        int size = newData.length;
+//        assertEquals(size, nInputDataSizeMinusOne + 1 + 256);
+//        assertEquals(nInputDataSizeMinusOne/2 + 256, maxPos);
+//    }
+//
+//    public void testAppendBack256(){
+//        int[] newData = ArrayFunctions.appendArrayBack(inputData, 256);
+//        int maxPos = findMaxInArray(newData);
+//        int size = newData.length;
+//        assertEquals(size, nInputDataSizeMinusOne + 1 + 256);
+//        assertEquals(nInputDataSizeMinusOne/2, maxPos);
+//    }
 
-    public void testAppendBack128(){
-        int[] newData = ArrayFunctions.appendArrayBack(inputData, 128);
-        int maxPos = findMaxInArray(newData);
-        int size = newData.length;
-        assertEquals(size, nInputDataSizeMinusOne + 1 + 128);
-        assertEquals(nInputDataSizeMinusOne/2, maxPos);
-    }
-
-    public void testAppendFront256(){
-        int[] newData = ArrayFunctions.appendArrayFront(inputData, 256);
-        int maxPos = findMaxInArray(newData);
-        int size = newData.length;
-        assertEquals(size, nInputDataSizeMinusOne + 1 + 256);
-        assertEquals(nInputDataSizeMinusOne/2 + 256, maxPos);
-    }
-
-    public void testAppendBack256(){
-        int[] newData = ArrayFunctions.appendArrayBack(inputData, 256);
-        int maxPos = findMaxInArray(newData);
-        int size = newData.length;
-        assertEquals(size, nInputDataSizeMinusOne + 1 + 256);
-        assertEquals(nInputDataSizeMinusOne/2, maxPos);
-    }
-
-    public void testAppendFront7(){
-        int[] newData = ArrayFunctions.appendArrayFront(inputData, 7);
-        int maxPos = findMaxInArray(newData);
-        int size = newData.length;
-        assertEquals(size, nInputDataSizeMinusOne + 1 + 7);
-        assertEquals(nInputDataSizeMinusOne/2 + 7, maxPos);
-    }
-
-    public void testAppendBack7(){
-        int[] newData = ArrayFunctions.appendArrayBack(inputData, 7);
-        int maxPos = findMaxInArray(newData);
-        int size = newData.length;
-        assertEquals(size, nInputDataSizeMinusOne + 1 + 7);
-        assertEquals(nInputDataSizeMinusOne/2, maxPos);
-    }
+//    public void testAppendFront7(){
+//        int[] newData = ArrayFunctions.appendArrayFront(inputData, 7);
+//        int maxPos = findMaxInArray(newData);
+//        int size = newData.length;
+//        assertEquals(size, nInputDataSizeMinusOne + 1 + 7);
+//        assertEquals(nInputDataSizeMinusOne/2 + 7, maxPos);
+//    }
+//
+//    public void testAppendBack7(){
+//        int[] newData = ArrayFunctions.appendArrayBack(inputData, 7);
+//        int maxPos = findMaxInArray(newData);
+//        int size = newData.length;
+//        assertEquals(size, nInputDataSizeMinusOne + 1 + 7);
+//        assertEquals(nInputDataSizeMinusOne/2, maxPos);
+//    }
 
     public void testMoveRight64(){
         int[] newData = ArrayFunctions.moveArrayRight(inputData, 64);

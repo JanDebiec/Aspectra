@@ -12,13 +12,9 @@ import android.view.MenuItem;
 
 import java.util.Map;
 
-import de.jandrotek.android.aspectra.core.SpectrumAsp;
 import de.jandrotek.android.aspectra.libprefs.AspectraAnalyzePrefs;
 import de.jandrotek.android.aspectra.libprefs.AspectraGlobalPrefsActivity;
-import de.jandrotek.android.aspectra.libprefs.AspectraLiveViewPrefs;
 import de.jandrotek.android.aspectra.libspectrafiles.SpectrumFiles;
-
-import static de.jandrotek.android.aspectra.analyze.R.string.PREFS_KEY_EXTENSION_NAME;
 
 public class AnalyzeListActivity extends ActionBarActivity
         implements AnalyzeListFragment.Callbacks {

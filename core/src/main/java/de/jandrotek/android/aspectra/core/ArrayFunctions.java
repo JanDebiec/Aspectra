@@ -13,31 +13,31 @@ import org.apache.commons.lang3.ArrayUtils;
 public class ArrayFunctions {
 
 
-    public static int[] appendArrayFront(int[] data, int size){
-        int[] newArray = new int[data.length + size];
-        int i;
-         for(i = 0; i < size; i++){
-             newArray[i] = 0;
-         }
-         for(int j = 0; j < data.length; j++){
-             newArray[i++] = data[j];
-         }
+//    public static int[] appendArrayFront(int[] data, int size){
+//        int[] newArray = new int[data.length + size];
+//        int i;
+//         for(i = 0; i < size; i++){
+//             newArray[i] = 0;
+//         }
+//         for(int j = 0; j < data.length; j++){
+//             newArray[i++] = data[j];
+//         }
+//
+//        return newArray;
+//    }
 
-        return newArray;
-    }
-
-    public static int[] appendArrayBack(int[] data, int size){
-        int[] newArray = new int[data.length + size];
-        int i;
-        for(i = 0; i < data.length; i++){
-            newArray[i] = data[i];
-        }
-        for(int j = 0; j < size; j++){
-            newArray[i++] = 0;
-        }
-
-        return newArray;
-    }
+//    public static int[] appendArrayBack(int[] data, int size){
+//        int[] newArray = new int[data.length + size];
+//        int i;
+//        for(i = 0; i < data.length; i++){
+//            newArray[i] = data[i];
+//        }
+//        for(int j = 0; j < size; j++){
+//            newArray[i++] = 0;
+//        }
+//
+//        return newArray;
+//    }
 
     public static int[] moveArrayRight(int[] data, int move){
 

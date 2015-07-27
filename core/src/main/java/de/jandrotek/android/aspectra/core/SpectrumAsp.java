@@ -18,7 +18,7 @@ import java.io.IOException;
  *              the spectra must be resized (normalized) to size 1024 (first compromise)
  *
  */
-public class SpectrumAsp  extends SpectrumBase {
+public class SpectrumAsp extends SpectrumBase {
 	private Header mHeader = null;
 //    private int[] mValues;
     private static final String eSep = "|";
@@ -63,13 +63,13 @@ public class SpectrumAsp  extends SpectrumBase {
         mFileName = fileName;
 	}
 
-	/**
-	 * create new ApsSpectrum from ChrSpectrum
-	 * @param chrSpectrum
-	 */
-	public SpectrumAsp(SpectrumChr chrSpectrum){
-
-	}
+//	/**
+//	 * create new ApsSpectrum from ChrSpectrum
+//	 * @param chrSpectrum
+//	 */
+//	public SpectrumAsp(Spectrum chrSpectrum){
+//
+//	}
 
 	public void setData(int[] data, int normalizeTo){
         setDataSize(data.length);

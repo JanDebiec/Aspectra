@@ -19,7 +19,6 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
 import de.jandrotek.android.aspectra.core.AspectraGlobals;
-import de.jandrotek.android.aspectra.core.SpectrumChr;
 import de.jandrotek.android.aspectra.libspectrafiles.SpectrumFiles;
 
 // lib ver 3.
@@ -65,7 +64,7 @@ public class PlotViewFragment extends Fragment
     private OnFragmentInteractionListener mListener;
     private ArrayList<String> mItems;
     private String[] mFileName;
-    private SpectrumChr[] mSpectrumFile;
+    private SpectrumChr_not_to_use[] mSpectrumFile;
     private int[][] mFileIntValues;
     private int[] mFileDataLength;
     private int mItemlistSize = 0;
@@ -109,7 +108,7 @@ public class PlotViewFragment extends Fragment
             mItems = getArguments().getStringArrayList(ARG_ITEM_IDS);
             mItemlistSize = mItems.size();
             mFileName = new String[mItemlistSize];
-            mSpectrumFile = new SpectrumChr[mItemlistSize];
+            mSpectrumFile = new SpectrumChr_not_to_use[mItemlistSize];
             mFileIntValues = new int[mItemlistSize][AspectraGlobals.eMaxSpectrumSize];
             realData = new GraphViewData[mItemlistSize][AspectraGlobals.eMaxSpectrumSize];
             mFileDataLength = new int[mItemlistSize];
@@ -120,7 +119,7 @@ public class PlotViewFragment extends Fragment
                 // load file specified in mItem.content
                 String fileName = item;
                 mFileName[i] = SpectrumFiles.mPath +"/" + fileName;
-                mSpectrumFile[i] = new SpectrumChr(mFileName[i]);
+                mSpectrumFile[i] = new SpectrumChr_not_to_use(mFileName[i]);
                 try{
                     GraphViewData[] tempRealData;
                     mFileDataLength[i] = mSpectrumFile[i].readValuesFromFile();

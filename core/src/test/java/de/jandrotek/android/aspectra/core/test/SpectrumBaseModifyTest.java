@@ -35,7 +35,30 @@ public class SpectrumBaseModifyTest extends TestCase {
         super.tearDown();
     }
 
-    public void testDummy(){
-        assertEquals(true, false);
+//    public void testDummy(){
+//        assertEquals(true, false);
+//    }
+
+    public void testSpectrumCreate(){
+        int size = spectrum.getDataSize();
+        assertEquals(nInputDataSizeMinusOne + 1, size);
+    }
+
+    public void testSpectrumCreateBeginIndex(){
+        int index = spectrum.getStartIndex();
+        assertEquals(0, index);
+    }
+
+    public void testMoveRight25(){
+        spectrum.moveData(25);
+        int index = spectrum.getStartIndex();
+        assertEquals(25, index);
+
+    }
+    public void testMoveRightSize25(){
+        spectrum.moveData(25);
+        int size = spectrum.getDataSize();
+        assertEquals(nInputDataSizeMinusOne + 1 + 25, size);
+
     }
 }

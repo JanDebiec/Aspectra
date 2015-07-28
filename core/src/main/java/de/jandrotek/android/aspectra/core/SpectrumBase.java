@@ -143,7 +143,7 @@ public class SpectrumBase {
             newData = ArrayFunctions.moveArrayLeft(mValues, - offset);
         }
         mValues = newData;
-        mStartIndex += offset;
+//        mStartIndex += offset;
         mEndIndex += offset;
         return mValues;
     }

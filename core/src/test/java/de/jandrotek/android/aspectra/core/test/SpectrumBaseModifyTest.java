@@ -88,7 +88,7 @@ public class SpectrumBaseModifyTest extends TestCase {
     public void testStretch2Times(){
         spectrum.stretchData(nInputDataSizeMinusOne / 2, 2.0f);
         int size = spectrum.getDataSize();
-        assertEquals(nInputDataSizeMinusOne * 2, size);
+        assertEquals((nInputDataSizeMinusOne + 1) * 2, size);
 
     }
 }

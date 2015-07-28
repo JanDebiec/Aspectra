@@ -168,7 +168,7 @@ public class ArrayFunctions {
             newArray[nIndexOutput] = temp;
             nIndexOutput++;
 
-        } while ((nIndexOutput <  (data.length - 1)) || (nIndexInputRight < (data.length - 1)));
+        } while ((nIndexOutput <  (newArray.length)) && (nIndexInputRight < (data.length)));
 
         return newArray;
     }

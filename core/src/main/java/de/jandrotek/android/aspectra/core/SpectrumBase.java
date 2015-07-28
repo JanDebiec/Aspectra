@@ -153,7 +153,7 @@ public class SpectrumBase {
         int[] newData;
         newData = ArrayFunctions.stretchArray(mValues, factor);
         mValues = newData;
-        mEndIndex += offset;
+        mEndIndex = newData.length;
         return mValues;
     }
 

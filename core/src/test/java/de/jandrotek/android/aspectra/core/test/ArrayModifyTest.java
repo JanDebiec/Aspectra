@@ -140,7 +140,8 @@ public class ArrayModifyTest extends TestCase {
      * new maximum should be placed at 128
      */
         public void testStretch1(){
-            int[] newData = ArrayFunctions.stretchArray(inputData, nInputDataSizeMinusOne / 2, (float) 2.0);
+//            int[] newData = ArrayFunctions.stretchArray(inputData, nInputDataSizeMinusOne / 2, (float) 2.0);
+            int[] newData = ArrayFunctions.stretchArray(inputData, (float) 2.0);
             int maxPos = findMaxInArray(newData);
             int size = newData.length;
             assertEquals(size, nInputDataSizeMinusOne + 1);

@@ -151,7 +151,7 @@ public class SpectrumBase {
     //TODO: check working and update indexies
     public int[] stretchData(int offset, float factor) {
         int[] newData;
-        newData = ArrayFunctions.stretchArray(mValues, offset, factor);
+        newData = ArrayFunctions.stretchArray(mValues, factor);
         mValues = newData;
         mEndIndex += offset;
         return mValues;

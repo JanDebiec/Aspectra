@@ -29,6 +29,7 @@ import com.jjoe64.graphview.series.LineGraphSeries;
 
 
 import de.jandrotek.android.aspectra.core.AspectraGlobals;
+import de.jandrotek.android.aspectra.core.SpectrumBase;
 import de.jandrotek.android.aspectra.libspectrafiles.ListContent;
 import de.jandrotek.android.aspectra.libspectrafiles.SpectrumFiles;
 //import android.app.Fragment;
@@ -74,7 +75,7 @@ public class PlotViewFragment extends Fragment
     private OnFragmentInteractionListener mListener;
     private ListContent.SpectrumItem mItem;
     private String mFileName;
-    private SpectrumChr_not_to_use mSpectrumFile;
+    private SpectrumBase mSpectrumFile;
     private int[] mFileIntValues;
     private DataPointJan[] mData;
 
@@ -125,7 +126,7 @@ public class PlotViewFragment extends Fragment
 
             // load file specified in mItem.content
             mFileName = SpectrumFiles.mPath +"/" + mItem.name;
-            mSpectrumFile = new SpectrumChr_not_to_use(mFileName);
+            mSpectrumFile = new SpectrumBase(mFileName);
             try{
                 fileLength = mSpectrumFile.readValuesFromFile();
                 mFileIntValues = mSpectrumFile.getValues();

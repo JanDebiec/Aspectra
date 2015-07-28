@@ -61,4 +61,21 @@ public class SpectrumBaseModifyTest extends TestCase {
         assertEquals(nInputDataSizeMinusOne + 1 + 25, size);
 
     }
+
+    // to move left, first move right to create buffer left
+    public void testMoveLeft25(){
+        spectrum.moveData(50);
+        spectrum.moveData(-25);
+        int index = spectrum.getStartIndex();
+        assertEquals(25, index);
+
+    }
+    public void testMoveLeftSize25(){
+        spectrum.moveData(50);
+        spectrum.moveData(-25);
+        int size = spectrum.getDataSize();
+        assertEquals(nInputDataSizeMinusOne + 1 + 25, size);
+
+    }
+
 }

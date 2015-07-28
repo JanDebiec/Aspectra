@@ -138,12 +138,12 @@ public class SpectrumBase {
         int[] newData;
         if(offset >= 0) { // move to the right
             newData = ArrayFunctions.moveArrayRight(mValues, offset);
-            mStartIndex += offset;
+//            mStartIndex += offset;
         } else { // move to the left
             newData = ArrayFunctions.moveArrayLeft(mValues, - offset);
         }
         mValues = newData;
-//        mStartIndex += offset;
+        mStartIndex += offset;
         mEndIndex += offset;
         return mValues;
     }

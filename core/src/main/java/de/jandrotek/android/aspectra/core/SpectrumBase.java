@@ -138,7 +138,6 @@ public class SpectrumBase {
         int[] newData;
         if(offset >= 0) { // move to the right
             newData = ArrayFunctions.moveArrayRight(mValues, offset);
-//            mStartIndex += offset;
         } else { // move to the left
             newData = ArrayFunctions.moveArrayLeft(mValues, - offset);
         }
@@ -148,7 +147,7 @@ public class SpectrumBase {
         return mValues;
     }
 
-    //TODO: check working and update indexies
+    //TODO: check working and update indexies, add offset
     public int[] stretchData(int offset, float factor) {
         int[] newData;
         newData = ArrayFunctions.stretchArray(mValues, factor);

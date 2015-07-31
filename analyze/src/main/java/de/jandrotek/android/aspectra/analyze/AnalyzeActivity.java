@@ -10,8 +10,7 @@ import android.view.MenuItem;
 import java.util.HashMap;
 import java.util.Map;
 
-import de.jandrotek.android.aspectra.core.SpectrumAsp;
-import de.jandrotek.android.aspectra.core.SpectrumChr;
+import de.jandrotek.android.aspectra.core.SpectrumBase;
 import de.jandrotek.android.aspectra.libspectrafiles.SpectrumFiles;
 import de.jandrotek.android.aspectra.libtouch.TouchView;
 
@@ -34,10 +33,10 @@ public class AnalyzeActivity extends AppCompatActivity
     private int[] mSpectrumToEditValues = null;
     private int[] mSpectrumReferenceValues = null;
     private int mSpectrumLengthMax;
-    private SpectrumChr mSpectrumToEdit;
-    private SpectrumChr mSpectrumToEditBackup;
+    private SpectrumBase mSpectrumToEdit;
+    private SpectrumBase mSpectrumToEditBackup;
     private boolean mSpectrumAlreadyEdited = false;
-    private SpectrumChr mSpectrumReference;
+    private SpectrumBase mSpectrumReference;
     private Map<String, String> mSpectraMap;
     public static boolean mCalcBusy = false;
 
@@ -85,7 +84,7 @@ public class AnalyzeActivity extends AppCompatActivity
     private void generateGraphViewData(){
         if (mSpectrumNameToEdit != null) {
             mSpectrumAbsNameToEdit = SpectrumFiles.mPath + "/" + mSpectrumNameToEdit;
-            mSpectrumToEdit = new SpectrumChr(mSpectrumAbsNameToEdit);
+            mSpectrumToEdit = new SpectrumBase(mSpectrumAbsNameToEdit);
             try {
                 mSpectrumToEditLength = mSpectrumToEdit.readValuesFromFile();
                 mSpectrumToEditValues = mSpectrumToEdit.getValues();
@@ -98,7 +97,7 @@ public class AnalyzeActivity extends AppCompatActivity
         if (mSpectrumNameReference != null) {
 
             mSpectrumNameAbsReference = SpectrumFiles.mPath + "/" + mSpectrumNameReference;
-            mSpectrumReference = new SpectrumChr(mSpectrumNameAbsReference);
+            mSpectrumReference = new SpectrumBase(mSpectrumNameAbsReference);
             try {
                 mSpectrumReferenceLength = mSpectrumReference.readValuesFromFile();
                 mSpectrumReferenceValues= mSpectrumReference.getValues();

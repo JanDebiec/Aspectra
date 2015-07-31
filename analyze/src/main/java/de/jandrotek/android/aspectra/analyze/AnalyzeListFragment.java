@@ -1,4 +1,4 @@
-package de.jandrotek.android.aspectra.viewer;
+package de.jandrotek.android.aspectra.analyze;
 
 import android.app.Activity;
 import android.app.ListFragment;
@@ -6,7 +6,10 @@ import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.SparseBooleanArray;
+import android.view.ActionMode;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,32 +19,34 @@ import android.widget.TextView;
 import android.widget.TwoLineListItem;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
-
-//import de.jandrotek.android.aspectra.main.ListContent.SpectrumItem;
+import java.util.Map;
 
 import de.jandrotek.android.aspectra.libspectrafiles.ListContent;
 
-public class ItemListFragment extends ListFragment {
+public class AnalyzeListFragment extends ListFragment {
+    //  implements  MultiChoiceModeListener{
     private static final String TAG = "ListItemsFrag";
+    private static final String STATE_ACTIVATED_POSITION = "activated_position";
     ListView mPrivateListView;
     private SpectrumAdapter mAdapter;
     ArrayList<String> filesNames;
-    ListViewerModeListener mModeListener;
-
-    private static final String STATE_ACTIVATED_POSITION = "activated_position";
     private Callbacks mCallbacks = sDummyCallbacks;
     private int mActivatedPosition = ListView.INVALID_POSITION;
+    private ActionMode mActionMode;
+    private String mFileName;
     public interface Callbacks {
-        void onItemSelected(ArrayList<String> filesNames);
+        void onItemSelected(Map<String, String> spectraNames);
     }
+
     private static Callbacks sDummyCallbacks = new Callbacks() {
         @Override
-        public void onItemSelected(ArrayList<String> filesNames) {
+        public void onItemSelected(Map<String, String> spectraNames) {
         }
     };
 
-    public ItemListFragment() {
+    public AnalyzeListFragment() {
     }
 
     @Override
@@ -51,7 +56,6 @@ public class ItemListFragment extends ListFragment {
         filesNames = new ArrayList<>();
         mAdapter = new SpectrumAdapter(ListContent.ITEMS);
         setListAdapter(mAdapter);
-
     }
 
     @Override
@@ -68,68 +72,16 @@ public class ItemListFragment extends ListFragment {
         }
 
         mPrivateListView = getListView();
-        mPrivateListView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
-        mModeListener = new ListViewerModeListener(
-                this, getListView());
-        mPrivateListView.setMultiChoiceModeListener(mModeListener        );
-        mPrivateListView.clearChoices();
+        mPrivateListView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+        mPrivateListView.setLongClickable(true);
+
+
     }
 
-    public boolean performActions(MenuItem item) {
-        SparseBooleanArray checked = getListView().getCheckedItemPositions();
-
-        switch (item.getItemId()) {
-            case R.id.item_delete: {
-                ArrayList<ListContent.SpectrumItem> positions = new ArrayList<>();
-                for (int i=0; i < checked.size(); i++) {
-                    if (checked.valueAt(i)) {
-                        int originalPosition = checked.keyAt(i);
-                        positions.add( ListContent.getItem(originalPosition));
-                    }
-                }
-                for (ListContent.SpectrumItem spectrum : positions) {
-//                    ListContent.SpectrumItem item;
-                    Log.d(TAG, spectrum.getName());
-//                   // mAdapter.remove(ListContent.SpectrumItem);
-//                    //mAdapter.remove(spectra.get(position));
-                }
-                return(true);
-            }
-            case R.id.item_show: {
-                ArrayList<ListContent.SpectrumItem> positions = new ArrayList<>();
-
-                int nPlotsCount = checked.size();
-                filesNames.clear();
-                ItemListActivity activity = (ItemListActivity) getActivity();
-                activity.mPlotsCount = nPlotsCount;
-
-                for (int i=0; i < nPlotsCount; i++) {
-                    if (checked.valueAt(i)) {
-                        int originalPosition = checked.keyAt(i);
-                        positions.add( ListContent.getItem(originalPosition));
-                    }
-                }
-                for (ListContent.SpectrumItem spectrum : positions) {
-                    String fileName = spectrum.getName();
-                    if(BuildConfig.DEBUG) {
-                        Log.d(TAG, fileName);
-                    }
-                    filesNames.add(fileName);
-                }
-                // call MultiPlotViewer
-                mCallbacks.onItemSelected(filesNames);
-
-                return(true);
-            }
-
-        }// switch
-        return(false);
-    }
         @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
 
-        // Activities containing this fragment must implement its callbacks.
         if (!(activity instanceof Callbacks)) {
             throw new IllegalStateException("Activity must implement fragment's callbacks.");
         }
@@ -154,9 +106,6 @@ public class ItemListFragment extends ListFragment {
         if(BuildConfig.DEBUG) {
             Log.i(TAG, "onStart");
         }
-        if(mModeListener.activeMode != null) {
-            mModeListener.activeMode.finish();
-        }
     }
 
     @Override
@@ -164,9 +113,6 @@ public class ItemListFragment extends ListFragment {
         super.onResume();
         if(BuildConfig.DEBUG) {
             Log.i(TAG, "onResume");
-        }
-        if(mModeListener.activeMode != null) {
-            mModeListener.activeMode.finish();
         }
     }
 
@@ -184,9 +130,6 @@ public class ItemListFragment extends ListFragment {
         if(BuildConfig.DEBUG) {
             Log.i(TAG, "onStop");
         }
-        if(mModeListener.activeMode != null) {
-            mModeListener.activeMode.finish();
-        }
     }
 
     @Override
@@ -200,11 +143,15 @@ public class ItemListFragment extends ListFragment {
     @Override
     public void onListItemClick(ListView listView, View view, int position, long id) {
         super.onListItemClick(listView, view, position, id);
-        filesNames.clear();
+        execOnClick(position);
+    }
+
+    private void execOnClick(int position) {
+        Map<String, String> spectraNames = new HashMap<>();
         ListContent.SpectrumItem spectrum = ListContent.getItem(position);
-        String fileName = spectrum.getName();
-        filesNames.add(fileName);
-        mCallbacks.onItemSelected(filesNames);
+        mFileName = spectrum.getName();
+        spectraNames.put(AnalyzeActivity.ARG_ITEM_EDIT, mFileName);
+        mCallbacks.onItemSelected(spectraNames);
     }
 
     @Override
@@ -247,6 +194,7 @@ public class ItemListFragment extends ListFragment {
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
 
+            final int PositionInList = position;
             TwoLineListItem twoLineListItem;
 
             if (convertView == null) {
@@ -264,10 +212,85 @@ public class ItemListFragment extends ListFragment {
             text1.setText(ListContent.ITEMS.get(position).getName());
             text2.setText(ListContent.ITEMS.get(position).getNotes());
 
+            twoLineListItem.setOnLongClickListener(new View.OnLongClickListener() {
+                // Called when the user long-clicks on someView
+                public boolean onLongClick(View view) {
+                    if (mActionMode != null) {
+                        return false;
+                    }
+                    //TODO: can't get item back unchecked
+//                    getListView().setItemChecked(PositionInList, true);
+                    mFileName = ListContent.ITEMS.get(PositionInList).getName();
+
+                    // Start the CAB using the ActionMode.Callback defined above
+                    mActionMode = getActivity().startActionMode(mActionModeCallback);
+                    view.setSelected(true);
+                    return true;
+                }
+            });
+            twoLineListItem.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    execOnClick(PositionInList);
+
+
+                }
+            });
             return twoLineListItem;
 
         }
     }
+
+
+
+    private ActionMode.Callback mActionModeCallback = new ActionMode.Callback() {
+
+        // Called when the action mode is created; startActionMode() was called
+        @Override
+        public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+            // Inflate a menu resource providing context menu items
+            MenuInflater inflater = mode.getMenuInflater();
+            inflater.inflate(R.menu.context_list_menu, menu);
+            return true;
+        }
+
+        // Called each time the action mode is shown. Always called after onCreateActionMode, but
+        // may be called multiple times if the mode is invalidated.
+        @Override
+        public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+            return false; // Return false if nothing is done
+        }
+
+        // Called when the user selects a contextual menu item
+        @Override
+        public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+            Map<String, String> spectraNames = new HashMap<>();
+            switch (item.getItemId()) {
+//                case R.id.item_set_reference:
+//                    spectraNames.put(AnalyzeFragment.ARG_ITEM_REFERENCE, mFileName);
+//                    mode.finish(); // Action picked, so close the CAB
+//                    mCallbacks.onItemSelected(spectraNames);
+//                    return true;
+                case R.id.item_delete:
+                    mode.finish(); // Action picked, so close the CAB
+                    return true;
+//                case R.id.item_edit:
+//                    spectraNames.put(AnalyzeFragment.ARG_ITEM_EDIT, mFileName);
+//                    mode.finish(); // Action picked, so close the CAB
+//                    mCallbacks.onItemSelected(spectraNames);
+//                    return true;
+                default:
+                    return false;
+            }
+        }
+
+
+        // Called when the user exits the action mode
+        @Override
+        public void onDestroyActionMode(ActionMode mode) {
+            mActionMode = null;
+        }
+    };
 }
 
 

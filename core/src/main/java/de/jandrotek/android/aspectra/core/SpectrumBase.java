@@ -25,14 +25,26 @@ public abstract class SpectrumBase {
     protected static final String mExtensionChr = "spk";
     //private String mFileNameWithPath;
     protected int[] mValues;
+
+    public int getStartIndex() {
+        return mStartIndex;
+    }
+
+    protected int mStartIndex;
+    protected int mEndIndex;
+//    protected int mSize;
     protected static final int SPK_CHR_FILE_DEFAULT_SIZE = 800;
 
-    public abstract int getDataSize();
+//    public abstract int getDataSize();
 
 	public abstract void setDataSize(int dataSize);
 
+    public int getDataSize() {
+        return mEndIndex;//mValues.length;
+    }
 
-	public void setFileName(String fileName){
+
+    public void setFileName(String fileName){
         mFileName = fileName;
 	}
 
@@ -45,7 +57,7 @@ public abstract class SpectrumBase {
         return mValues;
     }
 
-
+    public abstract int readValuesFromFile() ;
 
 //    /*
 //    Whereas you can have DateFormat patterns such as:

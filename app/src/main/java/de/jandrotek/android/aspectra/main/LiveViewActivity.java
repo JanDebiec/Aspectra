@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import java.io.File;
 import java.lang.ref.WeakReference;
+import java.util.ArrayList;
 
 //import de.jandrotek.android.aspectra.libplotspectra.PlotViewFragment;
 import de.jandrotek.android.aspectra.libplotspectrav3.PlotViewFragment;
@@ -53,13 +54,14 @@ public class LiveViewActivity extends BaseActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ArrayList<String> dummyItems = null;
         setContentView(R.layout.activity_live_view);
         if (savedInstanceState == null) {
             mCameraViewFragment = CameraViewFragment.newInstance( AspectraGlobals.ACT_ITEM_LIVE_VIEW);
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.fragmentHolderCameraView, mCameraViewFragment)
                     .commit();
-            mPlotViewFragment = PlotViewFragment.newInstance(AspectraGlobals.ACT_ITEM_LIVE_VIEW, 1);
+            mPlotViewFragment = PlotViewFragment.newInstance(AspectraGlobals.ACT_ITEM_LIVE_VIEW, dummyItems);
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.fvPlotView, mPlotViewFragment)
                     .commit();
@@ -214,7 +216,7 @@ public class LiveViewActivity extends BaseActivity
                 if(messId == AspectraGlobals.eMessageCompleteLine) {
                     int[] data = (int[])inputMessage.obj;
                     int length = data.length;
-                    mPlotViewFragment.showPlotOne(data, length);
+                    mPlotViewFragment.showPlot(0, data, length);
                     if(AspectraGlobals.mSavePlotInFile){
                         File f;
                         AspectraGlobals.mSavePlotInFile = false;

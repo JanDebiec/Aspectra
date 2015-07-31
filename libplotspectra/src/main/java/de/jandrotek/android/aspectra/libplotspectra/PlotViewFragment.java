@@ -129,7 +129,7 @@ public class PlotViewFragment extends Fragment
             mFileName = SpectrumFiles.mPath +"/" + mItem.name;
             mSpectrumFile = new SpectrumChr(mFileName);
             try{
-                fileLength = mSpectrumFile.readValuesChr();
+                fileLength = mSpectrumFile.readValuesFromFile();
                 mFileIntValues = mSpectrumFile.getValues();
 
             } catch (Exception e) {

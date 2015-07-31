@@ -4,15 +4,14 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.preference.PreferenceManager;
-import android.support.v7.app.ActionBarActivity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import de.jandrotek.android.aspectra.libprefs.AspectraSettings;
-import de.jandrotek.android.aspectra.libprefs.SettingsActivity;
+import de.jandrotek.android.aspectra.libprefs.AspectraLiveViewPrefs;
+import de.jandrotek.android.aspectra.libprefs.AspectraGlobalPrefsActivity;
 import de.jandrotek.android.aspectra.libspectrafiles.SpectrumFiles;
 
 public class BaseActivity extends AppCompatActivity //ActionBarActivity
@@ -23,7 +22,7 @@ public class BaseActivity extends AppCompatActivity //ActionBarActivity
 //    protected static final int ACT_ITEM_VIEW_PLOT   = 2;
 //    protected static final int ACT_ITEM_ANALYZE     = 3;
 
-    protected AspectraSettings mAspectraSettings;
+    protected AspectraLiveViewPrefs mAspectraSettings;
     protected String mFileFolder;
     protected String mFileExt;
     protected SpectrumFiles mSpectrumFiles;
@@ -33,7 +32,7 @@ public class BaseActivity extends AppCompatActivity //ActionBarActivity
    @Override
     protected void onCreate(Bundle savedInstanceState) {
        super.onCreate(savedInstanceState);
-       mAspectraSettings = new AspectraSettings();
+       mAspectraSettings = new AspectraLiveViewPrefs();
        mSpectrumFiles = new SpectrumFiles();
        Context context = getApplicationContext();
        SharedPreferences prefs = PreferenceManager
@@ -56,7 +55,7 @@ public class BaseActivity extends AppCompatActivity //ActionBarActivity
         int id = item.getItemId();
 
         if (id == R.id.action_settings) {
-            Intent intent = new Intent(this, SettingsActivity.class);
+            Intent intent = new Intent(this, AspectraGlobalPrefsActivity.class);
             startActivity(intent);
             return true;
         }

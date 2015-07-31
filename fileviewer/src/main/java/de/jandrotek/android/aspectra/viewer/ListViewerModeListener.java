@@ -9,17 +9,14 @@ import android.view.MenuItem;
 import android.widget.AbsListView;
 import android.widget.ListView;
 
-/**
- * Created by jan on 24.06.15.
- */
 @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-public class ViewerModeListener implements
+public class ListViewerModeListener implements
         AbsListView.MultiChoiceModeListener{
     ItemListFragment host;
     ActionMode activeMode;
     ListView lv;
 
-    ViewerModeListener(ItemListFragment host, ListView lv) {
+    ListViewerModeListener(ItemListFragment host, ListView lv) {
         this.host=host;
         this.lv=lv;
     }
@@ -27,12 +24,8 @@ public class ViewerModeListener implements
     @Override
     public boolean onCreateActionMode(ActionMode mode, Menu menu) {
         MenuInflater inflater=host.getActivity().getMenuInflater();
-
-//        mode.getMenuInflater().inflate(R.menu.menu_activity_base, menu);
-//        mode.getMenuInflater().inflate(R.menu.action_menu_multi, menu);
         inflater.inflate(R.menu.menu_activity_base, menu);
         inflater.inflate(R.menu.action_menu_multi, menu);
-//        inflater.inflate(R.menu.context, menu);
         mode.setTitle(R.string.context_title);
         mode.setSubtitle("(1)");
         activeMode=mode;

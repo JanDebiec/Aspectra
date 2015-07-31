@@ -4,9 +4,11 @@
 package de.jandrotek.android.aspectra.libplotspectrav3;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
@@ -18,10 +20,8 @@ import android.widget.FrameLayout;
 
 import de.jandrotek.android.aspectra.core.AspectraGlobals;
 import de.jandrotek.android.aspectra.core.SpectrumChr;
-import de.jandrotek.android.aspectra.libspectrafiles.ListContent;
 import de.jandrotek.android.aspectra.libspectrafiles.SpectrumFiles;
 
-//import android.support.v7.app.AppCompatActivity;
 // lib ver 3.
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.GraphView.GraphViewData;
@@ -58,38 +58,35 @@ public class PlotViewFragment extends Fragment
     private GraphView mGraphView;
     private int[] mPlotIntValues;
     //ver 3
-    private GraphViewData[] mData;
-    private GraphViewSeries mDataSeries;
-    private GraphViewSeries.GraphViewSeriesStyle mGraphStyle;
-    private GraphViewData[] realData;
-    // ver 4
-//    private LineGraphSeries<DataPointJan> mSeries1;
-//    private LineGraphSeries<DataPointJan> mSeries2;
-//    private DataPointJan[] realData;
-
+    GraphViewSeries mDataSeries;
+    private GraphViewSeries.GraphViewSeriesStyle[] mGraphStyle;
+    private GraphViewData[][] realData = null;
 
     private OnFragmentInteractionListener mListener;
-    private ArrayList<ListContent.SpectrumItem> mItems;
-    private String mFileName;
-    private SpectrumChr mSpectrumFile;
-    private int[] mFileIntValues;
-
-//    private boolean mFlagSavinggStarted = false;
+    private ArrayList<String> mItems;
+    private String[] mFileName;
+    private SpectrumChr[] mSpectrumFile;
+    private int[][] mFileIntValues;
+    private int[] mFileDataLength;
+    private int mItemlistSize = 0;
+    private int mDataLengthMax = 0;
+    private int[] mColor;
 
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
      * @param param1 Type of calling activity.
-     * @param param2 count of plots to draw.
+     * @param items Araylist of spectrumFiles names.
      * @return A new instance of fragment PlotViewFragment.
      */
-    // TODO: Rename and change types and number of parameters
-        public static PlotViewFragment newInstance(int param1, int param2) {
+        public static PlotViewFragment newInstance(int param1, ArrayList<String> items) {
         PlotViewFragment fragment = new PlotViewFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_PARAM1, param1);
-        args.putInt(ARG_PARAM2, param2);
+         if(param1 == AspectraGlobals.ACT_ITEM_VIEW_PLOT) {
+             args.putStringArrayList(ARG_ITEM_IDS, items);
+         }
         fragment.setArguments(args);
         return fragment;
     }
@@ -101,82 +98,110 @@ public class PlotViewFragment extends Fragment
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        int fileLength;
         if (getArguments() != null) {
             mParam1 = getArguments().getInt(ARG_PARAM1);
-            mParam2 = getArguments().getInt(ARG_PARAM2);
-        }
-        //ver 3
-        //realData = new GraphViewData[realPlotDataSize];
-        realData = new GraphViewData[PLOT_DATA_SIZE];
-        mData = generateDemoData();
-        // ver 4
-//        realData = new DataPointJan[PLOT_DATA_SIZE];
-        if (getArguments().containsKey(ARG_ITEM_IDS)) {
-            // Load the dummy content specified by the fragment
-            // arguments. In a real-world scenario, use a Loader
-            // to load content from a content provider.
-            mItems = getArguments().getStringArrayList(ARG_ITEM_IDS));
-//            mItems = ListContent.ITEM_MAP.get(getArguments().getStringArrayList(ARG_ITEM_IDS));
-
-
-            // load file specified in mItem.content
-            mFileName = SpectrumFiles.mPath +"/" + mItems[0].name;
-            mSpectrumFile = new SpectrumChr(mFileName);
-            try{
-                fileLength = mSpectrumFile.readValuesChr();
-                mFileIntValues = mSpectrumFile.getValues();
-
-            } catch (Exception e) {
-                e.printStackTrace();
+            if (getArguments().containsKey(ARG_ITEM_IDS)) {
+                mItems = getArguments().getStringArrayList(ARG_ITEM_IDS);
             }
-            //TODO: here is danger,what is bigger: mFileIntValues or 2048
-            int num = 2048;
-//            mData = new DataPointJan[num];
-//            for (int i=0; i<num; i++) {
-//
-//                mData[i] = new DataPointJan(i, mFileIntValues[i]);
-//            }
-
-
         }
+        if (getArguments().containsKey(ARG_ITEM_IDS)) {
 
+            mItems = getArguments().getStringArrayList(ARG_ITEM_IDS);
+            mItemlistSize = mItems.size();
+            mFileName = new String[mItemlistSize];
+            mSpectrumFile = new SpectrumChr[mItemlistSize];
+            mFileIntValues = new int[mItemlistSize][AspectraGlobals.eMaxSpectrumSize];
+            realData = new GraphViewData[mItemlistSize][AspectraGlobals.eMaxSpectrumSize];
+            mFileDataLength = new int[mItemlistSize];
+            int i = 0;
+
+            for(String item : mItems){
+
+                // load file specified in mItem.content
+                String fileName = item;
+                mFileName[i] = SpectrumFiles.mPath +"/" + fileName;
+                mSpectrumFile[i] = new SpectrumChr(mFileName[i]);
+                try{
+                    GraphViewData[] tempRealData;
+                    mFileDataLength[i] = mSpectrumFile[i].readValuesFromFile();
+                    mFileIntValues[i] = mSpectrumFile[i].getValues();
+                    tempRealData = new GraphViewData[mFileDataLength[i]];
+                    realData[i] = tempRealData;
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                i++;
+            }
+            mDataLengthMax = findMaxDataLength();
+        } else {
+            mItemlistSize = 1;
+            realData = new GraphViewData[mItemlistSize][AspectraGlobals.eMaxSpectrumSize];
+            mFileDataLength = new int[mItemlistSize];
+            mDataLengthMax = PLOT_DATA_SIZE;
+        }
+        mColor = new int[3];
+        mColor[0] = Color.rgb(255, 0, 0);
+        mColor[1] = Color.rgb(0, 255, 0);
+        mColor[2] = Color.rgb(0,0,255);
     }
 
+    private int findMaxDataLength(){
+        int max = 0;
+        int index = -1;
+        int i = 0;
+        for(i = 0; i < mItemlistSize; i++){
+            if(mFileDataLength[i] > max){
+                max = mFileDataLength[i];
+                index = i;
+            }
+        }
+
+        return max;
+    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.fragment_plot_view, container, false);
 
-//        mGraphView = new GraphView(getActivity());
         mGraphView = new LineGraphView(getActivity(), "");
-        // add data
-        mGraphStyle = new GraphViewSeries.GraphViewSeriesStyle();
-        mGraphStyle.thickness = 1;
-        mData = generateDemoData();
-        mDataSeries = new GraphViewSeries("", mGraphStyle, mData);
-        mGraphView.addSeries(mDataSeries);
+
+        if(mItems != null) {
+            for(int i = 0; i < mItems.size(); i++) {
+                generateData(i, mFileIntValues[i], mDataLengthMax);
+                GraphViewSeries dataSeries = new GraphViewSeries(
+                                "",
+                                new GraphViewSeries.GraphViewSeriesStyle(mColor[i], 1),
+                                realData[i]);
+                mGraphView.addSeries(dataSeries);
+            }
+        } else {
+            realData[0] = generateDemoData();
+            mDataSeries = new GraphViewSeries(
+                    "",
+                    new GraphViewSeries.GraphViewSeriesStyle(mColor[0], 1),
+                    realData[0]);
+            mGraphView.addSeries(mDataSeries);
+        }
         mGraphView.getGraphViewStyle().setTextSize(20);
         mGraphView.getGraphViewStyle().setNumHorizontalLabels(5);
         mGraphView.getGraphViewStyle().setNumVerticalLabels(4);
-
-        GraphViewSeries.GraphViewSeriesStyle geSstyle = mDataSeries.getStyle();
-        mGraphView.setViewPort(0, realPlotDataSize);
+        mGraphView.setViewPort(0, mDataLengthMax);
         registerForContextMenu(mGraphView);
 
         mGraphView.setOnTouchListener(new View.OnTouchListener() {
 
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                int action = event.getAction();
-                if(action == MotionEvent.ACTION_DOWN) {
+            int action = event.getAction();
+            if(action == MotionEvent.ACTION_DOWN) {
 
-                    if (!AspectraGlobals.mSavePlotInFile) {
-                        AspectraGlobals.mSavePlotInFile = true;
-                    }
+                if (!AspectraGlobals.mSavePlotInFile) {
+                    AspectraGlobals.mSavePlotInFile = true;
                 }
-                return true; //processed
+            }
+            return true; //processed
             }
 
         });
@@ -235,8 +260,6 @@ public class PlotViewFragment extends Fragment
     @Override
     public void onResume() {
         super.onResume();
-
-//        mFlagSavinggStarted = false;
     }
 
     //TODO will not working
@@ -275,85 +298,30 @@ public class PlotViewFragment extends Fragment
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
-// ver 4
-//    public void showPlotOne(int[] data, int length){
-//        if(mSeries1 != null) {
-//            realPlotDataSize = length;
-//            DataPointJan[] graphdata = generateData(data, length);// here explode
-//
-//            mGraphView.getViewport().setXAxisBoundsManual(true);
-//            mGraphView.getViewport().setMinX(0);
-//            mGraphView.getViewport().setMaxX(realPlotDataSize);
-//            mSeries1.resetData(graphdata);
-//        }
-//    }
 
-    // ver 3
-    public void showPlotOne(int[] data, int length){
+    public void showPlot(int index, int[] data, int length){
         if(mDataSeries != null) {
             realPlotDataSize = length;
-            GraphViewData[] graphdata = generateData(data, length);// here explode
+            generateData(index, data, length);
             mGraphView.setViewPort(0, realPlotDataSize);
-            mDataSeries.resetData(graphdata);
+            mDataSeries.resetData(realData[index]);
         }
     }
 
-    //ver 4
-//    private DataPointJan[] generateData(int[] data, int length) {
-//        DataPointJan baseDataPoint = new DataPointJan();
-//        // TODO:  variables as private in fragment, for speed up, GarbageCollection not needed
-//        for (int i=0; i<length; i++) {
-//
-//            baseDataPoint.setX(i);
-//            baseDataPoint.setY(data[i]);
-////            DataPointJan v = new DataPointJan(i, data[i]);
-//            realData[i] = baseDataPoint;
-//        }
-//        //TODO: check in plot act length, and add needed data only for that length
-//
-//        //for(int i = length; i < realPlotDataSize ; i++){
-//        for(int i = length; i < PLOT_DATA_SIZE ; i++){
-////            DataPointJan v = new DataPointJan(i, 0);
-//            baseDataPoint.setX(i);
-//            baseDataPoint.setY(0);
-//            realData[i] = baseDataPoint;
-//        }
-//        return realData;
-//    }
+    private void generateData(int index, int[] data, int length) {
+        if(realData[index] == null){
+            realData[index] = new GraphViewData[length];
+        }
+        for (int i=0; i<length; i++) {
 
-// ver 3
-        private GraphViewData[] generateData(int[] data, int length) {
-//  variables as private in fragment, for speed up, GarbageCollection not needed
-            for (int i=0; i<length; i++) {
+            realData[index][i] = new GraphViewData(i, data[i]);
+        }
+        //TODO: check in plot act length, and add needed data only for that length
 
-                realData[i] = new GraphViewData(i, data[i]);
-            }
-            //TODO: check in plot act length, and add needed data only for that length
-
-            //for(int i = length; i < realPlotDataSize ; i++){
-                for(int i = length; i < PLOT_DATA_SIZE ; i++){
-                realData[i] = new GraphViewData(i, 0);
-            }
-        return realData;
+        for(int i = length; i < mDataLengthMax ; i++){
+            realData[index][i] = new GraphViewData(i, 0);
+        }
     }
-
-
-    // ver 4
-//    private DataPointJan[] generateDemoData(){
-//        DataPointJan[] demoData;
-//        mPlotIntValues = new int[PLOT_DATA_SIZE];
-//        for (int i = 0; i < PLOT_DATA_SIZE/2; i++)
-//            mPlotIntValues[i] = i;
-//        for (int i = PLOT_DATA_SIZE/2; i < PLOT_DATA_SIZE; i++)
-//            mPlotIntValues[i] = PLOT_DATA_SIZE - i;
-//
-//        demoData = new DataPointJan[PLOT_DATA_SIZE];
-//        for (int i=0; i<PLOT_DATA_SIZE; i++) {
-//
-//            demoData[i] = new DataPointJan(i, mPlotIntValues[i]);
-//        }
-//        return demoData;
-//    }
 
     //ver 3
     private GraphViewData[] generateDemoData(){

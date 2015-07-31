@@ -1,4 +1,4 @@
-package de.jandrotek.android.aspectra.viewer;
+package de.jandrotek.android.aspectra.analyze;
 
 import android.content.Context;
 import android.content.Intent;
@@ -10,25 +10,27 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import java.util.ArrayList;
+import java.util.Map;
 
-import de.jandrotek.android.aspectra.libplotspectrav3.PlotViewFragment;
+import de.jandrotek.android.aspectra.core.SpectrumAsp;
+import de.jandrotek.android.aspectra.libprefs.AspectraAnalyzePrefs;
 import de.jandrotek.android.aspectra.libprefs.AspectraGlobalPrefsActivity;
 import de.jandrotek.android.aspectra.libprefs.AspectraLiveViewPrefs;
 import de.jandrotek.android.aspectra.libspectrafiles.SpectrumFiles;
 
-public class ItemListActivity extends ActionBarActivity
-        implements ItemListFragment.Callbacks {
+import static de.jandrotek.android.aspectra.analyze.R.string.PREFS_KEY_EXTENSION_NAME;
+
+public class AnalyzeListActivity extends ActionBarActivity
+        implements AnalyzeListFragment.Callbacks {
 
     private static final String TAG = "ListItemsAct";
-    private AspectraLiveViewPrefs mAspectraSettings;
+    private AspectraAnalyzePrefs mAnalyzeSettings;
     private String mFileFolder;
     private String mFileExt;
-
+    private String mSpectrumWork = null;
+    private String mSpectrumRef = null;
     private SpectrumFiles mSpectrumFiles = null;
     private int mFileListSize = 0;
-    private int mChartLength;
-    public int mPlotsCount = 1;// default = 1, can be changed in ListFragment
     private boolean mTwoPane;
 
     @Override
@@ -38,11 +40,11 @@ public class ItemListActivity extends ActionBarActivity
             Log.d(TAG, "onCreate() called");
         }
 
-        mAspectraSettings = new AspectraLiveViewPrefs();
+        mAnalyzeSettings = new AspectraAnalyzePrefs();
         Context context = getApplicationContext();
         SharedPreferences prefs = PreferenceManager
                 .getDefaultSharedPreferences(context);
-        mAspectraSettings.connectPrefs(context, prefs);
+        mAnalyzeSettings.connectPrefs(context, prefs);
 
         updateFromPreferences();
 
@@ -51,21 +53,21 @@ public class ItemListActivity extends ActionBarActivity
             mFileListSize = mSpectrumFiles.scanFolderForFiles(mFileFolder,mFileExt );
         }
 
-        setContentView(R.layout.activity_item_list);
+        setContentView(R.layout.activity_analyze_list);
 
-        if (findViewById(R.id.item_detail_container) != null) {
-            // The detail container view will be present only in the
-            // large-screen layouts (res/values-large and
-            // res/values-sw600dp). If this view is present, then the
-            // activity should be in two-pane mode.
-            mTwoPane = true;
-
-            // In two-pane mode, list items should be given the
-            // 'activated' state when touched.
-            ((ItemListFragment) getFragmentManager()
-                    .findFragmentById(R.id.item_list))
-                    .setActivateOnItemClick(true);
-        }
+//        if (findViewById(R.id.item_detail_container) != null) {
+//            // The detail container view will be present only in the
+//            // large-screen layouts (res/values-large and
+//            // res/values-sw600dp). If this view is present, then the
+//            // activity should be in two-pane mode.
+//            mTwoPane = true;
+//
+//            // In two-pane mode, list items should be given the
+//            // 'activated' state when touched.
+//            ((AnalyzeListFragment) getFragmentManager()
+//                    .findFragmentById(R.id.item_list))
+//                    .setActivateOnItemClick(true);
+//        }
 
     }
 
@@ -106,7 +108,7 @@ public class ItemListActivity extends ActionBarActivity
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_activity_list, menu);
+        getMenuInflater().inflate(R.menu.menu_analyze_list, menu);
         return true;
     }
 
@@ -129,8 +131,7 @@ public class ItemListActivity extends ActionBarActivity
     }
 
     @Override
-    public void onItemSelected(ArrayList<String> filesNames) {
-//TODO: activate the twoPane display
+    public void onItemSelected(Map<String, String> spectraNames) {
 //        if (mTwoPane) {
 //            // t will be fixed later, first we go with single pane
 //
@@ -147,16 +148,34 @@ public class ItemListActivity extends ActionBarActivity
 //
 //        } else {
             Bundle arguments = new Bundle();
-            arguments.putStringArrayList(PlotViewFragment.ARG_ITEM_IDS, filesNames);
-            Intent detailIntent = new Intent(this, ItemDetailActivity.class);
+            if(spectraNames.containsKey(AnalyzeActivity.ARG_ITEM_EDIT)){
+                mSpectrumWork = spectraNames.get(AnalyzeActivity.ARG_ITEM_EDIT);
+                mAnalyzeSettings.setPrefsSpectrumEdited(mSpectrumWork);
+                mAnalyzeSettings.saveSettings();
+            }
+            if (spectraNames.containsKey(AnalyzeActivity.ARG_ITEM_REFERENCE)){
+                mSpectrumRef = spectraNames.get(AnalyzeActivity.ARG_ITEM_REFERENCE);
+                mAnalyzeSettings.setPrefsSpectrumReference(mSpectrumRef);
+                mAnalyzeSettings.saveSettings();
+            }
+            arguments.putString(AnalyzeActivity.ARG_ITEM_EDIT, mSpectrumWork);
+            arguments.putString(AnalyzeActivity.ARG_ITEM_REFERENCE, mSpectrumRef);
+            Intent detailIntent = new Intent(this, AnalyzeActivity.class);
             detailIntent.putExtras(arguments);
             startActivity(detailIntent);
 //        }
     }
 
     protected void updateFromPreferences() {
-        mAspectraSettings.loadSettings();
-        mFileFolder = mAspectraSettings.getPrefsSpectraBasePath();
-        mFileExt = mAspectraSettings.getPrefsSpectraExt();
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+       String folderNameKey = this.getResources().getString(R.string.PREFS_KEY_FOLDER_NAME);
+        String folderNameDefault = this.getResources().getString(R.string.DEFAULT_FOLDER_NAME);
+        mFileFolder = prefs.getString(folderNameKey, folderNameDefault);
+        String extensionKey = this.getResources().getString(R.string.PREFS_KEY_EXTENSION_NAME);
+        String extensionDefault = this.getResources().getString(R.string.DEFAULT_EXTENSION_NAME);
+        mFileExt = prefs.getString(extensionKey, extensionDefault);
+        mAnalyzeSettings.loadSettings();
+        mSpectrumRef = mAnalyzeSettings.getPrefsSpectrumReference();
+        mSpectrumWork = mAnalyzeSettings.getPrefsSpectrumEdited();
     }
 }

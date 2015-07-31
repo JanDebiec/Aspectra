@@ -4,7 +4,6 @@ package de.jandrotek.android.aspectra.libspectrafiles;
 
 import android.os.Environment;
 import android.util.Log;
-import android.widget.Toast;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -20,6 +19,7 @@ public class SpectrumFiles {
     private static final String TAG = "SpectraFiles";
 
     public static String[] mFilelNameListOutput = null;
+    public static String[] mFilelNameListOutputUnsorted = null;
     public static String mPath = "";
 
     private static String mFileExt = "";
@@ -57,8 +57,8 @@ public class SpectrumFiles {
 
     public void searchForFiles(){
         // for every new search, old content should be cleared
-        if(mFilelNameListOutput != null) {
-            Arrays.fill(mFilelNameListOutput, null);
+        if(mFilelNameListOutputUnsorted != null) {
+            Arrays.fill(mFilelNameListOutputUnsorted, null);
         }
 
         FileWalker fileWalker;
@@ -66,13 +66,25 @@ public class SpectrumFiles {
         if((mExternalStorageAvailable)) {
 
             fileWalker = new FileWalker(mPath);
-            mFilelNameListOutput = fileWalker.search4Files(mFileExt);
+            mFilelNameListOutputUnsorted = fileWalker.search4Files(mFileExt);
+            mFilelNameListOutput = sortArrayFromNewest(mFilelNameListOutputUnsorted);
+
         }
         else{
             if(BuildConfig.DEBUG) {
                 Log.w("TAG", "media not availeable !");
             }
         }
+    }
+
+    private String[] sortArrayFromNewest(String[] unsortedArray) {
+        Arrays.sort(unsortedArray);
+        int arraySize = unsortedArray.length;
+        String[] outputArray = new String[arraySize];
+        for(int i = 0; i < arraySize; i++){
+            outputArray[arraySize - 1 - i] = unsortedArray[i];
+        }
+        return outputArray;
     }
 
     public int scanFolderForFiles(String fileFolder, String fileExtension) {

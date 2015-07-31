@@ -29,11 +29,12 @@ public class SpectrumChr  extends SpectrumBase{
      * @return size of read spectrum
      * @throws Exception
      */
-    public int readValuesChr() throws Exception {
+    public int readValuesFromFile() {
+//    public int readValuesFromFile() throws Exception {
         int i = 0;
         int k = 0;
         int value;
-        mValues = new int[2048];
+        mValues = new int[AspectraGlobals.eMaxSpectrumSize];
         try {
             File file;
             file = new File(mFileName);// TODO:here we need the whole name with path
@@ -67,17 +68,36 @@ public class SpectrumChr  extends SpectrumBase{
         } catch (IOException e) {
             e.printStackTrace();
         }
+        mStartIndex = 0;
+        mEndIndex = k;
         return k;
     }
 
     // getters, setters
-    public int getDataSize() {
-        return mSize;
-    }
-
     public void setDataSize(int dataSize) {
-        mSize = dataSize;
+        mEndIndex = dataSize;
     }
 
+    public int[] moveData(int offset) {
+        int[] newData;
+        if(offset >= 0) {
+            newData = ArrayFunctions.moveArrayRight(mValues, offset);
+            mStartIndex += offset;
+        } else {
+            newData = ArrayFunctions.moveArrayLeft(mValues, - offset);
+        }
+        mValues = newData;
+        mEndIndex += offset;
+        return mValues;
+    }
+
+    //TODO: check working and update indexies
+    public int[] stretchData(int offset, float factor) {
+        int[] newData;
+        newData = ArrayFunctions.stretchArray(mValues, offset, factor);
+        mValues = newData;
+        mEndIndex += offset;
+        return mValues;
+    }
 
 }

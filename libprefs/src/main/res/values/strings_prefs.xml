@@ -63,5 +63,13 @@
     <string name="pref_description_enable_normalize">normalize plot values to max 4096 (12 bits)</string>
     <string name="PREFS_KEY_ENABLE_NORMALIZE">PREFS_KEY_ENABLE_NORMALIZE</string>
 
+    <!--reference spectrum -->
+    <string name="PREFS_REFERENCE_SPECTRUM_KEY">PREFS_REFERENCE_SPECTRUM_KEY</string>
+    <string name="pref_reference_spectrum_name">reference spectrum</string>
+    <string name="PREFS_REFERENCE_SPECTRUM_DEFAULT">not defined</string>
 
+    <!--edited spectrum-->
+    <string name="PREFS_EDITED_SPECTRUM_KEY">PREFS_EDITED_SPECTRUM_KEY</string>
+    <string name="pref_edited_spectrum_name">edited spectrum</string>
+    <string name="PREFS_EDITED_SPECTRUM_DEFAULT">not defined</string>
 </resources>

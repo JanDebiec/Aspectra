@@ -21,3 +21,6 @@ allprojects {
 task wrapper(type: Wrapper) {
     gradleVersion = '2.4'
 }
+
+// Load dependencies
+apply from: 'gradleScript/dependencies.gradle'

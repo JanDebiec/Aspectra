@@ -27,8 +27,7 @@ android {
 
 dependencies {
     // new one
-    compile 'com.android.support:appcompat-v7:22.2.0'
-//    compile project(':libplotspectra')
+    compile supportDependencies.appCompat
     compile project(':libplotspectrav3')
     compile project(':libspectrafiles')
     compile project(':core')

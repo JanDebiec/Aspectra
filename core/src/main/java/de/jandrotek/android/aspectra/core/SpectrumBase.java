@@ -39,14 +39,9 @@ public class SpectrumBase {
 
     protected static final int SPK_CHR_FILE_DEFAULT_SIZE = 800;
 
-//    public abstract int getDataSize();
-
-//	public void setDataSize(int dataSize)
-
     public int getDataSize() {
         return mEndIndex;//mValues.length;
     }
-
 
     public void setFileName(String fileName){
         mFileName = fileName;
@@ -67,10 +62,7 @@ public class SpectrumBase {
         this.mStartIndex = 0;
     }
 
-//    public abstract int readValuesFromFile() ;
-
     private int mSize = SPK_CHR_FILE_DEFAULT_SIZE;
-
 
     public SpectrumBase(String fileName){
         mFileName = fileName;

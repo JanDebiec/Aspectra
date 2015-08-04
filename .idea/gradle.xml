@@ -18,6 +18,7 @@
             <option value="$PROJECT_DIR$/libprefs" />
             <option value="$PROJECT_DIR$/libspectrafiles" />
             <option value="$PROJECT_DIR$/libtouch" />
+            <option value="$PROJECT_DIR$/plottest" />
             <option value="$PROJECT_DIR$/touchtest" />
           </set>
         </option>

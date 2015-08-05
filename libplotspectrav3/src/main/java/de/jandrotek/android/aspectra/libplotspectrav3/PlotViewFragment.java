@@ -79,6 +79,7 @@ public class PlotViewFragment extends Fragment
      * @param param1 Type of calling activity.
      * @param items Araylist of spectrumFiles names.
      * @return A new instance of fragment PlotViewFragment.
+     * TODO: items as parameter is not a perfect idea, but what is better?
      */
         public static PlotViewFragment newInstance(int param1, ArrayList<String> items) {
         PlotViewFragment fragment = new PlotViewFragment();

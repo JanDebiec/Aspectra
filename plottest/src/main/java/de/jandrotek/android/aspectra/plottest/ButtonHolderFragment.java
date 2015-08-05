@@ -27,7 +27,7 @@ public class ButtonHolderFragment extends Fragment {
 
     PlotTestController mController = null;
 
-    public ButtonHolderFragment(Context context) {
+    public ButtonHolderFragment(MainActivity context) {
         mCallback = (OnButtonClickListener)context;
     }
 

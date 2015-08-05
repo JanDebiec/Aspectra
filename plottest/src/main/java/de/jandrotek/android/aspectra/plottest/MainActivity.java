@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import java.util.ArrayList;
+
 import de.jandrotek.android.aspectra.core.AspectraGlobals;
 import de.jandrotek.android.aspectra.libplotspectrav3.PlotViewFragment;
 
@@ -20,10 +22,11 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ArrayList<String> dummyItems = null;
 
         mController = new PlotTestController(this);
 
-        mButtonHolderFragment = ButtonHolderFragment();
+        mButtonHolderFragment = new ButtonHolderFragment(this);
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.fragmentButtonHolder, mButtonHolderFragment)
                 .commit();
@@ -65,6 +68,14 @@ public class MainActivity extends AppCompatActivity
             }
             case ButtonHolderFragment.eButtonMoveRight:{
                 mController.onButtonMoveRight();
+                break;
+            }
+            case ButtonHolderFragment.eButtonStretch:{
+                mController.onButtonStretch();
+                break;
+            }
+            case ButtonHolderFragment.eButtonSqueeze:{
+                mController.onButtonSqeeze();
                 break;
             }
         } // switch

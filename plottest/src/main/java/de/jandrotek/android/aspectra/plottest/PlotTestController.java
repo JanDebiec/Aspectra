@@ -47,4 +47,26 @@ public class PlotTestController {
         // push to PlotView
         mContext.updatePlot(data);
     }
+
+    public void onButtonStretch(){
+        int[] data;
+        mSpectrum.stretchData(0, 2.0f);
+
+        // get data from spectrum
+        data = mSpectrum.getValues();
+
+        // push to PlotView
+        mContext.updatePlot(data);
+    }
+
+    public void onButtonSqeeze(){
+        int[] data;
+        mSpectrum.stretchData(0, 0.5f);
+
+        // get data from spectrum
+        data = mSpectrum.getValues();
+
+        // push to PlotView
+        mContext.updatePlot(data);
+    }
 }

@@ -27,11 +27,18 @@ public class ButtonHolderFragment extends Fragment {
 
     PlotTestController mController = null;
 
-    public ButtonHolderFragment(MainActivity context) {
-        mCallback = (OnButtonClickListener)context;
+    public static ButtonHolderFragment newInstance(MainActivity context) {
+        ButtonHolderFragment  fragment = new ButtonHolderFragment();
+
+
+        fragment.mCallback = (OnButtonClickListener)context;
+        fragment.mController = context.mController;
+        return fragment;
     }
 
-    public interface OnButtonClickListener {
+    public ButtonHolderFragment() {
+    }
+        public interface OnButtonClickListener {
         // TODO: Update argument type and name
         void onButtonClickListener(int _buttonId);
     }

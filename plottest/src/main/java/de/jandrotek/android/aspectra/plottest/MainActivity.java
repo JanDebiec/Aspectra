@@ -14,7 +14,7 @@ public class MainActivity extends AppCompatActivity
     implements ButtonHolderFragment.OnButtonClickListener
 {
 
-    private PlotTestController mController = null;
+    public PlotTestController mController = null;
 
     private static PlotViewFragment mPlotViewFragment;
     private static ButtonHolderFragment mButtonHolderFragment;
@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity
 
         mController = new PlotTestController(this);
 
-        mButtonHolderFragment = new ButtonHolderFragment(this);
+        mButtonHolderFragment = ButtonHolderFragment.newInstance(this);
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.fragmentButtonHolder, mButtonHolderFragment)
                 .commit();

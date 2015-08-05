@@ -8,13 +8,26 @@ import android.view.MenuItem;
 import de.jandrotek.android.aspectra.core.AspectraGlobals;
 import de.jandrotek.android.aspectra.libplotspectrav3.PlotViewFragment;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity
+    implements ButtonHolderFragment.OnButtonClickListener
+{
+
+    private PlotTestController mController = null;
 
     private static PlotViewFragment mPlotViewFragment;
+    private static ButtonHolderFragment mButtonHolderFragment;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        mController = new PlotTestController(this);
+
+        mButtonHolderFragment = ButtonHolderFragment();
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.fragmentButtonHolder, mButtonHolderFragment)
+                .commit();
+
         mPlotViewFragment = PlotViewFragment.newInstance(AspectraGlobals.ACT_ITEM_LIVE_VIEW, dummyItems);
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.fvPlotView, mPlotViewFragment)
@@ -42,5 +55,22 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void onButtonClickListener(int _buttonId){
+        switch (_buttonId) {
+            case ButtonHolderFragment.eButtonMoveLeft:{
+                mController.onButtonMoveLeft();
+                break;
+            }
+            case ButtonHolderFragment.eButtonMoveRight:{
+                mController.onButtonMoveRight();
+                break;
+            }
+        } // switch
+    }
+
+    public void updatePlot(int[] data){
+
     }
 }

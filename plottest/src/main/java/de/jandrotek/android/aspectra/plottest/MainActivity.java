@@ -1,5 +1,6 @@
 package de.jandrotek.android.aspectra.plottest;
 
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -11,7 +12,8 @@ import de.jandrotek.android.aspectra.core.AspectraGlobals;
 import de.jandrotek.android.aspectra.libplotspectrav3.PlotViewFragment;
 
 public class MainActivity extends AppCompatActivity
-    implements ButtonHolderFragment.OnButtonClickListener
+    implements ButtonHolderFragment.OnButtonClickListener,
+        PlotViewFragment.OnFragmentInteractionListener
 {
 
     public PlotTestController mController = null;
@@ -84,4 +86,10 @@ public class MainActivity extends AppCompatActivity
     public void updatePlot(int[] data){
 
     }
+
+    public void onFragmentInteraction(Uri uri){
+
+        // do whatever you wish with the uri
+    }
+
 }

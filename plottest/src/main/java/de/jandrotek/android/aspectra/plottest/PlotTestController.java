@@ -13,6 +13,7 @@ public class PlotTestController {
 
     public PlotTestController(MainActivity context){
         mContext = context;
+        generateDemoSpectrum();
     }
 
     private final int eMoveDistance = 10;

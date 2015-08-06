@@ -10,6 +10,7 @@ import java.util.ArrayList;
 
 import de.jandrotek.android.aspectra.core.AspectraGlobals;
 import de.jandrotek.android.aspectra.libplotspectrav3.PlotViewFragment;
+import de.jandrotek.android.aspectra.libplotspectrav3.PlotViewFragmentV;
 
 public class MainActivity extends AppCompatActivity
     implements ButtonHolderFragment.OnButtonClickListener,
@@ -18,7 +19,7 @@ public class MainActivity extends AppCompatActivity
 
     public PlotTestController mController = null;
 
-    private static PlotViewFragment mPlotViewFragment;
+    private static PlotViewFragmentV mPlotViewFragment;
     private static ButtonHolderFragment mButtonHolderFragment;
     @Override
     protected void onCreate(Bundle savedInstanceState) {

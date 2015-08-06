@@ -10,6 +10,7 @@ import de.jandrotek.android.aspectra.core.SpectrumBase;
 public class PlotTestController {
 
     private final  MainActivity mContext;
+    private final static int PLOT_DATA_SIZE = 800;
 
     public PlotTestController(MainActivity context){
         mContext = context;
@@ -26,6 +27,12 @@ public class PlotTestController {
 
     public void generateDemoSpectrum(){
         mSpectrum = new SpectrumBase();
+        int[] mPlotIntValues = new int[PLOT_DATA_SIZE];
+        for (int i = 0; i < PLOT_DATA_SIZE/2; i++)
+            mPlotIntValues[i] = i;
+        for (int i = PLOT_DATA_SIZE/2; i < PLOT_DATA_SIZE; i++)
+            mPlotIntValues[i] = PLOT_DATA_SIZE - i;
+        mSpectrum.setValues(mPlotIntValues);
     }
 
     public void onButtonMoveLeft(){

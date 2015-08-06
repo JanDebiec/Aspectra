@@ -82,7 +82,7 @@ public class PlotViewFragmentC
      * TODO: items as parameter is not a perfect idea, but what is better?
      */
         public PlotViewFragmentC newInstance(int param1, ArrayList<String> items) {
-        if(mController = null) {
+        if(mController == null) {
             mController = new PlotViewFragmentC();
             mParam1 = param1;
 
@@ -129,11 +129,11 @@ public class PlotViewFragmentC
                 i++;
             }
             mDataLengthMax = findMaxDataLength();
-        } else {
-            mItemlistSize = 1;
-            mFileDataLength = new int[mItemlistSize];
-            mDataLengthMax = PLOT_DATA_SIZE;
-        }
+//        } else {
+//            mItemlistSize = 1;
+//            mFileDataLength = new int[mItemlistSize];
+//            mDataLengthMax = PLOT_DATA_SIZE;
+//        }
     }
 
     private int findMaxDataLength(){

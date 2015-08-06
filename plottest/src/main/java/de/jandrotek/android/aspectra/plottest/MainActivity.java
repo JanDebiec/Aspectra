@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity
                 .add(R.id.fragmentButtonHolder, mButtonHolderFragment)
                 .commit();
 
-        mPlotViewFragment = PlotViewFragment.newInstance(AspectraGlobals.ACT_ITEM_LIVE_VIEW, dummyItems);
+        mPlotViewFragment = PlotViewFragmentV.newInstance(1);
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.fvPlotView, mPlotViewFragment)
                 .commit();

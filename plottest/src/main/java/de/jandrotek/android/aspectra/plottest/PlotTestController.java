@@ -1,7 +1,5 @@
 package de.jandrotek.android.aspectra.plottest;
 
-import android.content.Context;
-
 import de.jandrotek.android.aspectra.core.SpectrumBase;
 
 /**
@@ -11,6 +9,7 @@ public class PlotTestController {
 
     private final  MainActivity mContext;
     private final static int PLOT_DATA_SIZE = 800;
+    int[] mData;
 
     public PlotTestController(MainActivity context){
         mContext = context;
@@ -18,6 +17,7 @@ public class PlotTestController {
     }
 
     private final int eMoveDistance = 10;
+    private int mMoveAbs = 0;
 
     private SpectrumBase mSpectrum = null;
 
@@ -36,45 +36,45 @@ public class PlotTestController {
     }
 
     public void onButtonMoveLeft(){
-        int[] data;
-        mSpectrum.moveData(-eMoveDistance);
-        // get data from spectrum
-        data = mSpectrum.getValues();
+        if(mMoveAbs >= eMoveDistance) {
+            mMoveAbs -= eMoveDistance;
+            mSpectrum.moveData(-eMoveDistance);
+            // get mData from spectrum
+            mData = mSpectrum.getValues();
+        }
 
         // push to PlotView
-        mContext.updatePlot(data);
+        mContext.updatePlot(mData);
     }
 
     public void onButtonMoveRight(){
-        int[] data;
+        mMoveAbs += eMoveDistance;
         mSpectrum.moveData(eMoveDistance);
 
-        // get data from spectrum
-        data = mSpectrum.getValues();
+        // get mData from spectrum
+        mData = mSpectrum.getValues();
 
         // push to PlotView
-        mContext.updatePlot(data);
+        mContext.updatePlot(mData);
     }
 
     public void onButtonStretch(){
-        int[] data;
         mSpectrum.stretchData(0, 2.0f);
 
-        // get data from spectrum
-        data = mSpectrum.getValues();
+        // get mData from spectrum
+        mData = mSpectrum.getValues();
 
         // push to PlotView
-        mContext.updatePlot(data);
+        mContext.updatePlot(mData);
     }
 
     public void onButtonSqeeze(){
-        int[] data;
         mSpectrum.stretchData(0, 0.5f);
 
-        // get data from spectrum
-        data = mSpectrum.getValues();
+        // get mData from spectrum
+        mData = mSpectrum.getValues();
 
         // push to PlotView
-        mContext.updatePlot(data);
+        mContext.updatePlot(mData);
     }
 }

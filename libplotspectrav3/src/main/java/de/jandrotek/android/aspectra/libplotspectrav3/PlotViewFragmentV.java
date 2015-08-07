@@ -243,12 +243,12 @@ public class PlotViewFragmentV extends Fragment
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        try {
-            mListener = (OnFragmentInteractionListener) activity;
-        } catch (ClassCastException e) {
-            throw new ClassCastException(activity.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
+//        try {
+//            mListener = (OnFragmentInteractionListener) activity;
+//        } catch (ClassCastException e) {
+//            throw new ClassCastException(activity.toString()
+//                    + " must implement OnFragmentInteractionListener");
+//        }
     }
 
     @Override
@@ -299,7 +299,8 @@ public class PlotViewFragmentV extends Fragment
         void onFragmentInteraction(Uri uri);
     }
 
-    public void showPlot(int index, int[] data, int length){
+    public void showPlot(int index, int[] data){
+        int length = data.length;
         if(mDataSeries != null) {
             realPlotDataSize = length;
             generateData(index, data, length);
@@ -317,6 +318,13 @@ public class PlotViewFragmentV extends Fragment
             realData[index][i] = new GraphViewData(i, data[i]);
         }
         //TODO: check in plot act length, and add needed data only for that length
+        if(mParam1 > 1) {
+            mDataLengthMax = findMaxDataLength();
+        }
+        else {
+            mDataLengthMax = length;
+        }
+
 
         for(int i = length; i < mDataLengthMax ; i++){
             realData[index][i] = new GraphViewData(i, 0);

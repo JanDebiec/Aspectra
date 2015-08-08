@@ -41,7 +41,7 @@ public class ArrayFunctions {
         // go to the right
         do{
             nDiffIndexOutput = nIndexOutput;
-            fDiffIndexInput = nDiffIndexOutput * factor;
+            fDiffIndexInput = nDiffIndexOutput / factor;
             fIndexInput = fDiffIndexInput;
             nIndexInputLeft = (int)fIndexInput;
             nIndexInputRight = (int)(fIndexInput + 1.0f);

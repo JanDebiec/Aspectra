@@ -99,9 +99,6 @@ public class PlotViewFragmentC
     }
 
     public void create() {
-//        if (getArguments().containsKey(ARG_ITEM_IDS)) {
-
-//            mItems = getArguments().getStringArrayList(ARG_ITEM_IDS);
             mItemlistSize = mItems.size();
             mFileName = new String[mItemlistSize];
             mSpectrumFile = new SpectrumBase[mItemlistSize];

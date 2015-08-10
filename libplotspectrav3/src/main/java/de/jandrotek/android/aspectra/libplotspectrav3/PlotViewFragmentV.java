@@ -12,7 +12,6 @@ import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
@@ -25,8 +24,6 @@ import com.jjoe64.graphview.LineGraphView;
 import java.util.ArrayList;
 
 import de.jandrotek.android.aspectra.core.AspectraGlobals;
-import de.jandrotek.android.aspectra.core.SpectrumBase;
-import de.jandrotek.android.aspectra.libspectrafiles.SpectrumFiles;
 
 // lib ver 3.
 
@@ -52,6 +49,8 @@ public class PlotViewFragmentV extends Fragment
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
+    private static int mMaxValueY = 4096;
+
     private static final int PLOT_DATA_SIZE = 1920;
     private int realPlotDataSize = PLOT_DATA_SIZE;
 
@@ -68,8 +67,6 @@ public class PlotViewFragmentV extends Fragment
 
     private OnFragmentInteractionListener mListener;
     private ArrayList<String> mItems;
-//    private String[] mFileName;
-//    private SpectrumBase[] mSpectrumFile;
     private int[][] mFileIntValues;
     private int[] mFileDataLength;
     private int mItemlistSize = 0;
@@ -104,42 +101,10 @@ public class PlotViewFragmentV extends Fragment
         if (getArguments() != null) {
             mParam1 = getArguments().getInt(ARG_PARAM1);
         }
-//        if (getArguments().containsKey(ARG_ITEM_IDS)) {
-//
-//            mItems = getArguments().getStringArrayList(ARG_ITEM_IDS);
-//            mItemlistSize = mItems.size();
-//            mFileName = new String[mItemlistSize];
-//            mSpectrumFile = new SpectrumBase[mItemlistSize];
-//            mFileIntValues = new int[mItemlistSize][AspectraGlobals.eMaxSpectrumSize];
-//            realData = new GraphViewData[mItemlistSize][AspectraGlobals.eMaxSpectrumSize];
-//            mFileDataLength = new int[mItemlistSize];
-//            int i = 0;
-//
-//            for(String item : mItems){
-//
-//                // load file specified in mItem.content
-//                String fileName = item;
-//                mFileName[i] = SpectrumFiles.mPath +"/" + fileName;
-//                mSpectrumFile[i] = new SpectrumBase(mFileName[i]);
-//                try{
-//                    GraphViewData[] tempRealData;
-//                    mFileDataLength[i] = mSpectrumFile[i].readValuesFromFile();
-//                    mFileIntValues[i] = mSpectrumFile[i].getValues();
-//                    tempRealData = new GraphViewData[mFileDataLength[i]];
-//                    realData[i] = tempRealData;
-//
-//                } catch (Exception e) {
-//                    e.printStackTrace();
-//                }
-//                i++;
-//            }
-//            mDataLengthMax = findMaxDataLength();
-//        } else {
-            mItemlistSize = 1;
-            realData = new GraphViewData[mItemlistSize][AspectraGlobals.eMaxSpectrumSize];
-            mFileDataLength = new int[mItemlistSize];
-            mDataLengthMax = PLOT_DATA_SIZE;
-//        }
+        mItemlistSize = 1;
+        realData = new GraphViewData[mItemlistSize][AspectraGlobals.eMaxSpectrumSize];
+        mFileDataLength = new int[mItemlistSize];
+        mDataLengthMax = PLOT_DATA_SIZE;
         mColor = new int[3];
         mColor[0] = Color.rgb(255, 0, 0);
         mColor[1] = Color.rgb(0, 255, 0);
@@ -167,52 +132,18 @@ public class PlotViewFragmentV extends Fragment
 
         mGraphView = new LineGraphView(getActivity(), "");
 
-//        if(mItems != null) {
-//            for(int i = 0; i < mItems.size(); i++) {
-//                generateData(i, mFileIntValues[i], mDataLengthMax);
-//                GraphViewSeries dataSeries = new GraphViewSeries(
-//                                "",
-//                                new GraphViewSeries.GraphViewSeriesStyle(mColor[i], 1),
-//                                realData[i]);
-//                mGraphView.addSeries(dataSeries);
-//            }
-//        } else {
-            realData[0] = generateDemoData();
-            mDataSeries = new GraphViewSeries(
-                    "",
-                    new GraphViewSeries.GraphViewSeriesStyle(mColor[0], 1),
-                    realData[0]);
-            mGraphView.addSeries(mDataSeries);
-//        }
+        realData[0] = generateDemoData();
+        mDataSeries = new GraphViewSeries(
+                "",
+                new GraphViewSeries.GraphViewSeriesStyle(mColor[0], 1),
+                realData[0]);
+        mGraphView.addSeries(mDataSeries);
         mGraphView.getGraphViewStyle().setTextSize(20);
         mGraphView.getGraphViewStyle().setNumHorizontalLabels(5);
         mGraphView.getGraphViewStyle().setNumVerticalLabels(4);
         mGraphView.setViewPort(0, mDataLengthMax);
         registerForContextMenu(mGraphView);
 
-        //TODO: define as separate function linked to source in XML
-//        mGraphView.setOnTouchListener(new View.OnTouchListener() {
-//
-//            @Override
-//            public boolean onTouch(View v, MotionEvent event) {
-//            int action = event.getAction();
-//            if(action == MotionEvent.ACTION_DOWN) {
-//
-//                if (!AspectraGlobals.mSavePlotInFile) {
-//                    AspectraGlobals.mSavePlotInFile = true;
-//                }
-//            }
-//            return true; //processed
-//            }
-//
-//        });
-//        // alone is working, but with onClickListener not
-//        mGraphView.setOnLongClickListener(new View.OnLongClickListener() {
-//            @Override
-//            public boolean onLongClick(View v) {
-//                return true;
-//            }
-//        });
 
 //        //TODO: optional - activate scaling / zooming
 //        // both modi will be handled with Touch-view helper class, not only in viewer
@@ -233,22 +164,10 @@ public class PlotViewFragmentV extends Fragment
         return rootView;
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }
 
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-//        try {
-//            mListener = (OnFragmentInteractionListener) activity;
-//        } catch (ClassCastException e) {
-//            throw new ClassCastException(activity.toString()
-//                    + " must implement OnFragmentInteractionListener");
-//        }
     }
 
     @Override
@@ -305,6 +224,7 @@ public class PlotViewFragmentV extends Fragment
             realPlotDataSize = length;
             generateData(index, data, length);
             mGraphView.setViewPort(0, realPlotDataSize);
+            mGraphView.setManualYAxisBounds(mMaxValueY, 0);
             mDataSeries.resetData(realData[index]);
         }
     }

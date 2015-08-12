@@ -38,8 +38,10 @@ import java.util.ArrayList;
  * to handle interaction events.
  * Use the {@link PlotViewFragment#newInstance} factory method to
  * create an instance of this fragment.
+ *
+ * 12.08.2015 splitted into view and controller
  */
-public class PlotViewFragment extends Fragment
+public class PlotViewFragment_NotToUse extends Fragment
     implements         View.OnCreateContextMenuListener
 {
     public static final String ARG_ITEM_IDS = "item_ids";

@@ -9,12 +9,12 @@ import android.view.MenuItem;
 import java.util.ArrayList;
 
 import de.jandrotek.android.aspectra.core.AspectraGlobals;
-import de.jandrotek.android.aspectra.libplotspectrav3.PlotViewFragment;
+//import de.jandrotek.android.aspectra.libplotspectrav3.PlotViewFragment;
 import de.jandrotek.android.aspectra.libplotspectrav3.PlotViewFragmentV;
 
 public class MainActivity extends AppCompatActivity
-    implements ButtonHolderFragment.OnButtonClickListener,
-        PlotViewFragment.OnFragmentInteractionListener
+    implements ButtonHolderFragment.OnButtonClickListener
+//        PlotViewFragment.OnFragmentInteractionListener
 {
 
     public PlotTestController mController = null;

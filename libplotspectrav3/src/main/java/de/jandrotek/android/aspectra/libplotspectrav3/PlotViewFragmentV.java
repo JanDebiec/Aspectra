@@ -36,22 +36,22 @@ import de.jandrotek.android.aspectra.core.AspectraGlobals;
  * Use the {@link PlotViewFragmentV#newInstance} factory method to
  * create an instance of this fragment.
  *
- * Modified version of fragmen, here only View, Controller is moved to
+ * Modified version of fragment, here only View, Controller is moved to
  * PlotViewFragmentC
  */
 public class PlotViewFragmentV extends Fragment
     implements         View.OnCreateContextMenuListener
 {
     private static PlotViewFragmentV mFragment = null;
-    public static final String ARG_ITEM_IDS = "item_ids";
+    //    public static final String ARG_ITEM_IDS = "item_ids";
         // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+//    private static final String ARG_PARAM2 = "param2";
 
     private static int mMaxValueY = 4096;
 
-    private static final int PLOT_DATA_SIZE = 1920;
+    private static final int PLOT_DATA_SIZE = AspectraGlobals.eMaxSpectrumSize;
     private int realPlotDataSize = PLOT_DATA_SIZE;
 
     // TODO: Rename and change types of parameters
@@ -100,15 +100,17 @@ public class PlotViewFragmentV extends Fragment
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             mParam1 = getArguments().getInt(ARG_PARAM1);
+        } else {
+            mParam1 = 1;
         }
-        mItemlistSize = 1;
+        mItemlistSize = mParam1;
         realData = new GraphViewData[mItemlistSize][AspectraGlobals.eMaxSpectrumSize];
         mFileDataLength = new int[mItemlistSize];
         mDataLengthMax = PLOT_DATA_SIZE;
         mColor = new int[3];
         mColor[0] = Color.rgb(255, 0, 0);
         mColor[1] = Color.rgb(0, 255, 0);
-        mColor[2] = Color.rgb(0,0,255);
+        mColor[2] = Color.rgb(0, 0, 255);
     }
 
     private int findMaxDataLength(){

@@ -19,8 +19,7 @@ android {
 }
 
 dependencies {
-//    compile files('libs/GraphView-3.1.2.jar')
-    compile project(':GraphView')
+    compile files('libs/GraphView-3.1.2.jar')
     compile project(':libprefs')
     compile project(':libspectrafiles')
     compile project(':core')

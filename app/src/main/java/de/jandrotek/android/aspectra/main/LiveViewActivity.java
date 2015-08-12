@@ -21,7 +21,6 @@ import de.jandrotek.android.aspectra.libplotspectrav3.PlotViewFragment;
 import de.jandrotek.android.aspectra.core.AspectraGlobals;
 //import de.jandrotek.android.aspectra.core.FileUtils;
 import de.jandrotek.android.aspectra.core.SpectrumAsp;
-import de.jandrotek.android.aspectra.libplotspectrav3.PlotViewFragmentV;
 import de.jandrotek.android.aspectra.libspectrafiles.SpectrumFiles;
 
 /**
@@ -35,7 +34,7 @@ public class LiveViewActivity extends BaseActivity
 {
 
     private static CameraViewFragment mCameraViewFragment;
-    private static PlotViewFragmentV mPlotViewFragment;
+    private static PlotViewFragment mPlotViewFragment;
 
     private static int mPreviewWidthX;
     private static int mPreviewHeightY;
@@ -62,7 +61,7 @@ public class LiveViewActivity extends BaseActivity
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.fragmentHolderCameraView, mCameraViewFragment)
                     .commit();
-            mPlotViewFragment = PlotViewFragmentV.newInstance(AspectraGlobals.ACT_ITEM_LIVE_VIEW, dummyItems);
+            mPlotViewFragment = PlotViewFragment.newInstance(AspectraGlobals.ACT_ITEM_LIVE_VIEW, dummyItems);
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.fvPlotView, mPlotViewFragment)
                     .commit();

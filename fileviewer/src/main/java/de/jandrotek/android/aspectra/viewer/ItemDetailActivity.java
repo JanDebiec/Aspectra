@@ -16,13 +16,14 @@ import java.util.ArrayList;
 
 import de.jandrotek.android.aspectra.core.AspectraGlobals;
 import de.jandrotek.android.aspectra.libplotspectrav3.PlotViewFragment;
+import de.jandrotek.android.aspectra.libplotspectrav3.PlotViewFragmentV;
 import de.jandrotek.android.aspectra.libprefs.AspectraGlobalPrefsActivity;
 
 public class ItemDetailActivity extends AppCompatActivity
         implements PlotViewFragment.OnFragmentInteractionListener
 {
     private static final String TAG = "DetailItemsAct";
-    private static PlotViewFragment mPlotViewFragment;
+    private static PlotViewFragmentV mPlotViewFragment;
     public int mPlotsCount = 1;// default = 1, can be changed in ListFragment
 
     @Override
@@ -38,7 +39,7 @@ public class ItemDetailActivity extends AppCompatActivity
             Bundle arguments = new Bundle();
 
             ArrayList<String> names = getIntent().getExtras().getStringArrayList(PlotViewFragment.ARG_ITEM_IDS);
-            mPlotViewFragment = PlotViewFragment.newInstance(AspectraGlobals.ACT_ITEM_VIEW_PLOT, names);
+            mPlotViewFragment = PlotViewFragmentV.newInstance(AspectraGlobals.ACT_ITEM_VIEW_PLOT, names);
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.item_detail_container, mPlotViewFragment)
                     .commit();

@@ -27,8 +27,6 @@ import de.jandrotek.android.aspectra.core.AspectraGlobals;
 
 // lib ver 3.
 
-// temporary on rescue branch
-
 
 /**
  * A simple {@link Fragment} subclass.
@@ -38,22 +36,22 @@ import de.jandrotek.android.aspectra.core.AspectraGlobals;
  * Use the {@link PlotViewFragmentV#newInstance} factory method to
  * create an instance of this fragment.
  *
- * Modified version of fragmen, here only View, Controller is moved to
+ * Modified version of fragment, here only View, Controller is moved to
  * PlotViewFragmentC
  */
 public class PlotViewFragmentV extends Fragment
     implements         View.OnCreateContextMenuListener
 {
     private static PlotViewFragmentV mFragment = null;
-    public static final String ARG_ITEM_IDS = "item_ids";
+    //    public static final String ARG_ITEM_IDS = "item_ids";
         // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+//    private static final String ARG_PARAM2 = "param2";
 
     private static int mMaxValueY = 4096;
 
-    private static final int PLOT_DATA_SIZE = 1920;
+    private static final int PLOT_DATA_SIZE = AspectraGlobals.eMaxSpectrumSize;
     private int realPlotDataSize = PLOT_DATA_SIZE;
 
     // TODO: Rename and change types of parameters
@@ -67,7 +65,7 @@ public class PlotViewFragmentV extends Fragment
     private GraphViewSeries.GraphViewSeriesStyle[] mGraphStyle;
     private GraphViewData[][] realData = null;
 
-    private OnFragmentInteractionListener mListener;
+//    private OnFragmentInteractionListener mListener;
     private ArrayList<String> mItems;
     private int[][] mFileIntValues;
     private int[] mFileDataLength;
@@ -102,15 +100,17 @@ public class PlotViewFragmentV extends Fragment
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             mParam1 = getArguments().getInt(ARG_PARAM1);
+        } else {
+            mParam1 = 1;
         }
-        mItemlistSize = 1;
+        mItemlistSize = mParam1;
         realData = new GraphViewData[mItemlistSize][AspectraGlobals.eMaxSpectrumSize];
         mFileDataLength = new int[mItemlistSize];
         mDataLengthMax = PLOT_DATA_SIZE;
         mColor = new int[3];
         mColor[0] = Color.rgb(255, 0, 0);
         mColor[1] = Color.rgb(0, 255, 0);
-        mColor[2] = Color.rgb(0,0,255);
+        mColor[2] = Color.rgb(0, 0, 255);
     }
 
     private int findMaxDataLength(){
@@ -142,7 +142,7 @@ public class PlotViewFragmentV extends Fragment
         mGraphView.addSeries(mDataSeries);
         mGraphView.getGraphViewStyle().setTextSize(20);
         mGraphView.getGraphViewStyle().setNumHorizontalLabels(5);
-        mGraphView.getGraphViewStyle().setNumVerticalLabels(4);
+        mGraphView.getGraphViewStyle().setNumVerticalLabels(5);
         mGraphView.setViewPort(0, mDataLengthMax);
         registerForContextMenu(mGraphView);
 
@@ -175,7 +175,7 @@ public class PlotViewFragmentV extends Fragment
     @Override
     public void onDetach() {
         super.onDetach();
-        mListener = null;
+//        mListener = null;
     }
 
     @Override
@@ -215,10 +215,10 @@ public class PlotViewFragmentV extends Fragment
      * "http://developer.android.com/training/basics/fragments/communicating.html"
      * >Communicating with Other Fragments</a> for more information.
      */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
-    }
+//    public interface OnFragmentInteractionListener {
+//        // TODO: Update argument type and name
+//        void onFragmentInteraction(Uri uri);
+//    }
 
     public void showPlot(int index, int[] data){
         int length = data.length;
@@ -229,13 +229,19 @@ public class PlotViewFragmentV extends Fragment
             mGraphView.setManualYAxisBounds(mMaxValueY, 0);
             mDataSeries.resetData(realData[index]);
         }
-    }
+   }
 
     private void generateData(int index, int[] data, int length) {
+        int realLength;
+        if(length > AspectraGlobals.eMaxSpectrumSize){
+            realLength = AspectraGlobals.eMaxSpectrumSize;
+        } else {
+            realLength = length;
+        }
         if(realData[index] == null){
             realData[index] = new GraphViewData[length];
         }
-        for (int i=0; i<length; i++) {
+        for (int i=0; i<realLength; i++) {
 
             realData[index][i] = new GraphViewData(i, data[i]);
         }
@@ -244,11 +250,11 @@ public class PlotViewFragmentV extends Fragment
             mDataLengthMax = findMaxDataLength();
         }
         else {
-            mDataLengthMax = length;
+            mDataLengthMax = realLength;
         }
 
 
-        for(int i = length; i < mDataLengthMax ; i++){
+        for(int i = realLength; i < mDataLengthMax ; i++){
             realData[index][i] = new GraphViewData(i, 0);
         }
     }

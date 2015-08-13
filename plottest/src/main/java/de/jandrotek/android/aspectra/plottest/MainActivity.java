@@ -10,9 +10,19 @@ import java.util.ArrayList;
 
 import de.jandrotek.android.aspectra.libplotspectrav3.PlotViewFragmentV;
 
+//<<<<<<< HEAD
+//import de.jandrotek.android.aspectra.libplotspectrav3.PlotViewFragment;
+
 public class MainActivity extends AppCompatActivity
-    implements ButtonHolderFragment.OnButtonClickListener,
-        PlotViewFragmentV.OnFragmentInteractionListener
+    implements ButtonHolderFragment.OnButtonClickListener
+//        PlotViewFragment.OnFragmentInteractionListener
+//=======
+//import de.jandrotek.android.aspectra.libplotspectrav3.PlotViewFragmentV;
+//
+//public class MainActivity extends AppCompatActivity
+//    implements ButtonHolderFragment.OnButtonClickListener,
+//        PlotViewFragmentV.OnFragmentInteractionListener
+//>>>>>>> 1cda1a3... back on master, after rescue, can be build and run
 {
 
     public PlotTestController mController = null;

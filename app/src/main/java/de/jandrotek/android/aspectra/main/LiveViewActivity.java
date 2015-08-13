@@ -16,12 +16,13 @@ import java.io.File;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 
-//import de.jandrotek.android.aspectra.libplotspectra.PlotViewFragment;
-import de.jandrotek.android.aspectra.libplotspectrav3.PlotViewFragmentV;
 import de.jandrotek.android.aspectra.core.AspectraGlobals;
-//import de.jandrotek.android.aspectra.core.FileUtils;
 import de.jandrotek.android.aspectra.core.SpectrumAsp;
+import de.jandrotek.android.aspectra.libplotspectrav3.PlotViewFragmentV;
 import de.jandrotek.android.aspectra.libspectrafiles.SpectrumFiles;
+
+//import de.jandrotek.android.aspectra.libplotspectra.PlotViewFragment;
+//import de.jandrotek.android.aspectra.core.FileUtils;
 
 /**
  * here comes the source from MainActivity_libprefs, handling CameraViewFragment,
@@ -29,8 +30,8 @@ import de.jandrotek.android.aspectra.libspectrafiles.SpectrumFiles;
  */
 
 public class LiveViewActivity extends BaseActivity
-        implements CameraViewFragment.OnFragmentInteractionListener,
-        PlotViewFragmentV.OnFragmentInteractionListener
+        implements CameraViewFragment.OnFragmentInteractionListener
+//        PlotViewFragmentV.OnFragmentInteractionListener
 {
 
     private static CameraViewFragment mCameraViewFragment;
@@ -61,8 +62,12 @@ public class LiveViewActivity extends BaseActivity
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.fragmentHolderCameraView, mCameraViewFragment)
                     .commit();
+//<<<<<<< HEAD
+//            mPlotViewFragment = PlotViewFragmentV.newInstance(AspectraGlobals.ACT_ITEM_LIVE_VIEW, dummyItems);
+//=======
             mPlotViewFragment = PlotViewFragmentV.newInstance(1);
 //            mPlotViewFragment = PlotViewFragmentV.newInstance(AspectraGlobals.ACT_ITEM_LIVE_VIEW, dummyItems);
+//>>>>>>> 1cda1a3... back on master, after rescue, can be build and run
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.fvPlotView, mPlotViewFragment)
                     .commit();
@@ -217,7 +222,8 @@ public class LiveViewActivity extends BaseActivity
                 if(messId == AspectraGlobals.eMessageCompleteLine) {
                     int[] data = (int[])inputMessage.obj;
                     int length = data.length;
-                    mPlotViewFragment.showPlot(0, data, length);
+                    mPlotViewFragment.showPlot(0, data);
+//                    mPlotViewFragment.showPlot(0, data, length);
                     if(AspectraGlobals.mSavePlotInFile){
                         File f;
                         AspectraGlobals.mSavePlotInFile = false;

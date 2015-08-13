@@ -3,24 +3,10 @@
  */
 package de.jandrotek.android.aspectra.libplotspectrav3;
 
-import android.app.Activity;
-import android.graphics.Color;
 import android.net.Uri;
-import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.view.ContextMenu;
-import android.view.LayoutInflater;
-import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.MotionEvent;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.FrameLayout;
 
-import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.GraphView.GraphViewData;
-import com.jjoe64.graphview.GraphViewSeries;
-import com.jjoe64.graphview.LineGraphView;
 
 import java.util.ArrayList;
 
@@ -32,12 +18,9 @@ import de.jandrotek.android.aspectra.libspectrafiles.SpectrumFiles;
 
 
 /**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link PlotViewFragmentC.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link PlotViewFragmentC#newInstance} factory method to
- * create an instance of this fragment.
+ * The Controller- Part of PlotViewFragment
+ * TODO: organize interface: input files or int[] arrays
+ * TODO: refactor constructor
  */
 public class PlotViewFragmentC
 {
@@ -48,19 +31,12 @@ public class PlotViewFragmentC
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    private static final int PLOT_DATA_SIZE = 1920;
+    private static final int PLOT_DATA_SIZE = AspectraGlobals.eMaxSpectrumSize;
     private int realPlotDataSize = PLOT_DATA_SIZE;
 
     // TODO: Rename and change types of parameters
     private static int mParam1;
     private int mParam2;
-
-//    private GraphView mGraphView;
-//    private int[] mPlotIntValues;
-//    //ver 3
-//    GraphViewSeries mDataSeries;
-//    private GraphViewSeries.GraphViewSeriesStyle[] mGraphStyle;
-//    private GraphViewData[][] realData = null;
 
     private OnFragmentInteractionListener mListener;
     private static ArrayList<String> mItems;
@@ -70,7 +46,6 @@ public class PlotViewFragmentC
     private int[] mFileDataLength;
     private int mItemlistSize = 0;
     private int mDataLengthMax = 0;
-//    private int[] mColor;
 
     /**
      * Use this factory method to create a new instance of
@@ -98,6 +73,7 @@ public class PlotViewFragmentC
         // Required empty public constructor
     }
 
+    // TODO: COntroller is normal class, content of create should be moved to constructor
     public void create() {
             mItemlistSize = mItems.size();
             mFileName = new String[mItemlistSize];
@@ -146,126 +122,8 @@ public class PlotViewFragmentC
 
         return max;
     }
-//    @Override
-//    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-//                             Bundle savedInstanceState) {
-//
-//        View rootView = inflater.inflate(R.layout.fragment_plot_view, container, false);
-//
-//        mGraphView = new LineGraphView(getActivity(), "");
-//
-//        if(mItems != null) {
-//            for(int i = 0; i < mItems.size(); i++) {
-//                generateData(i, mFileIntValues[i], mDataLengthMax);
-//                GraphViewSeries dataSeries = new GraphViewSeries(
-//                                "",
-//                                new GraphViewSeries.GraphViewSeriesStyle(mColor[i], 1),
-//                                realData[i]);
-//                mGraphView.addSeries(dataSeries);
-//            }
-//        } else {
-//            realData[0] = generateDemoData();
-//            mDataSeries = new GraphViewSeries(
-//                    "",
-//                    new GraphViewSeries.GraphViewSeriesStyle(mColor[0], 1),
-//                    realData[0]);
-//            mGraphView.addSeries(mDataSeries);
-//        }
-//        mGraphView.getGraphViewStyle().setTextSize(20);
-//        mGraphView.getGraphViewStyle().setNumHorizontalLabels(5);
-//        mGraphView.getGraphViewStyle().setNumVerticalLabels(4);
-//        mGraphView.setViewPort(0, mDataLengthMax);
-//        registerForContextMenu(mGraphView);
-//
-//        mGraphView.setOnTouchListener(new View.OnTouchListener() {
-//
-//            @Override
-//            public boolean onTouch(View v, MotionEvent event) {
-//            int action = event.getAction();
-//            if(action == MotionEvent.ACTION_DOWN) {
-//
-//                if (!AspectraGlobals.mSavePlotInFile) {
-//                    AspectraGlobals.mSavePlotInFile = true;
-//                }
-//            }
-//            return true; //processed
-//            }
-//
-//        });
-//
-//        // alone is working, but with onClickListener not
-//        mGraphView.setOnLongClickListener(new View.OnLongClickListener() {
-//            @Override
-//            public boolean onLongClick(View v) {
-//                return true;
-//            }
-//        });
-//
-//        //TODO: optional - activate scaling / zooming
-//        // both modi will be handled with Touch-view helper class, not only in viewer
-//        // in liveView is disabled, first in AnalyzeActivity
-//        if (mParam1 == AspectraGlobals.ACT_ITEM_ANALYZE) {
-//            //mGraphView.setScrollable(true);
-//            //mGraphView.setScalable(true);
-//        }
-//        else if(mParam1 == AspectraGlobals.ACT_ITEM_LIVE_VIEW) {
-//
-//        }
-//        else if(mParam1 == AspectraGlobals.ACT_ITEM_VIEW_PLOT) {
-//
-//        }
-//        FrameLayout mFrameLayout = (FrameLayout)rootView.findViewById(R.id.flPlotView);
-//        mFrameLayout.addView(mGraphView);
-//
-//        return rootView;
-//    }
-//
-//    // TODO: Rename method, update argument and hook method into UI event
-//    public void onButtonPressed(Uri uri) {
-//        if (mListener != null) {
-//            mListener.onFragmentInteraction(uri);
-//        }
-//    }
 
-//    @Override
-//    public void onAttach(Activity activity) {
-//        super.onAttach(activity);
-//        try {
-//            mListener = (OnFragmentInteractionListener) activity;
-//        } catch (ClassCastException e) {
-//            throw new ClassCastException(activity.toString()
-//                    + " must implement OnFragmentInteractionListener");
-//        }
-//    }
 
-//    @Override
-//    public void onDetach() {
-//        super.onDetach();
-//        mListener = null;
-//    }
-
-//    @Override
-//    public void onResume() {
-//        super.onResume();
-//    }
-
-//    //TODO will not working
-//    @Override
-//    public void onCreateContextMenu(ContextMenu menu, View v,
-//                                    ContextMenu.ContextMenuInfo menuInfo) {
-//        super.onCreateContextMenu(menu, v, menuInfo);
-//        MenuInflater inflater = getActivity().getMenuInflater();
-//        inflater.inflate(R.menu.plot_context_menu, menu);
-//    }
-
-//    @Override
-//    public boolean onContextItemSelected(MenuItem item) {
-//        boolean result = performActions(item);
-//        if (!result) {
-//            result = super.onContextItemSelected(item);
-//        }
-//        return result;
-//    }
 
     private boolean performActions(MenuItem item){
         return true;
@@ -295,37 +153,7 @@ public class PlotViewFragmentC
 //        }
 //    }
 
-//    private void generateData(int index, int[] data, int length) {
-//        if(realData[index] == null){
-//            realData[index] = new GraphViewData[length];
-//        }
-//        for (int i=0; i<length; i++) {
-//
-//            realData[index][i] = new GraphViewData(i, data[i]);
-//        }
-//        //TODO: check in plot act length, and add needed data only for that length
-//
-//        for(int i = length; i < mDataLengthMax ; i++){
-//            realData[index][i] = new GraphViewData(i, 0);
-//        }
-//    }
 
-//    //ver 3
-//    private GraphViewData[] generateDemoData(){
-//        GraphViewData[] demoData;
-//        mPlotIntValues = new int[PLOT_DATA_SIZE];
-//        for (int i = 0; i < PLOT_DATA_SIZE/2; i++)
-//            mPlotIntValues[i] = i;
-//        for (int i = PLOT_DATA_SIZE/2; i < PLOT_DATA_SIZE; i++)
-//            mPlotIntValues[i] = PLOT_DATA_SIZE - i;
-//
-//        demoData = new GraphViewData[PLOT_DATA_SIZE];
-//        for (int i=0; i<PLOT_DATA_SIZE; i++) {
-//
-//            demoData[i] = new GraphViewData(i, mPlotIntValues[i]);
-//        }
-//        return demoData;
-//    }
 }
 
 

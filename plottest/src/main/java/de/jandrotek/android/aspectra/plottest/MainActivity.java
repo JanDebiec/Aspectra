@@ -1,20 +1,18 @@
 package de.jandrotek.android.aspectra.plottest;
 
 import android.net.Uri;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import java.util.ArrayList;
 
-import de.jandrotek.android.aspectra.core.AspectraGlobals;
-import de.jandrotek.android.aspectra.libplotspectrav3.PlotViewFragment;
 import de.jandrotek.android.aspectra.libplotspectrav3.PlotViewFragmentV;
 
 public class MainActivity extends AppCompatActivity
     implements ButtonHolderFragment.OnButtonClickListener,
-        PlotViewFragment.OnFragmentInteractionListener
+        PlotViewFragmentV.OnFragmentInteractionListener
 {
 
     public PlotTestController mController = null;

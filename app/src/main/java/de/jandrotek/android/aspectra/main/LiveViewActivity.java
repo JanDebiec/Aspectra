@@ -21,12 +21,12 @@ import de.jandrotek.android.aspectra.core.SpectrumAsp;
 import de.jandrotek.android.aspectra.libplotspectrav3.PlotViewFragmentV;
 import de.jandrotek.android.aspectra.libspectrafiles.SpectrumFiles;
 
-//import de.jandrotek.android.aspectra.libplotspectra.PlotViewFragment;
+//import de.jandrotek.android.aspectra.libplotspectra.PlotViewFragment_notToUse;
 //import de.jandrotek.android.aspectra.core.FileUtils;
 
 /**
  * here comes the source from MainActivity_libprefs, handling CameraViewFragment,
- * and PlotViewFragment
+ * and PlotViewFragment_notToUse
  */
 
 public class LiveViewActivity extends BaseActivity

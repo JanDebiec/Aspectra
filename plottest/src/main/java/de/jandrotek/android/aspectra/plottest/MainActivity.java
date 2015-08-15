@@ -11,11 +11,11 @@ import java.util.ArrayList;
 import de.jandrotek.android.aspectra.libplotspectrav3.PlotViewFragmentV;
 
 //<<<<<<< HEAD
-//import de.jandrotek.android.aspectra.libplotspectrav3.PlotViewFragment;
+//import de.jandrotek.android.aspectra.libplotspectrav3.PlotViewFragment_notToUse;
 
 public class MainActivity extends AppCompatActivity
     implements ButtonHolderFragment.OnButtonClickListener
-//        PlotViewFragment.OnFragmentInteractionListener
+//        PlotViewFragment_notToUse.OnFragmentInteractionListener
 //=======
 //import de.jandrotek.android.aspectra.libplotspectrav3.PlotViewFragmentV;
 //

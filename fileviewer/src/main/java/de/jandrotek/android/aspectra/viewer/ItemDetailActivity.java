@@ -15,15 +15,17 @@ import android.view.MenuItem;
 import java.util.ArrayList;
 
 import de.jandrotek.android.aspectra.core.AspectraGlobals;
-import de.jandrotek.android.aspectra.libplotspectrav3.PlotViewFragment;
+import de.jandrotek.android.aspectra.libplotspectrav3.PlotViewController;
+import de.jandrotek.android.aspectra.libplotspectrav3.PlotViewFragment_notToUse;
 import de.jandrotek.android.aspectra.libplotspectrav3.PlotViewFragmentV;
 import de.jandrotek.android.aspectra.libprefs.AspectraGlobalPrefsActivity;
 
 public class ItemDetailActivity extends AppCompatActivity
-        implements PlotViewFragment.OnFragmentInteractionListener
+        implements PlotViewFragment_notToUse.OnFragmentInteractionListener
 {
     private static final String TAG = "DetailItemsAct";
     private static PlotViewFragmentV mPlotViewFragment;
+    private static PlotViewController mPlotViewController;
     public int mPlotsCount = 1;// default = 1, can be changed in ListFragment
 
     @Override
@@ -38,8 +40,9 @@ public class ItemDetailActivity extends AppCompatActivity
         if (savedInstanceState == null) {
             Bundle arguments = new Bundle();
 
-            ArrayList<String> names = getIntent().getExtras().getStringArrayList(PlotViewFragment.ARG_ITEM_IDS);
-            mPlotViewFragment = PlotViewFragmentV.newInstance(AspectraGlobals.ACT_ITEM_VIEW_PLOT, names);
+            ArrayList<String> names = getIntent().getExtras().getStringArrayList(AspectraGlobals.ARG_ITEM_IDS);
+            mPlotViewController = PlotViewController.newInstance(AspectraGlobals.ACT_ITEM_VIEW_PLOT, names);;
+            mPlotViewFragment = PlotViewFragmentV.newInstance(names.size());
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.item_detail_container, mPlotViewFragment)
                     .commit();

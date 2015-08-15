@@ -135,8 +135,8 @@ public class AnalyzeListActivity extends ActionBarActivity
 //            // adding or replacing the detail fragment using a
 //            // fragment transaction.
 //            Bundle arguments = new Bundle();
-//            arguments.putStringArrayList(PlotViewFragment.ARG_ITEM_IDS, filesNames);
-//            PlotViewFragment fragment = new PlotViewFragment();
+//            arguments.putStringArrayList(PlotViewFragment_notToUse.ARG_ITEM_IDS, filesNames);
+//            PlotViewFragment_notToUse fragment = new PlotViewFragment_notToUse();
 //            fragment.setArguments(arguments);
 //            getFragmentManager().beginTransaction()
 //                    .replace(R.id.item_detail_container, fragment)

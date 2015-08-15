@@ -186,7 +186,7 @@ public class GraphViewSeries {
 	 */
 	public void resetData(GraphViewDataInterface[] values) {
 		this.values = values;
-        checkValueOrder();
+  //      checkValueOrder();
         for (GraphView g : graphViews) {
 			g.redrawAll();
 		}

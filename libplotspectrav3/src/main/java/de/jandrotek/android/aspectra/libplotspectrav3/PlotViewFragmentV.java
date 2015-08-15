@@ -37,7 +37,7 @@ import de.jandrotek.android.aspectra.core.AspectraGlobals;
  * create an instance of this fragment.
  *
  * Modified version of fragment, here only View, Controller is moved to
- * PlotViewFragmentC
+ * PlotViewController
  */
 public class PlotViewFragmentV extends Fragment
     implements         View.OnCreateContextMenuListener
@@ -77,9 +77,8 @@ public class PlotViewFragmentV extends Fragment
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param param1 count f plots to draw.
+     * @param param1 count of plots to draw.
      * @return A new instance of fragment PlotViewFragmentV.
-     * TODO: items as parameter is not a perfect idea, but what is better?
      */
     public static PlotViewFragmentV newInstance(int param1) {
        if(mFragment == null) {

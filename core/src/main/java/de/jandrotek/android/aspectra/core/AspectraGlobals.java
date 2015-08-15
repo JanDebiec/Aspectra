@@ -25,5 +25,7 @@ public class AspectraGlobals {
 
     public static final int eMaxSpectrumSize = 1024;
 
+    public static final String ARG_ITEM_IDS = "item_ids";
+
 
 }

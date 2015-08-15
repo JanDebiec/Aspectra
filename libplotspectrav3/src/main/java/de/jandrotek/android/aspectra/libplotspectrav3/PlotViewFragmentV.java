@@ -103,6 +103,7 @@ public class PlotViewFragmentV extends Fragment
             mParam1 = 1;
         }
         mItemlistSize = mParam1;
+        mFileIntValues = new int[mItemlistSize][AspectraGlobals.eMaxSpectrumSize];
         realData = new GraphViewData[mItemlistSize][AspectraGlobals.eMaxSpectrumSize];
         mFileDataLength = new int[mItemlistSize];
         mDataLengthMax = PLOT_DATA_SIZE;
@@ -221,9 +222,10 @@ public class PlotViewFragmentV extends Fragment
 
     public void showPlot(int index, int[] data){
         int length = data.length;
+        mFileIntValues[index] = data;
         if(mDataSeries != null) {
             realPlotDataSize = length;
-            generateData(index, data, length);
+            generateData(index, mFileIntValues[index], length);
             mGraphView.setViewPort(0, realPlotDataSize);
             mGraphView.setManualYAxisBounds(mMaxValueY, 0);
             mDataSeries.resetData(realData[index]);

@@ -49,7 +49,6 @@ public class ItemDetailActivity extends AppCompatActivity
                     .commit();
 
             //TODO: display content
-            mPlotViewController.initDisplayInFragment();// must be called when fragment already exists
         }
         // Show the Up button in the action bar.
 //        getActionBar().setDisplayHomeAsUpEnabled(true);
@@ -69,6 +68,7 @@ public class ItemDetailActivity extends AppCompatActivity
     @Override
     public void onResume() {
         super.onResume();
+        mPlotViewController.initDisplayInFragment();// must be called when fragment already exists
     }
 
     @Override

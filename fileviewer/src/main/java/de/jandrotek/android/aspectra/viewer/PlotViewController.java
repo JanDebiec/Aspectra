@@ -1,17 +1,13 @@
 /**
  * 14.03.2015 source in Github
  */
-package de.jandrotek.android.aspectra.libplotspectrav3;
-
-import android.net.Uri;
-import android.view.MenuItem;
-
-import com.jjoe64.graphview.GraphView.GraphViewData;
+package de.jandrotek.android.aspectra.viewer;
 
 import java.util.ArrayList;
 
 import de.jandrotek.android.aspectra.core.AspectraGlobals;
 import de.jandrotek.android.aspectra.core.SpectrumBase;
+import de.jandrotek.android.aspectra.libplotspectrav3.PlotViewFragmentV;
 import de.jandrotek.android.aspectra.libspectrafiles.SpectrumFiles;
 
 // lib ver 3.
@@ -26,23 +22,25 @@ import de.jandrotek.android.aspectra.libspectrafiles.SpectrumFiles;
  */
 public class PlotViewController
 {
-    private static PlotViewController mController;
-    private static PlotViewFragmentV mPlotViewFragment;
+    private PlotViewController mController;
+    private PlotViewFragmentV mPlotViewFragment;
 
     private static final int PLOT_DATA_SIZE = AspectraGlobals.eMaxSpectrumSize;
     private int realPlotDataSize = PLOT_DATA_SIZE;
 
     // TODO: Rename and change types of parameters
-    private static int mParam1;
+    private int mParam1;
 
-    private static ArrayList<String> mItems = null;
-    private static String[] mFileName = null;
-    private static SpectrumBase[] mSpectrumFile = null;
-    private static int[][] mFileIntValues;
-    private static int[] mFileDataLength;
-    private static int mItemlistSize = 0;
-    private static int mDataLengthMax = 0;
-    private static int mIndex = -1;
+    private ArrayList<String> mItems = null;
+    private String[] mFileName = null;
+    private SpectrumBase[] mSpectrumFile = null;
+    private int[][] mFileIntValues;
+    private int[] mFileDataLength;
+    private int mItemlistSize = 0;// actually used
+    private int mItemlistSizeMax = 0;// max already used
+
+    private int mDataLengthMax = 0;
+    private int mIndex = -1;
 
     /**
      * Use this factory method to create a new instance of
@@ -53,31 +51,22 @@ public class PlotViewController
      * @return A new instance of fragment PlotViewFragment_notToUse.
      * TODO: items as parameter is not a perfect idea, but what is better?
      */
-     public static PlotViewController newInstance(int param1, ArrayList<String> items) {
-        if(mController == null) {
-            mController = new PlotViewController();
-            mParam1 = param1;
-
-            if (param1 == AspectraGlobals.ACT_ITEM_VIEW_PLOT) {
-                if(items != null) {
-                    mItems = items;
-                    mItemlistSize = mItems.size();
-                }
-                create();
-            } else { //TODO: then ???
+    public PlotViewController(int param1, ArrayList<String> items) {
+        mParam1 = param1;
+        if (param1 == AspectraGlobals.ACT_ITEM_VIEW_PLOT) {
+            if (items != null) {
+                mItems = items;
+                mItemlistSize = mItems.size();
             }
+//            create();
         }
-        return mController;
     }
 
-    private PlotViewController() {
-    }
 
-    // TODO: COntroller is normal class, content of create should be moved to constructor
-    public static void create() {
+    public void init(PlotViewFragmentV plotViewFragment) {
+        mPlotViewFragment = plotViewFragment;
 
         if(mItemlistSize > 0) {
-            mPlotViewFragment = PlotViewFragmentV.newInstance(mItemlistSize);
             mFileName = new String[mItemlistSize];
             mSpectrumFile = new SpectrumBase[mItemlistSize];
             mFileIntValues = new int[mItemlistSize][AspectraGlobals.eMaxSpectrumSize];
@@ -100,12 +89,10 @@ public class PlotViewController
                 i++;
             }
             mDataLengthMax = findMaxDataLength();
-        } else { //we don't use items, only int[]
-            // TODO; define what to do
         }
     }
 
-    private static int findMaxDataLength(){
+    private int findMaxDataLength() {
         int max = 0;
         int i = 0;
         for(i = 0; i < mItemlistSize; i++){
@@ -142,7 +129,11 @@ public class PlotViewController
         mPlotViewFragment.showPlot(index, data);
     }
 
-
+    public void initDisplayInFragment() {
+        for (int i = 0; i < mItemlistSize; i++) {
+            mPlotViewFragment.showPlot(i, mFileIntValues[i]);
+        }
+    }
 
 }
 

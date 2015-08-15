@@ -15,7 +15,7 @@ import android.view.MenuItem;
 import java.util.ArrayList;
 
 import de.jandrotek.android.aspectra.core.AspectraGlobals;
-import de.jandrotek.android.aspectra.libplotspectrav3.PlotViewController;
+//import de.jandrotek.android.aspectra.libplotspectrav3.PlotViewController;
 import de.jandrotek.android.aspectra.libplotspectrav3.PlotViewFragment_notToUse;
 import de.jandrotek.android.aspectra.libplotspectrav3.PlotViewFragmentV;
 import de.jandrotek.android.aspectra.libprefs.AspectraGlobalPrefsActivity;
@@ -41,11 +41,15 @@ public class ItemDetailActivity extends AppCompatActivity
             Bundle arguments = new Bundle();
 
             ArrayList<String> names = getIntent().getExtras().getStringArrayList(AspectraGlobals.ARG_ITEM_IDS);
-            mPlotViewController = PlotViewController.newInstance(AspectraGlobals.ACT_ITEM_VIEW_PLOT, names);;
+            mPlotViewController = new PlotViewController(AspectraGlobals.ACT_ITEM_VIEW_PLOT, names);
             mPlotViewFragment = PlotViewFragmentV.newInstance(names.size());
+            mPlotViewController.init(mPlotViewFragment);
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.item_detail_container, mPlotViewFragment)
                     .commit();
+
+            //TODO: display content
+            mPlotViewController.initDisplayInFragment();// must be called when fragment already exists
         }
         // Show the Up button in the action bar.
 //        getActionBar().setDisplayHomeAsUpEnabled(true);

@@ -220,6 +220,12 @@ public class PlotViewFragmentV extends Fragment
 //        void onFragmentInteraction(Uri uri);
 //    }
 
+    /**
+     * add content: if plot was not shown yet, then first add series to graph
+     *
+     * @param index
+     * @param data
+     */
     public void showPlot(int index, int[] data){
         int length = data.length;
         mFileIntValues[index] = data;

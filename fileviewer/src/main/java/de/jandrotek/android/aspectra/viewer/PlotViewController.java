@@ -129,6 +129,10 @@ public class PlotViewController
         mPlotViewFragment.showPlot(index, data);
     }
 
+    /**
+     * check if all of plots already exist, if not, first add series to graph,
+     * then update plot
+     */
     public void initDisplayInFragment() {
         for (int i = 0; i < mItemlistSize; i++) {
             mPlotViewFragment.showPlot(i, mFileIntValues[i]);

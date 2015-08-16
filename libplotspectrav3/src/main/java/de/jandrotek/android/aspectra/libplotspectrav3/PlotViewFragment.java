@@ -5,7 +5,6 @@ package de.jandrotek.android.aspectra.libplotspectrav3;
 
 import android.app.Activity;
 import android.graphics.Color;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.ContextMenu;
@@ -31,18 +30,18 @@ import de.jandrotek.android.aspectra.core.AspectraGlobals;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link PlotViewFragmentV.OnFragmentInteractionListener} interface
+ * {@link PlotViewFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link PlotViewFragmentV#newInstance} factory method to
+ * Use the {@link PlotViewFragment#newInstance} factory method to
  * create an instance of this fragment.
  *
  * Modified version of fragment, here only View, Controller is moved to
  * PlotViewController
  */
-public class PlotViewFragmentV extends Fragment
+public class PlotViewFragment extends Fragment
     implements         View.OnCreateContextMenuListener
 {
-    private static PlotViewFragmentV mFragment = null;
+    private static PlotViewFragment mFragment = null;
     //    public static final String ARG_ITEM_IDS = "item_ids";
         // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -78,11 +77,11 @@ public class PlotViewFragmentV extends Fragment
      * this fragment using the provided parameters.
      *
      * @param param1 count of plots to draw.
-     * @return A new instance of fragment PlotViewFragmentV.
+     * @return A new instance of fragment PlotViewFragment.
      */
-    public static PlotViewFragmentV newInstance(int param1) {
+    public static PlotViewFragment newInstance(int param1) {
        if(mFragment == null) {
-           mFragment = new PlotViewFragmentV();
+           mFragment = new PlotViewFragment();
        }
            Bundle args = new Bundle();
            args.putInt(ARG_PARAM1, param1);
@@ -90,7 +89,7 @@ public class PlotViewFragmentV extends Fragment
         return mFragment;
     }
 
-    public PlotViewFragmentV() {
+    public PlotViewFragment() {
         // Required empty public constructor
     }
 
@@ -162,10 +161,11 @@ public class PlotViewFragmentV extends Fragment
 
     public void createPlotSeries() {// or here
         for (int i = 0; i < mParam1; i++) {
+            int colorIndex = i % 3;
             realData[i] = generateDemoData();
             mDataSeries = new GraphViewSeries(
                     "",
-                    new GraphViewSeries.GraphViewSeriesStyle(mColor[0], 1),
+                    new GraphViewSeries.GraphViewSeriesStyle(mColor[colorIndex], 1),
                     realData[i]);
             mGraphView.addSeries(mDataSeries);
         }
@@ -181,7 +181,6 @@ public class PlotViewFragmentV extends Fragment
     @Override
     public void onDetach() {
         super.onDetach();
-//        mListener = null;
     }
 
     @Override
@@ -211,27 +210,6 @@ public class PlotViewFragmentV extends Fragment
         return true;
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p/>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-//    public interface OnFragmentInteractionListener {
-//        // TODO: Update argument type and name
-//        void onFragmentInteraction(Uri uri);
-//    }
-
-    /**
-     * add content: if plot was not shown yet, then first add series to graph
-     *
-     * @param index
-     * @param data
-     */
     public void showPlot(int index, int[] data){
         int length = data.length;
         mFileIntValues[index] = data;

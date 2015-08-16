@@ -18,7 +18,7 @@ import java.util.ArrayList;
 
 import de.jandrotek.android.aspectra.core.AspectraGlobals;
 import de.jandrotek.android.aspectra.core.SpectrumAsp;
-import de.jandrotek.android.aspectra.libplotspectrav3.PlotViewFragmentV;
+import de.jandrotek.android.aspectra.libplotspectrav3.PlotViewFragment;
 import de.jandrotek.android.aspectra.libspectrafiles.SpectrumFiles;
 
 //import de.jandrotek.android.aspectra.libplotspectra.PlotViewFragment_notToUse;
@@ -31,11 +31,11 @@ import de.jandrotek.android.aspectra.libspectrafiles.SpectrumFiles;
 
 public class LiveViewActivity extends BaseActivity
         implements CameraViewFragment.OnFragmentInteractionListener
-//        PlotViewFragmentV.OnFragmentInteractionListener
+//        PlotViewFragment.OnFragmentInteractionListener
 {
 
     private static CameraViewFragment mCameraViewFragment;
-    private static PlotViewFragmentV mPlotViewFragment;
+    private static PlotViewFragment mPlotViewFragment;
 
     private static int mPreviewWidthX;
     private static int mPreviewHeightY;
@@ -63,10 +63,10 @@ public class LiveViewActivity extends BaseActivity
                     .add(R.id.fragmentHolderCameraView, mCameraViewFragment)
                     .commit();
 //<<<<<<< HEAD
-//            mPlotViewFragment = PlotViewFragmentV.newInstance(AspectraGlobals.ACT_ITEM_LIVE_VIEW, dummyItems);
+//            mPlotViewFragment = PlotViewFragment.newInstance(AspectraGlobals.ACT_ITEM_LIVE_VIEW, dummyItems);
 //=======
-            mPlotViewFragment = PlotViewFragmentV.newInstance(1);
-//            mPlotViewFragment = PlotViewFragmentV.newInstance(AspectraGlobals.ACT_ITEM_LIVE_VIEW, dummyItems);
+            mPlotViewFragment = PlotViewFragment.newInstance(1);
+//            mPlotViewFragment = PlotViewFragment.newInstance(AspectraGlobals.ACT_ITEM_LIVE_VIEW, dummyItems);
 //>>>>>>> 1cda1a3... back on master, after rescue, can be build and run
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.fvPlotView, mPlotViewFragment)

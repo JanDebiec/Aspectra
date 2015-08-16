@@ -8,7 +8,7 @@ import android.view.MenuItem;
 
 import java.util.ArrayList;
 
-import de.jandrotek.android.aspectra.libplotspectrav3.PlotViewFragmentV;
+import de.jandrotek.android.aspectra.libplotspectrav3.PlotViewFragment;
 
 //<<<<<<< HEAD
 //import de.jandrotek.android.aspectra.libplotspectrav3.PlotViewFragment_notToUse;
@@ -17,17 +17,17 @@ public class MainActivity extends AppCompatActivity
     implements ButtonHolderFragment.OnButtonClickListener
 //        PlotViewFragment_notToUse.OnFragmentInteractionListener
 //=======
-//import de.jandrotek.android.aspectra.libplotspectrav3.PlotViewFragmentV;
+//import de.jandrotek.android.aspectra.libplotspectrav3.PlotViewFragment;
 //
 //public class MainActivity extends AppCompatActivity
 //    implements ButtonHolderFragment.OnButtonClickListener,
-//        PlotViewFragmentV.OnFragmentInteractionListener
+//        PlotViewFragment.OnFragmentInteractionListener
 //>>>>>>> 1cda1a3... back on master, after rescue, can be build and run
 {
 
     public PlotTestController mController = null;
 
-    private static PlotViewFragmentV mPlotViewFragment;
+    private static PlotViewFragment mPlotViewFragment;
     private static ButtonHolderFragment mButtonHolderFragment;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity
                 .add(R.id.fragmentButtonHolder, mButtonHolderFragment)
                 .commit();
 
-        mPlotViewFragment = PlotViewFragmentV.newInstance(1);
+        mPlotViewFragment = PlotViewFragment.newInstance(1);
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.fvPlotView, mPlotViewFragment)
                 .commit();

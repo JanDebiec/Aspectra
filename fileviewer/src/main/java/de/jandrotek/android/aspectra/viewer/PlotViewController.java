@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 import de.jandrotek.android.aspectra.core.AspectraGlobals;
 import de.jandrotek.android.aspectra.core.SpectrumBase;
-import de.jandrotek.android.aspectra.libplotspectrav3.PlotViewFragmentV;
+import de.jandrotek.android.aspectra.libplotspectrav3.PlotViewFragment;
 import de.jandrotek.android.aspectra.libspectrafiles.SpectrumFiles;
 
 // lib ver 3.
@@ -23,7 +23,7 @@ import de.jandrotek.android.aspectra.libspectrafiles.SpectrumFiles;
 public class PlotViewController
 {
     private PlotViewController mController;
-    private PlotViewFragmentV mPlotViewFragment;
+    private PlotViewFragment mPlotViewFragment;
 
     private static final int PLOT_DATA_SIZE = AspectraGlobals.eMaxSpectrumSize;
     private int realPlotDataSize = PLOT_DATA_SIZE;
@@ -72,7 +72,7 @@ public class PlotViewController
      * 3. restart: fragment has bigger amount of series as needed
      * @param plotViewFragment
      */
-    public void init(PlotViewFragmentV plotViewFragment) {
+    public void init(PlotViewFragment plotViewFragment) {
         mPlotViewFragment = plotViewFragment;
 // get series count from fragment mItemlistSizeAct
         // in switch consider each case

@@ -22,14 +22,14 @@ import de.jandrotek.android.aspectra.libspectrafiles.SpectrumFiles;
  */
 public class PlotViewController
 {
-    private PlotViewController mController;
+    //    private PlotViewController mController;
     private PlotViewFragment mPlotViewFragment;
 
-    private static final int PLOT_DATA_SIZE = AspectraGlobals.eMaxSpectrumSize;
-    private int realPlotDataSize = PLOT_DATA_SIZE;
+//    private static final int PLOT_DATA_SIZE = AspectraGlobals.eMaxSpectrumSize;
+//    private int realPlotDataSize = PLOT_DATA_SIZE;
 
     // TODO: Rename and change types of parameters
-    private int mParam1;
+//    private int mParam1;
 
     private ArrayList<String> mItems = null;
     private String[] mFileName = null;
@@ -42,24 +42,14 @@ public class PlotViewController
     private int mDataLengthMax = 0;
     private int mIndex = -1;
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Type of calling activity.
-     * @param items Araylist of spectrumFiles names.
-     * @return A new instance of fragment PlotViewFragment_notToUse.
-     * TODO: items as parameter is not a perfect idea, but what is better?
-     */
     public PlotViewController(int param1, ArrayList<String> items) {
-        mParam1 = param1;
+//        mParam1 = param1;
         if (param1 == AspectraGlobals.ACT_ITEM_VIEW_PLOT) {
             if (items != null) {
                 mItems = items;
                 mItemlistSizeAct = mItems.size();
 //                mItemlistSizeNew = mItems.size();
             }
-//            create();
         }
     }
 
@@ -70,11 +60,15 @@ public class PlotViewController
      * 1. restart: fgment has the same amount of series
      * 2. restart: fragment has smaller amount of serias as needed
      * 3. restart: fragment has bigger amount of series as needed
+     *
+     * seems that fragment can handle the task alone,
+     * using createPlotSeries() function
+     *
      * @param plotViewFragment
      */
     public void init(PlotViewFragment plotViewFragment) {
         mPlotViewFragment = plotViewFragment;
-// get series count from fragment mItemlistSizeAct
+        // get series count from fragment mItemlistSizeAct
         // in switch consider each case
         if (mItemlistSizeAct > 0) {// must be new
             mFileName = new String[mItemlistSizeAct];
@@ -112,31 +106,6 @@ public class PlotViewController
             }
         }
         return max;
-    }
-
-
-
-//    private boolean performActions(MenuItem item){
-//        return true;
-//    }
-
-//    /**
-//     * This interface must be implemented by activities that contain this
-//     * fragment to allow an interaction in this fragment to be communicated
-//     * to the activity and potentially other fragments contained in that
-//     * activity.
-//     * <p/>
-//     * See the Android Training lesson <a href=
-//     * "http://developer.android.com/training/basics/fragments/communicating.html"
-//     * >Communicating with Other Fragments</a> for more information.
-//     */
-//    public interface OnFragmentInteractionListener {
-//        // TODO: Update argument type and name
-//        void onFragmentInteraction(Uri uri);
-//    }
-
-    public void showPlot(int index, int[] data){
-        mPlotViewFragment.showPlot(index, data);
     }
 
     /**

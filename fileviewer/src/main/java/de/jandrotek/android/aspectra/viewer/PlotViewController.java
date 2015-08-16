@@ -15,10 +15,7 @@ import de.jandrotek.android.aspectra.libspectrafiles.SpectrumFiles;
 
 /**
  * The Controller-Part of PlotViewFragment
- * THe controller will be only used if interface to SpectrumFile
- * ?? and if only int[], maybe too ??
- * TODO: organize interface: input files or int[] arrays
- * TODO: refactor constructor
+ * THe controller will be only used if interface through SpectrumFile
  */
 public class PlotViewController
 {

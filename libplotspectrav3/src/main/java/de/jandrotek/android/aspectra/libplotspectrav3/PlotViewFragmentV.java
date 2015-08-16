@@ -161,12 +161,14 @@ public class PlotViewFragmentV extends Fragment
     }
 
     public void createPlotSeries() {// or here
-        realData[0] = generateDemoData();
-        mDataSeries = new GraphViewSeries(
-                "",
-                new GraphViewSeries.GraphViewSeriesStyle(mColor[0], 1),
-                realData[0]);
-        mGraphView.addSeries(mDataSeries);
+        for (int i = 0; i < mParam1; i++) {
+            realData[i] = generateDemoData();
+            mDataSeries = new GraphViewSeries(
+                    "",
+                    new GraphViewSeries.GraphViewSeriesStyle(mColor[0], 1),
+                    realData[i]);
+            mGraphView.addSeries(mDataSeries);
+        }
         mGraphView.setViewPort(0, mDataLengthMax);
     }
 

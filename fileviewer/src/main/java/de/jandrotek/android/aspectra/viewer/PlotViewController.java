@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import de.jandrotek.android.aspectra.core.AspectraGlobals;
 import de.jandrotek.android.aspectra.core.SpectrumBase;
 import de.jandrotek.android.aspectra.libplotspectrav3.PlotViewFragmentV;
-import de.jandrotek.android.aspectra.libspectrafiles.SpectrumFiles;
 
 // lib ver 3.
 
@@ -36,8 +35,8 @@ public class PlotViewController
     private SpectrumBase[] mSpectrumFile = null;
     private int[][] mFileIntValues;
     private int[] mFileDataLength;
-    private int mItemlistSize = 0;// actually used
-    private int mItemlistSizeMax = 0;// max already used
+    private int mItemlistSizeAct = 0;// actually used
+    private int mItemlistSizeNew = 0;// max already used
 
     private int mDataLengthMax = 0;
     private int mIndex = -1;
@@ -56,21 +55,30 @@ public class PlotViewController
         if (param1 == AspectraGlobals.ACT_ITEM_VIEW_PLOT) {
             if (items != null) {
                 mItems = items;
-                mItemlistSize = mItems.size();
+                mItemlistSizeNew = mItems.size();
             }
 //            create();
         }
     }
 
-
+    /**
+     * TODO:
+     * Function must consider more use cases:
+     * 0. start: fragment has 0 series
+     * 1. restart: fgment has the same amount of series
+     * 2. restart: fragment has smaller amount of serias as needed
+     * 3. restart: fragment has bigger amount of series as needed
+     * @param plotViewFragment
+     */
     public void init(PlotViewFragmentV plotViewFragment) {
         mPlotViewFragment = plotViewFragment;
-
-        if(mItemlistSize > 0) {
-            mFileName = new String[mItemlistSize];
-            mSpectrumFile = new SpectrumBase[mItemlistSize];
-            mFileIntValues = new int[mItemlistSize][AspectraGlobals.eMaxSpectrumSize];
-            mFileDataLength = new int[mItemlistSize];
+// get series count from fragment mItemlistSizeAct
+        // in switch consider each case
+        if(mItemlistSizeAct > 0) {
+            mFileName = new String[mItemlistSizeAct];
+            mSpectrumFile = new SpectrumBase[mItemlistSizeAct];
+            mFileIntValues = new int[mItemlistSizeAct][AspectraGlobals.eMaxSpectrumSize];
+            mFileDataLength = new int[mItemlistSizeAct];
             int i = 0;
 
             for (String item : mItems) {
@@ -95,7 +103,7 @@ public class PlotViewController
     private int findMaxDataLength() {
         int max = 0;
         int i = 0;
-        for(i = 0; i < mItemlistSize; i++){
+        for(i = 0; i < mItemlistSizeAct; i++){
             if(mFileDataLength[i] > max){
                 max = mFileDataLength[i];
                 mIndex = i;
@@ -134,7 +142,7 @@ public class PlotViewController
      * then update plot
      */
     public void initDisplayInFragment() {
-        for (int i = 0; i < mItemlistSize; i++) {
+        for (int i = 0; i < mItemlistSizeAct; i++) {
             mPlotViewFragment.showPlot(i, mFileIntValues[i]);
         }
     }

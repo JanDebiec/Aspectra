@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import de.jandrotek.android.aspectra.core.AspectraGlobals;
 import de.jandrotek.android.aspectra.core.SpectrumBase;
 import de.jandrotek.android.aspectra.libplotspectrav3.PlotViewFragmentV;
+import de.jandrotek.android.aspectra.libspectrafiles.SpectrumFiles;
 
 // lib ver 3.
 
@@ -55,7 +56,8 @@ public class PlotViewController
         if (param1 == AspectraGlobals.ACT_ITEM_VIEW_PLOT) {
             if (items != null) {
                 mItems = items;
-                mItemlistSizeNew = mItems.size();
+                mItemlistSizeAct = mItems.size();
+//                mItemlistSizeNew = mItems.size();
             }
 //            create();
         }
@@ -74,7 +76,7 @@ public class PlotViewController
         mPlotViewFragment = plotViewFragment;
 // get series count from fragment mItemlistSizeAct
         // in switch consider each case
-        if(mItemlistSizeAct > 0) {
+        if (mItemlistSizeAct > 0) {// must be new
             mFileName = new String[mItemlistSizeAct];
             mSpectrumFile = new SpectrumBase[mItemlistSizeAct];
             mFileIntValues = new int[mItemlistSizeAct][AspectraGlobals.eMaxSpectrumSize];
@@ -142,6 +144,7 @@ public class PlotViewController
      * then update plot
      */
     public void initDisplayInFragment() {
+        mPlotViewFragment.createPlotSeries();
         for (int i = 0; i < mItemlistSizeAct; i++) {
             mPlotViewFragment.showPlot(i, mFileIntValues[i]);
         }

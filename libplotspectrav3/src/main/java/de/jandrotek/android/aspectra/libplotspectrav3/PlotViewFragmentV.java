@@ -131,20 +131,18 @@ public class PlotViewFragmentV extends Fragment
                              Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.fragment_plot_view, container, false);
-
+// here i can create series too
         mGraphView = new LineGraphView(getActivity(), "");
-
-        realData[0] = generateDemoData();
-        mDataSeries = new GraphViewSeries(
-                "",
-                new GraphViewSeries.GraphViewSeriesStyle(mColor[0], 1),
-                realData[0]);
-        mGraphView.addSeries(mDataSeries);
         mGraphView.getGraphViewStyle().setTextSize(20);
         mGraphView.getGraphViewStyle().setNumHorizontalLabels(5);
         mGraphView.getGraphViewStyle().setNumVerticalLabels(5);
-        mGraphView.setViewPort(0, mDataLengthMax);
         registerForContextMenu(mGraphView);
+        FrameLayout mFrameLayout = (FrameLayout) rootView.findViewById(R.id.flPlotView);
+        mFrameLayout.addView(mGraphView);
+
+        return rootView;
+
+        //createPlotSeries();
 
 
 //        //TODO: optional - activate scaling / zooming
@@ -160,10 +158,16 @@ public class PlotViewFragmentV extends Fragment
 //        else if(mParam1 == AspectraGlobals.ACT_ITEM_VIEW_PLOT) {
 //
 //        }
-        FrameLayout mFrameLayout = (FrameLayout)rootView.findViewById(R.id.flPlotView);
-        mFrameLayout.addView(mGraphView);
+    }
 
-        return rootView;
+    public void createPlotSeries() {// or here
+        realData[0] = generateDemoData();
+        mDataSeries = new GraphViewSeries(
+                "",
+                new GraphViewSeries.GraphViewSeriesStyle(mColor[0], 1),
+                realData[0]);
+        mGraphView.addSeries(mDataSeries);
+        mGraphView.setViewPort(0, mDataLengthMax);
     }
 
 

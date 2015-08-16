@@ -22,14 +22,7 @@ import de.jandrotek.android.aspectra.libspectrafiles.SpectrumFiles;
  */
 public class PlotViewController
 {
-    //    private PlotViewController mController;
     private PlotViewFragment mPlotViewFragment;
-
-//    private static final int PLOT_DATA_SIZE = AspectraGlobals.eMaxSpectrumSize;
-//    private int realPlotDataSize = PLOT_DATA_SIZE;
-
-    // TODO: Rename and change types of parameters
-//    private int mParam1;
 
     private ArrayList<String> mItems = null;
     private String[] mFileName = null;
@@ -43,7 +36,6 @@ public class PlotViewController
     private int mIndex = -1;
 
     public PlotViewController(int param1, ArrayList<String> items) {
-//        mParam1 = param1;
         if (param1 == AspectraGlobals.ACT_ITEM_VIEW_PLOT) {
             if (items != null) {
                 mItems = items;
@@ -108,10 +100,6 @@ public class PlotViewController
         return max;
     }
 
-    /**
-     * check if all of plots already exist, if not, first add series to graph,
-     * then update plot
-     */
     public void initDisplayInFragment() {
         mPlotViewFragment.createPlotSeries();
         for (int i = 0; i < mItemlistSizeAct; i++) {

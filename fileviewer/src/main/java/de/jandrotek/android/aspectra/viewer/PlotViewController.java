@@ -10,9 +10,6 @@ import de.jandrotek.android.aspectra.core.SpectrumBase;
 import de.jandrotek.android.aspectra.libplotspectrav3.PlotViewFragment;
 import de.jandrotek.android.aspectra.libspectrafiles.SpectrumFiles;
 
-// lib ver 3.
-
-
 /**
  * The Controller-Part of PlotViewFragment
  * THe controller will be only used if interface through SpectrumFile

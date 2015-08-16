@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-//import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
 
 import android.util.Log;
@@ -15,7 +14,6 @@ import android.view.MenuItem;
 import java.util.ArrayList;
 
 import de.jandrotek.android.aspectra.core.AspectraGlobals;
-//import de.jandrotek.android.aspectra.libplotspectrav3.PlotViewController;
 import de.jandrotek.android.aspectra.libplotspectrav3.PlotViewFragment;
 import de.jandrotek.android.aspectra.libplotspectrav3.PlotViewFragment_notToUse;
 import de.jandrotek.android.aspectra.libprefs.AspectraGlobalPrefsActivity;
@@ -26,7 +24,6 @@ public class ItemDetailActivity extends AppCompatActivity
     private static final String TAG = "DetailItemsAct";
     private static PlotViewFragment mPlotViewFragment;
     private static PlotViewController mPlotViewController;
-//    public int mPlotsCount = 1;// default = 1, can be changed in ListFragment
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

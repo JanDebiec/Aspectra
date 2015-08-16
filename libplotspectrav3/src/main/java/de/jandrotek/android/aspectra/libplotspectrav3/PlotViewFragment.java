@@ -24,17 +24,7 @@ import java.util.ArrayList;
 
 import de.jandrotek.android.aspectra.core.AspectraGlobals;
 
-// lib ver 3.
-
-
 /**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link PlotViewFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link PlotViewFragment#newInstance} factory method to
- * create an instance of this fragment.
- *
  * Modified version of fragment, here only View, Controller is moved to
  * PlotViewController
  */
@@ -42,11 +32,8 @@ public class PlotViewFragment extends Fragment
     implements         View.OnCreateContextMenuListener
 {
     private static PlotViewFragment mFragment = null;
-    //    public static final String ARG_ITEM_IDS = "item_ids";
         // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
-//    private static final String ARG_PARAM2 = "param2";
 
     private static int mMaxValueY = 4096;
 
@@ -55,7 +42,6 @@ public class PlotViewFragment extends Fragment
 
     // TODO: Rename and change types of parameters
     private int mParam1;
-//    private int mParam2;
 
     private GraphView mGraphView;
     private int[] mPlotIntValues;
@@ -140,23 +126,6 @@ public class PlotViewFragment extends Fragment
         mFrameLayout.addView(mGraphView);
 
         return rootView;
-
-        //createPlotSeries();
-
-
-//        //TODO: optional - activate scaling / zooming
-//        // both modi will be handled with Touch-view helper class, not only in viewer
-//        // in liveView is disabled, first in AnalyzeActivity
-//        if (mParam1 == AspectraGlobals.ACT_ITEM_ANALYZE) {
-//            //mGraphView.setScrollable(true);
-//            //mGraphView.setScalable(true);
-//        }
-//        else if(mParam1 == AspectraGlobals.ACT_ITEM_LIVE_VIEW) {
-//
-//        }
-//        else if(mParam1 == AspectraGlobals.ACT_ITEM_VIEW_PLOT) {
-//
-//        }
     }
 
     public void createPlotSeries() {// or here

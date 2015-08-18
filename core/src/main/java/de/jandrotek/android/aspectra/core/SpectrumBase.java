@@ -2,12 +2,8 @@ package de.jandrotek.android.aspectra.core;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 /**
  * class for reading Chroco-Spectra files.
@@ -20,8 +16,9 @@ import java.util.Date;
  *
  * 27.07.2015   class changed from abstract to normal class,
  *              can be used directly, f.i.as CHR spectrum
- *              Asp spectrumwill be ectended from Base
+ *              Asp spectrum will be extended from Base
  *
+ * TODO: where is saving? should be here
  */
 public class SpectrumBase {
     protected String mFileName;

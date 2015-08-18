@@ -168,6 +168,39 @@ public class LiveViewActivity extends BaseActivity
         }
     }
 
+    //TODO: refactor: SpectrumAsp as parameter, work should be done in Spectrum
+    public class SaveSpectrumTask extends AsyncTask<Void, Void, Void> {
+        private Exception e = null;
+        private final SpectrumAsp spectrum;
+        private final File target;
+
+        SaveSpectrumTask(SpectrumAsp spectrum, File target) {
+            this.spectrum = spectrum;
+            this.target = target;
+        }
+        @Override
+        protected Void doInBackground(Void... args) {
+            try {
+//                spectrum.saveFile(target);
+//                SpectrumFiles.saveStringToFile(text, target);
+            }
+            catch (Exception e) {
+                this.e=e;
+            }
+            finally {
+                AspectraGlobals.mSavePlotInFile = false;
+            }
+            return(null);
+        }
+
+        @Override
+        protected void onPostExecute(Void arg0) {
+            if (e != null) {
+                boom(e);
+            }
+        }
+    }
+
     public class SaveSpectrumTask extends AsyncTask<Void, Void, Void> {
         private Exception e=null;
         private final String text;

@@ -138,7 +138,8 @@ public class PlotViewFragment extends Fragment
                     realData[i]);
             mGraphView.addSeries(mDataSeries);
         }
-        mGraphView.setViewPort(0, mDataLengthMax);
+        realPlotDataSize = 0;
+//        mGraphView.setViewPort(0, mDataLengthMax);
     }
 
 

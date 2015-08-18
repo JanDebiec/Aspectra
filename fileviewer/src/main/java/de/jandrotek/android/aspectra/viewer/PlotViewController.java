@@ -19,10 +19,10 @@ public class PlotViewController
     private PlotViewFragment mPlotViewFragment;
 
     private ArrayList<String> mItems = null;
-    private String[] mFileName = null;
-    private SpectrumBase[] mSpectrumFile = null;
-    private int[][] mFileIntValues;
-    private int[] mFileDataLength;
+    private String[] mFileNames = null;
+    private SpectrumBase[] mSpectrumFiles = null;
+    private int[][] mFilesIntValues;
+    private int[] mFilesDataLength;
     private int mItemlistSizeAct = 0;// actually used
     private int mItemlistSizeNew = 0;// max already used
 
@@ -57,21 +57,21 @@ public class PlotViewController
         // get series count from fragment mItemlistSizeAct
         // in switch consider each case
         if (mItemlistSizeAct > 0) {// must be new
-            mFileName = new String[mItemlistSizeAct];
-            mSpectrumFile = new SpectrumBase[mItemlistSizeAct];
-            mFileIntValues = new int[mItemlistSizeAct][AspectraGlobals.eMaxSpectrumSize];
-            mFileDataLength = new int[mItemlistSizeAct];
+            mFileNames = new String[mItemlistSizeAct];
+            mSpectrumFiles = new SpectrumBase[mItemlistSizeAct];
+            mFilesIntValues = new int[mItemlistSizeAct][AspectraGlobals.eMaxSpectrumSize];
+            mFilesDataLength = new int[mItemlistSizeAct];
             int i = 0;
 
             for (String item : mItems) {
 
                 // load file specified in mItem.content
                 String fileName = item;
-                mFileName[i] = SpectrumFiles.mPath + "/" + fileName;
-                mSpectrumFile[i] = new SpectrumBase(mFileName[i]);
+                mFileNames[i] = SpectrumFiles.mPath + "/" + fileName;
+                mSpectrumFiles[i] = new SpectrumBase(mFileNames[i]);
                 try {
-                    mFileDataLength[i] = mSpectrumFile[i].readValuesFromFile();
-                    mFileIntValues[i] = mSpectrumFile[i].getValues();
+                    mFilesDataLength[i] = mSpectrumFiles[i].readValuesFromFile();
+                    mFilesIntValues[i] = mSpectrumFiles[i].getValues();
 
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -86,8 +86,8 @@ public class PlotViewController
         int max = 0;
         int i = 0;
         for(i = 0; i < mItemlistSizeAct; i++){
-            if(mFileDataLength[i] > max){
-                max = mFileDataLength[i];
+            if(mFilesDataLength[i] > max){
+                max = mFilesDataLength[i];
                 mIndex = i;
             }
         }
@@ -97,8 +97,9 @@ public class PlotViewController
     public void initDisplayInFragment() {
         mPlotViewFragment.createPlotSeries();
         for (int i = 0; i < mItemlistSizeAct; i++) {
-            mPlotViewFragment.showPlot(i, mFileIntValues[i]);
+            mPlotViewFragment.updateSinglePlot(i, mFilesIntValues[i]);
         }
+        mPlotViewFragment.updateGraphView();
     }
 
 }

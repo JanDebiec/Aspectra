@@ -38,7 +38,8 @@ public class PlotViewFragment extends Fragment
     private static int mMaxValueY = 4096;
 
     private static final int PLOT_DATA_SIZE = AspectraGlobals.eMaxSpectrumSize;
-    private int realPlotDataSize = PLOT_DATA_SIZE;
+    private int realPlotDataSize = 0;//PLOT_DATA_SIZE;
+    private int mDataLengthMax = 0;
 
     // TODO: Rename and change types of parameters
     private int mParam1;
@@ -55,7 +56,6 @@ public class PlotViewFragment extends Fragment
     private int[][] mFileIntValues;
     private int[] mFileDataLength;
     private int mItemlistSize = 0;
-    private int mDataLengthMax = 0;
     private int[] mColor;
 
     /**
@@ -179,25 +179,31 @@ public class PlotViewFragment extends Fragment
         return true;
     }
 
-    public void showPlot(int index, int[] data){
+    public void updateSinglePlot(int index, int[] data){
         int length = data.length;
         mFileIntValues[index] = data;
         if(mDataSeries != null) {
-            realPlotDataSize = length;
+            if(length > realPlotDataSize) {
+                realPlotDataSize = length;
+            }
             generateData(index, mFileIntValues[index], length);
-            mGraphView.setViewPort(0, realPlotDataSize);
-            mGraphView.setManualYAxisBounds(mMaxValueY, 0);
             mDataSeries.resetData(realData[index]);
         }
    }
 
+    public void updateGraphView() {
+        mGraphView.setViewPort(0, realPlotDataSize);
+        mGraphView.setManualYAxisBounds(mMaxValueY, 0);
+    }
+
     private void generateData(int index, int[] data, int length) {
         int realLength;
-        if(length > AspectraGlobals.eMaxSpectrumSize){
-            realLength = AspectraGlobals.eMaxSpectrumSize;
-        } else {
-            realLength = length;
-        }
+//        if(length > AspectraGlobals.eMaxSpectrumSize){
+//            realLength = AspectraGlobals.eMaxSpectrumSize;
+//        } else {
+//            realLength = length;
+//        }
+        realLength = length;
         if(realData[index] == null){
             realData[index] = new GraphViewData[length];
         }
@@ -207,14 +213,14 @@ public class PlotViewFragment extends Fragment
         }
         //TODO: check in plot act length, and add needed data only for that length
         if(mParam1 > 1) {
-            mDataLengthMax = findMaxDataLength();
+            realPlotDataSize = findMaxDataLength();
         }
         else {
-            mDataLengthMax = realLength;
+            realPlotDataSize = realLength;
         }
 
 
-        for(int i = realLength; i < mDataLengthMax ; i++){
+        for(int i = realLength; i < realPlotDataSize ; i++){
             realData[index][i] = new GraphViewData(i, 0);
         }
     }

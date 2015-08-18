@@ -2,11 +2,9 @@ package de.jandrotek.android.aspectra.viewer;
 
 import android.annotation.TargetApi;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -15,11 +13,13 @@ import java.util.ArrayList;
 
 import de.jandrotek.android.aspectra.core.AspectraGlobals;
 import de.jandrotek.android.aspectra.libplotspectrav3.PlotViewFragment;
-import de.jandrotek.android.aspectra.libplotspectrav3.PlotViewFragment_notToUse;
 import de.jandrotek.android.aspectra.libprefs.AspectraGlobalPrefsActivity;
 
+//import de.jandrotek.android.aspectra.libplotspectrav3.PlotViewFragment_notToUse;
+
 public class ItemDetailActivity extends AppCompatActivity
-        implements PlotViewFragment_notToUse.OnFragmentInteractionListener
+//        implements PlotViewFragment_notToUse.OnFragmentInteractionListener
+//        implements PlotViewFragment.OnFragmentInteractionListener
 {
     private static final String TAG = "DetailItemsAct";
     private static PlotViewFragment mPlotViewFragment;
@@ -51,11 +51,11 @@ public class ItemDetailActivity extends AppCompatActivity
 //        getActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
-    @Override
-    public void onFragmentInteraction(Uri uri){
-
-        // do whatever you wish with the uri
-    }
+//    @Override
+//    public void onFragmentInteraction(Uri uri){
+//
+//        // do whatever you wish with the uri
+//    }
 
     @Override
     public void onStart() {

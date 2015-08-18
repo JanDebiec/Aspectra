@@ -93,7 +93,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void updatePlot(int[] data){
-        mPlotViewFragment.showPlot(0, data);
+        mPlotViewFragment.updateSinglePlot(0, data);
     }
 
     public void onFragmentInteraction(Uri uri){

@@ -69,11 +69,11 @@ public class AnalyzeActivity extends AppCompatActivity
         }
 
         generateGraphViewData();
-        updateSpectraInFragment(mSpectrumLengthMax);
+        updateSpectraView(mSpectrumLengthMax);
         mCalcBusy = false;
     }
 
-    private void updateSpectraInFragment(int mSpectrumLengthMax) {
+    private void updateSpectraView(int mSpectrumLengthMax) {
         if (mAnalyzeFragment != null) {
             mAnalyzeFragment.setSpectrumLengthMax(mSpectrumLengthMax);
             mAnalyzeFragment.setSpectrumReferenceValues(mSpectrumReferenceValues);
@@ -169,7 +169,7 @@ public class AnalyzeActivity extends AppCompatActivity
         mSpectrumToEditLength = mSpectrumToEdit.getDataSize();
         mSpectrumLengthMax = Math.max(mSpectrumToEditLength, mSpectrumReferenceLength);
         mSpectrumToEditValues = mSpectrumToEdit.getValues();
-        updateSpectraInFragment(mSpectrumLengthMax);
+        updateSpectraView(mSpectrumLengthMax);
         mAnalyzeFragment.updateEditedPlot();
     }
 

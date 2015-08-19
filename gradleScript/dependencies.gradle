@@ -2,6 +2,14 @@ ext {
     //Version
     supportLibrary = '22.2.0'
 
+    buildToolsVersion = '23'
+    compileSdkVersion = '22'
+
+    tools = [
+            bTV: "${buildToolsVersion}",
+            cSV: "${compileSdkVersion}",
+    ]
+
     //Support Libraries dependencies
     supportDependencies = [
             design           :    "com.android.support:design:${supportLibrary}",

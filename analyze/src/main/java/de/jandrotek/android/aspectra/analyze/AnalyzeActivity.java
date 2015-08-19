@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import de.jandrotek.android.aspectra.core.SpectrumBase;
+import de.jandrotek.android.aspectra.libplotspectrav3.PlotViewFragment;
 import de.jandrotek.android.aspectra.libspectrafiles.SpectrumFiles;
 import de.jandrotek.android.aspectra.libtouch.TouchView;
 
@@ -21,6 +22,8 @@ public class AnalyzeActivity extends AppCompatActivity
     public static final String ARG_ITEM_EDIT = "item_edit";
 
     private AnalyzeFragment mAnalyzeFragment;
+    private PlotViewFragment mViewFragment;
+    private AnalyzeViewController mViewController;
     private Fragment mContent;
     private TouchView mTouchView;
 
@@ -61,54 +64,57 @@ public class AnalyzeActivity extends AppCompatActivity
                 mSpectraMap.put(ARG_ITEM_EDIT, mSpectrumNameToEdit);
             }
 
-            mAnalyzeFragment = AnalyzeFragment.newInstance();
+//            mAnalyzeFragment = AnalyzeFragment.newInstance();
+//            getSupportFragmentManager().beginTransaction()
+//                    .add(R.id.fragment_analyze_plot_container, mAnalyzeFragment)
+//                    .commit();
+            mViewFragment = PlotViewFragment.newInstance(2);
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.fragment_analyze_plot_container, mAnalyzeFragment)
+                    .add(R.id.fragment_analyze_plot_container, mViewFragment)
                     .commit();
+            mViewController = new AnalyzeViewController();
+            mViewController.init(mViewFragment, mSpectrumNameToEdit, mSpectrumNameReference);
+
             mTouchView = (TouchView)findViewById(R.id.analyze_touchview_overlay);
         }
 
-        generateGraphViewData();
-        updateSpectraView(mSpectrumLengthMax);
+        mViewController.generateGraphViewData();
+        mViewController.updateSpectraView(mSpectrumLengthMax);
         mCalcBusy = false;
     }
 
-    private void updateSpectraView(int mSpectrumLengthMax) {
-        if (mAnalyzeFragment != null) {
-            mAnalyzeFragment.setSpectrumLengthMax(mSpectrumLengthMax);
-            mAnalyzeFragment.setSpectrumReferenceValues(mSpectrumReferenceValues);
-            mAnalyzeFragment.setSpectrumToEditValues(mSpectrumToEditValues);
-        }
-    }
+//    private void updateSpectraView(int mSpectrumLengthMax) {
+//        mViewController.updateSpectraView(mSpectrumLengthMax);
+//    }
 
-    private void generateGraphViewData(){
-        if (mSpectrumNameToEdit != null) {
-            mSpectrumAbsNameToEdit = SpectrumFiles.mPath + "/" + mSpectrumNameToEdit;
-            mSpectrumToEdit = new SpectrumBase(mSpectrumAbsNameToEdit);
-            try {
-                mSpectrumToEditLength = mSpectrumToEdit.readValuesFromFile();
-                mSpectrumToEditValues = mSpectrumToEdit.getValues();
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-
-        if (mSpectrumNameReference != null) {
-
-            mSpectrumNameAbsReference = SpectrumFiles.mPath + "/" + mSpectrumNameReference;
-            mSpectrumReference = new SpectrumBase(mSpectrumNameAbsReference);
-            try {
-                mSpectrumReferenceLength = mSpectrumReference.readValuesFromFile();
-                mSpectrumReferenceValues= mSpectrumReference.getValues();
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-        mSpectrumLengthMax = Math.max(mSpectrumToEditLength, mSpectrumReferenceLength);
-
-    }
+//    private void generateGraphViewData(){// move to controller
+//        if (mSpectrumNameToEdit != null) {
+//            mSpectrumAbsNameToEdit = SpectrumFiles.mPath + "/" + mSpectrumNameToEdit;
+//            mSpectrumToEdit = new SpectrumBase(mSpectrumAbsNameToEdit);
+//            try {
+//                mSpectrumToEditLength = mSpectrumToEdit.readValuesFromFile();
+//                mSpectrumToEditValues = mSpectrumToEdit.getValues();
+//
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+//        }
+//
+//        if (mSpectrumNameReference != null) {
+//
+//            mSpectrumNameAbsReference = SpectrumFiles.mPath + "/" + mSpectrumNameReference;
+//            mSpectrumReference = new SpectrumBase(mSpectrumNameAbsReference);
+//            try {
+//                mSpectrumReferenceLength = mSpectrumReference.readValuesFromFile();
+//                mSpectrumReferenceValues= mSpectrumReference.getValues();
+//
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+//        }
+//        mSpectrumLengthMax = Math.max(mSpectrumToEditLength, mSpectrumReferenceLength);
+//
+//    }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
@@ -165,13 +171,13 @@ public class AnalyzeActivity extends AppCompatActivity
     }
 
 
-    private void updateEditedSpectrumInFragment() {
-        mSpectrumToEditLength = mSpectrumToEdit.getDataSize();
-        mSpectrumLengthMax = Math.max(mSpectrumToEditLength, mSpectrumReferenceLength);
-        mSpectrumToEditValues = mSpectrumToEdit.getValues();
-        updateSpectraView(mSpectrumLengthMax);
-        mAnalyzeFragment.updateEditedPlot();
-    }
+//    private void updateEditedSpectrumInFragment() {
+//        mSpectrumToEditLength = mSpectrumToEdit.getDataSize();
+//        mSpectrumLengthMax = Math.max(mSpectrumToEditLength, mSpectrumReferenceLength);
+//        mSpectrumToEditValues = mSpectrumToEdit.getValues();
+//        mViewController.updateSpectraView(mSpectrumLengthMax);
+//        mAnalyzeFragment.updateEditedPlot();
+//    }
 
     public class CalcTask extends AsyncTask<Void, Void, Void> {
         private final int action;
@@ -209,7 +215,7 @@ public class AnalyzeActivity extends AppCompatActivity
 
         @Override
         protected void onPostExecute(Void arg0) {
-            updateEditedSpectrumInFragment();
+            mViewController.updateEditedSpectrumInFragment();
             mCalcBusy = false;
         }
 

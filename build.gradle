@@ -24,3 +24,4 @@ task wrapper(type: Wrapper) {
 
 // Load dependencies
 apply from: 'gradleScript/dependencies.gradle'
+

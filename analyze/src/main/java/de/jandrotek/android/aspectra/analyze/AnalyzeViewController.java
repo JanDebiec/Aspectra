@@ -41,8 +41,10 @@ public class AnalyzeViewController {
 
     }
 
-    public void init(PlotViewFragment plotViewFragment) {
+    public void init(PlotViewFragment plotViewFragment, String nameToEdit, String nameReference) {
         mPlotViewFragment = plotViewFragment;
+        mSpectrumNameToEdit = nameToEdit;
+        mSpectrumNameReference = nameReference;
 
     }
 
@@ -54,7 +56,7 @@ public class AnalyzeViewController {
         mPlotViewFragment.updateGraphView();
     }
 
-    private void updateSpectraView(int mSpectrumLengthMax) {
+    public void updateSpectraView(int mSpectrumLengthMax) {
         if (mPlotViewFragment != null) {
 //            mAnalyzeFragment.setSpectrumLengthMax(mSpectrumLengthMax);
             mPlotViewFragment.updateSinglePlot(1, mSpectrumReferenceValues);
@@ -65,7 +67,7 @@ public class AnalyzeViewController {
         }
     }
 
-    private void generateGraphViewData() {
+    public void generateGraphViewData() {
         if (mSpectrumNameToEdit != null) {
             mSpectrumAbsNameToEdit = SpectrumFiles.mPath + "/" + mSpectrumNameToEdit;
             mSpectrumToEdit = new SpectrumBase(mSpectrumAbsNameToEdit);
@@ -95,7 +97,7 @@ public class AnalyzeViewController {
     }
 
 
-    private void updateEditedSpectrumInFragment() {
+    public void updateEditedSpectrumInFragment() {
         mSpectrumToEditLength = mSpectrumToEdit.getDataSize();
         mSpectrumLengthMax = Math.max(mSpectrumToEditLength, mSpectrumReferenceLength);
         mSpectrumToEditValues = mSpectrumToEdit.getValues();
@@ -145,4 +147,4 @@ public class AnalyzeViewController {
 //        }
 
 }
-}
+

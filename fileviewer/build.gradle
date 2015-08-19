@@ -3,7 +3,8 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 22
  //   buildToolsVersion "22.0.1"
-    buildToolsVersion '23.0.0 rc3'
+//    buildToolsVersion '23.0.0 rc3'
+    buildToolsVersion tools.bTV
 
     defaultConfig {
         applicationId "de.jandrotek.android.aspectra.viewer"

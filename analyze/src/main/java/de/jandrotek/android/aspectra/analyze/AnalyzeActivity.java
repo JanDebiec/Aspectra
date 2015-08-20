@@ -118,6 +118,7 @@ public class AnalyzeActivity extends AppCompatActivity
     @Override
     public void onResume(){
         super.onResume();
+        mViewController.initDisplayInFragment();
         mViewController.generateGraphViewData();
         mViewController.updateSpectraView(mSpectrumLengthMax);
 

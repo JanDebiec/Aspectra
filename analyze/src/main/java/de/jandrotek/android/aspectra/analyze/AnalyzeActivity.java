@@ -20,7 +20,7 @@ public class AnalyzeActivity extends AppCompatActivity
     public static final String ARG_ITEM_REFERENCE = "item_reference";
     public static final String ARG_ITEM_EDIT = "item_edit";
 
-    private AnalyzeFragment mAnalyzeFragment;
+    //    private AnalyzeFragment mAnalyzeFragment;
     private PlotViewFragment mViewFragment;
     private AnalyzeViewController mViewController;
     private Fragment mContent;
@@ -94,14 +94,14 @@ public class AnalyzeActivity extends AppCompatActivity
         super.onSaveInstanceState(outState);
 
         //Save the fragment's instance
-        getSupportFragmentManager().putFragment(outState, "mContent", mAnalyzeFragment);
+        getSupportFragmentManager().putFragment(outState, "mContent", mViewFragment);
 
 
     }
 
     @Override
     public void onRestoreInstanceState(Bundle inState){
-        mAnalyzeFragment = (AnalyzeFragment)getSupportFragmentManager().getFragment(inState,"mContent");
+        mViewFragment = (PlotViewFragment) getSupportFragmentManager().getFragment(inState, "mContent");
     }
 
     @Override

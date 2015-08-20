@@ -27,18 +27,18 @@ public class AnalyzeActivity extends AppCompatActivity
     private TouchView mTouchView;
 
     private String mSpectrumNameToEdit;
-    private String mSpectrumAbsNameToEdit;
+    //    private String mSpectrumAbsNameToEdit;
     private String mSpectrumNameReference;
-    private String mSpectrumNameAbsReference;
-    private int mSpectrumToEditLength;
-    private int mSpectrumReferenceLength;
-    private int[] mSpectrumToEditValues = null;
-    private int[] mSpectrumReferenceValues = null;
+    //    private String mSpectrumNameAbsReference;
+//    private int mSpectrumToEditLength;
+//    private int mSpectrumReferenceLength;
+//    private int[] mSpectrumToEditValues = null;
+//    private int[] mSpectrumReferenceValues = null;
     private int mSpectrumLengthMax;
     private SpectrumBase mSpectrumToEdit;
     private SpectrumBase mSpectrumToEditBackup;
     private boolean mSpectrumAlreadyEdited = false;
-    private SpectrumBase mSpectrumReference;
+    //    private SpectrumBase mSpectrumReference;
     private Map<String, String> mSpectraMap;
     public static boolean mCalcBusy = false;
 
@@ -63,10 +63,6 @@ public class AnalyzeActivity extends AppCompatActivity
                 mSpectraMap.put(ARG_ITEM_EDIT, mSpectrumNameToEdit);
             }
 
-//            mAnalyzeFragment = AnalyzeFragment.newInstance();
-//            getSupportFragmentManager().beginTransaction()
-//                    .add(R.id.fragment_analyze_plot_container, mAnalyzeFragment)
-//                    .commit();
             mViewFragment = PlotViewFragment.newInstance(2);
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.fragment_analyze_plot_container, mViewFragment)
@@ -82,38 +78,7 @@ public class AnalyzeActivity extends AppCompatActivity
         mCalcBusy = false;
     }
 
-//    private void updateSpectraView(int mSpectrumLengthMax) {
-//        mViewController.updateSpectraView(mSpectrumLengthMax);
-//    }
 
-//    private void generateGraphViewData(){// move to controller
-//        if (mSpectrumNameToEdit != null) {
-//            mSpectrumAbsNameToEdit = SpectrumFiles.mPath + "/" + mSpectrumNameToEdit;
-//            mSpectrumToEdit = new SpectrumBase(mSpectrumAbsNameToEdit);
-//            try {
-//                mSpectrumToEditLength = mSpectrumToEdit.readValuesFromFile();
-//                mSpectrumToEditValues = mSpectrumToEdit.getValues();
-//
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//            }
-//        }
-//
-//        if (mSpectrumNameReference != null) {
-//
-//            mSpectrumNameAbsReference = SpectrumFiles.mPath + "/" + mSpectrumNameReference;
-//            mSpectrumReference = new SpectrumBase(mSpectrumNameAbsReference);
-//            try {
-//                mSpectrumReferenceLength = mSpectrumReference.readValuesFromFile();
-//                mSpectrumReferenceValues= mSpectrumReference.getValues();
-//
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//            }
-//        }
-//        mSpectrumLengthMax = Math.max(mSpectrumToEditLength, mSpectrumReferenceLength);
-//
-//    }
 
     @Override
     public void onResume(){

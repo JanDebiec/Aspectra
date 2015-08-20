@@ -1,13 +1,10 @@
 package de.jandrotek.android.aspectra.analyze;
 
-import android.os.AsyncTask;
-
 import java.util.Map;
 
 import de.jandrotek.android.aspectra.core.SpectrumBase;
 import de.jandrotek.android.aspectra.libplotspectrav3.PlotViewFragment;
 import de.jandrotek.android.aspectra.libspectrafiles.SpectrumFiles;
-import de.jandrotek.android.aspectra.libtouch.TouchView;
 
 /**
  * Controller part for AnalyzeView. Befor all was in AnalyzeActivity and Fragment
@@ -58,11 +55,8 @@ public class AnalyzeViewController {
 
     public void updateSpectraView(int mSpectrumLengthMax) {
         if (mPlotViewFragment != null) {
-//            mAnalyzeFragment.setSpectrumLengthMax(mSpectrumLengthMax);
             mPlotViewFragment.updateSinglePlot(1, mSpectrumReferenceValues);
-//            mAnalyzeFragment.setSpectrumReferenceValues(mSpectrumReferenceValues);
             mPlotViewFragment.updateSinglePlot(0, mSpectrumToEditValues);
-//            mAnalyzeFragment.setSpectrumToEditValues(mSpectrumToEditValues);
             mPlotViewFragment.updateGraphView();
         }
     }
@@ -102,7 +96,6 @@ public class AnalyzeViewController {
         mSpectrumLengthMax = Math.max(mSpectrumToEditLength, mSpectrumReferenceLength);
         mSpectrumToEditValues = mSpectrumToEdit.getValues();
         updateSpectraView(mSpectrumLengthMax);
-//        mAnalyzeFragment.updateEditedPlot();
         mPlotViewFragment.updateGraphView();
     }
 

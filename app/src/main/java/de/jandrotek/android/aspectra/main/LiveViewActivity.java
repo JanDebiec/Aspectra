@@ -258,6 +258,8 @@ public class LiveViewActivity extends BaseActivity
                     mPlotViewFragment.updateSinglePlot(0, data);
 //                    mPlotViewFragment.updateSinglePlot(0, data, length);
                     if(AspectraGlobals.mSavePlotInFile){
+                        //TODO: run task in controller, the only input: data
+                        // but to make a toast we need fileName
                         File f;
                         AspectraGlobals.mSavePlotInFile = false;
                         String fileName = SpectrumFiles.generateSpectrumAspFileName(mFileExt);

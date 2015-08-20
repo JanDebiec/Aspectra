@@ -72,7 +72,7 @@ public class SpectrumFiles {
         }
         else{
             if(BuildConfig.DEBUG) {
-                Log.w("TAG", "media not availeable !");
+                Log.w("TAG", "media not available !");
             }
         }
     }
@@ -107,6 +107,12 @@ public class SpectrumFiles {
         return mPath  + "/" + currentDateandTime + "." + fileExt;
     }
 
+    /**
+     * TODO: move function to java-lib
+     * @param text
+     * @param target
+     * @throws IOException
+     */
     public static void saveStringToFile(String text, File target) throws IOException {
         FileOutputStream fos=new FileOutputStream(target);
         OutputStreamWriter out=new OutputStreamWriter(fos);
@@ -117,6 +123,12 @@ public class SpectrumFiles {
         out.close();
     }
 
+    /**
+     * TODO: move check of external storage out of function,
+     * then it could be POPJ file
+     * @param fileName
+     * @return
+     */
     public File getTarget(String fileName) {
         File f = null;
         try {

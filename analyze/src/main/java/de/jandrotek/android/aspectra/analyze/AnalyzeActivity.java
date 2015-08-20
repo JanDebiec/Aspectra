@@ -1,9 +1,9 @@
 package de.jandrotek.android.aspectra.analyze;
 
 import android.os.AsyncTask;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -12,7 +12,6 @@ import java.util.Map;
 
 import de.jandrotek.android.aspectra.core.SpectrumBase;
 import de.jandrotek.android.aspectra.libplotspectrav3.PlotViewFragment;
-import de.jandrotek.android.aspectra.libspectrafiles.SpectrumFiles;
 import de.jandrotek.android.aspectra.libtouch.TouchView;
 
 public class AnalyzeActivity extends AppCompatActivity
@@ -78,8 +77,8 @@ public class AnalyzeActivity extends AppCompatActivity
             mTouchView = (TouchView)findViewById(R.id.analyze_touchview_overlay);
         }
 
-        mViewController.generateGraphViewData();
-        mViewController.updateSpectraView(mSpectrumLengthMax);
+//        mViewController.generateGraphViewData();
+//        mViewController.updateSpectraView(mSpectrumLengthMax);
         mCalcBusy = false;
     }
 
@@ -115,6 +114,14 @@ public class AnalyzeActivity extends AppCompatActivity
 //        mSpectrumLengthMax = Math.max(mSpectrumToEditLength, mSpectrumReferenceLength);
 //
 //    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        mViewController.generateGraphViewData();
+        mViewController.updateSpectraView(mSpectrumLengthMax);
+
+    }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {

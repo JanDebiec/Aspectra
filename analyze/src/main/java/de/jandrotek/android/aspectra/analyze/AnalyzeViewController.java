@@ -50,18 +50,19 @@ public class AnalyzeViewController {
         for (int i = 0; i < mItemlistSizeAct; i++) {
             mPlotViewFragment.updateSinglePlot(i, mFilesIntValues[i]);
         }
-        mPlotViewFragment.updateGraphView();
+//        mPlotViewFragment.updateGraphView();
     }
 
-    public void updateSpectraView(int mSpectrumLengthMax) {
+    public void updateSpectraView(int spectrumLengthMax) {
         if (mPlotViewFragment != null) {
+            int length;
             mPlotViewFragment.updateSinglePlot(1, mSpectrumReferenceValues);
             mPlotViewFragment.updateSinglePlot(0, mSpectrumToEditValues);
-            mPlotViewFragment.updateGraphView();
+            mPlotViewFragment.updateGraphView(spectrumLengthMax);
         }
     }
 
-    public void generateGraphViewData() {
+    public int generateGraphViewData() {
         if (mSpectrumNameToEdit != null) {
             mSpectrumAbsNameToEdit = SpectrumFiles.mPath + "/" + mSpectrumNameToEdit;
             mSpectrumToEdit = new SpectrumBase(mSpectrumAbsNameToEdit);
@@ -87,7 +88,7 @@ public class AnalyzeViewController {
             }
         }
         mSpectrumLengthMax = Math.max(mSpectrumToEditLength, mSpectrumReferenceLength);
-
+        return mSpectrumLengthMax;
     }
 
 
@@ -96,7 +97,7 @@ public class AnalyzeViewController {
         mSpectrumLengthMax = Math.max(mSpectrumToEditLength, mSpectrumReferenceLength);
         mSpectrumToEditValues = mSpectrumToEdit.getValues();
         updateSpectraView(mSpectrumLengthMax);
-        mPlotViewFragment.updateGraphView();
+        mPlotViewFragment.updateGraphView(mSpectrumLengthMax);
     }
 
 //    public class CalcTask extends AsyncTask<Void, Void, Void> {

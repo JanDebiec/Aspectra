@@ -82,9 +82,11 @@ public class AnalyzeActivity extends AppCompatActivity
 
     @Override
     public void onResume(){
+        int length;
         super.onResume();
         mViewController.initDisplayInFragment();
-        mViewController.generateGraphViewData();
+        length = mViewController.generateGraphViewData();
+        mSpectrumLengthMax = length;
         mViewController.updateSpectraView(mSpectrumLengthMax);
 
     }

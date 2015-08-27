@@ -33,8 +33,7 @@ public class AnalyzeViewController {
     private int[] mStartIndexNew;
 
     public AnalyzeViewController() {
-        mStartIndex = new int {
-            mItemlistSizeAct;
+        mStartIndex = new int[mItemlistSizeAct];
         mSpectrumLength = new int[mItemlistSizeAct];
         mSpectrumNames = new String[mItemlistSizeAct];
         mSpectrumToShow = new SpectrumBase[mItemlistSizeAct];
@@ -52,7 +51,7 @@ public class AnalyzeViewController {
     public void initDisplayInFragment() {
         mPlotViewFragment.createPlotSeries();
         for (int i = 0; i < mItemlistSizeAct; i++) {
-            mPlotViewFragment.updateSinglePlot(i, mFilesIntValues[i]);
+            mPlotViewFragment.updateSinglePlot(i, mSpectrumToEditValues[i]);
         }
     }
 
@@ -104,6 +103,8 @@ public class AnalyzeViewController {
      *                  By first option, we have possibilities to resize the window
      */
     public void calcNewSpectraPositions(int _movement) {
+        int movementEdit;
+        int movementRef;
 
         mStartIndex[eSpectrumToEdit] = mSpectrumToShow[eSpectrumToEdit].getStartIndex();
         mStartIndex[eSpectrumReference] = mSpectrumToShow[eSpectrumReference].getStartIndex();
@@ -113,21 +114,16 @@ public class AnalyzeViewController {
             mStartIndexNew[eSpectrumToEdit] = 0;
             mStartIndexNew[eSpectrumReference] = offsetRef;
         }
-        mStartIndexNew[eSpectrumToEdit] = mStartIndex[eSpectrumToEdit];
 
-        if (_movement < 0) { // move left
-            // cheap and dirty handling, moving left, cut the data
-            // moving left proper handling needs modify both spectra, edit and ref
-            // and after moving right, again modify both
+        movementEdit = mStartIndexNew[eSpectrumToEdit] - mStartIndex[eSpectrumToEdit];
+        movementRef = mStartIndexNew[eSpectrumReference] - mStartIndex[eSpectrumReference];
 
-//                    if(startIndex < -factor) { // additinal we must append left reference
-//                        mSpectrumReference.moveData((int) factor + startIndex );
-//                        mSpectrumToEdit.moveData((int) startIndex);
-//                    } else { // startIndex bigger as move
-            mSpectrumToShow[eSpectrumToEdit].moveData((int) _movement);
-//                    }
-        } else { // move right
-            mSpectrumToShow[eSpectrumToEdit].moveData((int) _movement);
+        if (movementEdit != 0) {
+            mSpectrumToShow[eSpectrumToEdit].moveData(movementEdit);
+        }
+
+        if (movementRef != 0) {
+            mSpectrumToShow[eSpectrumReference].moveData(movementRef);
         }
 
     }

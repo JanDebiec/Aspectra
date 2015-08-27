@@ -160,23 +160,7 @@ public class AnalyzeActivity extends AppCompatActivity
         protected Void doInBackground(Void... params) {
 //            mCalcBusy = true;
             if (action == TouchView.ePlotAction_Move) {
-                // TODO: move the calcultations of spectra into controller
-                mViewController.calcNewSpectraPositions();
-//                if(factor < 0){ // move left
-//                    int startIndex = mSpectrumToEdit.getStartIndex();
-//                    // cheap and dirty handling, moving left, cut the data
-//                    // moving left proper handling needs modify both spectra, edit and ref
-//                    // and after moving right, again modify both
-//
-////                    if(startIndex < -factor) { // additinal we must append left reference
-////                        mSpectrumReference.moveData((int) factor + startIndex );
-////                        mSpectrumToEdit.moveData((int) startIndex);
-////                    } else { // startIndex bigger as move
-//                        mSpectrumToEdit.moveData((int) factor);
-////                    }
-//                } else { // move right
-//                    mSpectrumToEdit.moveData((int) factor);
-//                }
+                mViewController.calcNewSpectraPositions((int) factor);
             }
             return(null);
         }

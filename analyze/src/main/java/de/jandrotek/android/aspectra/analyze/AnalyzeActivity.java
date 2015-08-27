@@ -27,18 +27,11 @@ public class AnalyzeActivity extends AppCompatActivity
     private TouchView mTouchView;
 
     private String mSpectrumNameToEdit;
-    //    private String mSpectrumAbsNameToEdit;
     private String mSpectrumNameReference;
-    //    private String mSpectrumNameAbsReference;
-//    private int mSpectrumToEditLength;
-//    private int mSpectrumReferenceLength;
-//    private int[] mSpectrumToEditValues = null;
-//    private int[] mSpectrumReferenceValues = null;
     private int mSpectrumLengthMax;
     private SpectrumBase mSpectrumToEdit;
     private SpectrumBase mSpectrumToEditBackup;
     private boolean mSpectrumAlreadyEdited = false;
-    //    private SpectrumBase mSpectrumReference;
     private Map<String, String> mSpectraMap;
     public static boolean mCalcBusy = false;
 
@@ -73,8 +66,6 @@ public class AnalyzeActivity extends AppCompatActivity
             mTouchView = (TouchView)findViewById(R.id.analyze_touchview_overlay);
         }
 
-//        mViewController.generateGraphViewData();
-//        mViewController.updateSpectraView(mSpectrumLengthMax);
         mCalcBusy = false;
     }
 
@@ -169,21 +160,23 @@ public class AnalyzeActivity extends AppCompatActivity
         protected Void doInBackground(Void... params) {
 //            mCalcBusy = true;
             if (action == TouchView.ePlotAction_Move) {
-                if(factor < 0){ // move left
-                    int startIndex = mSpectrumToEdit.getStartIndex();
-                    // cheap and dirty handling, moving left, cut the data
-                    // moving left proper handling needs modify both spectra, edit and ref
-                    // and after moving right, again modify both
-
-//                    if(startIndex < -factor) { // additinal we must append left reference
-//                        mSpectrumReference.moveData((int) factor + startIndex );
-//                        mSpectrumToEdit.moveData((int) startIndex);
-//                    } else { // startIndex bigger as move
-                        mSpectrumToEdit.moveData((int) factor);
-//                    }
-                } else { // move right
-                    mSpectrumToEdit.moveData((int) factor);
-                }
+                // TODO: move the calcultations of spectra into controller
+                mViewController.calcNewSpectraPositions();
+//                if(factor < 0){ // move left
+//                    int startIndex = mSpectrumToEdit.getStartIndex();
+//                    // cheap and dirty handling, moving left, cut the data
+//                    // moving left proper handling needs modify both spectra, edit and ref
+//                    // and after moving right, again modify both
+//
+////                    if(startIndex < -factor) { // additinal we must append left reference
+////                        mSpectrumReference.moveData((int) factor + startIndex );
+////                        mSpectrumToEdit.moveData((int) startIndex);
+////                    } else { // startIndex bigger as move
+//                        mSpectrumToEdit.moveData((int) factor);
+////                    }
+//                } else { // move right
+//                    mSpectrumToEdit.moveData((int) factor);
+//                }
             }
             return(null);
         }

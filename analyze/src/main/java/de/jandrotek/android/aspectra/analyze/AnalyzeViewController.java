@@ -1,7 +1,5 @@
 package de.jandrotek.android.aspectra.analyze;
 
-import java.util.Map;
-
 import de.jandrotek.android.aspectra.core.AspectraGlobals;
 import de.jandrotek.android.aspectra.core.SpectrumBase;
 import de.jandrotek.android.aspectra.libplotspectrav3.PlotViewFragment;
@@ -26,13 +24,17 @@ public class AnalyzeViewController {
     private int[][] mSpectrumToEditValues = null;
     private int mSpectrumLengthMax;
     private SpectrumBase[] mSpectrumToShow;
-    private boolean mSpectrumAlreadyEdited = false;
-    private Map<String, String> mSpectraMap;
+    // --Commented out by Inspection (25.08.15 08:14):private boolean mSpectrumAlreadyEdited = false;
+    // --Commented out by Inspection (25.08.15 08:14):private Map<String, String> mSpectraMap;
     public static boolean mCalcBusy = false;
-    private int[][] mFilesIntValues;
+    // --Commented out by Inspection (25.08.15 08:14):private int[][] mFilesIntValues;
     private int mItemlistSizeAct = 2;// actually used
+    private int[] mStartIndex;
+    private int[] mStartIndexNew;
 
     public AnalyzeViewController() {
+        mStartIndex = new int {
+            mItemlistSizeAct;
         mSpectrumLength = new int[mItemlistSizeAct];
         mSpectrumNames = new String[mItemlistSizeAct];
         mSpectrumToShow = new SpectrumBase[mItemlistSizeAct];
@@ -89,6 +91,47 @@ public class AnalyzeViewController {
         updateSpectraView(mSpectrumLengthMax);
         mPlotViewFragment.updateGraphView(mSpectrumLengthMax);
     }
+
+    /**
+     * function for control movement of spaectra in plot
+     *
+     * @param _movement try to position one spectra at zero.
+     *                  By moving right, reference stays at 0, "edit" moves right
+     *                  By moving left, if startIndex of Edit is > 0, then ref stays at 0,
+     *                  if not then Edit will be positioned at 0 and Ref will be moved rights.
+     *                  Second option: only part > 0 will  be shown (but not erased!)
+     *                  This is not so good, because the pot size will be only so big as reference.
+     *                  By first option, we have possibilities to resize the window
+     */
+    public void calcNewSpectraPositions(int _movement) {
+
+        mStartIndex[eSpectrumToEdit] = mSpectrumToShow[eSpectrumToEdit].getStartIndex();
+        mStartIndex[eSpectrumReference] = mSpectrumToShow[eSpectrumReference].getStartIndex();
+        mStartIndexNew[eSpectrumToEdit] = mStartIndex[eSpectrumToEdit];
+        if (mStartIndexNew[eSpectrumToEdit] < 0) {
+            int offsetRef = -mStartIndexNew[eSpectrumToEdit];
+            mStartIndexNew[eSpectrumToEdit] = 0;
+            mStartIndexNew[eSpectrumReference] = offsetRef;
+        }
+        mStartIndexNew[eSpectrumToEdit] = mStartIndex[eSpectrumToEdit];
+
+        if (_movement < 0) { // move left
+            // cheap and dirty handling, moving left, cut the data
+            // moving left proper handling needs modify both spectra, edit and ref
+            // and after moving right, again modify both
+
+//                    if(startIndex < -factor) { // additinal we must append left reference
+//                        mSpectrumReference.moveData((int) factor + startIndex );
+//                        mSpectrumToEdit.moveData((int) startIndex);
+//                    } else { // startIndex bigger as move
+            mSpectrumToShow[eSpectrumToEdit].moveData((int) _movement);
+//                    }
+        } else { // move right
+            mSpectrumToShow[eSpectrumToEdit].moveData((int) _movement);
+        }
+
+    }
+
 
 //    public class CalcTask extends AsyncTask<Void, Void, Void> {
 //        private final int action;

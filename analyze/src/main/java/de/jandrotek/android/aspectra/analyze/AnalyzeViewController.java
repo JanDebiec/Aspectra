@@ -86,6 +86,7 @@ public class AnalyzeViewController {
 
     public void updateEditedSpectrumInFragment() {
         mSpectrumLength[eSpectrumToEdit] = mSpectrumToShow[eSpectrumToEdit].getDataSize();
+        mSpectrumLength[eSpectrumReference] = mSpectrumToShow[eSpectrumReference].getDataSize();
         mSpectrumLengthMax = Math.max(mSpectrumLength[eSpectrumToEdit], mSpectrumLength[eSpectrumReference]);
         mSpectrumToEditValues[eSpectrumToEdit] = mSpectrumToShow[eSpectrumToEdit].getValues();
         updateSpectraView(mSpectrumLengthMax);
@@ -96,12 +97,13 @@ public class AnalyzeViewController {
      * function for control movement of spaectra in plot
      *
      * @param _movement try to position one spectra at zero.
-     *                  By moving right, reference stays at 0, "edit" moves right
-     *                  By moving left, if startIndex of Edit is > 0, then ref stays at 0,
-     *                  if not then Edit will be positioned at 0 and Ref will be moved rights.
-     *                  Second option: only part > 0 will  be shown (but not erased!)
-     *                  This is not so good, because the pot size will be only so big as reference.
-     *                  By first option, we have possibilities to resize the window
+     *
+     * By moving right, reference stays at 0, "edit" moves right
+     * By moving left, if startIndex of Edit is > 0, then ref stays at 0,
+     * if not then Edit will be positioned at 0 and Ref will be moved rights.
+     * Second option: only part > 0 will  be shown (but not erased!)
+     * This is not so good, because the pot size will be only so big as reference.
+     * By first option, we have possibilities to resize the window
      */
     public void calcNewSpectraPositions(int _movement) {
         int movementEdit;

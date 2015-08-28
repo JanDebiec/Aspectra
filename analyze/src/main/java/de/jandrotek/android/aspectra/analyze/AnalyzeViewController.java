@@ -34,6 +34,7 @@ public class AnalyzeViewController {
 
     public AnalyzeViewController() {
         mStartIndex = new int[mItemlistSizeAct];
+        mStartIndexNew = new int[mItemlistSizeAct];
         mSpectrumLength = new int[mItemlistSizeAct];
         mSpectrumNames = new String[mItemlistSizeAct];
         mSpectrumToShow = new SpectrumBase[mItemlistSizeAct];
@@ -105,12 +106,13 @@ public class AnalyzeViewController {
     public void calcNewSpectraPositions(int _movement) {
         int movementEdit;
         int movementRef;
+        int offsetRef;
 
         mStartIndex[eSpectrumToEdit] = mSpectrumToShow[eSpectrumToEdit].getStartIndex();
         mStartIndex[eSpectrumReference] = mSpectrumToShow[eSpectrumReference].getStartIndex();
-        mStartIndexNew[eSpectrumToEdit] = mStartIndex[eSpectrumToEdit];
+        mStartIndexNew[eSpectrumToEdit] = mStartIndex[eSpectrumToEdit] + _movement;
         if (mStartIndexNew[eSpectrumToEdit] < 0) {
-            int offsetRef = -mStartIndexNew[eSpectrumToEdit];
+            offsetRef = -mStartIndexNew[eSpectrumToEdit];
             mStartIndexNew[eSpectrumToEdit] = 0;
             mStartIndexNew[eSpectrumReference] = offsetRef;
         }

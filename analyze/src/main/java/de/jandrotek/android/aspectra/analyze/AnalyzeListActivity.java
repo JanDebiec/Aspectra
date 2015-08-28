@@ -144,6 +144,11 @@ public class AnalyzeListActivity extends ActionBarActivity
 //
 //        } else {
             Bundle arguments = new Bundle();
+        //TODO check the condition, temporary workout
+        if (mSpectrumRef.equals("not defined")) {
+            mSpectrumRef = mSpectrumWork;
+        }
+
             if(spectraNames.containsKey(AnalyzeActivity.ARG_ITEM_EDIT)){
                 mSpectrumWork = spectraNames.get(AnalyzeActivity.ARG_ITEM_EDIT);
                 mAnalyzeSettings.setPrefsSpectrumEdited(mSpectrumWork);
@@ -154,7 +159,8 @@ public class AnalyzeListActivity extends ActionBarActivity
                 mAnalyzeSettings.setPrefsSpectrumReference(mSpectrumRef);
                 mAnalyzeSettings.saveSettings();
             }
-            arguments.putString(AnalyzeActivity.ARG_ITEM_EDIT, mSpectrumWork);
+
+        arguments.putString(AnalyzeActivity.ARG_ITEM_EDIT, mSpectrumWork);
             arguments.putString(AnalyzeActivity.ARG_ITEM_REFERENCE, mSpectrumRef);
             Intent detailIntent = new Intent(this, AnalyzeActivity.class);
             detailIntent.putExtras(arguments);

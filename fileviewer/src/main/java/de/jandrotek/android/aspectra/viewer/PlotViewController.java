@@ -99,7 +99,7 @@ public class PlotViewController
         for (int i = 0; i < mItemlistSizeAct; i++) {
             mPlotViewFragment.updateSinglePlot(i, mFilesIntValues[i]);
         }
-        mPlotViewFragment.updateGraphView();
+        mPlotViewFragment.updateGraphView(mDataLengthMax);
     }
 
 }

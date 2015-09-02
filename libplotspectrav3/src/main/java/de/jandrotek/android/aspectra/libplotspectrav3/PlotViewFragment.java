@@ -47,7 +47,7 @@ public class PlotViewFragment extends Fragment
     private GraphView mGraphView;
     private int[] mPlotIntValues;
     //ver 3
-    GraphViewSeries mDataSeries;
+    private GraphViewSeries[] mDataSeries;
     private GraphViewSeries.GraphViewSeriesStyle[] mGraphStyle;
     private GraphViewData[][] realData = null;
 
@@ -90,6 +90,7 @@ public class PlotViewFragment extends Fragment
         mItemlistSize = mParam1;
         mFileIntValues = new int[mItemlistSize][AspectraGlobals.eMaxSpectrumSize];
         realData = new GraphViewData[mItemlistSize][AspectraGlobals.eMaxSpectrumSize];
+        mDataSeries = new GraphViewSeries[mItemlistSize];
         mFileDataLength = new int[mItemlistSize];
         mDataLengthMax = PLOT_DATA_SIZE;
         mColor = new int[3];
@@ -132,11 +133,13 @@ public class PlotViewFragment extends Fragment
         for (int i = 0; i < mParam1; i++) {
             int colorIndex = i % 3;
             realData[i] = generateDemoData();
-            mDataSeries = new GraphViewSeries(
+//            GraphViewSeries mDataSeries;
+
+            mDataSeries[i] = new GraphViewSeries(
                     "",
                     new GraphViewSeries.GraphViewSeriesStyle(mColor[colorIndex], 1),
                     realData[i]);
-            mGraphView.addSeries(mDataSeries);
+            mGraphView.addSeries(mDataSeries[i]);
         }
         realPlotDataSize = 0;
 //        mGraphView.setViewPort(0, mDataLengthMax);
@@ -183,12 +186,12 @@ public class PlotViewFragment extends Fragment
     public void updateSinglePlot(int index, int[] data){
         int length = data.length;
         mFileIntValues[index] = data;
-        if(mDataSeries != null) {
+        if (mDataSeries[index] != null) {
             if(length > realPlotDataSize) {
                 realPlotDataSize = length;
             }
             generateData(index, mFileIntValues[index], length);
-            mDataSeries.resetData(realData[index]);
+            mDataSeries[index].resetData(realData[index]);
         }
    }
 
@@ -198,13 +201,14 @@ public class PlotViewFragment extends Fragment
         mGraphView.setManualYAxisBounds(mMaxValueY, 0);
     }
 
+    //TODO: check the index boundaries
     private void generateData(int index, int[] data, int length) {
         int realLength;
-//        if(length > AspectraGlobals.eMaxSpectrumSize){
-//            realLength = AspectraGlobals.eMaxSpectrumSize;
-//        } else {
-//            realLength = length;
-//        }
+        if (length > AspectraGlobals.eMaxSpectrumSize) {
+            realLength = AspectraGlobals.eMaxSpectrumSize;
+        } else {
+            realLength = length;
+        }
         realLength = length;
         if(realData[index] == null){
             realData[index] = new GraphViewData[length];

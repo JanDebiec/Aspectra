@@ -89,6 +89,7 @@ public class AnalyzeViewController {
         mSpectrumLength[eSpectrumReference] = mSpectrumToShow[eSpectrumReference].getDataSize();
         mSpectrumLengthMax = Math.max(mSpectrumLength[eSpectrumToEdit], mSpectrumLength[eSpectrumReference]);
         mSpectrumToEditValues[eSpectrumToEdit] = mSpectrumToShow[eSpectrumToEdit].getValues();
+        mSpectrumToEditValues[eSpectrumReference] = mSpectrumToShow[eSpectrumReference].getValues();
         updateSpectraView(mSpectrumLengthMax);
         mPlotViewFragment.updateGraphView(mSpectrumLengthMax);
     }
@@ -105,6 +106,7 @@ public class AnalyzeViewController {
      * This is not so good, because the pot size will be only so big as reference.
      * By first option, we have possibilities to resize the window
      */
+    //TODO: fix bug by move to the right after left
     public void calcNewSpectraPositions(int _movement) {
         int movementEdit;
         int movementRef;
@@ -116,7 +118,7 @@ public class AnalyzeViewController {
         if (mStartIndexNew[eSpectrumToEdit] < 0) {
             offsetRef = -mStartIndexNew[eSpectrumToEdit];
             mStartIndexNew[eSpectrumToEdit] = 0;
-            mStartIndexNew[eSpectrumReference] = offsetRef;
+            mStartIndexNew[eSpectrumReference] = offsetRef + mStartIndex[eSpectrumReference];
         }
 
         movementEdit = mStartIndexNew[eSpectrumToEdit] - mStartIndex[eSpectrumToEdit];

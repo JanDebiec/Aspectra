@@ -118,7 +118,7 @@ public class AnalyzeViewController {
      *
      * @param _movement
      */
-    private void calcNewPositions(int _movement) {
+    public void calcNewPositions(int _movement) {
         int movementEdit;
         int movementRef;
         int offsetLeft;

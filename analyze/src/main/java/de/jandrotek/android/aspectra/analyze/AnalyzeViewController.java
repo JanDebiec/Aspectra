@@ -28,10 +28,13 @@ public class AnalyzeViewController {
     private int mItemlistSizeAct = 2;// actually used
     private int[] mStartIndexOld;
     private int[] mStartIndexNew;
+    private int[] mMovement;
+
 
     public AnalyzeViewController() {
         mStartIndexOld = new int[mItemlistSizeAct];
         mStartIndexNew = new int[mItemlistSizeAct];
+        mMovement = new int[mItemlistSizeAct];
         mSpectrumLength = new int[mItemlistSizeAct];
         mSpectrumNames = new String[mItemlistSizeAct];
         mSpectrumToShow = new SpectrumBase[mItemlistSizeAct];
@@ -105,6 +108,7 @@ public class AnalyzeViewController {
     public void calcNewSpectraPositions(int _movement) {
         getOldPositions();
         calcNewPositions(_movement);
+        moveSpectra();
     }
 
     private void getOldPositions() {
@@ -113,14 +117,14 @@ public class AnalyzeViewController {
         mStartIndexOld[eSpectrumReference] = mSpectrumToShow[eSpectrumReference].getStartIndex();
     }
 
+
     /**
      * pure math, without any connections, should be tested !
      *
      * @param _movement
      */
     public void calcNewPositions(int _movement) {
-        int movementEdit;
-        int movementRef;
+
         int offsetLeft;
         int spectrumAtLeft = eSpectrumReference;
 
@@ -142,15 +146,19 @@ public class AnalyzeViewController {
             mStartIndexNew[eSpectrumReference] -= offsetLeft;
         }
 
-        movementEdit = mStartIndexNew[eSpectrumToEdit] - mStartIndexOld[eSpectrumToEdit];
-        movementRef = mStartIndexNew[eSpectrumReference] - mStartIndexOld[eSpectrumReference];
+        mMovement[eSpectrumToEdit] = mStartIndexNew[eSpectrumToEdit] - mStartIndexOld[eSpectrumToEdit];
+        mMovement[eSpectrumReference] = mStartIndexNew[eSpectrumReference] - mStartIndexOld[eSpectrumReference];
 
-        if (movementEdit != 0) {
-            mSpectrumToShow[eSpectrumToEdit].moveData(movementEdit);
+
+    }
+
+    private void moveSpectra() {
+        if (mMovement[eSpectrumToEdit] != 0) {
+            mSpectrumToShow[eSpectrumToEdit].moveData(mMovement[eSpectrumToEdit]);
         }
 
-        if (movementRef != 0) {
-            mSpectrumToShow[eSpectrumReference].moveData(movementRef);
+        if (mMovement[eSpectrumReference] != 0) {
+            mSpectrumToShow[eSpectrumReference].moveData(mMovement[eSpectrumReference]);
         }
     }
 
@@ -195,5 +203,21 @@ public class AnalyzeViewController {
 //            mCalcBusy = false;
 //        }
 
+    public int[] getStartIndexNew() {
+        return mStartIndexNew;
+    }
+
+    // these functions will be used only in testing
+    public void setStartIndexOld(int[] startIndexOld) {
+        mStartIndexOld = startIndexOld;
+    }
+
+    public void setStartIndexNew(int[] startIndexNew) {
+        mStartIndexNew = startIndexNew;
+    }
+
+    public int[] getMovement() {
+        return mMovement;
+    }
 }
 

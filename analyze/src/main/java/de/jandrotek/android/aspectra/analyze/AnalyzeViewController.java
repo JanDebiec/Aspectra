@@ -103,14 +103,26 @@ public class AnalyzeViewController {
      * By first option, we have possibilities to resize the window
      */
     public void calcNewSpectraPositions(int _movement) {
+        getOldPositions();
+        calcNewPositions(_movement);
+    }
+
+    private void getOldPositions() {
+        // get act positions
+        mStartIndexOld[eSpectrumToEdit] = mSpectrumToShow[eSpectrumToEdit].getStartIndex();
+        mStartIndexOld[eSpectrumReference] = mSpectrumToShow[eSpectrumReference].getStartIndex();
+    }
+
+    /**
+     * pure math, without any connections, should be tested !
+     *
+     * @param _movement
+     */
+    private void calcNewPositions(int _movement) {
         int movementEdit;
         int movementRef;
         int offsetLeft;
         int spectrumAtLeft = eSpectrumReference;
-
-        // get act positions
-        mStartIndexOld[eSpectrumToEdit] = mSpectrumToShow[eSpectrumToEdit].getStartIndex();
-        mStartIndexOld[eSpectrumReference] = mSpectrumToShow[eSpectrumReference].getStartIndex();
 
         // calc new positions
         mStartIndexNew[eSpectrumToEdit] = mStartIndexOld[eSpectrumToEdit] + _movement;

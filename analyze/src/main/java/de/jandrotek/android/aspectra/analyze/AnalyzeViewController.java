@@ -106,19 +106,33 @@ public class AnalyzeViewController {
      * This is not so good, because the pot size will be only so big as reference.
      * By first option, we have possibilities to resize the window
      */
-    //TODO: fix bug by move to the right after left
     public void calcNewSpectraPositions(int _movement) {
         int movementEdit;
         int movementRef;
-        int offsetRef;
+//        int offsetRef;
+        int offsetLeft;
+        int spectrumAtLeft = eSpectrumReference;
 
+        // get act positions
         mStartIndex[eSpectrumToEdit] = mSpectrumToShow[eSpectrumToEdit].getStartIndex();
         mStartIndex[eSpectrumReference] = mSpectrumToShow[eSpectrumReference].getStartIndex();
+
+        // calc new positions
         mStartIndexNew[eSpectrumToEdit] = mStartIndex[eSpectrumToEdit] + _movement;
-        if (mStartIndexNew[eSpectrumToEdit] < 0) {
-            offsetRef = -mStartIndexNew[eSpectrumToEdit];
-            mStartIndexNew[eSpectrumToEdit] = 0;
-            mStartIndexNew[eSpectrumReference] = offsetRef + mStartIndex[eSpectrumReference];
+        mStartIndexNew[eSpectrumReference] = mStartIndex[eSpectrumReference];
+
+        // find which one os at left
+        if (mStartIndexNew[eSpectrumToEdit] >= mStartIndexNew[eSpectrumReference]) {
+            spectrumAtLeft = eSpectrumReference;
+        } else {
+            spectrumAtLeft = eSpectrumToEdit;
+        }
+
+        //place one spectrum, most left at zero
+        offsetLeft = mStartIndexNew[spectrumAtLeft];
+        if (offsetLeft != 0) {
+            mStartIndexNew[eSpectrumToEdit] -= offsetLeft;
+            mStartIndexNew[eSpectrumReference] -= offsetLeft;
         }
 
         movementEdit = mStartIndexNew[eSpectrumToEdit] - mStartIndex[eSpectrumToEdit];
@@ -131,7 +145,6 @@ public class AnalyzeViewController {
         if (movementRef != 0) {
             mSpectrumToShow[eSpectrumReference].moveData(movementRef);
         }
-
     }
 
 

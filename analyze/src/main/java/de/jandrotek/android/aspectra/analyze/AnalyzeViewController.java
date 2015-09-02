@@ -6,8 +6,8 @@ import de.jandrotek.android.aspectra.libplotspectrav3.PlotViewFragment;
 import de.jandrotek.android.aspectra.libspectrafiles.SpectrumFiles;
 
 /**
- * Controller part for AnalyzeView. Befor all was in AnalyzeActivity and Fragment
- * Similar tasks as PlotViewController inm fileViewer
+ * Controller part for AnalyzeView. In the past, all was in AnalyzeActivity and Fragment
+ * Similar tasks as PlotViewController in fileViewer
  * <p/>
  * Created by jan on 19.08.15.
  */
@@ -24,16 +24,13 @@ public class AnalyzeViewController {
     private int[][] mSpectrumToEditValues = null;
     private int mSpectrumLengthMax;
     private SpectrumBase[] mSpectrumToShow;
-    // --Commented out by Inspection (25.08.15 08:14):private boolean mSpectrumAlreadyEdited = false;
-    // --Commented out by Inspection (25.08.15 08:14):private Map<String, String> mSpectraMap;
     public static boolean mCalcBusy = false;
-    // --Commented out by Inspection (25.08.15 08:14):private int[][] mFilesIntValues;
     private int mItemlistSizeAct = 2;// actually used
-    private int[] mStartIndex;
+    private int[] mStartIndexOld;
     private int[] mStartIndexNew;
 
     public AnalyzeViewController() {
-        mStartIndex = new int[mItemlistSizeAct];
+        mStartIndexOld = new int[mItemlistSizeAct];
         mStartIndexNew = new int[mItemlistSizeAct];
         mSpectrumLength = new int[mItemlistSizeAct];
         mSpectrumNames = new String[mItemlistSizeAct];
@@ -46,7 +43,6 @@ public class AnalyzeViewController {
         mPlotViewFragment = plotViewFragment;
         mSpectrumNames[eSpectrumToEdit] = nameToEdit;
         mSpectrumNames[eSpectrumReference] = nameReference;
-
     }
 
     public void initDisplayInFragment() {
@@ -109,17 +105,16 @@ public class AnalyzeViewController {
     public void calcNewSpectraPositions(int _movement) {
         int movementEdit;
         int movementRef;
-//        int offsetRef;
         int offsetLeft;
         int spectrumAtLeft = eSpectrumReference;
 
         // get act positions
-        mStartIndex[eSpectrumToEdit] = mSpectrumToShow[eSpectrumToEdit].getStartIndex();
-        mStartIndex[eSpectrumReference] = mSpectrumToShow[eSpectrumReference].getStartIndex();
+        mStartIndexOld[eSpectrumToEdit] = mSpectrumToShow[eSpectrumToEdit].getStartIndex();
+        mStartIndexOld[eSpectrumReference] = mSpectrumToShow[eSpectrumReference].getStartIndex();
 
         // calc new positions
-        mStartIndexNew[eSpectrumToEdit] = mStartIndex[eSpectrumToEdit] + _movement;
-        mStartIndexNew[eSpectrumReference] = mStartIndex[eSpectrumReference];
+        mStartIndexNew[eSpectrumToEdit] = mStartIndexOld[eSpectrumToEdit] + _movement;
+        mStartIndexNew[eSpectrumReference] = mStartIndexOld[eSpectrumReference];
 
         // find which one os at left
         if (mStartIndexNew[eSpectrumToEdit] >= mStartIndexNew[eSpectrumReference]) {
@@ -135,8 +130,8 @@ public class AnalyzeViewController {
             mStartIndexNew[eSpectrumReference] -= offsetLeft;
         }
 
-        movementEdit = mStartIndexNew[eSpectrumToEdit] - mStartIndex[eSpectrumToEdit];
-        movementRef = mStartIndexNew[eSpectrumReference] - mStartIndex[eSpectrumReference];
+        movementEdit = mStartIndexNew[eSpectrumToEdit] - mStartIndexOld[eSpectrumToEdit];
+        movementRef = mStartIndexNew[eSpectrumReference] - mStartIndexOld[eSpectrumReference];
 
         if (movementEdit != 0) {
             mSpectrumToShow[eSpectrumToEdit].moveData(movementEdit);

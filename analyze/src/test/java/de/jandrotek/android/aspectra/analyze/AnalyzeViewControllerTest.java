@@ -117,4 +117,79 @@ public class AnalyzeViewControllerTest {
         assertEquals("move -5 from 3 failed", expected, actual);
     }
 
+    @Test
+    public void testCNP_FromLeftToRightFar() throws Exception {
+        indexOld[0] = 0;
+        indexOld[1] = 3;
+        int moveRight = 5;
+        controller.setStartIndexOld(indexOld);
+        controller.calcNewPositions(moveRight);
+        movement = controller.getMovement();
+
+        // edited
+        expected = 2;
+        actual = movement[0];
+        assertEquals("move -5 from 3 failed", expected, actual);
+        //reference
+        expected = -3;
+        actual = movement[1];
+        assertEquals("move -5 from 3 failed", expected, actual);
+    }
+
+    @Test
+    public void testCNP_FromLeftToRight() throws Exception {
+        indexOld[0] = 0;
+        indexOld[1] = 5;
+        int moveRight = 3;
+        controller.setStartIndexOld(indexOld);
+        controller.calcNewPositions(moveRight);
+        movement = controller.getMovement();
+
+        // edited
+        expected = 0;
+        actual = movement[0];
+        assertEquals("move -5 from 3 failed", expected, actual);
+        //reference
+        expected = -3;
+        actual = movement[1];
+        assertEquals("move -5 from 3 failed", expected, actual);
+    }
+
+    @Test
+    public void testCNP_FromLeftToLeft() throws Exception {
+        indexOld[0] = 0;
+        indexOld[1] = 5;
+        int moveRight = -3;
+        controller.setStartIndexOld(indexOld);
+        controller.calcNewPositions(moveRight);
+        movement = controller.getMovement();
+
+        // edited
+        expected = 0;
+        actual = movement[0];
+        assertEquals("move -5 from 3 failed", expected, actual);
+        //reference
+        expected = 3;
+        actual = movement[1];
+        assertEquals("move -5 from 3 failed", expected, actual);
+    }
+
+    @Test
+    public void testCNP_FromRightToRight() throws Exception {
+        indexOld[0] = 5;
+        indexOld[1] = 0;
+        int moveRight = 3;
+        controller.setStartIndexOld(indexOld);
+        controller.calcNewPositions(moveRight);
+        movement = controller.getMovement();
+
+        // edited
+        expected = 3;
+        actual = movement[0];
+        assertEquals("move -5 from 3 failed", expected, actual);
+        //reference
+        expected = 0;
+        actual = movement[1];
+        assertEquals("move -5 from 3 failed", expected, actual);
+    }
 }

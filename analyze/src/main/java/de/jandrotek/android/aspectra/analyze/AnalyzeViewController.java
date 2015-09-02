@@ -94,7 +94,7 @@ public class AnalyzeViewController {
     }
 
     /**
-     * function for control movement of spaectra in plot
+     * function for control movement of spectra in plot
      *
      * @param _movement try to position one spectra at zero.
      *
@@ -121,12 +121,12 @@ public class AnalyzeViewController {
     /**
      * pure math, without any connections, should be tested !
      *
-     * @param _movement
+     * @param _movement positive to the right
      */
     public void calcNewPositions(int _movement) {
 
         int offsetLeft;
-        int spectrumAtLeft = eSpectrumReference;
+        int spectrumAtLeft;
 
         // calc new positions
         mStartIndexNew[eSpectrumToEdit] = mStartIndexOld[eSpectrumToEdit] + _movement;
@@ -184,7 +184,7 @@ public class AnalyzeViewController {
 //                    // moving left proper handling needs modify both spectra, edit and ref
 //                    // and after moving right, again modify both
 //
-////                    if(startIndex < -factor) { // additinal we must append left reference
+////                    if(startIndex < -factor) { // additional we must append left reference
 ////                        mSpectrumReference.moveData((int) factor + startIndex );
 ////                        mSpectrumToEdit.moveData((int) startIndex);
 ////                    } else { // startIndex bigger as move

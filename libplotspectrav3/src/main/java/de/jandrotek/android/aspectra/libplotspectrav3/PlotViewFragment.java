@@ -53,7 +53,7 @@ public class PlotViewFragment extends Fragment
 
 //    private OnFragmentInteractionListener mListener;
     private ArrayList<String> mItems;
-    private int[][] mFileIntValues;
+    //    private int[][] mFileIntValues;
     private int[] mFileDataLength;
     private int mItemlistSize = 0;
     private int[] mColor;
@@ -88,7 +88,7 @@ public class PlotViewFragment extends Fragment
             mParam1 = 1;
         }
         mItemlistSize = mParam1;
-        mFileIntValues = new int[mItemlistSize][AspectraGlobals.eMaxSpectrumSize];
+//        mFileIntValues = new int[mItemlistSize][AspectraGlobals.eMaxSpectrumSize];
 //        realData = new GraphViewData[mItemlistSize][AspectraGlobals.eMaxSpectrumSize];
         mDataSeries = new GraphViewSeries[mItemlistSize];
 //        mFileDataLength = new int[mItemlistSize];

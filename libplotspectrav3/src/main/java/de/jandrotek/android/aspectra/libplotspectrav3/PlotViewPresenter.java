@@ -14,26 +14,28 @@ public class PlotViewPresenter {
     private PlotViewFragment mFragment;
     private int mSpectraPlotCount = 0;
     private int[] mFileDataLength;
-    private int[] mPlotIntValues;
+    private int[] mPlotIntDemoValues;
     private static final int PLOT_DATA_SIZE = AspectraGlobals.eMaxSpectrumSize;
     private int realPlotDataSize = 0;//PLOT_DATA_SIZE;
+    private int[][] mFileIntValues;
 
     public PlotViewPresenter(int spectraPlotCount, PlotViewFragment fragment) {
         this.mSpectraPlotCount = spectraPlotCount;
         mFragment = fragment;
 //        realData = new GraphView.GraphViewData[mSpectraPlotCount][AspectraGlobals.eMaxSpectrumSize];
         mFileDataLength = new int[mSpectraPlotCount];
+        mFileIntValues = new int[mSpectraPlotCount][AspectraGlobals.eMaxSpectrumSize];
 
     }
 
     public void updateSinglePlot(int index, int[] data) {
         int length = data.length;
-        mPlotIntValues[index] = data;
+        mFileIntValues[index] = data;
 //        if (mDataSeries[index] != null) {
         if (length > realPlotDataSize) {
             realPlotDataSize = length;
         }
-        GraphView.GraphViewData[] realData = generateData(index, mPlotIntValues[index], length);
+        GraphView.GraphViewData[] realData = generateData(index, mFileIntValues[index], length);
         mFragment.mDataSeries[index].resetData(realData);
 //        }
     }
@@ -87,16 +89,16 @@ public class PlotViewPresenter {
 
     private GraphView.GraphViewData[] generateDemoData() {
         GraphView.GraphViewData[] demoData;
-        mPlotIntValues = new int[PLOT_DATA_SIZE];
+        mPlotIntDemoValues = new int[PLOT_DATA_SIZE];
         for (int i = 0; i < PLOT_DATA_SIZE / 2; i++)
-            mPlotIntValues[i] = i;
+            mPlotIntDemoValues[i] = i;
         for (int i = PLOT_DATA_SIZE / 2; i < PLOT_DATA_SIZE; i++)
-            mPlotIntValues[i] = PLOT_DATA_SIZE - i;
+            mPlotIntDemoValues[i] = PLOT_DATA_SIZE - i;
 
         demoData = new GraphView.GraphViewData[PLOT_DATA_SIZE];
         for (int i = 0; i < PLOT_DATA_SIZE; i++) {
 
-            demoData[i] = new GraphView.GraphViewData(i, mPlotIntValues[i]);
+            demoData[i] = new GraphView.GraphViewData(i, mPlotIntDemoValues[i]);
         }
         return demoData;
     }

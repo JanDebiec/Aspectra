@@ -94,7 +94,8 @@ abstract public class GraphView extends LinearLayout {
 			 // measure bottom text
 			if (labelTextHeight == null || horLabelTextWidth == null) {
 				paint.setTextSize(getGraphViewStyle().getTextSize());
-				double testX = ((getMaxX(true)-getMinX(true))*0.783)+getMinX(true);
+//JD				double testX = ((getMaxX(true)-getMinX(true))*0.783)+getMinX(true);
+				double testX = ((getMaxX(false) - getMinX(false)) * 0.783) + getMinX(false);
 				String testLabel = formatLabel(testX, true);
 				paint.getTextBounds(testLabel, 0, testLabel.length(), textBounds);
                 // multiline

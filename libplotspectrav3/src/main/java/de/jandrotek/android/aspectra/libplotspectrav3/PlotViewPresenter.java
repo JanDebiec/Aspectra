@@ -67,7 +67,8 @@ public class PlotViewPresenter {
         }
 
 
-        for (int i = realLength; i < realPlotDataSize; i++) {
+        for (int i = realLength; i < AspectraGlobals.eMaxSpectrumSize; i++) {
+//        for (int i = realLength; i < realPlotDataSize; i++) {
             realData[i] = new GraphView.GraphViewData(i, 0);
         }
         return realData;

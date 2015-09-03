@@ -3,6 +3,7 @@ package de.jandrotek.android.aspectra.analyze;
 import de.jandrotek.android.aspectra.core.AspectraGlobals;
 import de.jandrotek.android.aspectra.core.SpectrumBase;
 import de.jandrotek.android.aspectra.libplotspectrav3.PlotViewFragment;
+import de.jandrotek.android.aspectra.libplotspectrav3.PlotViewPresenter;
 import de.jandrotek.android.aspectra.libspectrafiles.SpectrumFiles;
 
 /**
@@ -14,6 +15,8 @@ import de.jandrotek.android.aspectra.libspectrafiles.SpectrumFiles;
 public class AnalyzeViewController {
 
     private PlotViewFragment mPlotViewFragment;
+    private PlotViewPresenter mPlotViewPresenter;
+
 
     //    private enum SpectrumNumber  {SpectrumToEdit, SpectrumReference};
     private static final int eSpectrumToEdit = 0;
@@ -42,23 +45,28 @@ public class AnalyzeViewController {
         mSpectrumToEditValues = new int[mItemlistSizeAct][AspectraGlobals.eMaxSpectrumSize];
     }
 
-    public void init(PlotViewFragment plotViewFragment, String nameToEdit, String nameReference) {
+    public void init(PlotViewFragment plotViewFragment,
+                     PlotViewPresenter plotViewPresenter,
+                     String nameToEdit, String nameReference) {
         mPlotViewFragment = plotViewFragment;
+        mPlotViewPresenter = plotViewPresenter;
         mSpectrumNames[eSpectrumToEdit] = nameToEdit;
         mSpectrumNames[eSpectrumReference] = nameReference;
     }
 
     public void initDisplayInFragment() {
         mPlotViewFragment.createPlotSeries();
+//        mPlotViewPresenter.createPlotSeries();
         for (int i = 0; i < mItemlistSizeAct; i++) {
-            mPlotViewFragment.updateSinglePlot(i, mSpectrumToEditValues[i]);
+//            mPlotViewFragment.updateSinglePlot(i, mSpectrumToEditValues[i]);
+            mPlotViewPresenter.updateSinglePlot(i, mSpectrumToEditValues[i]);
         }
     }
 
     public void updateSpectraView(int spectrumLengthMax) {
         if (mPlotViewFragment != null) {
-            mPlotViewFragment.updateSinglePlot(eSpectrumReference, mSpectrumToEditValues[eSpectrumReference]);
-            mPlotViewFragment.updateSinglePlot(eSpectrumToEdit, mSpectrumToEditValues[eSpectrumToEdit]);
+            mPlotViewPresenter.updateSinglePlot(eSpectrumReference, mSpectrumToEditValues[eSpectrumReference]);
+            mPlotViewPresenter.updateSinglePlot(eSpectrumToEdit, mSpectrumToEditValues[eSpectrumToEdit]);
             mPlotViewFragment.updateGraphView(spectrumLengthMax);
         }
     }

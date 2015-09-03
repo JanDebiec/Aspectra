@@ -12,6 +12,7 @@ import java.util.Map;
 
 import de.jandrotek.android.aspectra.core.SpectrumBase;
 import de.jandrotek.android.aspectra.libplotspectrav3.PlotViewFragment;
+import de.jandrotek.android.aspectra.libplotspectrav3.PlotViewPresenter;
 import de.jandrotek.android.aspectra.libtouch.TouchView;
 
 public class AnalyzeActivity extends AppCompatActivity
@@ -23,6 +24,7 @@ public class AnalyzeActivity extends AppCompatActivity
     //    private AnalyzeFragment mAnalyzeFragment;
     private PlotViewFragment mViewFragment;
     private AnalyzeViewController mViewController;
+    private PlotViewPresenter mPlotViewPresenter;
     private Fragment mContent;
     private TouchView mTouchView;
 
@@ -57,11 +59,12 @@ public class AnalyzeActivity extends AppCompatActivity
             }
 
             mViewFragment = PlotViewFragment.newInstance(2);
+            mPlotViewPresenter = new PlotViewPresenter(2, mViewFragment);
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.fragment_analyze_plot_container, mViewFragment)
                     .commit();
             mViewController = new AnalyzeViewController();
-            mViewController.init(mViewFragment, mSpectrumNameToEdit, mSpectrumNameReference);
+            mViewController.init(mViewFragment, mPlotViewPresenter, mSpectrumNameToEdit, mSpectrumNameReference);
 
             mTouchView = (TouchView)findViewById(R.id.analyze_touchview_overlay);
         }

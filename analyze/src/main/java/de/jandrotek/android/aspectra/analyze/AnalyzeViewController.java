@@ -17,8 +17,6 @@ public class AnalyzeViewController {
     private PlotViewFragment mPlotViewFragment;
     private PlotViewPresenter mPlotViewPresenter;
 
-
-    //    private enum SpectrumNumber  {SpectrumToEdit, SpectrumReference};
     private static final int eSpectrumToEdit = 0;
     private static final int eSpectrumReference = 1;
     private String[] mSpectrumNames;
@@ -27,22 +25,21 @@ public class AnalyzeViewController {
     private int[][] mSpectrumToEditValues = null;
     private int mSpectrumLengthMax;
     private SpectrumBase[] mSpectrumToShow;
-    public static boolean mCalcBusy = false;
-    private int mItemlistSizeAct = 2;// actually used
+    public static boolean mCalcBusy = false; // can be still used
+    private int mItemListSizeAct = 2;// actually used
     private int[] mStartIndexOld;
     private int[] mStartIndexNew;
     private int[] mMovement;
 
-
     public AnalyzeViewController() {
-        mStartIndexOld = new int[mItemlistSizeAct];
-        mStartIndexNew = new int[mItemlistSizeAct];
-        mMovement = new int[mItemlistSizeAct];
-        mSpectrumLength = new int[mItemlistSizeAct];
-        mSpectrumNames = new String[mItemlistSizeAct];
-        mSpectrumToShow = new SpectrumBase[mItemlistSizeAct];
-        mSpectrumAbsolutePathNames = new String[mItemlistSizeAct];
-        mSpectrumToEditValues = new int[mItemlistSizeAct][AspectraGlobals.eMaxSpectrumSize];
+        mStartIndexOld = new int[mItemListSizeAct];
+        mStartIndexNew = new int[mItemListSizeAct];
+        mMovement = new int[mItemListSizeAct];
+        mSpectrumLength = new int[mItemListSizeAct];
+        mSpectrumNames = new String[mItemListSizeAct];
+        mSpectrumToShow = new SpectrumBase[mItemListSizeAct];
+        mSpectrumAbsolutePathNames = new String[mItemListSizeAct];
+        mSpectrumToEditValues = new int[mItemListSizeAct][AspectraGlobals.eMaxSpectrumSize];
     }
 
     public void init(PlotViewFragment plotViewFragment,
@@ -56,9 +53,7 @@ public class AnalyzeViewController {
 
     public void initDisplayInFragment() {
         mPlotViewFragment.createPlotSeries();
-//        mPlotViewPresenter.createPlotSeries();
-        for (int i = 0; i < mItemlistSizeAct; i++) {
-//            mPlotViewFragment.updateSinglePlot(i, mSpectrumToEditValues[i]);
+        for (int i = 0; i < mItemListSizeAct; i++) {
             mPlotViewPresenter.updateSinglePlot(i, mSpectrumToEditValues[i]);
         }
     }
@@ -72,7 +67,7 @@ public class AnalyzeViewController {
     }
 
     public int generateGraphViewData() {
-        for (int i = 0; i < mItemlistSizeAct; i++) {
+        for (int i = 0; i < mItemListSizeAct; i++) {
             if (mSpectrumNames[i] != null) {
                 mSpectrumAbsolutePathNames[i] = SpectrumFiles.mPath + "/" + mSpectrumNames[i];
                 mSpectrumToShow[i] = new SpectrumBase(mSpectrumAbsolutePathNames[i]);
@@ -120,7 +115,6 @@ public class AnalyzeViewController {
     }
 
     private void getOldPositions() {
-        // get act positions
         mStartIndexOld[eSpectrumToEdit] = mSpectrumToShow[eSpectrumToEdit].getStartIndex();
         mStartIndexOld[eSpectrumReference] = mSpectrumToShow[eSpectrumReference].getStartIndex();
     }
@@ -156,8 +150,6 @@ public class AnalyzeViewController {
 
         mMovement[eSpectrumToEdit] = mStartIndexNew[eSpectrumToEdit] - mStartIndexOld[eSpectrumToEdit];
         mMovement[eSpectrumReference] = mStartIndexNew[eSpectrumReference] - mStartIndexOld[eSpectrumReference];
-
-
     }
 
     private void moveSpectra() {
@@ -211,11 +203,13 @@ public class AnalyzeViewController {
 //            mCalcBusy = false;
 //        }
 
+    //************************************************************************************
+    // these functions will be used only in testing
+    //************************************************************************************
     public int[] getStartIndexNew() {
         return mStartIndexNew;
     }
 
-    // these functions will be used only in testing
     public void setStartIndexOld(int[] startIndexOld) {
         mStartIndexOld = startIndexOld;
     }

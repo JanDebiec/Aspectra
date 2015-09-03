@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import de.jandrotek.android.aspectra.core.AspectraGlobals;
 import de.jandrotek.android.aspectra.core.SpectrumAsp;
 import de.jandrotek.android.aspectra.libplotspectrav3.PlotViewFragment;
+import de.jandrotek.android.aspectra.libplotspectrav3.PlotViewPresenter;
 import de.jandrotek.android.aspectra.libspectrafiles.SpectrumFiles;
 
 //import de.jandrotek.android.aspectra.libplotspectra.PlotViewFragment_notToUse;
@@ -36,6 +37,7 @@ public class LiveViewActivity extends BaseActivity
 
     private static CameraViewFragment mCameraViewFragment;
     private static PlotViewFragment mPlotViewFragment;
+    private PlotViewPresenter mPlotViewPresenter;
 
     private static int mPreviewWidthX;
     private static int mPreviewHeightY;
@@ -72,6 +74,7 @@ public class LiveViewActivity extends BaseActivity
                     .add(R.id.fvPlotView, mPlotViewFragment)
                     .commit();
         }
+        mPlotViewPresenter = new PlotViewPresenter(1, mPlotViewFragment);
 
         updateFromPreferences();
     }

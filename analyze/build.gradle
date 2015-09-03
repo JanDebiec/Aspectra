@@ -1,5 +1,7 @@
 apply plugin: 'com.android.application'
 
+apply from: '../config/quality.gradle'
+
 android {
     compileSdkVersion 22
 //    compileSdkVersion tools.cSV

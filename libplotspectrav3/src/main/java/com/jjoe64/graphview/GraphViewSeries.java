@@ -88,8 +88,8 @@ public class GraphViewSeries {
 		}
 		this.style = style;
 		this.values = values;
-        checkValueOrder();
-    }
+//        checkValueOrder();
+	}
 
 	/**
 	 * this graphview will be redrawn if data changes

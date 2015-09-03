@@ -89,7 +89,7 @@ public class PlotViewFragment extends Fragment
         }
         mItemlistSize = mParam1;
 //        mFileIntValues = new int[mItemlistSize][AspectraGlobals.eMaxSpectrumSize];
-//        realData = new GraphViewData[mItemlistSize][AspectraGlobals.eMaxSpectrumSize];
+        realData = new GraphViewData[mItemlistSize][AspectraGlobals.eMaxSpectrumSize];
         mDataSeries = new GraphViewSeries[mItemlistSize];
 //        mFileDataLength = new int[mItemlistSize];
         mDataLengthMax = PLOT_DATA_SIZE;

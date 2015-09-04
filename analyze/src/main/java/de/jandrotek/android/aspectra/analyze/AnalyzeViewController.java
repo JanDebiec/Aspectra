@@ -85,17 +85,6 @@ public class AnalyzeViewController {
         return mSpectrumLengthMax;
     }
 
-
-//    public void updateEditedSpectrumInFragment_oldVersion() {
-//        mSpectrumLength[eSpectrumToEdit] = mSpectrumToShow[eSpectrumToEdit].getDataSize();
-//        mSpectrumLength[eSpectrumReference] = mSpectrumToShow[eSpectrumReference].getDataSize();
-//        mSpectrumLengthMax = Math.max(mSpectrumLength[eSpectrumToEdit], mSpectrumLength[eSpectrumReference]);
-//        mSpectrumToEditValues[eSpectrumToEdit] = mSpectrumToShow[eSpectrumToEdit].getValues();
-//        mSpectrumToEditValues[eSpectrumReference] = mSpectrumToShow[eSpectrumReference].getValues();
-//        updateSpectraView(mSpectrumLengthMax);
-//        mPlotViewFragment.updateGraphView(mSpectrumLengthMax);
-//    }
-
     public void updateEditedSpectrumInFragment() {
         mSpectrumLength[eSpectrumToEdit] = mSpectrumToShow[eSpectrumToEdit].getDataSize();
         mSpectrumLength[eSpectrumReference] = mSpectrumToShow[eSpectrumReference].getDataSize();

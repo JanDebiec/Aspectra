@@ -137,6 +137,12 @@ public class SpectrumBase {
     }
 
     public int[] moveData(int offset) {
+        mStartIndex += offset;
+        mEndIndex += offset;
+        return mValues;
+    }
+
+//    public int[] moveData_oldVersion(int offset) {
 //        int[] newData;
 //        if(offset >= 0) { // move to the right
 //            newData = ArrayFunctions.moveArrayRight(mValues, offset);
@@ -144,23 +150,10 @@ public class SpectrumBase {
 //            newData = ArrayFunctions.moveArrayLeft(mValues, - offset);
 //        }
 //        mValues = newData;
-        mStartIndex += offset;
-        mEndIndex += offset;
-        return mValues;
-    }
-
-    public int[] moveData_oldVersion(int offset) {
-        int[] newData;
-        if(offset >= 0) { // move to the right
-            newData = ArrayFunctions.moveArrayRight(mValues, offset);
-        } else { // move to the left
-            newData = ArrayFunctions.moveArrayLeft(mValues, - offset);
-        }
-        mValues = newData;
-        mStartIndex += offset;
-        mEndIndex += offset;
-        return mValues;
-    }
+//        mStartIndex += offset;
+//        mEndIndex += offset;
+//        return mValues;
+//    }
 
     //TODO: check working and update indexies, add offset
     public int[] stretchData(int offset, float factor) {

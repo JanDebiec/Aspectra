@@ -50,9 +50,18 @@ public class SpectrumBase {
 		return mFileName;
 	}
 
+    /**
+     * @return only pure data, without zeros at the beginning, or end
+     */
     public int[] getValues(){
 
         return mValues;
+    }
+
+    public int[] getWholeSpectrum() {
+        int[] newData;
+        newData = ArrayFunctions.moveArrayRight(mValues, mStartIndex);
+        return newData;
     }
 
     public void setValues(int[] data){
@@ -128,6 +137,19 @@ public class SpectrumBase {
     }
 
     public int[] moveData(int offset) {
+//        int[] newData;
+//        if(offset >= 0) { // move to the right
+//            newData = ArrayFunctions.moveArrayRight(mValues, offset);
+//        } else { // move to the left
+//            newData = ArrayFunctions.moveArrayLeft(mValues, - offset);
+//        }
+//        mValues = newData;
+        mStartIndex += offset;
+        mEndIndex += offset;
+        return mValues;
+    }
+
+    public int[] moveData_oldVersion(int offset) {
         int[] newData;
         if(offset >= 0) { // move to the right
             newData = ArrayFunctions.moveArrayRight(mValues, offset);

@@ -73,7 +73,7 @@ public class AnalyzeViewController {
                 mSpectrumToShow[i] = new SpectrumBase(mSpectrumAbsolutePathNames[i]);
                 try {
                     mSpectrumLength[i] = mSpectrumToShow[i].readValuesFromFile();
-                    mSpectrumToEditValues[i] = mSpectrumToShow[i].getValues();
+                    mSpectrumToEditValues[i] = mSpectrumToShow[i].getWholeSpectrum();
 
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -86,12 +86,22 @@ public class AnalyzeViewController {
     }
 
 
+//    public void updateEditedSpectrumInFragment_oldVersion() {
+//        mSpectrumLength[eSpectrumToEdit] = mSpectrumToShow[eSpectrumToEdit].getDataSize();
+//        mSpectrumLength[eSpectrumReference] = mSpectrumToShow[eSpectrumReference].getDataSize();
+//        mSpectrumLengthMax = Math.max(mSpectrumLength[eSpectrumToEdit], mSpectrumLength[eSpectrumReference]);
+//        mSpectrumToEditValues[eSpectrumToEdit] = mSpectrumToShow[eSpectrumToEdit].getValues();
+//        mSpectrumToEditValues[eSpectrumReference] = mSpectrumToShow[eSpectrumReference].getValues();
+//        updateSpectraView(mSpectrumLengthMax);
+//        mPlotViewFragment.updateGraphView(mSpectrumLengthMax);
+//    }
+
     public void updateEditedSpectrumInFragment() {
         mSpectrumLength[eSpectrumToEdit] = mSpectrumToShow[eSpectrumToEdit].getDataSize();
         mSpectrumLength[eSpectrumReference] = mSpectrumToShow[eSpectrumReference].getDataSize();
         mSpectrumLengthMax = Math.max(mSpectrumLength[eSpectrumToEdit], mSpectrumLength[eSpectrumReference]);
-        mSpectrumToEditValues[eSpectrumToEdit] = mSpectrumToShow[eSpectrumToEdit].getValues();
-        mSpectrumToEditValues[eSpectrumReference] = mSpectrumToShow[eSpectrumReference].getValues();
+        mSpectrumToEditValues[eSpectrumToEdit] = mSpectrumToShow[eSpectrumToEdit].getWholeSpectrum();
+        mSpectrumToEditValues[eSpectrumReference] = mSpectrumToShow[eSpectrumReference].getWholeSpectrum();
         updateSpectraView(mSpectrumLengthMax);
         mPlotViewFragment.updateGraphView(mSpectrumLengthMax);
     }

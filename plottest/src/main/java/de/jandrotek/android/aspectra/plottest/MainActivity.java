@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import java.util.ArrayList;
 
 import de.jandrotek.android.aspectra.libplotspectrav3.PlotViewFragment;
+import de.jandrotek.android.aspectra.libplotspectrav3.PlotViewPresenter;
 
 //<<<<<<< HEAD
 //import de.jandrotek.android.aspectra.libplotspectrav3.PlotViewFragment_notToUse;
@@ -26,6 +27,7 @@ public class MainActivity extends AppCompatActivity
 {
 
     public PlotTestController mController = null;
+    private PlotViewPresenter mPlotViewPresenter;
 
     private static PlotViewFragment mPlotViewFragment;
     private static ButtonHolderFragment mButtonHolderFragment;
@@ -46,6 +48,7 @@ public class MainActivity extends AppCompatActivity
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.fvPlotView, mPlotViewFragment)
                 .commit();
+        mPlotViewPresenter = new PlotViewPresenter(1, mPlotViewFragment);
     }
 
 
@@ -93,7 +96,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void updatePlot(int[] data){
-        mPlotViewFragment.updateSinglePlot(0, data);
+        mPlotViewPresenter.updateSinglePlot(0, data);
     }
 
     public void onFragmentInteraction(Uri uri){

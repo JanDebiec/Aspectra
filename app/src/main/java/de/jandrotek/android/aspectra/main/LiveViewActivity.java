@@ -258,7 +258,7 @@ public class LiveViewActivity extends BaseActivity
                 if(messId == AspectraGlobals.eMessageCompleteLine) {
                     int[] data = (int[])inputMessage.obj;
                     int length = data.length;
-                    mPlotViewFragment.updateSinglePlot(0, data);
+                    mPlotViewPresenter.updateSinglePlot(0, data);//TODO:
 //                    mPlotViewFragment.updateSinglePlot(0, data, length);
                     if(AspectraGlobals.mSavePlotInFile){
                         //TODO: run task in controller, the only input: data

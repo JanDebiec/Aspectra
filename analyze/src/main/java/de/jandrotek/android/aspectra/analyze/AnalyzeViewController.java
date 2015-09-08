@@ -31,7 +31,14 @@ public class AnalyzeViewController {
     private int[] mStartIndexNew;
     private int[] mMovement;
 
-    public AnalyzeViewController() {
+    public AnalyzeViewController(int plotCount, PlotViewFragment plotViewFragment,
+                                 PlotViewPresenter plotViewPresenter,
+                                 String nameToEdit, String nameReference) {
+        mItemListSizeAct = plotCount;
+        mPlotViewFragment = plotViewFragment;
+        mPlotViewPresenter = plotViewPresenter;
+        mSpectrumNames[eSpectrumToEdit] = nameToEdit;
+        mSpectrumNames[eSpectrumReference] = nameReference;
         mStartIndexOld = new int[mItemListSizeAct];
         mStartIndexNew = new int[mItemListSizeAct];
         mMovement = new int[mItemListSizeAct];
@@ -41,6 +48,18 @@ public class AnalyzeViewController {
         mSpectrumAbsolutePathNames = new String[mItemListSizeAct];
         mSpectrumToEditValues = new int[mItemListSizeAct][AspectraGlobals.eMaxSpectrumSize];
     }
+
+//    public AnalyzeViewController(int plotCount) {
+//        mItemListSizeAct = plotCount;
+//        mStartIndexOld = new int[mItemListSizeAct];
+//        mStartIndexNew = new int[mItemListSizeAct];
+//        mMovement = new int[mItemListSizeAct];
+//        mSpectrumLength = new int[mItemListSizeAct];
+//        mSpectrumNames = new String[mItemListSizeAct];
+//        mSpectrumToShow = new SpectrumBase[mItemListSizeAct];
+//        mSpectrumAbsolutePathNames = new String[mItemListSizeAct];
+//        mSpectrumToEditValues = new int[mItemListSizeAct][AspectraGlobals.eMaxSpectrumSize];
+//    }
 
     public void init(PlotViewFragment plotViewFragment,
                      PlotViewPresenter plotViewPresenter,

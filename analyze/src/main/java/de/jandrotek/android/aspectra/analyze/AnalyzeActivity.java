@@ -20,6 +20,8 @@ public class AnalyzeActivity extends AppCompatActivity
 {
     public static final String ARG_ITEM_REFERENCE = "item_reference";
     public static final String ARG_ITEM_EDIT = "item_edit";
+    public static final int ePlotCount = 2;
+
 
     //    private AnalyzeFragment mAnalyzeFragment;
     private PlotViewFragment mViewFragment;
@@ -59,12 +61,18 @@ public class AnalyzeActivity extends AppCompatActivity
             }
 
             mViewFragment = PlotViewFragment.newInstance(2);
-            mPlotViewPresenter = new PlotViewPresenter(2, mViewFragment);
+            mPlotViewPresenter = new PlotViewPresenter(ePlotCount, mViewFragment);
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.fragment_analyze_plot_container, mViewFragment)
                     .commit();
-            mViewController = new AnalyzeViewController();
-            mViewController.init(mViewFragment, mPlotViewPresenter, mSpectrumNameToEdit, mSpectrumNameReference);
+            mViewController = new AnalyzeViewControllerBuilder()
+                    .setPlotCount(ePlotCount)
+                    .setPlotViewFragment(mViewFragment)
+                    .setPlotViewPresenter(mPlotViewPresenter)
+                    .setNameToEdit(mSpectrumNameToEdit)
+                    .setNameReference(mSpectrumNameReference)
+                    .createAnalyzeViewController();
+//            mViewController.init(mViewFragment, mPlotViewPresenter, mSpectrumNameToEdit, mSpectrumNameReference);
 
             mTouchView = (TouchView)findViewById(R.id.analyze_touchview_overlay);
         }

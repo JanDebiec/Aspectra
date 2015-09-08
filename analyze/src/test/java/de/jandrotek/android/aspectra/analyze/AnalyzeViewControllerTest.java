@@ -21,7 +21,7 @@ public class AnalyzeViewControllerTest {
     @Before
     public void setUp() throws Exception {
 
-        controller = new AnalyzeViewController();
+        controller = new AnalyzeViewControllerBuilder().createAnalyzeViewController();
         indexOld = new int[2];
     }
 

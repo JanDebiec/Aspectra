@@ -4,7 +4,6 @@ import de.jandrotek.android.aspectra.core.AspectraGlobals;
 import de.jandrotek.android.aspectra.core.SpectrumBase;
 import de.jandrotek.android.aspectra.libplotspectrav3.PlotViewFragment;
 import de.jandrotek.android.aspectra.libplotspectrav3.PlotViewPresenter;
-import de.jandrotek.android.aspectra.libspectrafiles.SpectrumFiles;
 
 /**
  * Controller part for AnalyzeView. In the past, all was in AnalyzeActivity and Fragment
@@ -49,26 +48,31 @@ public class AnalyzeViewController {
         mSpectrumToEditValues = new int[mItemListSizeAct][AspectraGlobals.eMaxSpectrumSize];
     }
 
-//    public AnalyzeViewController(int plotCount) {
-//        mItemListSizeAct = plotCount;
-//        mStartIndexOld = new int[mItemListSizeAct];
-//        mStartIndexNew = new int[mItemListSizeAct];
-//        mMovement = new int[mItemListSizeAct];
-//        mSpectrumLength = new int[mItemListSizeAct];
-//        mSpectrumNames = new String[mItemListSizeAct];
-//        mSpectrumToShow = new SpectrumBase[mItemListSizeAct];
-//        mSpectrumAbsolutePathNames = new String[mItemListSizeAct];
-//        mSpectrumToEditValues = new int[mItemListSizeAct][AspectraGlobals.eMaxSpectrumSize];
-//    }
-
-    public void init(PlotViewFragment plotViewFragment,
-                     PlotViewPresenter plotViewPresenter,
-                     String nameToEdit, String nameReference) {
-        mPlotViewFragment = plotViewFragment;
-        mPlotViewPresenter = plotViewPresenter;
-        mSpectrumNames[eSpectrumToEdit] = nameToEdit;
-        mSpectrumNames[eSpectrumReference] = nameReference;
+    /**
+     * consructor used only in UnitTest
+     *
+     * @param plotCount
+     */
+    public AnalyzeViewController(int plotCount) {
+        mItemListSizeAct = plotCount;
+        mStartIndexOld = new int[mItemListSizeAct];
+        mStartIndexNew = new int[mItemListSizeAct];
+        mMovement = new int[mItemListSizeAct];
+        mSpectrumLength = new int[mItemListSizeAct];
+        mSpectrumNames = new String[mItemListSizeAct];
+        mSpectrumToShow = new SpectrumBase[mItemListSizeAct];
+        mSpectrumAbsolutePathNames = new String[mItemListSizeAct];
+        mSpectrumToEditValues = new int[mItemListSizeAct][AspectraGlobals.eMaxSpectrumSize];
     }
+
+//    public void init(PlotViewFragment plotViewFragment,
+//                     PlotViewPresenter plotViewPresenter,
+//                     String nameToEdit, String nameReference) {
+//        mPlotViewFragment = plotViewFragment;
+//        mPlotViewPresenter = plotViewPresenter;
+//        mSpectrumNames[eSpectrumToEdit] = nameToEdit;
+//        mSpectrumNames[eSpectrumReference] = nameReference;
+//    }
 
     public void initDisplayInFragment() {
         mPlotViewFragment.createPlotSeries();

@@ -1,7 +1,7 @@
 /**
  * 14.03.2015 source in Github
  */
-package de.jandrotek.android.aspectra.viewer;
+package de.jandrotek.android.aspectra.libplotspectrav3;
 
 import java.util.ArrayList;
 
@@ -18,7 +18,7 @@ import de.jandrotek.android.aspectra.libspectrafiles.SpectrumFiles;
 public class PlotViewController
 {
     private PlotViewFragment mPlotViewFragment;
-    private PlotViewPresenter mPlotViewPresenter;
+    public PlotViewPresenter mPlotViewPresenter;
 
     private ArrayList<String> mItems = null;
     private String[] mFileNames = null;
@@ -31,12 +31,14 @@ public class PlotViewController
     private int mDataLengthMax = 0;
     private int mIndex = -1;
 
-    public PlotViewController(int param1, ArrayList<String> items) {
+    public PlotViewController(int param1, ArrayList<String> items, int intemsCount) {
         if (param1 == AspectraGlobals.ACT_ITEM_VIEW_PLOT) {
             if (items != null) {
                 mItems = items;
                 mItemlistSizeAct = mItems.size();
 //                mItemlistSizeNew = mItems.size();
+            } else {
+                mItemlistSizeAct = intemsCount;
             }
         }
     }
@@ -66,20 +68,24 @@ public class PlotViewController
             mFilesDataLength = new int[mItemlistSizeAct];
             int i = 0;
 
-            for (String item : mItems) {
+            if (mItems != null) {
+                for (String item : mItems) {
 
-                // load file specified in mItem.content
-                String fileName = item;
-                mFileNames[i] = SpectrumFiles.mPath + "/" + fileName;
-                mSpectrumFiles[i] = new SpectrumBase(mFileNames[i]);
-                try {
-                    mFilesDataLength[i] = mSpectrumFiles[i].readValuesFromFile();
-                    mFilesIntValues[i] = mSpectrumFiles[i].getValues();
+                    // load file specified in mItem.content
+                    String fileName = item;
+                    mFileNames[i] = SpectrumFiles.mPath + "/" + fileName;
+                    mSpectrumFiles[i] = new SpectrumBase(mFileNames[i]);
+                    try {
+                        mFilesDataLength[i] = mSpectrumFiles[i].readValuesFromFile();
+                        mFilesIntValues[i] = mSpectrumFiles[i].getValues();
 
-                } catch (Exception e) {
-                    e.printStackTrace();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    i++;
                 }
-                i++;
+            } else {
+                mFilesIntValues[i] = new int[AspectraGlobals.eMaxSpectrumSize];
             }
             mDataLengthMax = findMaxDataLength();
         }

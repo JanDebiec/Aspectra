@@ -18,6 +18,8 @@ import java.util.ArrayList;
 
 import de.jandrotek.android.aspectra.core.AspectraGlobals;
 import de.jandrotek.android.aspectra.core.SpectrumAsp;
+import de.jandrotek.android.aspectra.libplotspectrav3.PlotViewController;
+import de.jandrotek.android.aspectra.libplotspectrav3.PlotViewControllerBuilder;
 import de.jandrotek.android.aspectra.libplotspectrav3.PlotViewFragment;
 import de.jandrotek.android.aspectra.libplotspectrav3.PlotViewPresenter;
 import de.jandrotek.android.aspectra.libspectrafiles.SpectrumFiles;
@@ -41,6 +43,7 @@ public class LiveViewActivity extends BaseActivity
 
     private static int mPreviewWidthX;
     private static int mPreviewHeightY;
+    private PlotViewController mPlotViewController;
 
     public Handler getHandler() {
         return mHandler;
@@ -58,24 +61,20 @@ public class LiveViewActivity extends BaseActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ArrayList<String> dummyItems = null;
+        mPlotViewController = new PlotViewControllerBuilder().setParam1(AspectraGlobals.ACT_ITEM_VIEW_PLOT).createPlotViewController();
         setContentView(R.layout.activity_live_view);
         if (savedInstanceState == null) {
             mCameraViewFragment = CameraViewFragment.newInstance( AspectraGlobals.ACT_ITEM_LIVE_VIEW);
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.fragmentHolderCameraView, mCameraViewFragment)
                     .commit();
-//<<<<<<< HEAD
-//            mPlotViewFragment = PlotViewFragment.newInstance(AspectraGlobals.ACT_ITEM_LIVE_VIEW, dummyItems);
-//=======
             mPlotViewFragment = PlotViewFragment.newInstance(1);
-//            mPlotViewFragment = PlotViewFragment.newInstance(AspectraGlobals.ACT_ITEM_LIVE_VIEW, dummyItems);
-//>>>>>>> 1cda1a3... back on master, after rescue, can be build and run
+            mPlotViewController.init(mPlotViewFragment);
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.fvPlotView, mPlotViewFragment)
                     .commit();
         }
-        mPlotViewPresenter = new PlotViewPresenter(1, mPlotViewFragment);
-
+        mPlotViewPresenter = mPlotViewController.mPlotViewPresenter;
         updateFromPreferences();
     }
 
@@ -156,6 +155,7 @@ public class LiveViewActivity extends BaseActivity
         updateFromPreferences();
         mSpectrumFiles.setFileFolder(mFileFolder);
         mSpectrumFiles.setFileExt(mFileExt);
+        mPlotViewController.initDisplayInFragment();// must be called when fragment already exists
     }
 
     //@Override
@@ -259,7 +259,7 @@ public class LiveViewActivity extends BaseActivity
                     int[] data = (int[])inputMessage.obj;
                     int length = data.length;
                     mPlotViewPresenter.updateSinglePlot(0, data);//TODO:
-//                    mPlotViewFragment.updateSinglePlot(0, data, length);
+                    mPlotViewPresenter.updateFragmentPort(0, length);
                     if(AspectraGlobals.mSavePlotInFile){
                         //TODO: run task in controller, the only input: data
                         // but to make a toast we need fileName

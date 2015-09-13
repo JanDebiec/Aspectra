@@ -29,10 +29,9 @@ import de.jandrotek.android.aspectra.core.AspectraGlobals;
  * PlotViewController
  */
 public class PlotViewFragment extends Fragment
-    implements         View.OnCreateContextMenuListener
-{
+        implements View.OnCreateContextMenuListener {
     private static PlotViewFragment mFragment = null;
-        // TODO: Rename parameter arguments, choose names that match
+    // TODO: Rename parameter arguments, choose names that match
     private static final String ARG_PARAM1 = "param1";
 
     private static int mMaxValueY = 4096;
@@ -51,7 +50,7 @@ public class PlotViewFragment extends Fragment
     private GraphViewSeries.GraphViewSeriesStyle[] mGraphStyle;
     private GraphViewData[][] realData = null;
 
-//    private OnFragmentInteractionListener mListener;
+    //    private OnFragmentInteractionListener mListener;
     private ArrayList<String> mItems;
     //    private int[][] mFileIntValues;
     private int[] mFileDataLength;
@@ -67,12 +66,12 @@ public class PlotViewFragment extends Fragment
      * @return A new instance of fragment PlotViewFragment.
      */
     public static PlotViewFragment newInstance(int param1) {
-       if(mFragment == null) {
-           mFragment = new PlotViewFragment();
-       }
-           Bundle args = new Bundle();
-           args.putInt(ARG_PARAM1, param1);
-           mFragment.setArguments(args);
+        if (mFragment == null) {
+            mFragment = new PlotViewFragment();
+        }
+        Bundle args = new Bundle();
+        args.putInt(ARG_PARAM1, param1);
+        mFragment.setArguments(args);
         return mFragment;
     }
 
@@ -133,8 +132,6 @@ public class PlotViewFragment extends Fragment
     public void createPlotSeries() {// or here
         for (int i = 0; i < mParam1; i++) {
             int colorIndex = i % 3;
-//            realData[i] = generateDemoData();
-//            GraphViewSeries mDataSeries;
 
             mDataSeries[i] = new GraphViewSeries(
                     "",
@@ -151,7 +148,7 @@ public class PlotViewFragment extends Fragment
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        mInitialized = false;
+//        mInitialized = false;
     }
 
     @Override
@@ -163,7 +160,7 @@ public class PlotViewFragment extends Fragment
     @Override
     public void onResume() {
         super.onResume();
-        mInitialized = false;
+//        mInitialized = false;
     }
 
     //TODO will not working
@@ -184,7 +181,7 @@ public class PlotViewFragment extends Fragment
         return result;
     }
 
-    private boolean performActions(MenuItem item){
+    private boolean performActions(MenuItem item) {
         return true;
     }
 
@@ -206,6 +203,10 @@ public class PlotViewFragment extends Fragment
         mGraphView.setManualYAxisBounds(mMaxValueY, 0);
     }
 
+    public void updateGraphViewPort(int start, int end) {
+
+        mGraphView.setViewPort(start, end);
+    }
 //    //TODO: check the index boundaries, move to presenter
 //    private void generateData(int index, int[] data, int length) {
 //        int realLength;

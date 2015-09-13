@@ -36,6 +36,9 @@ public class PlotViewPresenter {
             realPlotDataSize = length;
         }
         GraphView.GraphViewData[] realData = generateData(index, mFileIntValues[index], length);
+        if (!mFragment.mInitialized) {
+            mFragment.createPlotSeries();
+        }
         mFragment.mDataSeries[index].resetData(realData);// in live view, here we get null exception
 //        }
     }

@@ -57,6 +57,7 @@ public class PlotViewFragment extends Fragment
     private int[] mFileDataLength;
     private int mItemlistSize = 0;
     private int[] mColor;
+    public boolean mInitialized = false;
 
     /**
      * Use this factory method to create a new instance of
@@ -142,6 +143,7 @@ public class PlotViewFragment extends Fragment
             mGraphView.addSeries(mDataSeries[i]);
         }
         realPlotDataSize = 0;
+        mInitialized = true;
 //        mGraphView.setViewPort(0, mDataLengthMax);
     }
 
@@ -149,16 +151,19 @@ public class PlotViewFragment extends Fragment
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
+        mInitialized = false;
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
+        mInitialized = false;
     }
 
     @Override
     public void onResume() {
         super.onResume();
+        mInitialized = false;
     }
 
     //TODO will not working

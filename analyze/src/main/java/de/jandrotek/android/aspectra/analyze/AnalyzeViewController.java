@@ -4,6 +4,7 @@ import de.jandrotek.android.aspectra.core.AspectraGlobals;
 import de.jandrotek.android.aspectra.core.SpectrumBase;
 import de.jandrotek.android.aspectra.libplotspectrav3.PlotViewFragment;
 import de.jandrotek.android.aspectra.libplotspectrav3.PlotViewPresenter;
+import de.jandrotek.android.aspectra.libspectrafiles.SpectrumFiles;
 
 /**
  * Controller part for AnalyzeView. In the past, all was in AnalyzeActivity and Fragment

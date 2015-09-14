@@ -2,7 +2,8 @@ ext {
     //Version
     supportLibrary = '22.2.0'
 
-    buildToolsVersion = '23'
+    buildToolsVersion = '23.0.1'
+//    buildToolsVersion = '23'
     compileSdkVersion = '22'
 
     tools = [

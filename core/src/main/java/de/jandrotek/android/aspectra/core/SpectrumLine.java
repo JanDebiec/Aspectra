@@ -1,4 +1,4 @@
-package com.jandrotek.android.aspectra.lib;
+package de.jandrotek.android.aspectra.core;
 
 import java.util.List;
 
@@ -8,7 +8,7 @@ import java.util.List;
 public class SpectrumLine {
     private int mSize = 0;
     private int[] mLine = null;
-    private List<com.jandrotek.android.aspectra.lib.Peak> mPeakList;
+    private List<de.jandrotek.android.aspectra.core.Peak> mPeakList;
 
     public SpectrumLine(int[] inputLine){
         mLine = inputLine;

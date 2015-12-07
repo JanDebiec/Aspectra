@@ -126,6 +126,9 @@ public class AnalyzeListActivity extends ActionBarActivity
         return false;
     }
 
+    //TODO:
+    // add check if RefSpectrum defined.
+    // if not, show a toast
     @Override
     public void onItemSelected(Map<String, String> spectraNames) {
 //        if (mTwoPane) {

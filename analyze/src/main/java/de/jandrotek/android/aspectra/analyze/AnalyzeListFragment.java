@@ -146,6 +146,14 @@ public class AnalyzeListFragment extends ListFragment {
         execOnClick(position);
     }
 
+    /**
+     * TODO:
+     * on short click, item wirll be selected to analyze
+     * on long click: options menu:
+     * set as reference, delete, ...
+     *
+     * @param position
+     */
     private void execOnClick(int position) {
         Map<String, String> spectraNames = new HashMap<>();
         ListContent.SpectrumItem spectrum = ListContent.getItem(position);

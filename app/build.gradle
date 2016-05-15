@@ -1,5 +1,15 @@
 apply plugin: 'com.android.application'
 
+def gitVersion() {
+    if (!System.getenv('CI_BUILD')) {
+        // don't care
+        return 1
+    }
+    def cmd = 'git rev-list HEAD --first-parent --count'
+    cmd.execute().text.trim().toInteger()
+}
+
+
 android {
     compileSdkVersion 22
 //    buildToolsVersion "22.0.1"
@@ -10,7 +20,8 @@ android {
         applicationId "de.jandrotek.android.aspectra.mini"
         minSdkVersion 15
         targetSdkVersion 22
-        versionCode 1
+//        versionCode 1
+        versionCode gitVersion()
         versionName "1.0"
     }
     buildTypes {

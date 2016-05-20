@@ -24,7 +24,8 @@
             android:name="de.jandrotek.android.aspectra.main.LiveViewActivity"
             android:configChanges="orientation|screenSize"
             android:label="@string/app_name"
-            android:screenOrientation="landscape" >
+            android:screenOrientation="user"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -40,5 +41,4 @@
             android:label="@string/title_activity_global_prefs" >
         </activity>
     </application>
-    AspectraGlobalPrefsActivity
 </manifest>

@@ -61,8 +61,19 @@ public class LiveViewActivity extends BaseActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ArrayList<String> dummyItems = null;
+        //TODO call prefs, to see which orientation should we use,
+        // configure proper elements to work portrait or landscape mode
+        // separate decide, how spectrum should be calculated, in X or in Y from camera view
+
+        updateFromPreferences();
         mPlotViewController = new PlotViewControllerBuilder().setParam1(AspectraGlobals.ACT_ITEM_VIEW_PLOT).createPlotViewController();
         setContentView(R.layout.activity_live_view);
+
+        if(mScreenLandscapeOrientation){
+
+        } else {
+
+        }
         if (savedInstanceState == null) {
             mCameraViewFragment = CameraViewFragment.newInstance( AspectraGlobals.ACT_ITEM_LIVE_VIEW);
             getSupportFragmentManager().beginTransaction()
@@ -75,7 +86,6 @@ public class LiveViewActivity extends BaseActivity
                     .commit();
         }
         mPlotViewPresenter = mPlotViewController.mPlotViewPresenter;
-        updateFromPreferences();
     }
 
     //TODO: set proper handling of configuration: portrait/landscape

@@ -25,6 +25,7 @@ public class AspectraLiveViewPrefs {
     private static String mPREFS_KEY_SPECTRA_BASEPATH;
     private static String mPREFS_KEY_SPECTRA_LENGTH;
     private static String mPREFS_KEY_SPECTRA_EXTENSION;
+    private static String mPREFS_KEY_ORIENTATION;
 
     //DEFAULTs
 //    private String mDefaultWidthStart;
@@ -33,14 +34,25 @@ public class AspectraLiveViewPrefs {
 //    private String mDefaultHeightEnd;
 //    private String mDefaultScanAreaWidth;
 //    private String mDefaultSpectraLength;
-    private String mDefaultSpectraBasePath;
-    private String mDefaultSpectraExtension;
+//    private String mDefaultSpectraBasePath;
+//    private String mDefaultSpectraExtension;
+//    private String mDefaultLanscapeOrientation;
 
     //values
     private int mPrefsWidthStart;
     private int mPrefsWidthEnd;
     private int mPrefsHeightStart;
     private int mPrefsHeightEnd;
+
+    public boolean isPrefsLanscapeOrientation() {
+        return mPrefsLanscapeOrientation;
+    }
+
+    public void setPrefsLanscapeOrientation(boolean mPrefsLanscapeOrientation) {
+        this.mPrefsLanscapeOrientation = mPrefsLanscapeOrientation;
+    }
+
+    private boolean mPrefsLanscapeOrientation;
 
     private int mPrefsSpectraLength;
     private String mPrefsSpectraBasePath;
@@ -125,6 +137,9 @@ public class AspectraLiveViewPrefs {
         String mDefaultHeightEnd;
         String mDefaultScanAreaWidth;
         String mDefaultSpectraLength;
+        String mDefaultSpectraExtension;
+        String mDefaultSpectraBasePath;
+        String mDefaultLanscapeOrientation;
 
         mDefaultWidthStart = mContext.getResources().getString(R.string.DEFAULT_WIDTH_START);
         mPREFS_KEY_WIDTH_START =  mContext.getResources().getString(R.string.PREFS_KEY_WIDTH_START);
@@ -159,6 +174,9 @@ public class AspectraLiveViewPrefs {
         mPREFS_KEY_SPECTRA_EXTENSION =  mContext.getResources().getString(R.string.PREFS_KEY_SPECTRA_EXTENSION);
         this.mPrefsSpectraExt = mPrefs.getString(mPREFS_KEY_SPECTRA_EXTENSION, mDefaultSpectraExtension);
 
+        mDefaultLanscapeOrientation = "false";
+        mPREFS_KEY_ORIENTATION = mContext.getResources().getString(R.string.PREFS_KEY_ORIENTATION);
+        mPrefsLanscapeOrientation = Boolean.parseBoolean(mPrefs.getString(mPREFS_KEY_ORIENTATION, mDefaultLanscapeOrientation));
     }
 
     public void saveSettings(){
@@ -188,13 +206,10 @@ public class AspectraLiveViewPrefs {
         editor.putString(mPREFS_KEY_SPECTRA_LENGTH, Integer.toString(mPrefsSpectraLength));
         editor.apply();
 
-//        mPREFS_KEY_SPECTRA_BASEPATH =  mContext.getResources().getString(R.string.PREFS_KEY_SPECTRA_BASEPATH);
-//        editor.putString(mPREFS_KEY_SPECTRA_BASEPATH, (mDefaultSpectraBasePath));
-//        editor.apply();
-//
-//        mPREFS_KEY_SPECTRA_EXTENSION =  mContext.getResources().getString(R.string.PREFS_KEY_SPECTRA_EXTENSION);
-//        editor.putString(mPREFS_KEY_SPECTRA_EXTENSION, (mDefaultSpectraExtension));
-//        editor.apply();
+        mPREFS_KEY_ORIENTATION = mContext.getResources().getString(R.string.PREFS_KEY_ORIENTATION);
+        editor.putString(mPREFS_KEY_ORIENTATION, Boolean.toString(mPrefsLanscapeOrientation));
+        editor.apply();
+
     }
 }
 

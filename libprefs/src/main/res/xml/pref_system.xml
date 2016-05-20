@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <CheckBoxPreference
+        android:key="@string/PREFS_KEY_ORIENTATION"
+        android:title="@string/pref_orientation"
+        android:summary="@string/pref_orientation_summ"
+        android:defaultValue="true" />
     <EditTextPreference
         android:key="@string/PREFS_KEY_FOLDER_NAME"
         android:title="@string/pref_title_folder_name"
@@ -13,6 +18,7 @@
     <EditTextPreference
         android:key="@string/PREFS_KEY_EXTENSION_NAME"
         android:title="@string/pref_title_extension_name"
+        android:summary="@string/pref_extension_summ"
         android:defaultValue="@string/DEFAULT_EXTENSION_NAME"
         android:selectAllOnFocus="true"
         android:inputType="text"

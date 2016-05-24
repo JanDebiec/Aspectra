@@ -54,7 +54,7 @@ public class ViewConfigActivity extends BaseActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_view_config);
+        setContentView(R.layout.activity_view_config_landscape);
 
         mViewSettings = ConfigViewSettings.getInstance();
 

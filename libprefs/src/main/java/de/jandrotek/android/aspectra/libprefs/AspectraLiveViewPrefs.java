@@ -47,6 +47,16 @@ public class AspectraLiveViewPrefs {
     private String mPrefsSpectraExt;
     private int mPrefsScanAreaWidth;
 
+    public boolean isPrefsLandscapeCameraOrientation() {
+        return mPrefsLandscapeCameraOrientation;
+    }
+
+    public void setPrefsLandscapeCameraOrientation(boolean prefsLandscapeCameraOrientation) {
+        mPrefsLandscapeCameraOrientation = prefsLandscapeCameraOrientation;
+    }
+
+    private boolean mPrefsLandscapeCameraOrientation;
+
     public int getPrefsWidthStart() {
         return mPrefsWidthStart;
     }

@@ -61,8 +61,14 @@ public class LiveViewActivity extends BaseActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ArrayList<String> dummyItems = null;
+
+        updateOrientationFromPrefs();
+        if (mLanscapeOrientation) {
+            setContentView(R.layout.activity_live_view_landscape);
+        } else {
+            setContentView(R.layout.activity_live_view_portrait);
+        }
         mPlotViewController = new PlotViewControllerBuilder().setParam1(AspectraGlobals.ACT_ITEM_VIEW_PLOT).createPlotViewController();
-        setContentView(R.layout.activity_live_view);
         if (savedInstanceState == null) {
             mCameraViewFragment = CameraViewFragment.newInstance( AspectraGlobals.ACT_ITEM_LIVE_VIEW);
             getSupportFragmentManager().beginTransaction()

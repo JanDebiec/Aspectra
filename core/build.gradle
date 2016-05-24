@@ -1,5 +1,8 @@
 apply plugin: 'java'
 
+targetCompatibility = "1.7"
+sourceCompatibility = "1.7"
+
 repositories {
     mavenCentral()
 }
@@ -27,5 +30,5 @@ test {
 
 dependencies {
     compile files('libs/common-lang3.jar')
-    testCompile 'junit:junit:4.+'
+//    testCompile 'junit:junit:4.+'
 }

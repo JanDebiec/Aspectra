@@ -26,7 +26,7 @@ public class BaseActivity extends AppCompatActivity //ActionBarActivity
     protected String mFileFolder;
     protected String mFileExt;
     protected SpectrumFiles mSpectrumFiles;
-    protected boolean mScreenLandscapeOrientation = false;
+    protected boolean mLanscapeOrientation = false;
 
     protected boolean mCameraPresent = false;
 
@@ -93,8 +93,12 @@ public class BaseActivity extends AppCompatActivity //ActionBarActivity
         // used by all activities
         mFileFolder = mAspectraSettings.getPrefsSpectraBasePath();
         mFileExt = mAspectraSettings.getPrefsSpectraExt();
-        mScreenLandscapeOrientation = mAspectraSettings.isPrefsLanscapeOrientation();
+        mLanscapeOrientation = mAspectraSettings.isPrefsLandscapeCameraOrientation();
         // the rest is updated local
+    }
+
+    protected void updateOrientationFromPrefs() {
+        mLanscapeOrientation = mAspectraSettings.isPrefsLandscapeCameraOrientation();
     }
 
 }

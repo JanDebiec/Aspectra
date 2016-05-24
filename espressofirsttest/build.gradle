@@ -28,6 +28,7 @@ android {
     }
 //    }
 
+    buildToolsVersion '23.0.2'
 }
 
 dependencies {

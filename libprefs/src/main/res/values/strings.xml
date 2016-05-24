@@ -38,6 +38,7 @@
     <string name="PREFS_KEY_ORIENTATION">PREFS_KEY_ORIENTATION</string>
     <string name="pref_orientation_summ">checked for landscape screen orientation</string>
     <string name="pref_extension_summ">to recognize by aspectra-viewer</string>
+    <string name="pref_camera_orientation_title">Lanscape orientation of spectrograph</string>
 
 
 </resources>

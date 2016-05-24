@@ -65,15 +65,14 @@ public class LiveViewActivity extends BaseActivity
         // configure proper elements to work portrait or landscape mode
         // separate decide, how spectrum should be calculated, in X or in Y from camera view
 
-        updateFromPreferences();
-        mPlotViewController = new PlotViewControllerBuilder().setParam1(AspectraGlobals.ACT_ITEM_VIEW_PLOT).createPlotViewController();
-        setContentView(R.layout.activity_live_view);
 
-        if(mScreenLandscapeOrientation){
-
+        updateOrientationFromPrefs();
+        if (mLanscapeOrientation) {
+            setContentView(R.layout.activity_live_view_landscape);
         } else {
-
+            setContentView(R.layout.activity_live_view_portrait);
         }
+        mPlotViewController = new PlotViewControllerBuilder().setParam1(AspectraGlobals.ACT_ITEM_VIEW_PLOT).createPlotViewController();
         if (savedInstanceState == null) {
             mCameraViewFragment = CameraViewFragment.newInstance( AspectraGlobals.ACT_ITEM_LIVE_VIEW);
             getSupportFragmentManager().beginTransaction()

@@ -151,7 +151,8 @@ public class AspectraLiveViewPrefs {
 
         mDefaultLandscapeOrientation = mContext.getResources().getString(R.string.DEFAULT_KEY_LANDSCAPE_ORIENTATION);
         mPREFS_KEY_LANSCAPE_ORIENTATION = mContext.getResources().getString(R.string.PREFS_KEY_LANDSCAPE_ORIENTATION);
-        this.mPrefsLandscapeCameraOrientation = Boolean.parseBoolean(mPrefs.getString(mPREFS_KEY_LANSCAPE_ORIENTATION, mDefaultLandscapeOrientation));
+        this.mPrefsLandscapeCameraOrientation = mPrefs.getBoolean(mPREFS_KEY_LANSCAPE_ORIENTATION, Boolean.parseBoolean(mDefaultLandscapeOrientation));
+//                Boolean.parseBoolean(mPrefs.getString(mPREFS_KEY_LANSCAPE_ORIENTATION, mDefaultLandscapeOrientation));
 
         mDefaultFolderName = mContext.getResources().getString(R.string.DEFAULT_FOLDER_NAME);
         mPREFS_KEY_FOLDER_NAME = mContext.getResources().getString(R.string.PREFS_KEY_FOLDER_NAME);

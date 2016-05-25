@@ -91,8 +91,8 @@ public class BaseActivity extends AppCompatActivity //ActionBarActivity
     protected void updateFromPreferences() {
         mAspectraSettings.loadSettings();
         // used by all activities
-        mFileFolder = mAspectraSettings.getPrefsSpectraBasePath();
-        mFileExt = mAspectraSettings.getPrefsSpectraExt();
+        mFileFolder = mAspectraSettings.getPrefsSaveFolderName();
+        mFileExt = mAspectraSettings.getPrefsExtensionName();
         mLanscapeOrientation = mAspectraSettings.isPrefsLandscapeCameraOrientation();
         // the rest is updated local
     }

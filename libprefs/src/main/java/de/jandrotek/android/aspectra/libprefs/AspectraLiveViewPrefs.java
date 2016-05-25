@@ -27,6 +27,8 @@ public class AspectraLiveViewPrefs {
     private static String mPREFS_KEY_SCAN_AREA_WIDTH;
     private static String mPREFS_KEY_SPECTRA_LENGTH;
     private static String mPREFS_KEY_LANSCAPE_ORIENTATION;
+    private static String mPREFS_KEY_FOLDER_NAME;
+    private static String mPREFS_KEY_EXTENSION_NAME;
 
     //values
     private int mPrefsWidthStart;
@@ -34,6 +36,17 @@ public class AspectraLiveViewPrefs {
     private int mPrefsHeightStart;
     private int mPrefsHeightEnd;
     private boolean mPrefsLandscapeCameraOrientation;
+
+    public String getPrefsExtensionName() {
+        return mPrefsExtensionName;
+    }
+
+    public String getPrefsSaveFolderName() {
+        return mPrefsSaveFolderName;
+    }
+
+    private String mPrefsExtensionName;
+    private String mPrefsSaveFolderName;
 
     private int mPrefsSpectraLength;
     private int mPrefsScanAreaWidth;
@@ -109,6 +122,8 @@ public class AspectraLiveViewPrefs {
         String mDefaultScanAreaWidth;
         String mDefaultSpectraLength;
         String mDefaultLandscapeOrientation;
+        String mDefaultFolderName;
+        String mDefaultExtensionName;
 
         mDefaultWidthStart = mContext.getResources().getString(R.string.DEFAULT_WIDTH_START);
         mPREFS_KEY_WIDTH_START =  mContext.getResources().getString(R.string.PREFS_KEY_WIDTH_START);
@@ -137,6 +152,14 @@ public class AspectraLiveViewPrefs {
         mDefaultLandscapeOrientation = mContext.getResources().getString(R.string.DEFAULT_KEY_LANDSCAPE_ORIENTATION);
         mPREFS_KEY_LANSCAPE_ORIENTATION = mContext.getResources().getString(R.string.PREFS_KEY_LANDSCAPE_ORIENTATION);
         this.mPrefsLandscapeCameraOrientation = Boolean.parseBoolean(mPrefs.getString(mPREFS_KEY_LANSCAPE_ORIENTATION, mDefaultLandscapeOrientation));
+
+        mDefaultFolderName = mContext.getResources().getString(R.string.DEFAULT_FOLDER_NAME);
+        mPREFS_KEY_FOLDER_NAME = mContext.getResources().getString(R.string.PREFS_KEY_FOLDER_NAME);
+        this.mPrefsSaveFolderName = mPrefs.getString(mPREFS_KEY_FOLDER_NAME, mDefaultFolderName);
+
+        mDefaultExtensionName = mContext.getResources().getString(R.string.DEFAULT_EXTENSION_NAME);
+        mPREFS_KEY_EXTENSION_NAME = mContext.getResources().getString(R.string.PREFS_KEY_EXTENSION_NAME);
+        this.mPrefsSaveFolderName = mPrefs.getString(mPREFS_KEY_EXTENSION_NAME, mDefaultExtensionName);
     }
 
     public void saveSettings(){

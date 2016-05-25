@@ -36,6 +36,7 @@ public class AspectraLiveViewPrefs {
     private int mPrefsHeightStart;
     private int mPrefsHeightEnd;
     private boolean mPrefsLandscapeCameraOrientation;
+    private String mPrefsLandscapeCameraOrientationString;
 
     public String getPrefsExtensionName() {
         return mPrefsExtensionName;
@@ -121,7 +122,7 @@ public class AspectraLiveViewPrefs {
         String mDefaultHeightEnd;
         String mDefaultScanAreaWidth;
         String mDefaultSpectraLength;
-        String mDefaultLandscapeOrientation;
+        String mStrDefaultLandscapeOrientation;
         String mDefaultFolderName;
         String mDefaultExtensionName;
 
@@ -149,9 +150,10 @@ public class AspectraLiveViewPrefs {
         mPREFS_KEY_SPECTRA_LENGTH =  mContext.getResources().getString(R.string.PREFS_KEY_SPECTRA_LENGTH);
         this.mPrefsSpectraLength = Integer.parseInt(mPrefs.getString(mPREFS_KEY_SPECTRA_LENGTH, mDefaultSpectraLength));
 
-        mDefaultLandscapeOrientation = mContext.getResources().getString(R.string.DEFAULT_KEY_LANDSCAPE_ORIENTATION);
+        mStrDefaultLandscapeOrientation = mContext.getResources().getString(R.string.DEFAULT_KEY_LANDSCAPE_ORIENTATION);
         mPREFS_KEY_LANSCAPE_ORIENTATION = mContext.getResources().getString(R.string.PREFS_KEY_LANDSCAPE_ORIENTATION);
-        this.mPrefsLandscapeCameraOrientation = mPrefs.getBoolean(mPREFS_KEY_LANSCAPE_ORIENTATION, Boolean.parseBoolean(mDefaultLandscapeOrientation));
+        this.mPrefsLandscapeCameraOrientationString = mPrefs.getString(mPREFS_KEY_LANSCAPE_ORIENTATION,mStrDefaultLandscapeOrientation);
+        this.mPrefsLandscapeCameraOrientation = Boolean.getBoolean(mPrefsLandscapeCameraOrientationString);
 //                Boolean.parseBoolean(mPrefs.getString(mPREFS_KEY_LANSCAPE_ORIENTATION, mDefaultLandscapeOrientation));
 
         mDefaultFolderName = mContext.getResources().getString(R.string.DEFAULT_FOLDER_NAME);

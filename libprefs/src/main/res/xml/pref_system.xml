@@ -25,8 +25,8 @@
         android:singleLine="true"
         android:maxLines="1" />
     <CheckBoxPreference
-        android:defaultValue="false"
+        android:defaultValue="@string/DEFAULT_KEY_LANDSCAPE_ORIENTATION"
         android:title="@string/pref_camera_orientation_title"
-        android:key="@string/PREFS_CAMERA_ORIENTATION"/>
+        android:key="@string/PREFS_KEY_LANDSCAPE_ORIENTATION"/>
 
 </PreferenceScreen>

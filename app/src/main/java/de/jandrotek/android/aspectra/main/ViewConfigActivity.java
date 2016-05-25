@@ -54,7 +54,12 @@ public class ViewConfigActivity extends BaseActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_view_config_landscape);
+        updateOrientationFromPrefs();
+        if (mLanscapeOrientation) {
+            setContentView(R.layout.activity_view_config_landscape);
+        } else {
+            setContentView(R.layout.activity_view_config_portrait);
+        }
 
         mViewSettings = ConfigViewSettings.getInstance();
 

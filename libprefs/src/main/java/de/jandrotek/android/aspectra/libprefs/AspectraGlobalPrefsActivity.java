@@ -72,7 +72,7 @@ public class AspectraGlobalPrefsActivity extends PreferenceActivity {
         bindPreferenceSummaryToValue(findPreference(keyFolderName));
         String keyExtensionName = getResources().getString(R.string.PREFS_KEY_EXTENSION_NAME);
         bindPreferenceSummaryToValue(findPreference(keyExtensionName));
-        String keyOrientationName = getResources().getString(R.string.PREFS_CAMERA_ORIENTATION);
+        String keyOrientationName = getResources().getString(R.string.PREFS_KEY_LANDSCAPE_ORIENTATION);
         bindPreferenceSummaryToValue(findPreference(keyOrientationName));
     }
 

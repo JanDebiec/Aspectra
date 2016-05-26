@@ -56,9 +56,9 @@ public class ViewConfigActivity extends BaseActivity
         super.onCreate(savedInstanceState);
         updateOrientationFromPrefs();
         if (mLanscapeOrientation) {
-            setContentView(R.layout.activity_view_config_landscape);
+            setContentView(R.layout.activity_view_config_cam_land);
         } else {
-            setContentView(R.layout.activity_view_config_portrait);
+            setContentView(R.layout.activity_view_config_cam_port);
         }
 
         mViewSettings = ConfigViewSettings.getInstance();

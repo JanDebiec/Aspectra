@@ -68,9 +68,9 @@ public class LiveViewActivity extends BaseActivity
 
         updateOrientationFromPrefs();
         if (mLanscapeOrientation) {
-            setContentView(R.layout.activity_live_view_landscape);
+            setContentView(R.layout.activity_live_view_cam_land);
         } else {
-            setContentView(R.layout.activity_live_view_portrait);
+            setContentView(R.layout.activity_live_view_cam_port);
         }
         mPlotViewController = new PlotViewControllerBuilder().setParam1(AspectraGlobals.ACT_ITEM_VIEW_PLOT).createPlotViewController();
         if (savedInstanceState == null) {
@@ -79,12 +79,12 @@ public class LiveViewActivity extends BaseActivity
                     .add(R.id.fragmentHolderCameraView, mCameraViewFragment)
                     .commit();
             mPlotViewFragment = PlotViewFragment.newInstance(1);
-            mPlotViewController.init(mPlotViewFragment);
+//            mPlotViewController.init(mPlotViewFragment);
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.fvPlotView, mPlotViewFragment)
                     .commit();
         }
-        mPlotViewPresenter = mPlotViewController.mPlotViewPresenter;
+//        mPlotViewPresenter = mPlotViewController.mPlotViewPresenter;
     }
 
     //TODO: set proper handling of configuration: portrait/landscape
@@ -164,6 +164,15 @@ public class LiveViewActivity extends BaseActivity
         updateFromPreferences();
         mSpectrumFiles.setFileFolder(mFileFolder);
         mSpectrumFiles.setFileExt(mFileExt);
+
+        if(mPlotViewFragment == null) {
+            mPlotViewFragment = PlotViewFragment.newInstance(1);
+        }
+        mPlotViewController.init(mPlotViewFragment);
+
+        mPlotViewPresenter = mPlotViewController.mPlotViewPresenter;
+
+
         mPlotViewController.initDisplayInFragment();// must be called when fragment already exists
     }
 

@@ -97,7 +97,7 @@ public class CameraViewFragment extends Fragment {
             mParam2 = getArguments().getInt(ARG_PARAM2);
         }
 
-        mImageProcessing = new ImageProcessing();
+//        mImageProcessing = new ImageProcessing();
         // Find the total number of cameras available
         mNumberOfCameras = Camera.getNumberOfCameras();
 
@@ -286,8 +286,14 @@ public class CameraViewFragment extends Fragment {
 
 
     }
+
+    public void setImageProcessing(ImageProcessing imageProcessing) {
+        mImageProcessing = imageProcessing;
+    }
+
     public void updateBorderPercents() {
 
+        //TODO: move to activity
         if (mImageProcessing != null) {
             mImageProcessing.setStartPercentX(mStartPercentHX);
             mImageProcessing.setEndPercentX(mEndPercentHX);

@@ -23,6 +23,7 @@ import de.jandrotek.android.aspectra.libplotspectrav3.PlotViewControllerBuilder;
 import de.jandrotek.android.aspectra.libplotspectrav3.PlotViewFragment;
 import de.jandrotek.android.aspectra.libplotspectrav3.PlotViewPresenter;
 import de.jandrotek.android.aspectra.libspectrafiles.SpectrumFiles;
+import de.jandrotek.android.aspectra.core.ImageProcessing;
 
 //import de.jandrotek.android.aspectra.libplotspectra.PlotViewFragment_notToUse;
 //import de.jandrotek.android.aspectra.core.FileUtils;
@@ -48,6 +49,8 @@ public class LiveViewActivity extends BaseActivity
     public Handler getHandler() {
         return mHandler;
     }
+
+    private ImageProcessing mImageProcessing;
 
     /**
      * Instances of static inner classes do not hold an implicit
@@ -84,6 +87,9 @@ public class LiveViewActivity extends BaseActivity
                     .add(R.id.fvPlotView, mPlotViewFragment)
                     .commit();
         }
+        mImageProcessing = new ImageProcessing();
+        mCameraViewFragment.setImageProcessing(mImageProcessing);
+
 //        mPlotViewPresenter = mPlotViewController.mPlotViewPresenter;
     }
 
@@ -162,8 +168,8 @@ public class LiveViewActivity extends BaseActivity
     public void onResume(){
         super.onResume();
         updateFromPreferences();
-        mSpectrumFiles.setFileFolder(mFileFolder);
-        mSpectrumFiles.setFileExt(mFileExt);
+//        mSpectrumFiles.setFileFolder(mFileFolder);
+//        mSpectrumFiles.setFileExt(mFileExt);
 
         if(mPlotViewFragment == null) {
             mPlotViewFragment = PlotViewFragment.newInstance(1);
@@ -187,6 +193,9 @@ public class LiveViewActivity extends BaseActivity
             mCameraViewFragment.setScanAreaWidth(mAspectraSettings.getPrefsScanAreaWidth());
             mCameraViewFragment.updateBorderPercents();
         }
+        mSpectrumFiles.setFileFolder(mFileFolder);
+        mSpectrumFiles.setFileExt(mFileExt);
+        //TODO: update ImageProcessing
     }
 
 //    //TODO: refactor: SpectrumAsp as parameter, work should be done in Spectrum

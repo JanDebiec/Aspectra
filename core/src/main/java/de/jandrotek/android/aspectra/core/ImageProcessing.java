@@ -69,7 +69,53 @@ public class ImageProcessing {
 
     }
 
-    public int[] extractBinnedLine(byte[] inputArray)
+    public int[] extractBinnedLine(byte[] inputArray) {
+        if (mOrientationLandscape) {
+            return extractBinnedLineLand(inputArray);
+        } else {
+            return extractBinnedLinePort(inputArray);
+        }
+    }
+
+    //TODO: adapt to spectrum in height
+    private int[] extractBinnedLinePort(byte[] inputArray)
+            throws ArrayIndexOutOfBoundsException {
+        int indexW, index;
+        int indexY;
+
+        try {
+
+            //TODO: move the lines to configuration
+            configureBinningArea();
+
+            index = mIndexStartX + mPictureSizeX * mIndexStartY;
+
+            //first line
+            for (int x = 0; x < mSizeX; x++) {
+
+                mBinnedLine[x] = inputArray[index] & 0xFF;
+                index++;
+            }
+
+            //next lines
+            indexY = mIndexStartY + 1;
+            index = mIndexStartX + mPictureSizeX * indexY;
+            for (int y = 1; y < mSizeY; y++) {
+                for (int x = 0; x < mSizeX; x++) {
+                    mBinnedLine[x] += inputArray[index] & 0xFF;
+                    index++;
+                }
+                indexY++;
+                index = mIndexStartX + mPictureSizeX * indexY;
+            }
+
+        } catch (ArrayIndexOutOfBoundsException e) {
+
+        }
+        return mBinnedLine;
+    }
+
+    private int[] extractBinnedLineLand(byte[] inputArray)
     throws ArrayIndexOutOfBoundsException {
         int indexW, index;
         int indexY;

@@ -124,7 +124,7 @@ public class AspectraLiveViewPrefs {
         String mDefaultSpectraLength;
         String mDefaultFolderName;
         String mDefaultExtensionName;
-        Boolean mDefaultLandscapeOrientation = false;
+//        Boolean mDefaultLandscapeOrientation = false;
 
         mDefaultWidthStart = mContext.getResources().getString(R.string.DEFAULT_WIDTH_START);
         mPREFS_KEY_WIDTH_START =  mContext.getResources().getString(R.string.PREFS_KEY_WIDTH_START);
@@ -152,7 +152,7 @@ public class AspectraLiveViewPrefs {
 
 //        mStrDefaultLandscapeOrientation = mContext.getResources().getString(R.string.DEFAULT_KEY_LANDSCAPE_ORIENTATION);
         mPREFS_KEY_LANSCAPE_ORIENTATION = mContext.getResources().getString(R.string.PREFS_KEY_LANDSCAPE_ORIENTATION);
-        this.mPrefsLandscapeCameraOrientation = mPrefs.getBoolean(mPREFS_KEY_LANSCAPE_ORIENTATION, mDefaultLandscapeOrientation);
+        this.mPrefsLandscapeCameraOrientation = mPrefs.getBoolean(mPREFS_KEY_LANSCAPE_ORIENTATION, true);
 
                 //Boolean.getBoolean(mPrefsLandscapeCameraOrientationString);
 
@@ -193,9 +193,9 @@ public class AspectraLiveViewPrefs {
         editor.apply();
 
 
-        mPREFS_KEY_LANSCAPE_ORIENTATION = mContext.getResources().getString(R.string.PREFS_KEY_LANDSCAPE_ORIENTATION);
-        editor.putString(mPREFS_KEY_LANSCAPE_ORIENTATION, Boolean.toString(mPrefsLandscapeCameraOrientation));
-        editor.apply();
+//        mPREFS_KEY_LANSCAPE_ORIENTATION = mContext.getResources().getString(R.string.PREFS_KEY_LANDSCAPE_ORIENTATION);
+//        editor.putString(mPREFS_KEY_LANSCAPE_ORIENTATION, Boolean.toString(mPrefsLandscapeCameraOrientation));
+//        editor.apply();
 
     }
 }

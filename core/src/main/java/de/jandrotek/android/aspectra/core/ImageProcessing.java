@@ -26,15 +26,15 @@ public class ImageProcessing {
     private int mAxisToBin; // axis "senkrecht" to spectrum
     private int mAxisToCalc; // axis parallel to spectrum
 
-    public boolean isOrientationLandscape() {
-        return mOrientationLandscape;
+    public boolean isSpectrumOrientationLandscape() {
+        return mSpectrumOrientationLandscape;
     }
 
-    public void setOrientationLandscape(boolean orientationLandscape) {
-        mOrientationLandscape = orientationLandscape;
+    public void setSpectrumOrientationLandscape(boolean spectrumOrientationLandscape) {
+        mSpectrumOrientationLandscape = spectrumOrientationLandscape;
     }
 
-    private boolean mOrientationLandscape = true;
+    private boolean mSpectrumOrientationLandscape = true;
 
   //  private SpectrumLine mSpectrumLine;
     private int mSizeX;
@@ -47,11 +47,11 @@ public class ImageProcessing {
 
     private int[] mBinnedLine = null;
 
-    private int mIndexStartX;
-    private int mIndexStartY;
+    private int mIndexStartW;
+    private int mIndexStartH;
     // camera shot dimensions
-    private int mPictureSizeX; // before mPicureWidthX
-    private int mPictureSizeY; // before mPictureSizeY
+    private int mPictureSizeWidth; // before mPicureWidthX
+    private int mPictureSizeHeight; // before mPictureSizeHeight
 
     public ImageProcessing() {
     }
@@ -70,7 +70,7 @@ public class ImageProcessing {
     }
 
     public int[] extractBinnedLine(byte[] inputArray) {
-        if (mOrientationLandscape) {
+        if (mSpectrumOrientationLandscape) {
             return extractBinnedLineLand(inputArray);
         } else {
             return extractBinnedLinePort(inputArray);
@@ -80,34 +80,43 @@ public class ImageProcessing {
     //TODO: adapt to spectrum in height
     private int[] extractBinnedLinePort(byte[] inputArray)
             throws ArrayIndexOutOfBoundsException {
-        int indexW, index;
-        int indexY;
+        int indexW;
+        int indexH;
 
         try {
 
-            //TODO: move the lines to configuration
-            configureBinningArea();
+            // another method:
+            // main loop: every index of spectrum binned line
+            // internal loop:
+            // we add (bin) pixels for every spectrum index
 
-            index = mIndexStartX + mPictureSizeX * mIndexStartY;
-
-            //first line
             for (int x = 0; x < mSizeX; x++) {
-
-                mBinnedLine[x] = inputArray[index] & 0xFF;
-                index++;
-            }
-
-            //next lines
-            indexY = mIndexStartY + 1;
-            index = mIndexStartX + mPictureSizeX * indexY;
-            for (int y = 1; y < mSizeY; y++) {
-                for (int x = 0; x < mSizeX; x++) {
-                    mBinnedLine[x] += inputArray[index] & 0xFF;
-                    index++;
+                for (int y = 0; y < mSizeY; y++) {
+                    ;
                 }
-                indexY++;
-                index = mIndexStartX + mPictureSizeX * indexY;
             }
+
+
+//                indexW = mIndexStartW + mPictureSizeWidth * mIndexStartH;
+//
+//            //first line
+//            for (int x = 0; x < mSizeX; x++) {
+//
+//                mBinnedLine[x] = inputArray[indexW] & 0xFF;
+//                indexW++;
+//            }
+//
+//            //next lines
+//            indexH = mIndexStartH + 1;
+//            indexW = mIndexStartW + mPictureSizeWidth * indexH;
+//            for (int y = 1; y < mSizeY; y++) {
+//                for (int x = 0; x < mSizeX; x++) {
+//                    mBinnedLine[x] += inputArray[indexW] & 0xFF;
+//                    indexW++;
+//                }
+//                indexH++;
+//                indexW = mIndexStartW + mPictureSizeWidth * indexH;
+//            }
 
         } catch (ArrayIndexOutOfBoundsException e) {
 
@@ -117,33 +126,30 @@ public class ImageProcessing {
 
     private int[] extractBinnedLineLand(byte[] inputArray)
     throws ArrayIndexOutOfBoundsException {
-        int indexW, index;
-        int indexY;
+        int indexW;
+        int indexH;
 
         try {
 
-            //TODO: move the lines to configuration
-            configureBinningArea();
-
-            index = mIndexStartX + mPictureSizeX * mIndexStartY;
+            indexW = mIndexStartW + mPictureSizeWidth * mIndexStartH;
 
             //first line
             for (int x = 0; x < mSizeX; x++) {
 
-                mBinnedLine[x] = inputArray[index] & 0xFF;
-                index++;
+                mBinnedLine[x] = inputArray[indexW] & 0xFF;
+                indexW++;
             }
 
             //next lines
-            indexY = mIndexStartY + 1;
-            index = mIndexStartX + mPictureSizeX * indexY;
+            indexH = mIndexStartH + 1;
+            indexW = mIndexStartW + mPictureSizeWidth * indexH;
             for (int y = 1; y < mSizeY; y++) {
                 for (int x = 0; x < mSizeX; x++) {
-                    mBinnedLine[x] += inputArray[index] & 0xFF;
-                    index++;
+                    mBinnedLine[x] += inputArray[indexW] & 0xFF;
+                    indexW++;
                 }
-                indexY++;
-                index = mIndexStartX + mPictureSizeX * indexY;
+                indexH++;
+                indexW = mIndexStartW + mPictureSizeWidth * indexH;
             }
 
         }
@@ -153,19 +159,21 @@ public class ImageProcessing {
         return mBinnedLine;
     }
 
-    private void configureBinningArea() {
-        if (mOrientationLandscape) {
-            mSizeX = mPictureSizeX * (mEndPercentX - mStartPercentX) / 100;
-            //mSizeY = mPictureSizeY * (mEndPercentY - mStartPercentY) / 100;
-            mIndexStartX = mPictureSizeX * mStartPercentX / 100;
-            mIndexStartY = mPictureSizeY * mStartPercentY / 100;
-            if (mBinnedLine == null) {
-                mBinnedLine = new int[mSizeX];
-            } else {
-                mBinnedLine = (int[]) resizeArray(mBinnedLine, mSizeX);
-            }
+    public void configureBinningArea(boolean _SpectrumOrientationLandscape) {
+        mSpectrumOrientationLandscape = _SpectrumOrientationLandscape;
+        if (mSpectrumOrientationLandscape) {
+            mSizeX = mPictureSizeWidth * (mEndPercentX - mStartPercentX) / 100;
+            mIndexStartW = mPictureSizeWidth * mStartPercentX / 100;
+            mIndexStartH = mPictureSizeHeight * mStartPercentY / 100;
         } else {
-
+            mSizeX = mPictureSizeHeight * (mEndPercentX - mStartPercentX) / 100;
+            mIndexStartW = mPictureSizeWidth * mStartPercentY / 100;
+            mIndexStartH = mPictureSizeHeight * mStartPercentX / 100;
+        }
+        if (mBinnedLine == null) {
+            mBinnedLine = new int[mSizeX];
+        } else {
+            mBinnedLine = (int[]) resizeArray(mBinnedLine, mSizeX);
         }
     }
 
@@ -204,12 +212,12 @@ public class ImageProcessing {
         mEndPercentY = endPercentW;
     }
 
-    public void setPictureSizeX(int pictureSizeX) {
-        mPictureSizeX = pictureSizeX;
+    public void setPictureSizeWidth(int pictureSizeWidth) {
+        mPictureSizeWidth = pictureSizeWidth;
     }
 
-    public void setPictureSizeY(int pictureSizeY) {
-        mPictureSizeY = pictureSizeY;
+    public void setPictureSizeHeight(int pictureSizeHeight) {
+        mPictureSizeHeight = pictureSizeHeight;
     }
 
     public void setScanAreaWidth(int scanAreaWidth) {

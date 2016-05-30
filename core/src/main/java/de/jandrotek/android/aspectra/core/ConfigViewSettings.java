@@ -2,10 +2,21 @@ package de.jandrotek.android.aspectra.core;
 
 /**
  * Created by jan on 21.01.15.
+ * changed 30.05.2016
+ * we have dimensions and settings :
+ * X : spectrum length, Y spectrum width
+ * and
+ * width: camera longer side, height: camera shorter side.
+ * For SpectrumLanscapeOrientation:
+ * X == width, Y == height
+ * For SpectrumPortraitOrientation
+ * X == height, Y = width
+
  */
 public class ConfigViewSettings {
 
     private static ConfigViewSettings mInstance = null;
+    private boolean mSpectrumOrientationLandscape = true;
 
     private  boolean mConfViewConfigured = false;
     private  boolean mCamPreviewConfigured = false;
@@ -24,8 +35,8 @@ public class ConfigViewSettings {
 
     private float mAmountLinesY;
 
-    private float[] mWidthPointsX = new float[4];
-    private float[] mHeightPointsY = new float[4];
+    private float[] mCrossPointsW = new float[4];
+    private float[] mCrosstPointsH = new float[4];
 
     public static ConfigViewSettings getInstance(){
         if(mInstance == null) {
@@ -43,27 +54,27 @@ public class ConfigViewSettings {
     }
 
     public float[] getPointsX(){
-        return mWidthPointsX;
+        return mCrossPointsW;
     }
 
     public float[] getPointsY(){
-        return mHeightPointsY;
+        return mCrosstPointsH;
     }
 
-    public void setConfigDimensions(float widthX, float heightY){
+    public void setConfigViewDimensions(float widthX, float heightY) {
         mConfViewConfigured = true;
         mConfigWidthX = widthX;
         mConfigHeightY = heightY;
     }
 
-    public void setPreviewDimensions(int widthX, int heightY){
+    public void setCameraPreviewDimensions(int widthX, int heightY) {
         mCamPreviewConfigured = true;
         mPreviewWidthX = (float)widthX;
         mPreviewHeightY = (float)heightY;
         mHeightEndPercentY = mHeightStartPercentY + (mAmountLinesY * 100) / mPreviewHeightY;
     }
 
-    public void calcXYPoints() {
+    public void calcCrossPoints() {
         float deltaX;
         float deltaY;
         float offsetX = 0.0f;
@@ -73,30 +84,44 @@ public class ConfigViewSettings {
         float faktorK;
         float previewInConfigY;
 
-        deltaX = mPreviewWidthX - mConfigWidthX;
-        if(deltaX > 1.0f) { // prefiewX bigger then configX
-            faktorK = mConfigWidthX / mPreviewWidthX;
-            previewInConfigY = mPreviewHeightY * faktorK;
-            offsetY = (mConfigHeightY - previewInConfigY) / 2;
-            smallerY = previewInConfigY;
+        if (mSpectrumOrientationLandscape) {
+            deltaX = mPreviewWidthX - mConfigWidthX;
+            if (deltaX > 1.0f) { // prefiewX bigger then configX
+                faktorK = mConfigWidthX / mPreviewWidthX;
+                previewInConfigY = mPreviewHeightY * faktorK;
+                offsetY = (mConfigHeightY - previewInConfigY) / 2;
+                smallerY = previewInConfigY;
+            }
+            mCrossPointsW[0] = offsetX;
+            mCrossPointsW[3] = offsetX + smallerX;
+            mCrosstPointsH[0] = offsetY;
+            mCrosstPointsH[3] = offsetY + smallerY;
+
+            mCrossPointsW[1] = offsetX + mWidthStartPercentX * smallerX / 100;
+            mCrossPointsW[2] = offsetX + mWidthEndPercentX * smallerX / 100;
+
+            mCrosstPointsH[1] = offsetY + mHeightStartPercentY * smallerY / 100;
+            mCrosstPointsH[2] = offsetY + mHeightEndPercentY * smallerY / 100;
+        } else {
+//TODO: adapt to spectrum portrait orientation
+            deltaX = mPreviewWidthX - mConfigWidthX;
+            if (deltaX > 1.0f) { // prefiewX bigger then configX
+                faktorK = mConfigWidthX / mPreviewWidthX;
+                previewInConfigY = mPreviewHeightY * faktorK;
+                offsetY = (mConfigHeightY - previewInConfigY) / 2;
+                smallerY = previewInConfigY;
+            }
+            mCrossPointsW[0] = offsetX;
+            mCrossPointsW[3] = offsetX + smallerX;
+            mCrosstPointsH[0] = offsetY;
+            mCrosstPointsH[3] = offsetY + smallerY;
+
+            mCrossPointsW[1] = offsetX + mWidthStartPercentX * smallerX / 100;
+            mCrossPointsW[2] = offsetX + mWidthEndPercentX * smallerX / 100;
+
+            mCrosstPointsH[1] = offsetY + mHeightStartPercentY * smallerY / 100;
+            mCrosstPointsH[2] = offsetY + mHeightEndPercentY * smallerY / 100;
         }
-
-//        deltaY = mConfigHeightY - mPreviewHeightY;
-//        if(deltaY > 1.0f) { // we have offset in X, 1.0f because of roundup error
-//            offsetY = deltaY / 2;
-//            smallerY = mPreviewHeightY;
-//        }
-
-        mWidthPointsX[0] = offsetX;
-        mWidthPointsX[3] = offsetX + smallerX;
-        mHeightPointsY[0] = offsetY;
-        mHeightPointsY[3] = offsetY + smallerY;
-
-        mWidthPointsX[1] = offsetX + mWidthStartPercentX * smallerX / 100;
-        mWidthPointsX[2] = offsetX + mWidthEndPercentX * smallerX / 100;
-
-        mHeightPointsY[1] = offsetY +  mHeightStartPercentY * smallerY / 100;
-        mHeightPointsY[2] = offsetY + mHeightEndPercentY * smallerY / 100;
     }
 
     public void setPercent(float widthStartX, float widthEndX, float heightStartY, float deltaLinesY) {

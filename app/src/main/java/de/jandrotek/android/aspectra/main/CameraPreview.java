@@ -162,8 +162,8 @@ public class CameraPreview  extends ViewGroup implements SurfaceHolder.Callback,
                 configMessage.sendToTarget();
             }
 
-            mImageProcessing.setPictureSizeX(mPreviewWidthX);
-            mImageProcessing.setPictureSizeY(mPreviewHeightY);
+            mImageProcessing.setPictureSizeWidth(mPreviewWidthX);
+            mImageProcessing.setPictureSizeHeight(mPreviewHeightY);
             mImageFormat = parameters.getPreviewFormat();
 
             setCameraDisplayOrientation(0, mCamera);
@@ -336,8 +336,8 @@ public class CameraPreview  extends ViewGroup implements SurfaceHolder.Callback,
             }
 
             // configure ImageProcessing
-            mImageProcessing.setPictureSizeX(mPreviewWidthX);
-            mImageProcessing.setPictureSizeY(mPreviewHeightY);
+            mImageProcessing.setPictureSizeWidth(mPreviewWidthX);
+            mImageProcessing.setPictureSizeHeight(mPreviewHeightY);
 
             // Center the child SurfaceView within the parent.
             if (width * mPreviewHeightY > height * mPreviewWidthX) {

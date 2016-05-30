@@ -195,7 +195,7 @@ public class LiveViewActivity extends BaseActivity
         }
         mSpectrumFiles.setFileFolder(mFileFolder);
         mSpectrumFiles.setFileExt(mFileExt);
-        //TODO: update ImageProcessing
+        mImageProcessing.configureBinningArea(mLanscapeOrientation);
     }
 
 //    //TODO: refactor: SpectrumAsp as parameter, work should be done in Spectrum

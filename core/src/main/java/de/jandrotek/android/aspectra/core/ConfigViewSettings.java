@@ -22,15 +22,15 @@ public class ConfigViewSettings {
     private  boolean mCamPreviewConfigured = false;
     private  boolean mPersentsConfigured = false;
 
-    private float mConfigWidthX;
-    private float mConfigHeightY;
-    private float mPreviewWidthX;
-    private float mPreviewHeightY;
+    private float mConfigViewWidth;
+    private float mConfigViewHeight;
+    private float mCameraPreviewWidth;
+    private float mCameraPreviewHeight;
 
-    private float mWidthStartPercentX = 10;
-    private float mWidthEndPercentX = 90;
-    private float mHeightStartPercentY = 49;
-    private float mHeightEndPercentY = 51;
+    private float mConfigStartPercentX = 10;
+    private float mConfigEndPercentX = 90;
+    private float mConfigStartPercentY = 49;
+    private float mConfigEndPercentY = 51;
 
 
     private float mAmountLinesY;
@@ -53,25 +53,25 @@ public class ConfigViewSettings {
          return ((mConfViewConfigured) && (mCamPreviewConfigured) && (mPersentsConfigured));
     }
 
-    public float[] getPointsX(){
+    public float[] getPointsW() {
         return mCrossPointsW;
     }
 
-    public float[] getPointsY(){
+    public float[] getPointsH() {
         return mCrosstPointsH;
     }
 
     public void setConfigViewDimensions(float widthX, float heightY) {
         mConfViewConfigured = true;
-        mConfigWidthX = widthX;
-        mConfigHeightY = heightY;
+        mConfigViewWidth = widthX;
+        mConfigViewHeight = heightY;
     }
 
     public void setCameraPreviewDimensions(int widthX, int heightY) {
         mCamPreviewConfigured = true;
-        mPreviewWidthX = (float)widthX;
-        mPreviewHeightY = (float)heightY;
-        mHeightEndPercentY = mHeightStartPercentY + (mAmountLinesY * 100) / mPreviewHeightY;
+        mCameraPreviewWidth = (float) widthX;
+        mCameraPreviewHeight = (float) heightY;
+        mConfigEndPercentY = mConfigStartPercentY + (mAmountLinesY * 100) / mCameraPreviewHeight;
     }
 
     public void calcCrossPoints() {
@@ -79,17 +79,17 @@ public class ConfigViewSettings {
         float deltaY;
         float offsetX = 0.0f;
         float offsetY = 0.0f;
-        float smallerX = mConfigWidthX;
-        float smallerY = mConfigHeightY;
+        float smallerX = mConfigViewWidth;
+        float smallerY = mConfigViewHeight;
         float faktorK;
         float previewInConfigY;
 
         if (mSpectrumOrientationLandscape) {
-            deltaX = mPreviewWidthX - mConfigWidthX;
+            deltaX = mCameraPreviewWidth - mConfigViewWidth;
             if (deltaX > 1.0f) { // prefiewX bigger then configX
-                faktorK = mConfigWidthX / mPreviewWidthX;
-                previewInConfigY = mPreviewHeightY * faktorK;
-                offsetY = (mConfigHeightY - previewInConfigY) / 2;
+                faktorK = mConfigViewWidth / mCameraPreviewWidth;
+                previewInConfigY = mCameraPreviewHeight * faktorK;
+                offsetY = (mConfigViewHeight - previewInConfigY) / 2;
                 smallerY = previewInConfigY;
             }
             mCrossPointsW[0] = offsetX;
@@ -97,18 +97,18 @@ public class ConfigViewSettings {
             mCrosstPointsH[0] = offsetY;
             mCrosstPointsH[3] = offsetY + smallerY;
 
-            mCrossPointsW[1] = offsetX + mWidthStartPercentX * smallerX / 100;
-            mCrossPointsW[2] = offsetX + mWidthEndPercentX * smallerX / 100;
+            mCrossPointsW[1] = offsetX + mConfigStartPercentX * smallerX / 100;
+            mCrossPointsW[2] = offsetX + mConfigEndPercentX * smallerX / 100;
 
-            mCrosstPointsH[1] = offsetY + mHeightStartPercentY * smallerY / 100;
-            mCrosstPointsH[2] = offsetY + mHeightEndPercentY * smallerY / 100;
+            mCrosstPointsH[1] = offsetY + mConfigStartPercentY * smallerY / 100;
+            mCrosstPointsH[2] = offsetY + mConfigEndPercentY * smallerY / 100;
         } else {
 //TODO: adapt to spectrum portrait orientation
-            deltaX = mPreviewWidthX - mConfigWidthX;
+            deltaX = mCameraPreviewWidth - mConfigViewWidth;
             if (deltaX > 1.0f) { // prefiewX bigger then configX
-                faktorK = mConfigWidthX / mPreviewWidthX;
-                previewInConfigY = mPreviewHeightY * faktorK;
-                offsetY = (mConfigHeightY - previewInConfigY) / 2;
+                faktorK = mConfigViewWidth / mCameraPreviewWidth;
+                previewInConfigY = mCameraPreviewHeight * faktorK;
+                offsetY = (mConfigViewHeight - previewInConfigY) / 2;
                 smallerY = previewInConfigY;
             }
             mCrossPointsW[0] = offsetX;
@@ -116,56 +116,56 @@ public class ConfigViewSettings {
             mCrosstPointsH[0] = offsetY;
             mCrosstPointsH[3] = offsetY + smallerY;
 
-            mCrossPointsW[1] = offsetX + mWidthStartPercentX * smallerX / 100;
-            mCrossPointsW[2] = offsetX + mWidthEndPercentX * smallerX / 100;
+            mCrossPointsW[1] = offsetX + mConfigStartPercentX * smallerX / 100;
+            mCrossPointsW[2] = offsetX + mConfigEndPercentX * smallerX / 100;
 
-            mCrosstPointsH[1] = offsetY + mHeightStartPercentY * smallerY / 100;
-            mCrosstPointsH[2] = offsetY + mHeightEndPercentY * smallerY / 100;
+            mCrosstPointsH[1] = offsetY + mConfigStartPercentY * smallerY / 100;
+            mCrosstPointsH[2] = offsetY + mConfigEndPercentY * smallerY / 100;
         }
     }
 
     public void setPercent(float widthStartX, float widthEndX, float heightStartY, float deltaLinesY) {
 
-        mWidthStartPercentX = widthStartX;
-        mWidthEndPercentX = widthEndX;
-        mHeightStartPercentY = heightStartY;
+        mConfigStartPercentX = widthStartX;
+        mConfigEndPercentX = widthEndX;
+        mConfigStartPercentY = heightStartY;
         mAmountLinesY = deltaLinesY;
         if(mCamPreviewConfigured) {
-            mHeightEndPercentY = mHeightStartPercentY + (mAmountLinesY * 100) / mPreviewHeightY;
+            mConfigEndPercentY = mConfigStartPercentY + (mAmountLinesY * 100) / mCameraPreviewHeight;
         }
         mPersentsConfigured = true;
     }
 
-    public float getWidthStartPercentX() {
-        return mWidthStartPercentX;
+    public float getConfigStartPercentX() {
+        return mConfigStartPercentX;
     }
 
-    public float getWidthEndPercentX() {
-        return mWidthEndPercentX;
+    public float getConfigEndPercentX() {
+        return mConfigEndPercentX;
     }
 
-    public float getHeightStartPercentY() {
-        return mHeightStartPercentY;
+    public float getConfigStartPercentY() {
+        return mConfigStartPercentY;
     }
 
-    public float getHeightEndPercentY() {
-        return mHeightEndPercentY;
+    public float getConfigEndPercentY() {
+        return mConfigEndPercentY;
     }
 
-    public void setWidthStartPercentX(int widthStartPercentX) {
-        mWidthStartPercentX = widthStartPercentX;
+    public void setConfigStartPercentX(int configStartPercentX) {
+        mConfigStartPercentX = configStartPercentX;
     }
 
-    public void setWidthEndPercentX(int widthEndPercentX) {
-        mWidthEndPercentX = widthEndPercentX;
+    public void setConfigEndPercentX(int configEndPercentX) {
+        mConfigEndPercentX = configEndPercentX;
     }
 
-    public void setHeightStartPercentY(int heightStartPercentY) {
-        mHeightStartPercentY = heightStartPercentY;
+    public void setConfigStartPercentY(int configStartPercentY) {
+        mConfigStartPercentY = configStartPercentY;
     }
 
-    public void setHeightEndPercentY(int heightEndPercentY) {
-        mHeightEndPercentY = heightEndPercentY;
+    public void setConfigEndPercentY(int configEndPercentY) {
+        mConfigEndPercentY = configEndPercentY;
     }
 
     public float getAmountLinesY() {

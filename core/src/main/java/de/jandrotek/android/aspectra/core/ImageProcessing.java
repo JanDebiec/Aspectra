@@ -91,32 +91,15 @@ public class ImageProcessing {
             // we add (bin) pixels for every spectrum index
 
             for (int x = 0; x < mSizeX; x++) {
+                mBinnedLine[x] = 0;
+                indexH = mIndexStartH + x;
+                indexW = mIndexStartW + mPictureSizeWidth * indexH;
+
                 for (int y = 0; y < mSizeY; y++) {
-                    ;
+                    mBinnedLine[x] += inputArray[indexW] & 0xFF;
+                    indexW++;
                 }
             }
-
-
-//                indexW = mIndexStartW + mPictureSizeWidth * mIndexStartH;
-//
-//            //first line
-//            for (int x = 0; x < mSizeX; x++) {
-//
-//                mBinnedLine[x] = inputArray[indexW] & 0xFF;
-//                indexW++;
-//            }
-//
-//            //next lines
-//            indexH = mIndexStartH + 1;
-//            indexW = mIndexStartW + mPictureSizeWidth * indexH;
-//            for (int y = 1; y < mSizeY; y++) {
-//                for (int x = 0; x < mSizeX; x++) {
-//                    mBinnedLine[x] += inputArray[indexW] & 0xFF;
-//                    indexW++;
-//                }
-//                indexH++;
-//                indexW = mIndexStartW + mPictureSizeWidth * indexH;
-//            }
 
         } catch (ArrayIndexOutOfBoundsException e) {
 

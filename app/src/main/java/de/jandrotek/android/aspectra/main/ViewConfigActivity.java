@@ -303,10 +303,10 @@ public class ViewConfigActivity extends BaseActivity
             mCameraViewFragment.setScanAreaWidth(mDeltaLinesY);
         }
         if(mViewSettings != null){
-            mViewSettings.setWidthStartPercentX(mPersentStartW);
-            mViewSettings.setWidthEndPercentX(mPersentEndW);
-            mViewSettings.setHeightStartPercentY(mPersentStartH);
-            mViewSettings.setHeightEndPercentY(mPersentEndH);
+            mViewSettings.setConfigStartPercentX(mPersentStartW);
+            mViewSettings.setConfigEndPercentX(mPersentEndW);
+            mViewSettings.setConfigStartPercentY(mPersentStartH);
+            mViewSettings.setConfigEndPercentY(mPersentEndH);
             mViewSettings.setAmountLinesY(mDeltaLinesY);
         }
 

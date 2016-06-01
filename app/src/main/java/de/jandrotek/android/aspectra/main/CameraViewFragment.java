@@ -206,6 +206,10 @@ public class CameraViewFragment extends Fragment {
         mCamera = Camera.open(mCurrentCamera);
         mCameraCurrentlyLocked = mCurrentCamera;
         mCamPreview.setCamera(mCamera);
+        if (mImageProcessing == null) {
+
+            mImageProcessing = ImageProcessing.getInstance();
+        }
         mCamPreview.setProcessing(mImageProcessing);
 //        updateBorderPercents();
         cameraProcessingShouldRun(true);

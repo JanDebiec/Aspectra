@@ -23,6 +23,8 @@ package de.jandrotek.android.aspectra.core;
 
 
 public class ImageProcessing {
+    private static ImageProcessing mProcessing = null;
+
     private int mAxisToBin; // axis "senkrecht" to spectrum
     private int mAxisToCalc; // axis parallel to spectrum
 
@@ -53,7 +55,15 @@ public class ImageProcessing {
     private int mPictureSizeWidth; // before mPicureWidthX
     private int mPictureSizeHeight; // before mPictureSizeHeight
 
-    public ImageProcessing() {
+    public static ImageProcessing getInstance() {
+        if (mProcessing == null) {
+            mProcessing = new ImageProcessing();
+        }
+        return mProcessing;
+    }
+
+
+    private ImageProcessing() {
     }
 
 

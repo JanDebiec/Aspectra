@@ -87,7 +87,7 @@ public class LiveViewActivity extends BaseActivity
                     .add(R.id.fvPlotView, mPlotViewFragment)
                     .commit();
         }
-        mImageProcessing = new ImageProcessing();
+        mImageProcessing = ImageProcessing.getInstance();
         mCameraViewFragment.setImageProcessing(mImageProcessing);
 
 //        mPlotViewPresenter = mPlotViewController.mPlotViewPresenter;
@@ -195,8 +195,10 @@ public class LiveViewActivity extends BaseActivity
         }
         mSpectrumFiles.setFileFolder(mFileFolder);
         mSpectrumFiles.setFileExt(mFileExt);
-        if (mImageProcessing != null)
-            mImageProcessing.configureBinningArea(mLanscapeOrientation);
+        if (mImageProcessing == null) {
+            mImageProcessing = ImageProcessing.getInstance();
+        }
+        mImageProcessing.configureBinningArea(mLanscapeOrientation);
     }
 
 //    //TODO: refactor: SpectrumAsp as parameter, work should be done in Spectrum

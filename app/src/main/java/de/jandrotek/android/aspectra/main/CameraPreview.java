@@ -3,12 +3,13 @@ package de.jandrotek.android.aspectra.main;
 /**
  * Created by jan on 21.12.14.
  */
-import java.io.IOException;
-import java.util.List;
-
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.ImageFormat;
+import android.hardware.Camera;
+import android.hardware.Camera.Parameters;
+import android.hardware.Camera.Size;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
@@ -18,10 +19,8 @@ import android.view.SurfaceView;
 import android.view.View;
 import android.view.ViewGroup;
 
-import android.graphics.ImageFormat;
-import android.hardware.Camera;
-import android.hardware.Camera.Size;
-import android.hardware.Camera.Parameters;
+import java.io.IOException;
+import java.util.List;
 
 import de.jandrotek.android.aspectra.core.AspectraGlobals;
 import de.jandrotek.android.aspectra.core.ImageProcessing;
@@ -37,16 +36,8 @@ public class CameraPreview  extends ViewGroup implements SurfaceHolder.Callback,
     private Size mPreviewSize;
     private List<Size> mSupportedPreviewSizes;
     private boolean mSurfaceCreated = false;
-    private int mPreviewWidthX;
-    private int mPreviewHeightY;
-
-//    private int mStartPercentH = 0;
-//    private int mStartIndexH;
-//    private int mEndIndexH;
-//    private int mEndPercentH = 100;
-//    private int mLineLength;
-//    private int mEndPercentV = 50;
-//    private int mStartPercentV = 49;
+    private int mPreviewWidth;
+    private int mPreviewHeight;
 
     private byte[] mFrameData = null;
     private int mImageFormat;
@@ -140,21 +131,21 @@ public class CameraPreview  extends ViewGroup implements SurfaceHolder.Callback,
             Parameters parameters;
 
             parameters = mCamera.getParameters();
-            mPreviewWidthX = mPreviewSize.width;
-            mPreviewHeightY = mPreviewSize.height;
-            parameters.setPreviewSize(mPreviewWidthX, mPreviewHeightY);
+            mPreviewWidth = mPreviewSize.width;
+            mPreviewHeight = mPreviewSize.height;
+            parameters.setPreviewSize(mPreviewWidth, mPreviewHeight);
             requestLayout();
 
             // for later use, in ConfiActivity should be known globally
-            AspectraGlobals.mPreviewWidthX = mPreviewWidthX;
-            AspectraGlobals.mPreviewHeightY = mPreviewHeightY;
+            AspectraGlobals.mPreviewWidthX = mPreviewWidth;
+            AspectraGlobals.mPreviewHeightY = mPreviewHeight;
             if(BuildConfig.DEBUG) {
-                Log.i(TAG, "width = " + mPreviewWidthX + ", height = " + mPreviewHeightY);
+                Log.i(TAG, "width = " + mPreviewWidth + ", height = " + mPreviewHeight);
             }
             // send message, that size is already known
             int[] previewSize = new int[2];
-            previewSize[0] = mPreviewWidthX;
-            previewSize[1] = mPreviewHeightY;
+            previewSize[0] = mPreviewWidth;
+            previewSize[1] = mPreviewHeight;
 
             if(mLVActHandler != null) {
                 Message configMessage =
@@ -162,11 +153,12 @@ public class CameraPreview  extends ViewGroup implements SurfaceHolder.Callback,
                 configMessage.sendToTarget();
             }
 
-            mImageProcessing.setPictureSizeWidth(mPreviewWidthX);
-            mImageProcessing.setPictureSizeHeight(mPreviewHeightY);
+            mImageProcessing.setPictureSizeWidth(mPreviewWidth);
+            mImageProcessing.setPictureSizeHeight(mPreviewHeight);
             mImageFormat = parameters.getPreviewFormat();
 
             setCameraDisplayOrientation(0, mCamera);
+            parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_INFINITY);
 
             mCamera.setParameters(parameters);
 
@@ -206,17 +198,15 @@ public class CameraPreview  extends ViewGroup implements SurfaceHolder.Callback,
     private Runnable doImageProcessing = new Runnable() {
         public void run() {
             mbProcessing = true;
-//            int[] line = extractLine(mFrameData);
 
             try {
                 int[] line = mImageProcessing.extractBinnedLine(mFrameData);
-            Message completeMessage =
-                    mLVActHandler.obtainMessage(AspectraGlobals.eMessageCompleteLine, line);
-            completeMessage.sendToTarget();
+                Message completeMessage =
+                        mLVActHandler.obtainMessage(AspectraGlobals.eMessageCompleteLine, line);
+                completeMessage.sendToTarget();
             }
             catch (Exception e){
                 Log.e(TAG, "Exception caused by mImageProcessing()", e);
-
             }
             mbProcessing = false;
         }
@@ -246,14 +236,14 @@ public class CameraPreview  extends ViewGroup implements SurfaceHolder.Callback,
         camera.setDisplayOrientation(result);
     }
 
-    private void setAutofocusToInfinity(){
-        Parameters parameters;
-
-        parameters = mCamera.getParameters();
-        parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_INFINITY);
-        mCamera.setParameters(parameters);
-
-    }
+//    private void setAutofocusToInfinity(){
+//        Parameters parameters;
+//
+//        parameters = mCamera.getParameters();
+//        parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_INFINITY);
+//        mCamera.setParameters(parameters);
+//
+//    }
 
     private Size getOptimalPreviewSize(List<Size> sizes, int w, int h) {
         final double ASPECT_TOLERANCE = 0.1;
@@ -307,6 +297,7 @@ public class CameraPreview  extends ViewGroup implements SurfaceHolder.Callback,
         if (mCamera != null) {
             Camera.Parameters parameters = mCamera.getParameters();
             parameters.setPreviewSize(mPreviewSize.width, mPreviewSize.height);
+            parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_INFINITY);
 
             try {
 
@@ -328,26 +319,26 @@ public class CameraPreview  extends ViewGroup implements SurfaceHolder.Callback,
             final int width = r - l;
             final int height = b - t;
 
-            mPreviewWidthX = width;
-            mPreviewHeightY = height;
+            mPreviewWidth = width;
+            mPreviewHeight = height;
             if (mPreviewSize != null) {
-                mPreviewWidthX = mPreviewSize.width;
-                mPreviewHeightY = mPreviewSize.height;
+                mPreviewWidth = mPreviewSize.width;
+                mPreviewHeight = mPreviewSize.height;
             }
 
             // configure ImageProcessing
-            mImageProcessing.setPictureSizeWidth(mPreviewWidthX);
-            mImageProcessing.setPictureSizeHeight(mPreviewHeightY);
+            mImageProcessing.setPictureSizeWidth(mPreviewWidth);
+            mImageProcessing.setPictureSizeHeight(mPreviewHeight);
 
             // Center the child SurfaceView within the parent.
-            if (width * mPreviewHeightY > height * mPreviewWidthX) {
-                final int scaledChildWidth = mPreviewWidthX * height
-                        / mPreviewHeightY;
+            if (width * mPreviewHeight > height * mPreviewWidth) {
+                final int scaledChildWidth = mPreviewWidth * height
+                        / mPreviewHeight;
                 child.layout((width - scaledChildWidth) / 2, 0,
                         (width + scaledChildWidth) / 2, height);
             } else {
-                final int scaledChildHeight = mPreviewHeightY * width
-                        / mPreviewWidthX;
+                final int scaledChildHeight = mPreviewHeight * width
+                        / mPreviewWidth;
                 child.layout(0, (height - scaledChildHeight) / 2, width,
                         (height + scaledChildHeight) / 2);
             }
@@ -361,12 +352,12 @@ public class CameraPreview  extends ViewGroup implements SurfaceHolder.Callback,
     }
 
 
-    public int getPreviewWidthX() {
-        return mPreviewWidthX;
+    public int getPreviewWidth() {
+        return mPreviewWidth;
     }
 
-    public int getPreviewHeightY() {
-        return mPreviewHeightY;
+    public int getPreviewHeight() {
+        return mPreviewHeight;
     }
 
 

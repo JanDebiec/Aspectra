@@ -291,6 +291,15 @@ public class CameraViewFragment extends Fragment {
 
     }
 
+    public void updateOrientationInConfigView(boolean _SpectrumOrientationLandscape) {
+
+        if (mConfigLinesView != null) {
+            mConfigLinesView.setSpectrumOrientationLandscape(_SpectrumOrientationLandscape);
+        }
+
+
+    }
+
     public void setImageProcessing(ImageProcessing imageProcessing) {
         mImageProcessing = imageProcessing;
     }

@@ -28,6 +28,10 @@ import de.jandrotek.android.aspectra.core.ConfigViewSettings;
 public class ConfigLinesView extends View {
     private static final String TAG = "ConfigView";
 
+    public void setSpectrumOrientationLandscape(boolean spectrumOrientationLandscape) {
+        mSpectrumOrientationLandscape = spectrumOrientationLandscape;
+    }
+
     private boolean mSpectrumOrientationLandscape = true;
     private ConfigViewSettings mViewSettings = null;
 
@@ -95,11 +99,13 @@ public class ConfigLinesView extends View {
 
     public void setPreviewDimensions(int widthX, int heightY){
         mViewSettings.setCameraPreviewDimensions(widthX, heightY);
+        mViewSettings.setSpectrumOrientationLandscape(mSpectrumOrientationLandscape);
         initializeLines();
     }
 
     private void setConfigViewDimensions(float widthX, float heightY) {
         mViewSettings.setConfigViewDimensions(widthX, heightY);
+        mViewSettings.setSpectrumOrientationLandscape(mSpectrumOrientationLandscape);
         initializeLines();
     }
 

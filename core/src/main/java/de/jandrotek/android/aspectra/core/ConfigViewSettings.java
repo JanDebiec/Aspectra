@@ -16,6 +16,11 @@ package de.jandrotek.android.aspectra.core;
 public class ConfigViewSettings {
 
     private static ConfigViewSettings mInstance = null;
+
+    public void setSpectrumOrientationLandscape(boolean spectrumOrientationLandscape) {
+        mSpectrumOrientationLandscape = spectrumOrientationLandscape;
+    }
+
     private boolean mSpectrumOrientationLandscape = true;
 
     private  boolean mConfViewConfigured = false;

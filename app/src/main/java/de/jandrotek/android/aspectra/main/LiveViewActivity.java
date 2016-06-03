@@ -192,6 +192,7 @@ public class LiveViewActivity extends BaseActivity
             mCameraViewFragment.setEndPercentVY(mAspectraSettings.getPrefsHeightEnd());
             mCameraViewFragment.setScanAreaWidth(mAspectraSettings.getPrefsScanAreaWidth());
             mCameraViewFragment.updateBorderPercents();
+            mCameraViewFragment.updateOrientationInConfigView(mLanscapeOrientation);
         }
         mSpectrumFiles.setFileFolder(mFileFolder);
         mSpectrumFiles.setFileExt(mFileExt);

@@ -17,6 +17,7 @@ import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 
 import de.jandrotek.android.aspectra.core.AspectraGlobals;
+import de.jandrotek.android.aspectra.core.ConfigViewSettings;
 import de.jandrotek.android.aspectra.core.SpectrumAsp;
 import de.jandrotek.android.aspectra.libplotspectrav3.PlotViewController;
 import de.jandrotek.android.aspectra.libplotspectrav3.PlotViewControllerBuilder;
@@ -41,6 +42,7 @@ public class LiveViewActivity extends BaseActivity
     private static CameraViewFragment mCameraViewFragment;
     private static PlotViewFragment mPlotViewFragment;
     private PlotViewPresenter mPlotViewPresenter;
+    private ConfigViewSettings mViewSettings = null;
 
     private static int mPreviewWidthX;
     private static int mPreviewHeightY;
@@ -180,6 +182,8 @@ public class LiveViewActivity extends BaseActivity
 
 
         mPlotViewController.initDisplayInFragment();// must be called when fragment already exists
+        mViewSettings = ConfigViewSettings.getInstance();
+        mViewSettings.setSpectrumOrientationLandscape(mLanscapeOrientation);
     }
 
     //@Override

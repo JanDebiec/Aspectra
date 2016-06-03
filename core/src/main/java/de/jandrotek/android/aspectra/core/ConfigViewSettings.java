@@ -111,16 +111,18 @@ public class ConfigViewSettings {
                 offsetY = (mConfigViewHeight - previewInConfigY) / 2;
                 smallerY = previewInConfigY;
             }
-            mCrossPointsW[0] = offsetX;
-            mCrossPointsW[3] = offsetX + smallerX;
-            mCrosstPointsH[0] = offsetY;
-            mCrosstPointsH[3] = offsetY + smallerY;
 
-            mCrossPointsW[1] = offsetX + mConfigStartPercentX * smallerX / 100;
-            mCrossPointsW[2] = offsetX + mConfigEndPercentX * smallerX / 100;
+            mCrossPointsW[0] = offsetY;
+            mCrossPointsW[3] = offsetY + smallerY;
 
-            mCrosstPointsH[1] = offsetY + mConfigStartPercentY * smallerY / 100;
-            mCrosstPointsH[2] = offsetY + mConfigEndPercentY * smallerY / 100;
+            mCrosstPointsH[0] = offsetX;
+            mCrosstPointsH[3] = offsetX + smallerX;
+
+            mCrossPointsW[1] = offsetY + mConfigStartPercentY * smallerY / 100;
+            mCrossPointsW[2] = offsetY + mConfigEndPercentY * smallerY / 100;
+
+            mCrosstPointsH[1] = offsetX + mConfigStartPercentX * smallerX / 100;
+            mCrosstPointsH[2] = offsetX + mConfigEndPercentX * smallerX / 100;
         }
     }
 

@@ -41,7 +41,7 @@ public class ConfigViewSettings {
     private float mAmountLinesY;
 
     private float[] mCrossPointsW = new float[4];
-    private float[] mCrosstPointsH = new float[4];
+    private float[] mCrossPointsH = new float[4];
 
     public static ConfigViewSettings getInstance(){
         if(mInstance == null) {
@@ -63,7 +63,7 @@ public class ConfigViewSettings {
     }
 
     public float[] getPointsH() {
-        return mCrosstPointsH;
+        return mCrossPointsH;
     }
 
     public void setConfigViewDimensions(float widthX, float heightY) {
@@ -82,52 +82,59 @@ public class ConfigViewSettings {
     public void calcCrossPoints() {
         float deltaX;
         float deltaY;
-        float offsetX = 0.0f;
-        float offsetY = 0.0f;
-        float smallerX = mConfigViewWidth;
-        float smallerY = mConfigViewHeight;
+        float offsetW = 0.0f;
+        float offsetH = 0.0f;
+        float smallerW = mConfigViewWidth;
+        float smallerH = mConfigViewHeight;
         float faktorK;
-        float previewInConfigY;
+        float previewInConfigH;
 
         if (mSpectrumOrientationLandscape) {
             deltaX = mCameraPreviewWidth - mConfigViewWidth;
-            if (deltaX > 1.0f) { // prefiewX bigger then configX
+//            if (deltaX > 1.0f) { // prefiewX bigger then configX
                 faktorK = mConfigViewWidth / mCameraPreviewWidth;
-                previewInConfigY = mCameraPreviewHeight * faktorK;
-                offsetY = (mConfigViewHeight - previewInConfigY) / 2;
-                smallerY = previewInConfigY;
-            }
-            mCrossPointsW[0] = offsetX;
-            mCrossPointsW[3] = offsetX + smallerX;
-            mCrosstPointsH[0] = offsetY;
-            mCrosstPointsH[3] = offsetY + smallerY;
+            previewInConfigH = mCameraPreviewHeight * faktorK;
+            offsetH = (mConfigViewHeight - previewInConfigH) / 2;
+            smallerH = previewInConfigH;
+//            } else {
+//                faktorK = mConfigViewWidth / mCameraPreviewWidth;
+//                previewInConfigY = mCameraPreviewHeight * faktorK;
+//                offsetY = (previewInConfigY - mConfigViewHeight) / 2;
+//                smallerY = mConfigViewHeight;
+//            }
 
-            mCrossPointsW[1] = offsetX + mConfigStartPercentX * smallerX / 100;
-            mCrossPointsW[2] = offsetX + mConfigEndPercentX * smallerX / 100;
+            //TODO here is a bug, offsetY must be calculated
+            mCrossPointsW[0] = offsetW;
+            mCrossPointsW[3] = offsetW + smallerW;
+            mCrossPointsH[0] = offsetH;
+            mCrossPointsH[3] = offsetH + smallerH;
 
-            mCrosstPointsH[1] = offsetY + mConfigStartPercentY * smallerY / 100;
-            mCrosstPointsH[2] = offsetY + mConfigEndPercentY * smallerY / 100;
+            mCrossPointsW[1] = offsetW + mConfigStartPercentX * smallerW / 100;
+            mCrossPointsW[2] = offsetW + mConfigEndPercentX * smallerW / 100;
+
+            mCrossPointsH[1] = offsetH + mConfigStartPercentY * smallerH / 100;
+            mCrossPointsH[2] = offsetH + mConfigEndPercentY * smallerH / 100;
         } else {
 //TODO: adapt to spectrum portrait orientation
             deltaX = mCameraPreviewWidth - mConfigViewWidth;
-            if (deltaX > 1.0f) { // prefiewX bigger then configX
+//            if (deltaX > 1.0f) { // prefiewX bigger then configX
                 faktorK = mConfigViewWidth / mCameraPreviewWidth;
-                previewInConfigY = mCameraPreviewHeight * faktorK;
-                offsetY = (mConfigViewHeight - previewInConfigY) / 2;
-                smallerY = previewInConfigY;
-            }
+            previewInConfigH = mCameraPreviewHeight * faktorK;
+            offsetH = (mConfigViewHeight - previewInConfigH) / 2;
+            smallerH = previewInConfigH;
+//            }
 
-            mCrossPointsW[0] = offsetY;
-            mCrossPointsW[3] = offsetY + smallerY;
+            mCrossPointsW[0] = offsetW;
+            mCrossPointsW[3] = offsetW + smallerW;
 
-            mCrosstPointsH[0] = offsetX;
-            mCrosstPointsH[3] = offsetX + smallerX;
+            mCrossPointsH[0] = offsetH;
+            mCrossPointsH[3] = offsetH + smallerH;
 
-            mCrossPointsW[1] = offsetY + mConfigStartPercentY * smallerY / 100;
-            mCrossPointsW[2] = offsetY + mConfigEndPercentY * smallerY / 100;
+            mCrossPointsW[1] = offsetW + mConfigStartPercentY * smallerW / 100;
+            mCrossPointsW[2] = offsetW + mConfigEndPercentY * smallerW / 100;
 
-            mCrosstPointsH[1] = offsetX + mConfigStartPercentX * smallerX / 100;
-            mCrosstPointsH[2] = offsetX + mConfigEndPercentX * smallerX / 100;
+            mCrossPointsH[1] = offsetH + mConfigStartPercentX * smallerH / 100;
+            mCrossPointsH[2] = offsetH + mConfigEndPercentX * smallerH / 100;
         }
     }
 

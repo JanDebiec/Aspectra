@@ -117,12 +117,15 @@ public class ConfigViewSettings {
         } else {
 //TODO: adapt to spectrum portrait orientation
             deltaX = mCameraPreviewWidth - mConfigViewWidth;
-//            if (deltaX > 1.0f) { // prefiewX bigger then configX
+            if (deltaX > 1.0f) { // prefiewX bigger then configX
                 faktorK = mConfigViewWidth / mCameraPreviewWidth;
             previewInConfigH = mCameraPreviewHeight * faktorK;
             offsetH = (mConfigViewHeight - previewInConfigH) / 2;
             smallerH = previewInConfigH;
-//            }
+//            } else {
+//
+            }
+
 
             mCrossPointsW[0] = offsetW;
             mCrossPointsW[3] = offsetW + smallerW;

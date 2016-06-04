@@ -314,13 +314,21 @@ public class CameraPreview  extends ViewGroup implements SurfaceHolder.Callback,
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
         if (getChildCount() > 0) {
+            // child = SurfaceView
             final View child = getChildAt(0);
 
+            //TODO: get device orientation
+            // in portrait mode, camera own height and weith are different as SurfaceView width and height
+            // in lanscape mode are the same
+
+            // own dimensions
             final int width = r - l;
             final int height = b - t;
 
             mPreviewWidth = width;
             mPreviewHeight = height;
+
+            // from camera, result of getOptiomalPreviewSize()
             if (mPreviewSize != null) {
                 mPreviewWidth = mPreviewSize.width;
                 mPreviewHeight = mPreviewSize.height;
@@ -331,17 +339,41 @@ public class CameraPreview  extends ViewGroup implements SurfaceHolder.Callback,
             mImageProcessing.setPictureSizeHeight(mPreviewHeight);
 
             // Center the child SurfaceView within the parent.
+            // resolve the variables for debugging:
+            int nl, nt, nr, nb;
+            final int width_previewH = width * mPreviewHeight;
+            final int height_previewW = height * mPreviewWidth;
             if (width * mPreviewHeight > height * mPreviewWidth) {
                 final int scaledChildWidth = mPreviewWidth * height
                         / mPreviewHeight;
+                nl = (width - scaledChildWidth) / 2;
+                nt = 0;
+                nr = (width + scaledChildWidth) / 2;
+                nb = height;
                 child.layout((width - scaledChildWidth) / 2, 0,
                         (width + scaledChildWidth) / 2, height);
             } else {
                 final int scaledChildHeight = mPreviewHeight * width
                         / mPreviewWidth;
+                nl = 0;
+                nt = (height - scaledChildHeight) / 2;
+                nr = width;
+                nb = (height + scaledChildHeight) / 2;
                 child.layout(0, (height - scaledChildHeight) / 2, width,
                         (height + scaledChildHeight) / 2);
             }
+// original version
+//            if (width * mPreviewHeight > height * mPreviewWidth) {
+//                final int scaledChildWidth = mPreviewWidth * height
+//                        / mPreviewHeight;
+//                child.layout((width - scaledChildWidth) / 2, 0,
+//                        (width + scaledChildWidth) / 2, height);
+//            } else {
+//                final int scaledChildHeight = mPreviewHeight * width
+//                        / mPreviewWidth;
+//                child.layout(0, (height - scaledChildHeight) / 2, width,
+//                        (height + scaledChildHeight) / 2);
+//            }
         }
     }
 

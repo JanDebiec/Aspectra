@@ -62,6 +62,7 @@ public class ViewConfigActivity extends BaseActivity
         }
 
         mViewSettings = ConfigViewSettings.getInstance();
+        mViewSettings.setSpectrumOrientationLandscape(mLanscapeOrientation);
 
         // blocks
         mBlockStartW    = (RelativeLayout) findViewById(R.id.sbcWidthStart);
@@ -194,6 +195,8 @@ public class ViewConfigActivity extends BaseActivity
     public void onResume(){
         super.onResume();
         updateFromPreferences();
+        mViewSettings = ConfigViewSettings.getInstance();
+        mViewSettings.setSpectrumOrientationLandscape(mLanscapeOrientation);
     }
 
     private int calcCountLinesY(int progress) {

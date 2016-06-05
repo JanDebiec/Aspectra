@@ -28,7 +28,7 @@ public class BaseActivity extends AppCompatActivity //ActionBarActivity
     protected String mFileExt;
     protected SpectrumFiles mSpectrumFiles;
     protected boolean mSpectrumLanscapeOrientation = false;
-    protected int mDeviceOrientation = false;
+    protected int mDeviceOrientation;
 
     protected boolean mCameraPresent = false;
 

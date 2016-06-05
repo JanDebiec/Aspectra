@@ -33,7 +33,7 @@ public class CameraPreview  extends ViewGroup implements SurfaceHolder.Callback,
 //    private SurfaceView mSurfaceView;
     private SurfaceHolder mCameraHolder;
     //private static FragmentActivity mActivity = null;
-    private Size mPreviewSize;
+    private Size mCameraPreviewSize;
     private List<Size> mSupportedPreviewSizes;
     private boolean mSurfaceCreated = false;
     private int mCameraOwnPreviewWidth;
@@ -147,34 +147,70 @@ public class CameraPreview  extends ViewGroup implements SurfaceHolder.Callback,
             Parameters parameters;
 
             parameters = mCamera.getParameters();
-            mCameraOwnPreviewWidth = mPreviewSize.width;
-            mCameraOwnPreviewHeight = mPreviewSize.height;
-            parameters.setPreviewSize(mCameraOwnPreviewWidth, mCameraOwnPreviewHeight);
-            requestLayout();
+            //if orientation portrait, change w with h
+            if (mDeviceOrientation == AspectraGlobals.DEVICE_ORIENTATION_LANDSCAPE) {
+                mCameraOwnPreviewWidth = mCameraPreviewSize.width;
+                mCameraOwnPreviewHeight = mCameraPreviewSize.height;
+                parameters.setPreviewSize(mCameraOwnPreviewWidth, mCameraOwnPreviewHeight);
+                requestLayout();
 
-            // for later use, in ConfiActivity should be known globally
-            AspectraGlobals.mPreviewWidthX = mCameraOwnPreviewWidth;
-            AspectraGlobals.mPreviewHeightY = mCameraOwnPreviewHeight;
-            if(BuildConfig.DEBUG) {
-                Log.i(TAG, "width = " + mCameraOwnPreviewWidth + ", height = " + mCameraOwnPreviewHeight);
+                // for later use, in ConfiActivity should be known globally
+                AspectraGlobals.mPreviewWidthX = mCameraOwnPreviewWidth;
+                AspectraGlobals.mPreviewHeightY = mCameraOwnPreviewHeight;
+                if (BuildConfig.DEBUG) {
+                    Log.i(TAG, "width = " + mCameraOwnPreviewWidth + ", height = " + mCameraOwnPreviewHeight);
+                }
+                // send message, that size is already known
+                int[] previewSize = new int[2];
+                previewSize[0] = mCameraOwnPreviewWidth;
+                previewSize[1] = mCameraOwnPreviewHeight;
+
+                if (mLVActHandler != null) {
+                    Message configMessage =
+                            mLVActHandler.obtainMessage(AspectraGlobals.eMessagePreviewSize, previewSize);
+                    configMessage.sendToTarget();
+                }
+
+                mImageProcessing.setPictureSizeWidth(mCameraOwnPreviewWidth);
+                mImageProcessing.setPictureSizeHeight(mCameraOwnPreviewHeight);
+                mImageFormat = parameters.getPreviewFormat();
+
+                setCameraDisplayOrientation(0, mCamera);
+                parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_INFINITY);
+            } else if (mDeviceOrientation == AspectraGlobals.DEVICE_ORIENTATION_PORTRAIT) {
+                //TODO: adapt to portrait device orientation
+                mCameraOwnPreviewWidth = mCameraPreviewSize.width;
+                mCameraOwnPreviewHeight = mCameraPreviewSize.height;
+                parameters.setPreviewSize(mCameraOwnPreviewWidth, mCameraOwnPreviewHeight);
+                requestLayout();
+
+                // for later use, in ConfiActivity should be known globally
+                AspectraGlobals.mPreviewWidthX = mCameraOwnPreviewWidth;
+                AspectraGlobals.mPreviewHeightY = mCameraOwnPreviewHeight;
+                if (BuildConfig.DEBUG) {
+                    Log.i(TAG, "width = " + mCameraOwnPreviewWidth + ", height = " + mCameraOwnPreviewHeight);
+                }
+                // send message, that size is already known
+                int[] previewSize = new int[2];
+                previewSize[0] = mCameraOwnPreviewWidth;
+                previewSize[1] = mCameraOwnPreviewHeight;
+
+                if (mLVActHandler != null) {
+                    Message configMessage =
+                            mLVActHandler.obtainMessage(AspectraGlobals.eMessagePreviewSize, previewSize);
+                    configMessage.sendToTarget();
+                }
+
+                mImageProcessing.setPictureSizeWidth(mCameraOwnPreviewWidth);
+                mImageProcessing.setPictureSizeHeight(mCameraOwnPreviewHeight);
+                mImageFormat = parameters.getPreviewFormat();
+
+                setCameraDisplayOrientation(0, mCamera);
+                parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_INFINITY);
+            } else {
+
             }
-            // send message, that size is already known
-            int[] previewSize = new int[2];
-            previewSize[0] = mCameraOwnPreviewWidth;
-            previewSize[1] = mCameraOwnPreviewHeight;
 
-            if(mLVActHandler != null) {
-                Message configMessage =
-                        mLVActHandler.obtainMessage(AspectraGlobals.eMessagePreviewSize, previewSize);
-                configMessage.sendToTarget();
-            }
-
-            mImageProcessing.setPictureSizeWidth(mCameraOwnPreviewWidth);
-            mImageProcessing.setPictureSizeHeight(mCameraOwnPreviewHeight);
-            mImageFormat = parameters.getPreviewFormat();
-
-            setCameraDisplayOrientation(0, mCamera);
-            parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_INFINITY);
 
             mCamera.setParameters(parameters);
 
@@ -199,7 +235,7 @@ public class CameraPreview  extends ViewGroup implements SurfaceHolder.Callback,
                 Log.e(TAG, "IOException caused by setPreviewDisplay()", exception);
             }
         }
-        if (mPreviewSize == null) requestLayout();
+        if (mCameraPreviewSize == null) requestLayout();
         mSurfaceCreated = true;
     }
 
@@ -306,23 +342,19 @@ public class CameraPreview  extends ViewGroup implements SurfaceHolder.Callback,
         setMeasuredDimension(viewOwnWidth, viewOwnHeight);
 
         if (mSupportedPreviewSizes != null) {
-            // if orientation landscape
-            mPreviewSize = getOptimalPreviewSize(mSupportedPreviewSizes, viewOwnWidth,
-                    viewOwnHeight);
-            //if orientation portrait, change w with h
             if (mDeviceOrientation == AspectraGlobals.DEVICE_ORIENTATION_LANDSCAPE) {
-
+                mCameraPreviewSize = getOptimalPreviewSize(mSupportedPreviewSizes, viewOwnWidth,
+                        viewOwnHeight);
             } else if (mDeviceOrientation == AspectraGlobals.DEVICE_ORIENTATION_PORTRAIT) {
-
-            } else {
-
+                mCameraPreviewSize = getOptimalPreviewSize(mSupportedPreviewSizes, viewOwnHeight,
+                        viewOwnWidth);
             }
 
         }
 
-        if (mCamera != null) {
+        if ((mCamera != null) && (mCameraPreviewSize != null)) {
             Camera.Parameters parameters = mCamera.getParameters();
-            parameters.setPreviewSize(mPreviewSize.width, mPreviewSize.height);
+            parameters.setPreviewSize(mCameraPreviewSize.width, mCameraPreviewSize.height);
             parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_INFINITY);
 
             try {
@@ -343,22 +375,35 @@ public class CameraPreview  extends ViewGroup implements SurfaceHolder.Callback,
             // child = SurfaceView
             final View child = getChildAt(0);
 
+            final int viewOwnWidth = r - l;
+            final int viewOwnHeight = b - t;
+
+            if ((viewOwnHeight > 0) && (viewOwnWidth > 0)
+                    && (mCameraOwnPreviewWidth > 0) && (mCameraOwnPreviewHeight > 0)) {
             //TODO: get device orientation
             // in portrait mode, camera own height and weith are different as SurfaceView width and height
             // in lanscape mode are the same
+                //if orientation portrait, change w with h
+                if (mDeviceOrientation == AspectraGlobals.DEVICE_ORIENTATION_LANDSCAPE) {
+                    mCameraOwnPreviewWidth = viewOwnWidth;
+                    mCameraOwnPreviewHeight = viewOwnHeight;
 
-            // own dimensions
-            final int width = r - l;
-            final int height = b - t;
+                    // from camera, result of getOptiomalPreviewSize()
+                    if (mCameraPreviewSize != null) {
+                        mCameraOwnPreviewWidth = mCameraPreviewSize.width;
+                        mCameraOwnPreviewHeight = mCameraPreviewSize.height;
+                    }
+                } else if (mDeviceOrientation == AspectraGlobals.DEVICE_ORIENTATION_PORTRAIT) {
+                    mCameraOwnPreviewHeight = viewOwnWidth;
+                    mCameraOwnPreviewWidth = viewOwnHeight;
 
-            mCameraOwnPreviewWidth = width;
-            mCameraOwnPreviewHeight = height;
-
-            // from camera, result of getOptiomalPreviewSize()
-            if (mPreviewSize != null) {
-                mCameraOwnPreviewWidth = mPreviewSize.width;
-                mCameraOwnPreviewHeight = mPreviewSize.height;
+                    // from camera, result of getOptiomalPreviewSize()
+                    if (mCameraPreviewSize != null) {
+                        mCameraOwnPreviewWidth = mCameraPreviewSize.width;
+                        mCameraOwnPreviewHeight = mCameraPreviewSize.height;
+                    }
             }
+
 
             // configure ImageProcessing
             mImageProcessing.setPictureSizeWidth(mCameraOwnPreviewWidth);
@@ -367,39 +412,29 @@ public class CameraPreview  extends ViewGroup implements SurfaceHolder.Callback,
             // Center the child SurfaceView within the parent.
             // resolve the variables for debugging:
             int nl, nt, nr, nb;
-            final int width_previewH = width * mCameraOwnPreviewHeight;
-            final int height_previewW = height * mCameraOwnPreviewWidth;
-            if (width * mCameraOwnPreviewHeight > height * mCameraOwnPreviewWidth) {
-                final int scaledChildWidth = mCameraOwnPreviewWidth * height
+                final int width_previewH = viewOwnWidth * mCameraOwnPreviewHeight;
+                final int height_previewW = viewOwnHeight * mCameraOwnPreviewWidth;
+                if (viewOwnWidth * mCameraOwnPreviewHeight > viewOwnHeight * mCameraOwnPreviewWidth) {
+                    final int scaledChildWidth = mCameraOwnPreviewWidth * viewOwnHeight
                         / mCameraOwnPreviewHeight;
-                nl = (width - scaledChildWidth) / 2;
+                    nl = (viewOwnWidth - scaledChildWidth) / 2;
                 nt = 0;
-                nr = (width + scaledChildWidth) / 2;
-                nb = height;
-                child.layout((width - scaledChildWidth) / 2, 0,
-                        (width + scaledChildWidth) / 2, height);
-            } else {
-                final int scaledChildHeight = mCameraOwnPreviewHeight * width
-                        / mCameraOwnPreviewWidth;
-                nl = 0;
-                nt = (height - scaledChildHeight) / 2;
-                nr = width;
-                nb = (height + scaledChildHeight) / 2;
-                child.layout(0, (height - scaledChildHeight) / 2, width,
-                        (height + scaledChildHeight) / 2);
-            }
-// original version
-//            if (width * mCameraOwnPreviewHeight > height * mCameraOwnPreviewWidth) {
-//                final int scaledChildWidth = mCameraOwnPreviewWidth * height
-//                        / mCameraOwnPreviewHeight;
+                    nr = (viewOwnWidth + scaledChildWidth) / 2;
+                    nb = viewOwnHeight;
 //                child.layout((width - scaledChildWidth) / 2, 0,
 //                        (width + scaledChildWidth) / 2, height);
-//            } else {
-//                final int scaledChildHeight = mCameraOwnPreviewHeight * width
-//                        / mCameraOwnPreviewWidth;
+            } else {
+                    final int scaledChildHeight = mCameraOwnPreviewHeight * viewOwnWidth
+                        / mCameraOwnPreviewWidth;
+                nl = 0;
+                    nt = (viewOwnHeight - scaledChildHeight) / 2;
+                    nr = viewOwnWidth;
+                    nb = (viewOwnHeight + scaledChildHeight) / 2;
 //                child.layout(0, (height - scaledChildHeight) / 2, width,
 //                        (height + scaledChildHeight) / 2);
-//            }
+                }
+                child.layout(nl, nt, nr, nb);
+            }
         }
     }
 
@@ -417,32 +452,5 @@ public class CameraPreview  extends ViewGroup implements SurfaceHolder.Callback,
     public int getCameraOwnPreviewHeight() {
         return mCameraOwnPreviewHeight;
     }
-
-
-//    public void setStartPercentH(int startPercent) {
-//        mStartPercentH = startPercent;
-////        if(mImageProcessing != null) {
-////            mImageProcessing.setStartPercentX(startPercent);
-////        }
-//    }
-
-//    public void setEndPercentH(int endPercent) {
-//        mEndPercentH = endPercent;
-////        mImageProcessing.setEndPercentX(endPercent);
-//    }
-
-
-//    public void setStartPercentV(int startPercentV) {
-//        mStartPercentV = startPercentV;
-////        mImageProcessing.setStartPercentY(startPercentV);
-//    }
-
-
-
-//    public void setEndPercentV(int endPercentV) {
-//        mEndPercentV = endPercentV;
-////        mImageProcessing.setEndPercentY(endPercentV);
-//    }
-
 
 }

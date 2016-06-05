@@ -36,8 +36,24 @@ public class CameraPreview  extends ViewGroup implements SurfaceHolder.Callback,
     private Size mPreviewSize;
     private List<Size> mSupportedPreviewSizes;
     private boolean mSurfaceCreated = false;
-    private int mPreviewWidth;
-    private int mPreviewHeight;
+    private int mCameraOwnPreviewWidth;
+    private int mCameraOwnPreviewHeight;
+    private int mCameraSizeinViewWidth;
+    private int mCameraSizeinViewHeight;
+    private int mDeviceOrientation;
+
+    public void setCameraSizeinViewHeight(int cameraSizeinViewHeight) {
+        mCameraSizeinViewHeight = cameraSizeinViewHeight;
+    }
+
+    public void setCameraSizeinViewWidth(int cameraSizeinViewWidth) {
+        mCameraSizeinViewWidth = cameraSizeinViewWidth;
+    }
+
+    public void setDeviceOrientation(int deviceOrientation) {
+        mDeviceOrientation = deviceOrientation;
+    }
+
 
     private byte[] mFrameData = null;
     private int mImageFormat;
@@ -131,21 +147,21 @@ public class CameraPreview  extends ViewGroup implements SurfaceHolder.Callback,
             Parameters parameters;
 
             parameters = mCamera.getParameters();
-            mPreviewWidth = mPreviewSize.width;
-            mPreviewHeight = mPreviewSize.height;
-            parameters.setPreviewSize(mPreviewWidth, mPreviewHeight);
+            mCameraOwnPreviewWidth = mPreviewSize.width;
+            mCameraOwnPreviewHeight = mPreviewSize.height;
+            parameters.setPreviewSize(mCameraOwnPreviewWidth, mCameraOwnPreviewHeight);
             requestLayout();
 
             // for later use, in ConfiActivity should be known globally
-            AspectraGlobals.mPreviewWidthX = mPreviewWidth;
-            AspectraGlobals.mPreviewHeightY = mPreviewHeight;
+            AspectraGlobals.mPreviewWidthX = mCameraOwnPreviewWidth;
+            AspectraGlobals.mPreviewHeightY = mCameraOwnPreviewHeight;
             if(BuildConfig.DEBUG) {
-                Log.i(TAG, "width = " + mPreviewWidth + ", height = " + mPreviewHeight);
+                Log.i(TAG, "width = " + mCameraOwnPreviewWidth + ", height = " + mCameraOwnPreviewHeight);
             }
             // send message, that size is already known
             int[] previewSize = new int[2];
-            previewSize[0] = mPreviewWidth;
-            previewSize[1] = mPreviewHeight;
+            previewSize[0] = mCameraOwnPreviewWidth;
+            previewSize[1] = mCameraOwnPreviewHeight;
 
             if(mLVActHandler != null) {
                 Message configMessage =
@@ -153,8 +169,8 @@ public class CameraPreview  extends ViewGroup implements SurfaceHolder.Callback,
                 configMessage.sendToTarget();
             }
 
-            mImageProcessing.setPictureSizeWidth(mPreviewWidth);
-            mImageProcessing.setPictureSizeHeight(mPreviewHeight);
+            mImageProcessing.setPictureSizeWidth(mCameraOwnPreviewWidth);
+            mImageProcessing.setPictureSizeHeight(mCameraOwnPreviewHeight);
             mImageFormat = parameters.getPreviewFormat();
 
             setCameraDisplayOrientation(0, mCamera);
@@ -283,15 +299,18 @@ public class CameraPreview  extends ViewGroup implements SurfaceHolder.Callback,
         // We purposely disregard child measurements because act as a
         // wrapper to a SurfaceView that centers the camera preview instead
         // of stretching it.
-        final int width = resolveSize(getSuggestedMinimumWidth(),
+        final int viewOwnWidth = resolveSize(getSuggestedMinimumWidth(),
                 widthMeasureSpec);
-        final int height = resolveSize(getSuggestedMinimumHeight(),
+        final int viewOwnHeight = resolveSize(getSuggestedMinimumHeight(),
                 heightMeasureSpec);
-        setMeasuredDimension(width, height);
+        setMeasuredDimension(viewOwnWidth, viewOwnHeight);
 
         if (mSupportedPreviewSizes != null) {
-            mPreviewSize = getOptimalPreviewSize(mSupportedPreviewSizes, width,
-                    height);
+            // if orientation landscape
+            mPreviewSize = getOptimalPreviewSize(mSupportedPreviewSizes, viewOwnWidth,
+                    viewOwnHeight);
+            //if orientation portrait, change w with h
+
         }
 
         if (mCamera != null) {
@@ -325,27 +344,27 @@ public class CameraPreview  extends ViewGroup implements SurfaceHolder.Callback,
             final int width = r - l;
             final int height = b - t;
 
-            mPreviewWidth = width;
-            mPreviewHeight = height;
+            mCameraOwnPreviewWidth = width;
+            mCameraOwnPreviewHeight = height;
 
             // from camera, result of getOptiomalPreviewSize()
             if (mPreviewSize != null) {
-                mPreviewWidth = mPreviewSize.width;
-                mPreviewHeight = mPreviewSize.height;
+                mCameraOwnPreviewWidth = mPreviewSize.width;
+                mCameraOwnPreviewHeight = mPreviewSize.height;
             }
 
             // configure ImageProcessing
-            mImageProcessing.setPictureSizeWidth(mPreviewWidth);
-            mImageProcessing.setPictureSizeHeight(mPreviewHeight);
+            mImageProcessing.setPictureSizeWidth(mCameraOwnPreviewWidth);
+            mImageProcessing.setPictureSizeHeight(mCameraOwnPreviewHeight);
 
             // Center the child SurfaceView within the parent.
             // resolve the variables for debugging:
             int nl, nt, nr, nb;
-            final int width_previewH = width * mPreviewHeight;
-            final int height_previewW = height * mPreviewWidth;
-            if (width * mPreviewHeight > height * mPreviewWidth) {
-                final int scaledChildWidth = mPreviewWidth * height
-                        / mPreviewHeight;
+            final int width_previewH = width * mCameraOwnPreviewHeight;
+            final int height_previewW = height * mCameraOwnPreviewWidth;
+            if (width * mCameraOwnPreviewHeight > height * mCameraOwnPreviewWidth) {
+                final int scaledChildWidth = mCameraOwnPreviewWidth * height
+                        / mCameraOwnPreviewHeight;
                 nl = (width - scaledChildWidth) / 2;
                 nt = 0;
                 nr = (width + scaledChildWidth) / 2;
@@ -353,8 +372,8 @@ public class CameraPreview  extends ViewGroup implements SurfaceHolder.Callback,
                 child.layout((width - scaledChildWidth) / 2, 0,
                         (width + scaledChildWidth) / 2, height);
             } else {
-                final int scaledChildHeight = mPreviewHeight * width
-                        / mPreviewWidth;
+                final int scaledChildHeight = mCameraOwnPreviewHeight * width
+                        / mCameraOwnPreviewWidth;
                 nl = 0;
                 nt = (height - scaledChildHeight) / 2;
                 nr = width;
@@ -363,14 +382,14 @@ public class CameraPreview  extends ViewGroup implements SurfaceHolder.Callback,
                         (height + scaledChildHeight) / 2);
             }
 // original version
-//            if (width * mPreviewHeight > height * mPreviewWidth) {
-//                final int scaledChildWidth = mPreviewWidth * height
-//                        / mPreviewHeight;
+//            if (width * mCameraOwnPreviewHeight > height * mCameraOwnPreviewWidth) {
+//                final int scaledChildWidth = mCameraOwnPreviewWidth * height
+//                        / mCameraOwnPreviewHeight;
 //                child.layout((width - scaledChildWidth) / 2, 0,
 //                        (width + scaledChildWidth) / 2, height);
 //            } else {
-//                final int scaledChildHeight = mPreviewHeight * width
-//                        / mPreviewWidth;
+//                final int scaledChildHeight = mCameraOwnPreviewHeight * width
+//                        / mCameraOwnPreviewWidth;
 //                child.layout(0, (height - scaledChildHeight) / 2, width,
 //                        (height + scaledChildHeight) / 2);
 //            }
@@ -384,12 +403,12 @@ public class CameraPreview  extends ViewGroup implements SurfaceHolder.Callback,
     }
 
 
-    public int getPreviewWidth() {
-        return mPreviewWidth;
+    public int getCameraOwnPreviewWidth() {
+        return mCameraOwnPreviewWidth;
     }
 
-    public int getPreviewHeight() {
-        return mPreviewHeight;
+    public int getCameraOwnPreviewHeight() {
+        return mCameraOwnPreviewHeight;
     }
 
 

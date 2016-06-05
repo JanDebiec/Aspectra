@@ -55,14 +55,14 @@ public class ViewConfigActivity extends BaseActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         updateOrientationFromPrefs();
-        if (mLanscapeOrientation) {
+        if (mSpectrumLanscapeOrientation) {
             setContentView(R.layout.activity_view_config_cam_land);
         } else {
             setContentView(R.layout.activity_view_config_cam_port);
         }
 
         mViewSettings = ConfigViewSettings.getInstance();
-        mViewSettings.setSpectrumOrientationLandscape(mLanscapeOrientation);
+        mViewSettings.setSpectrumOrientationLandscape(mSpectrumLanscapeOrientation);
 
         // blocks
         mBlockStartW    = (RelativeLayout) findViewById(R.id.sbcWidthStart);
@@ -196,7 +196,9 @@ public class ViewConfigActivity extends BaseActivity
         super.onResume();
         updateFromPreferences();
         mViewSettings = ConfigViewSettings.getInstance();
-        mViewSettings.setSpectrumOrientationLandscape(mLanscapeOrientation);
+        mViewSettings.setSpectrumOrientationLandscape(mSpectrumLanscapeOrientation);
+        getScreenOrientation();
+        //TODO: set device orientation in some child views
     }
 
     private int calcCountLinesY(int progress) {

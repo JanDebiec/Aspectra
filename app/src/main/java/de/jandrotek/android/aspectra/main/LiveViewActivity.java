@@ -72,7 +72,7 @@ public class LiveViewActivity extends BaseActivity
 
 
         updateOrientationFromPrefs();
-        if (mLanscapeOrientation) {
+        if (mSpectrumLanscapeOrientation) {
             setContentView(R.layout.activity_live_view_cam_land);
         } else {
             setContentView(R.layout.activity_live_view_cam_port);
@@ -183,7 +183,9 @@ public class LiveViewActivity extends BaseActivity
 
         mPlotViewController.initDisplayInFragment();// must be called when fragment already exists
         mViewSettings = ConfigViewSettings.getInstance();
-        mViewSettings.setSpectrumOrientationLandscape(mLanscapeOrientation);
+        mViewSettings.setSpectrumOrientationLandscape(mSpectrumLanscapeOrientation);
+        getScreenOrientation();
+        //TODO: set device orientation in some child views
     }
 
     //@Override
@@ -196,14 +198,14 @@ public class LiveViewActivity extends BaseActivity
             mCameraViewFragment.setEndPercentVY(mAspectraSettings.getPrefsHeightEnd());
             mCameraViewFragment.setScanAreaWidth(mAspectraSettings.getPrefsScanAreaWidth());
             mCameraViewFragment.updateBorderPercents();
-            mCameraViewFragment.updateOrientationInConfigView(mLanscapeOrientation);
+            mCameraViewFragment.updateOrientationInConfigView(mSpectrumLanscapeOrientation);
         }
         mSpectrumFiles.setFileFolder(mFileFolder);
         mSpectrumFiles.setFileExt(mFileExt);
         if (mImageProcessing == null) {
             mImageProcessing = ImageProcessing.getInstance();
         }
-        mImageProcessing.configureBinningArea(mLanscapeOrientation);
+        mImageProcessing.configureBinningArea(mSpectrumLanscapeOrientation);
     }
 
 //    //TODO: refactor: SpectrumAsp as parameter, work should be done in Spectrum

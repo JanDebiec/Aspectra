@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import de.jandrotek.android.aspectra.core.AspectraGlobals;
 import de.jandrotek.android.aspectra.libprefs.AspectraLiveViewPrefs;
 import de.jandrotek.android.aspectra.libprefs.AspectraGlobalPrefsActivity;
 import de.jandrotek.android.aspectra.libspectrafiles.SpectrumFiles;
@@ -26,7 +27,8 @@ public class BaseActivity extends AppCompatActivity //ActionBarActivity
     protected String mFileFolder;
     protected String mFileExt;
     protected SpectrumFiles mSpectrumFiles;
-    protected boolean mLanscapeOrientation = false;
+    protected boolean mSpectrumLanscapeOrientation = false;
+    protected int mDeviceOrientation = false;
 
     protected boolean mCameraPresent = false;
 
@@ -93,13 +95,23 @@ public class BaseActivity extends AppCompatActivity //ActionBarActivity
         // used by all activities
         mFileFolder = mAspectraSettings.getPrefsSaveFolderName();
         mFileExt = mAspectraSettings.getPrefsExtensionName();
-        mLanscapeOrientation = mAspectraSettings.isPrefsLandscapeCameraOrientation();
+        mSpectrumLanscapeOrientation = mAspectraSettings.isPrefsLandscapeCameraOrientation();
         // the rest is updated local
     }
 
     protected void updateOrientationFromPrefs() {
-        mLanscapeOrientation = mAspectraSettings.isPrefsLandscapeCameraOrientation();
+        mSpectrumLanscapeOrientation = mAspectraSettings.isPrefsLandscapeCameraOrientation();
     }
 
+    public void getScreenOrientation() {
+// Query what the orientation currently really is.
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+            mDeviceOrientation = AspectraGlobals.DEVICE_ORIENTATION_PORTRAIT; // Portrait Mode
+
+        } else if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            mDeviceOrientation = AspectraGlobals.DEVICE_ORIENTATION_LANDSCAPE;   // Landscape mode
+        }
+        mDeviceOrientation = AspectraGlobals.DEVICE_ORIENTATION_UNKNOWN;
+    }
 }
 

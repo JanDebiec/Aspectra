@@ -198,7 +198,8 @@ public class ViewConfigActivity extends BaseActivity
         mViewSettings = ConfigViewSettings.getInstance();
         mViewSettings.setSpectrumOrientationLandscape(mSpectrumLanscapeOrientation);
         getScreenOrientation();
-        //TODO: set device orientation in some child views
+        mCameraViewFragment.setDeviceOrientation(mDeviceOrientation):
+        mViewSettings.setDeviceOrientation(mDeviceOrientation);
     }
 
     private int calcCountLinesY(int progress) {

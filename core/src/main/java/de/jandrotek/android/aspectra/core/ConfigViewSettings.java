@@ -23,6 +23,12 @@ public class ConfigViewSettings {
 
     private boolean mSpectrumOrientationLandscape = true;
 
+    public void setDeviceOrientation(int deviceOrientation) {
+        mDeviceOrientation = deviceOrientation;
+    }
+
+    private int mDeviceOrientation;
+
     private  boolean mConfViewConfigured = false;
     private  boolean mCamPreviewConfigured = false;
     private  boolean mPersentsConfigured = false;

@@ -170,8 +170,6 @@ public class LiveViewActivity extends BaseActivity
     public void onResume(){
         super.onResume();
         updateFromPreferences();
-//        mSpectrumFiles.setFileFolder(mFileFolder);
-//        mSpectrumFiles.setFileExt(mFileExt);
 
         if(mPlotViewFragment == null) {
             mPlotViewFragment = PlotViewFragment.newInstance(1);
@@ -185,7 +183,8 @@ public class LiveViewActivity extends BaseActivity
         mViewSettings = ConfigViewSettings.getInstance();
         mViewSettings.setSpectrumOrientationLandscape(mSpectrumLanscapeOrientation);
         getScreenOrientation();
-        //TODO: set device orientation in some child views
+        mCameraViewFragment.setDeviceOrientation(mDeviceOrientation):
+        mViewSettings.setDeviceOrientation(mDeviceOrientation);
     }
 
     //@Override

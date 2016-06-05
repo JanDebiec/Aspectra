@@ -310,6 +310,13 @@ public class CameraPreview  extends ViewGroup implements SurfaceHolder.Callback,
             mPreviewSize = getOptimalPreviewSize(mSupportedPreviewSizes, viewOwnWidth,
                     viewOwnHeight);
             //if orientation portrait, change w with h
+            if (mDeviceOrientation == AspectraGlobals.DEVICE_ORIENTATION_LANDSCAPE) {
+
+            } else if (mDeviceOrientation == AspectraGlobals.DEVICE_ORIENTATION_PORTRAIT) {
+
+            } else {
+
+            }
 
         }
 

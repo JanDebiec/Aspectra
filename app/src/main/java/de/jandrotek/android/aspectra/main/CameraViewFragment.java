@@ -199,7 +199,7 @@ public class CameraViewFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-
+//TODO: add try catch if camera not to disposal, then toast and
 //        mFlagConfigStarted = false;
         // Use mCurrentCamera to select the camera desired to safely restore
         // the fragment after the camera has been changed

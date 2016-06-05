@@ -110,8 +110,9 @@ public class BaseActivity extends AppCompatActivity //ActionBarActivity
 
         } else if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
             mDeviceOrientation = AspectraGlobals.DEVICE_ORIENTATION_LANDSCAPE;   // Landscape mode
+        } else {
+            mDeviceOrientation = AspectraGlobals.DEVICE_ORIENTATION_UNKNOWN;
         }
-        mDeviceOrientation = AspectraGlobals.DEVICE_ORIENTATION_UNKNOWN;
     }
 }
 

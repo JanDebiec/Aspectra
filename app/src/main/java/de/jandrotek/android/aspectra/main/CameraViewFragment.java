@@ -38,8 +38,11 @@ public class CameraViewFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private static int mParam2;
 
-    public static void setDeviceOrientation(int deviceOrientation) {
-        CameraViewFragment.mDeviceOrientation = mDeviceOrientation;
+    public void setDeviceOrientation(int deviceOrientation) {
+        if (mCamPreview != null) {
+            mCamPreview.setDeviceOrientation(deviceOrientation);
+        }
+        CameraViewFragment.mDeviceOrientation = deviceOrientation;
     }
 
     private static int mDeviceOrientation;
@@ -198,6 +201,8 @@ public class CameraViewFragment extends Fragment {
 
         });
         cameraProcessingShouldRun(true);
+        mCamPreview.setDeviceOrientation(mDeviceOrientation);
+
 
         return rootView;
     }

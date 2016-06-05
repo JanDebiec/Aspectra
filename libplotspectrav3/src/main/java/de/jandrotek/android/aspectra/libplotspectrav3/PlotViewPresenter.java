@@ -1,5 +1,7 @@
 package de.jandrotek.android.aspectra.libplotspectrav3;
 
+import android.util.Log;
+
 import com.jjoe64.graphview.GraphView;
 
 import de.jandrotek.android.aspectra.core.AspectraGlobals;
@@ -11,6 +13,7 @@ public class PlotViewPresenter {
 
     //    private GraphView.GraphViewData[][] realData = null;
 //    private int realPlotDataSize = 0;//PLOT_DATA_SIZE;
+    private static final String TAG = "PlotViewPresenter";
     private PlotViewFragment mFragment;
     private int mSpectraPlotCount = 0;
     private int[] mFileDataLength;
@@ -53,31 +56,38 @@ public class PlotViewPresenter {
         int realLength;
         GraphView.GraphViewData[] realData = new GraphView.GraphViewData[AspectraGlobals.eMaxSpectrumSize];
 
-        if (length > AspectraGlobals.eMaxSpectrumSize) {
-            realLength = AspectraGlobals.eMaxSpectrumSize;
-        } else {
+        try {
+            if (length > AspectraGlobals.eMaxSpectrumSize) {
+                realLength = AspectraGlobals.eMaxSpectrumSize;
+            } else {
+                realLength = length;
+            }
             realLength = length;
-        }
-        realLength = length;
 //        if(realData[index] == null){
 //            realData[index] = new GraphView.GraphViewData[length];
 //        }
-        for (int i = 0; i < realLength; i++) {
+            for (int i = 0; i < realLength; i++) {
 
-            realData[i] = new GraphView.GraphViewData(i, data[i]);
-        }
-        //TODO: check in plot act length, and add needed data only for that length
-        if (mSpectraPlotCount > 1) {
-            realPlotDataSize = findMaxDataLength();
-        } else {
-            realPlotDataSize = realLength;
-        }
+                realData[i] = new GraphView.GraphViewData(i, data[i]);
+            }
+            //TODO: check in plot act length, and add needed data only for that length
+            if (mSpectraPlotCount > 1) {
+                realPlotDataSize = findMaxDataLength();
+            } else {
+                realPlotDataSize = realLength;
+            }
 
 
-        for (int i = realLength; i < AspectraGlobals.eMaxSpectrumSize; i++) {
+            for (int i = realLength; i < AspectraGlobals.eMaxSpectrumSize; i++) {
 //        for (int i = realLength; i < realPlotDataSize; i++) {
-            realData[i] = new GraphView.GraphViewData(i, 0);
+                realData[i] = new GraphView.GraphViewData(i, 0);
+            }
+        } catch (Exception exception) {
+            if (BuildConfig.DEBUG) {
+                Log.e(TAG, "Exception caused by generateData()", exception);
+            }
         }
+
         return realData;
     }
 

@@ -91,6 +91,11 @@ public class LiveViewActivity extends BaseActivity
         }
         mImageProcessing = ImageProcessing.getInstance();
         mCameraViewFragment.setImageProcessing(mImageProcessing);
+        getScreenOrientation();
+        mCameraViewFragment.setDeviceOrientation(mDeviceOrientation);
+        mViewSettings = ConfigViewSettings.getInstance();
+
+        mViewSettings.setDeviceOrientation(mDeviceOrientation);
 
 //        mPlotViewPresenter = mPlotViewController.mPlotViewPresenter;
     }

@@ -378,11 +378,10 @@ public class CameraPreview  extends ViewGroup implements SurfaceHolder.Callback,
             final int viewOwnWidth = r - l;
             final int viewOwnHeight = b - t;
 
-            if ((viewOwnHeight > 0) && (viewOwnWidth > 0)
-                    && (mCameraOwnPreviewWidth > 0) && (mCameraOwnPreviewHeight > 0)) {
-            //TODO: get device orientation
-            // in portrait mode, camera own height and weith are different as SurfaceView width and height
-            // in lanscape mode are the same
+            if ((viewOwnHeight > 0) && (viewOwnWidth > 0)) {
+                //TODO: get device orientation
+                // in portrait mode, camera own height and weith are different as SurfaceView width and height
+                // in lanscape mode are the same
                 //if orientation portrait, change w with h
                 if (mDeviceOrientation == AspectraGlobals.DEVICE_ORIENTATION_LANDSCAPE) {
                     mCameraOwnPreviewWidth = viewOwnWidth;
@@ -402,8 +401,9 @@ public class CameraPreview  extends ViewGroup implements SurfaceHolder.Callback,
                         mCameraOwnPreviewWidth = mCameraPreviewSize.width;
                         mCameraOwnPreviewHeight = mCameraPreviewSize.height;
                     }
+                }
             }
-
+            if ((mCameraOwnPreviewWidth > 0) && (mCameraOwnPreviewHeight > 0)) {
 
             // configure ImageProcessing
             mImageProcessing.setPictureSizeWidth(mCameraOwnPreviewWidth);

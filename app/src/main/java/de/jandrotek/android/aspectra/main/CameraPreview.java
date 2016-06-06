@@ -389,51 +389,55 @@ public class CameraPreview  extends ViewGroup implements SurfaceHolder.Callback,
 
                     // from camera, result of getOptiomalPreviewSize()
                     if (mCameraPreviewSize != null) {
-                        mCameraOwnPreviewWidth = mCameraPreviewSize.width;
-                        mCameraOwnPreviewHeight = mCameraPreviewSize.height;
+                        mCameraSizeinViewWidth = mCameraPreviewSize.width;
+                        mCameraSizeinViewHeight = mCameraPreviewSize.height;
                     }
                 } else if (mDeviceOrientation == AspectraGlobals.DEVICE_ORIENTATION_PORTRAIT) {
-                    mCameraOwnPreviewHeight = viewOwnWidth;
-                    mCameraOwnPreviewWidth = viewOwnHeight;
+                    mCameraSizeinViewHeight = viewOwnWidth;
+                    mCameraSizeinViewWidth = viewOwnHeight;
 
                     // from camera, result of getOptiomalPreviewSize()
                     if (mCameraPreviewSize != null) {
-                        mCameraOwnPreviewWidth = mCameraPreviewSize.width;
-                        mCameraOwnPreviewHeight = mCameraPreviewSize.height;
+                        mCameraSizeinViewHeight = mCameraPreviewSize.width;
+                        mCameraSizeinViewWidth = mCameraPreviewSize.height;
                     }
                 }
             }
-            if ((mCameraOwnPreviewWidth > 0) && (mCameraOwnPreviewHeight > 0)) {
+            if ((mCameraSizeinViewWidth > 0) && (mCameraSizeinViewHeight > 0)) {
 
-            // configure ImageProcessing
-            mImageProcessing.setPictureSizeWidth(mCameraOwnPreviewWidth);
-            mImageProcessing.setPictureSizeHeight(mCameraOwnPreviewHeight);
+                // configure ImageProcessing
+                mImageProcessing.setPictureSizeWidth(mCameraOwnPreviewWidth);
+                mImageProcessing.setPictureSizeHeight(mCameraOwnPreviewHeight);
 
-            // Center the child SurfaceView within the parent.
-            // resolve the variables for debugging:
-            int nl, nt, nr, nb;
-                final int width_previewH = viewOwnWidth * mCameraOwnPreviewHeight;
-                final int height_previewW = viewOwnHeight * mCameraOwnPreviewWidth;
-                if (viewOwnWidth * mCameraOwnPreviewHeight > viewOwnHeight * mCameraOwnPreviewWidth) {
-                    final int scaledChildWidth = mCameraOwnPreviewWidth * viewOwnHeight
-                        / mCameraOwnPreviewHeight;
-                    nl = (viewOwnWidth - scaledChildWidth) / 2;
-                nt = 0;
-                    nr = (viewOwnWidth + scaledChildWidth) / 2;
-                    nb = viewOwnHeight;
-//                child.layout((width - scaledChildWidth) / 2, 0,
-//                        (width + scaledChildWidth) / 2, height);
-            } else {
-                    final int scaledChildHeight = mCameraOwnPreviewHeight * viewOwnWidth
-                        / mCameraOwnPreviewWidth;
-                nl = 0;
-                    nt = (viewOwnHeight - scaledChildHeight) / 2;
-                    nr = viewOwnWidth;
-                    nb = (viewOwnHeight + scaledChildHeight) / 2;
-//                child.layout(0, (height - scaledChildHeight) / 2, width,
-//                        (height + scaledChildHeight) / 2);
+                // Center the child SurfaceView within the parent.
+                // resolve the variables for debugging:
+                int child_left, child_top, child_right, child_bottom;
+
+                //alpha and beta are the angles between diagonals, on the right side
+                // alpha for parent, beta for child
+                int angle_beta = 0;
+                int angle_alpha = 0;
+
+                //calculate beta
+                angle_beta = viewOwnWidth * mCameraSizeinViewHeight;
+                //calculate alpha
+                angle_alpha = viewOwnHeight * mCameraSizeinViewWidth;
+
+                // if child placed vertical, free spaces left and right
+                if (angle_beta > angle_alpha) {
+                    final int scaledChildWidth = angle_alpha / mCameraSizeinViewHeight;
+                    child_left = (viewOwnWidth - scaledChildWidth) / 2;
+                    child_top = 0;
+                    child_right = (viewOwnWidth + scaledChildWidth) / 2;
+                    child_bottom = viewOwnHeight;
+                } else { // child placed horizontal, free space top and bottom
+                    final int scaledChildHeight = angle_beta / mCameraSizeinViewWidth;
+                    child_left = 0;
+                    child_top = (viewOwnHeight - scaledChildHeight) / 2;
+                    child_right = viewOwnWidth;
+                    child_bottom = (viewOwnHeight + scaledChildHeight) / 2;
                 }
-                child.layout(nl, nt, nr, nb);
+                child.layout(child_left, child_top, child_right, child_bottom);
             }
         }
     }

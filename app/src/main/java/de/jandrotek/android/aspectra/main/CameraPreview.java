@@ -23,6 +23,7 @@ import java.io.IOException;
 import java.util.List;
 
 import de.jandrotek.android.aspectra.core.AspectraGlobals;
+import de.jandrotek.android.aspectra.core.ConfigViewSettings;
 import de.jandrotek.android.aspectra.core.ImageProcessing;
 
 @SuppressLint("ViewConstructor")
@@ -32,6 +33,7 @@ public class CameraPreview  extends ViewGroup implements SurfaceHolder.Callback,
     private Camera mCamera = null;
 //    private SurfaceView mSurfaceView;
     private SurfaceHolder mCameraHolder;
+    private ConfigViewSettings mViewSettings = null;
     //private static FragmentActivity mActivity = null;
     private Size mCameraPreviewSize;
     private List<Size> mSupportedPreviewSizes;
@@ -42,28 +44,16 @@ public class CameraPreview  extends ViewGroup implements SurfaceHolder.Callback,
     private int mCameraSizeinViewHeight;
     private int mDeviceOrientation;
 
-    public void setCameraSizeinViewHeight(int cameraSizeinViewHeight) {
-        mCameraSizeinViewHeight = cameraSizeinViewHeight;
-    }
-
-    public void setCameraSizeinViewWidth(int cameraSizeinViewWidth) {
-        mCameraSizeinViewWidth = cameraSizeinViewWidth;
-    }
-
     public void setDeviceOrientation(int deviceOrientation) {
         mDeviceOrientation = deviceOrientation;
     }
 
-
     private byte[] mFrameData = null;
     private int mImageFormat;
     private boolean mbProcessing = false;
-
-
     public boolean isProcessingShouldRun() {
         return mbProcessingShouldRun;
     }
-
     public void setProcessingShouldRun(boolean mbProcessingShouldRun) {
         this.mbProcessingShouldRun = mbProcessingShouldRun;
     }
@@ -95,6 +85,7 @@ public class CameraPreview  extends ViewGroup implements SurfaceHolder.Callback,
         mCameraHolder = surfaceView.getHolder();
         mCameraHolder.addCallback(this);
         mCameraHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
+        mViewSettings = ConfigViewSettings.getInstance();
     }
 
     @Override
@@ -379,10 +370,9 @@ public class CameraPreview  extends ViewGroup implements SurfaceHolder.Callback,
             final int viewOwnHeight = b - t;
 
             if ((viewOwnHeight > 0) && (viewOwnWidth > 0)) {
-                //TODO: get device orientation
                 // in portrait mode, camera own height and weith are different as SurfaceView width and height
                 // in lanscape mode are the same
-                //if orientation portrait, change w with h
+                // if orientation portrait, change w with h
                 if (mDeviceOrientation == AspectraGlobals.DEVICE_ORIENTATION_LANDSCAPE) {
                     mCameraOwnPreviewWidth = viewOwnWidth;
                     mCameraOwnPreviewHeight = viewOwnHeight;
@@ -438,6 +428,13 @@ public class CameraPreview  extends ViewGroup implements SurfaceHolder.Callback,
                     child_bottom = (viewOwnHeight + scaledChildHeight) / 2;
                 }
                 child.layout(child_left, child_top, child_right, child_bottom);
+                if (mViewSettings == null) {
+                    mViewSettings = ConfigViewSettings.getInstance();
+                }
+                int previewWidth = child_right - child_left;
+                int previewHeight = child_bottom - child_top;
+                mViewSettings.setCameraPreviewDimensions(previewWidth, previewHeight);
+
             }
         }
     }

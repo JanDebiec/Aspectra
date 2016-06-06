@@ -78,10 +78,10 @@ public class ConfigViewSettings {
         mConfigViewHeight = heightY;
     }
 
-    public void setCameraPreviewDimensions(int widthX, int heightY) {
+    public void setCameraPreviewDimensions(int previewWidth, int previewHeight) {
         mCamPreviewConfigured = true;
-        mCameraPreviewWidth = (float) widthX;
-        mCameraPreviewHeight = (float) heightY;
+        mCameraPreviewWidth = (float) previewWidth;
+        mCameraPreviewHeight = (float) previewHeight;
         mConfigEndPercentY = mConfigStartPercentY + (mAmountLinesY * 100) / mCameraPreviewHeight;
     }
 
@@ -123,17 +123,17 @@ public class ConfigViewSettings {
                 smallerY = previewInConfigY;
             }
 
-            mCrossPointsW[0] = offsetY;
-            mCrossPointsW[3] = offsetY + smallerY;
+            mCrossPointsW[0] = offsetX;
+            mCrossPointsW[3] = offsetX + smallerX;
 
-            mCrosstPointsH[0] = offsetX;
-            mCrosstPointsH[3] = offsetX + smallerX;
+            mCrosstPointsH[0] = offsetY;
+            mCrosstPointsH[3] = offsetY + smallerY;
 
-            mCrossPointsW[1] = offsetY + mConfigStartPercentY * smallerY / 100;
-            mCrossPointsW[2] = offsetY + mConfigEndPercentY * smallerY / 100;
+            mCrossPointsW[1] = offsetX + mConfigStartPercentY * smallerX / 100;
+            mCrossPointsW[2] = offsetX + mConfigEndPercentY * smallerX / 100;
 
-            mCrosstPointsH[1] = offsetX + mConfigStartPercentX * smallerX / 100;
-            mCrosstPointsH[2] = offsetX + mConfigEndPercentX * smallerX / 100;
+            mCrosstPointsH[1] = offsetY + mConfigStartPercentX * smallerY / 100;
+            mCrosstPointsH[2] = offsetY + mConfigEndPercentX * smallerY / 100;
         }
     }
 

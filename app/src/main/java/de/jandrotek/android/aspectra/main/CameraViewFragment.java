@@ -150,7 +150,7 @@ public class CameraViewFragment extends Fragment {
 
             mPreviewWidthX = AspectraGlobals.mPreviewWidthX;
             mPreviewHeightY = AspectraGlobals.mPreviewHeightY;
-            mConfigLinesView.setPreviewDimensions(mPreviewWidthX, mPreviewHeightY);
+//            mConfigLinesView.setPreviewDimensions(mPreviewWidthX, mPreviewHeightY);
         }
 
         mFramePreview = (FrameLayout) rootView.findViewById(R.id.liveViewFrame);

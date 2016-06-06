@@ -38,6 +38,7 @@ public class ConfigLinesView extends View {
     private float mConfigWidthX;
     private float mConfigHeightY;
 
+
     private float[] mCrossPointsW = new float[4];
     private float[] mCrossPointsH = new float[4];
 
@@ -99,7 +100,7 @@ public class ConfigLinesView extends View {
 
     public void setPreviewDimensions(int widthX, int heightY){
         mViewSettings.setCameraPreviewDimensions(widthX, heightY);
-        mViewSettings.setSpectrumOrientationLandscape(mSpectrumOrientationLandscape);
+//        mViewSettings.setSpectrumOrientationLandscape(mSpectrumOrientationLandscape);
         initializeLines();
     }
 

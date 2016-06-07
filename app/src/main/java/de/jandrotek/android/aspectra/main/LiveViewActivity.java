@@ -91,13 +91,13 @@ public class LiveViewActivity extends BaseActivity
         }
         mImageProcessing = ImageProcessing.getInstance();
         mCameraViewFragment.setImageProcessing(mImageProcessing);
+
+        // set both orientations in childs
         getScreenOrientation();
         mCameraViewFragment.setDeviceOrientation(mDeviceOrientation);
         mViewSettings = ConfigViewSettings.getInstance();
-
         mViewSettings.setDeviceOrientation(mDeviceOrientation);
-
-//        mPlotViewPresenter = mPlotViewController.mPlotViewPresenter;
+        mViewSettings.setSpectrumOrientationLandscape(mSpectrumLanscapeOrientation);
     }
 
     //TODO: set proper handling of configuration: portrait/landscape

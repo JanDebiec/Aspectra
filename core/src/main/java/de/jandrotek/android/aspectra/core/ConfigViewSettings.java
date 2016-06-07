@@ -22,12 +22,11 @@ public class ConfigViewSettings {
     }
 
     private boolean mSpectrumOrientationLandscape = true;
+    private int mDeviceOrientation = AspectraGlobals.DEVICE_ORIENTATION_LANDSCAPE;
 
     public void setDeviceOrientation(int deviceOrientation) {
         mDeviceOrientation = deviceOrientation;
     }
-
-    private int mDeviceOrientation;
 
     private  boolean mConfViewConfigured = false;
     private  boolean mCamPreviewConfigured = false;
@@ -93,9 +92,10 @@ public class ConfigViewSettings {
         float smallerX = mConfigViewWidth;
         float smallerY = mConfigViewHeight;
         float faktorK;
+        float previewInConfigX;
         float previewInConfigY;
 
-        if (mSpectrumOrientationLandscape) {
+        if (mDeviceOrientation == AspectraGlobals.DEVICE_ORIENTATION_LANDSCAPE) {
             deltaX = mCameraPreviewWidth - mConfigViewWidth;
             if (deltaX > 1.0f) { // prefiewX bigger then configX
                 faktorK = mConfigViewWidth / mCameraPreviewWidth;
@@ -103,38 +103,74 @@ public class ConfigViewSettings {
                 offsetY = (mConfigViewHeight - previewInConfigY) / 2;
                 smallerY = previewInConfigY;
             }
-            mCrossPointsW[0] = offsetX;
-            mCrossPointsW[3] = offsetX + smallerX;
-            mCrosstPointsH[0] = offsetY;
-            mCrosstPointsH[3] = offsetY + smallerY;
+            if (mSpectrumOrientationLandscape) {
+                mCrossPointsW[0] = offsetX;
+                mCrossPointsW[3] = offsetX + smallerX;
 
-            mCrossPointsW[1] = offsetX + mConfigStartPercentX * smallerX / 100;
-            mCrossPointsW[2] = offsetX + mConfigEndPercentX * smallerX / 100;
+                mCrosstPointsH[0] = offsetY;
+                mCrosstPointsH[3] = offsetY + smallerY;
 
-            mCrosstPointsH[1] = offsetY + mConfigStartPercentY * smallerY / 100;
-            mCrosstPointsH[2] = offsetY + mConfigEndPercentY * smallerY / 100;
-        } else {
-//TODO: adapt to spectrum portrait orientation
-            deltaX = mCameraPreviewWidth - mConfigViewWidth;
-            if (deltaX > 1.0f) { // prefiewX bigger then configX
-                faktorK = mConfigViewWidth / mCameraPreviewWidth;
-                previewInConfigY = mCameraPreviewHeight * faktorK;
-                offsetY = (mConfigViewHeight - previewInConfigY) / 2;
-                smallerY = previewInConfigY;
+                mCrossPointsW[1] = offsetX + mConfigStartPercentX * smallerX / 100;
+                mCrossPointsW[2] = offsetX + mConfigEndPercentX * smallerX / 100;
+
+                mCrosstPointsH[1] = offsetY + mConfigStartPercentY * smallerY / 100;
+                mCrosstPointsH[2] = offsetY + mConfigEndPercentY * smallerY / 100;
+            } else { // spectrum portrait
+                mCrossPointsW[0] = offsetX;
+                mCrossPointsW[3] = offsetX + smallerX;
+
+                mCrosstPointsH[0] = offsetY;
+                mCrosstPointsH[3] = offsetY + smallerY;
+
+                mCrossPointsW[1] = offsetX + mConfigStartPercentY * smallerX / 100;
+                mCrossPointsW[2] = offsetX + mConfigEndPercentY * smallerX / 100;
+
+                mCrosstPointsH[1] = offsetY + mConfigStartPercentX * smallerY / 100;
+                mCrosstPointsH[2] = offsetY + mConfigEndPercentX * smallerY / 100;
             }
+        } else if (mDeviceOrientation == AspectraGlobals.DEVICE_ORIENTATION_PORTRAIT) {
+//TODO: adapt to portrait orientation
+//            deltaX = mCameraPreviewWidth - mConfigViewWidth;
+//            if (deltaX > 1.0f) { // prefiewX bigger then configX
+//                faktorK = mConfigViewWidth / mCameraPreviewWidth;
+//                previewInConfigY = mCameraPreviewHeight * faktorK;
+//                offsetY = (mConfigViewHeight - previewInConfigY) / 2;
+//                smallerY = previewInConfigY;
+//            }
+            deltaY = mCameraPreviewHeight - mConfigViewHeight;
+            if (deltaY > 1.0f) { // preViewY bigger then configY
+                faktorK = mConfigViewHeight / mCameraPreviewHeight;
+                previewInConfigX = mCameraPreviewWidth * faktorK;
+                offsetX = (mConfigViewWidth - previewInConfigX) / 2;
+                smallerX = previewInConfigX;
+            }
+            if (mSpectrumOrientationLandscape) {
+                mCrossPointsW[0] = offsetX;
+                mCrossPointsW[3] = offsetX + smallerX;
 
-            mCrossPointsW[0] = offsetX;
-            mCrossPointsW[3] = offsetX + smallerX;
+                mCrosstPointsH[0] = offsetY;
+                mCrosstPointsH[3] = offsetY + smallerY;
 
-            mCrosstPointsH[0] = offsetY;
-            mCrosstPointsH[3] = offsetY + smallerY;
+                mCrossPointsW[1] = offsetX + mConfigStartPercentY * smallerX / 100;
+                mCrossPointsW[2] = offsetX + mConfigEndPercentY * smallerX / 100;
 
-            mCrossPointsW[1] = offsetX + mConfigStartPercentY * smallerX / 100;
-            mCrossPointsW[2] = offsetX + mConfigEndPercentY * smallerX / 100;
+                mCrosstPointsH[1] = offsetY + mConfigStartPercentX * smallerY / 100;
+                mCrosstPointsH[2] = offsetY + mConfigEndPercentX * smallerY / 100;
+            } else { // spectrum portrait
+                mCrossPointsW[0] = offsetX;
+                mCrossPointsW[3] = offsetX + smallerX;
 
-            mCrosstPointsH[1] = offsetY + mConfigStartPercentX * smallerY / 100;
-            mCrosstPointsH[2] = offsetY + mConfigEndPercentX * smallerY / 100;
+                mCrosstPointsH[0] = offsetY;
+                mCrosstPointsH[3] = offsetY + smallerY;
+
+                mCrossPointsW[1] = offsetX + mConfigStartPercentX * smallerX / 100;
+                mCrossPointsW[2] = offsetX + mConfigEndPercentX * smallerX / 100;
+
+                mCrosstPointsH[1] = offsetY + mConfigStartPercentY * smallerY / 100;
+                mCrosstPointsH[2] = offsetY + mConfigEndPercentY * smallerY / 100;
+            }
         }
+
     }
 
     public void setPercent(float widthStartX, float widthEndX, float heightStartY, float deltaLinesY) {

@@ -101,7 +101,7 @@ public class ViewConfigActivity extends BaseActivity
                     mPersentStartW = progress;
                     mPrefsChanged = true;
                     mSbStartWValue.setText(Integer.toString(mPersentStartW));
-                    updateConfigView();
+                    updateLinesInConfigView();
                 }
             }
 
@@ -123,7 +123,7 @@ public class ViewConfigActivity extends BaseActivity
                     mPersentEndW = progress;
                     mPrefsChanged = true;
                     mSbEndWValue.setText(Integer.toString(mPersentEndW));
-                    updateConfigView();
+                    updateLinesInConfigView();
                 }
             }
 
@@ -143,7 +143,7 @@ public class ViewConfigActivity extends BaseActivity
                     mPersentStartH = progress;
                     mPrefsChanged = true;
                     mSbStartHValue.setText(Integer.toString(mPersentStartH));
-                    updateConfigView();
+                updateLinesInConfigView();
             }
 
             @Override
@@ -163,7 +163,7 @@ public class ViewConfigActivity extends BaseActivity
                 mPrefsChanged = true;
                 mDeltaLinesY = calcCountLinesY(progress);
                 mSbAreaYValue.setText(Integer.toString(mDeltaLinesY));
-                updateConfigView();
+                updateLinesInConfigView();
             }
 
             @Override
@@ -187,7 +187,14 @@ public class ViewConfigActivity extends BaseActivity
                             // .add(R.id.container, new PlaceholderFragment())
                     .commit();
         }
+
         updateFromPreferences();
+        // set both orientations in childs
+        getScreenOrientation();
+        mCameraViewFragment.setDeviceOrientation(mDeviceOrientation);
+        mViewSettings = ConfigViewSettings.getInstance();
+        mViewSettings.setDeviceOrientation(mDeviceOrientation);
+        mViewSettings.setSpectrumOrientationLandscape(mSpectrumLanscapeOrientation);
 
     }
 
@@ -318,7 +325,7 @@ public class ViewConfigActivity extends BaseActivity
 
     }
 
-    protected void updateConfigView() {
+    protected void updateLinesInConfigView() {
         if (mCameraViewFragment != null) {
 //            mCameraViewFragment.updateBorderInConfigView(mPersentStartW, mPersentEndW, mPersentStartH, mPersentEndH);
             mCameraViewFragment.updateBorderInConfigView(mPersentStartW, mPersentEndW, mPersentStartH, mDeltaLinesY);

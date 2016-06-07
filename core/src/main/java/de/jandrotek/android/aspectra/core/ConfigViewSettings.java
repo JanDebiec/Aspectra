@@ -97,12 +97,12 @@ public class ConfigViewSettings {
 
         if (mDeviceOrientation == AspectraGlobals.DEVICE_ORIENTATION_LANDSCAPE) {
             deltaX = mCameraPreviewWidth - mConfigViewWidth;
-            if (deltaX > 1.0f) { // prefiewX bigger then configX
+//            if (deltaX > 1.0f) { // prefiewX bigger then configX
                 faktorK = mConfigViewWidth / mCameraPreviewWidth;
                 previewInConfigY = mCameraPreviewHeight * faktorK;
                 offsetY = (mConfigViewHeight - previewInConfigY) / 2;
                 smallerY = previewInConfigY;
-            }
+//            }
             if (mSpectrumOrientationLandscape) {
                 mCrossPointsW[0] = offsetX;
                 mCrossPointsW[3] = offsetX + smallerX;
@@ -137,13 +137,14 @@ public class ConfigViewSettings {
 //                offsetY = (mConfigViewHeight - previewInConfigY) / 2;
 //                smallerY = previewInConfigY;
 //            }
-            deltaY = mCameraPreviewHeight - mConfigViewHeight;
-            if (deltaY > 1.0f) { // preViewY bigger then configY
-                faktorK = mConfigViewHeight / mCameraPreviewHeight;
-                previewInConfigX = mCameraPreviewWidth * faktorK;
+            // for camera preview hidht should be considered as view-width, and preview-width as view-height
+            deltaY = mCameraPreviewWidth - mConfigViewHeight;
+//            if (deltaY > 1.0f) { // preViewY bigger then configY
+            faktorK = mConfigViewHeight / mCameraPreviewWidth;
+            previewInConfigX = mCameraPreviewHeight * faktorK;
                 offsetX = (mConfigViewWidth - previewInConfigX) / 2;
                 smallerX = previewInConfigX;
-            }
+//            }
             if (mSpectrumOrientationLandscape) {
                 mCrossPointsW[0] = offsetX;
                 mCrossPointsW[3] = offsetX + smallerX;

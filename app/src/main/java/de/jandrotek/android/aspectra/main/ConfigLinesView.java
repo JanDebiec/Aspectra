@@ -161,6 +161,7 @@ public class ConfigLinesView extends View {
 
     @Override
     protected void onDraw(Canvas canvas) {
+        initializeLines();
         canvas.drawPath(mPath0, mLinePaint0);
         canvas.drawPath(mPath1, mLinePaint1);
         canvas.drawPath(mPath2, mLinePaint2);

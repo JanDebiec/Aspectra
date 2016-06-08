@@ -106,7 +106,7 @@ public class ConfigLinesView extends View {
 
     private void setConfigViewDimensions(float widthX, float heightY) {
         mViewSettings.setConfigViewDimensions(widthX, heightY);
-        mViewSettings.setSpectrumOrientationLandscape(mSpectrumOrientationLandscape);
+//        mViewSettings.setSpectrumOrientationLandscape(mSpectrumOrientationLandscape);
         initializeLines();
     }
 
@@ -161,7 +161,11 @@ public class ConfigLinesView extends View {
 
     @Override
     protected void onDraw(Canvas canvas) {
-        initializeLines();
+        boolean newCrossPoints = mViewSettings.isNewCrossPoints();
+        if (newCrossPoints) {
+            initializeLines();
+            mViewSettings.setNewCrossPoints(false);
+        }
         canvas.drawPath(mPath0, mLinePaint0);
         canvas.drawPath(mPath1, mLinePaint1);
         canvas.drawPath(mPath2, mLinePaint2);

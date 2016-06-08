@@ -28,6 +28,16 @@ public class ConfigViewSettings {
         mDeviceOrientation = deviceOrientation;
     }
 
+    public boolean isNewCrossPoints() {
+        return mNewCrossPoints;
+    }
+
+    public void setNewCrossPoints(boolean mNewCrossPoints) {
+        this.mNewCrossPoints = mNewCrossPoints;
+    }
+
+    private boolean mNewCrossPoints = false;
+
     private  boolean mConfViewConfigured = false;
     private  boolean mCamPreviewConfigured = false;
     private  boolean mPersentsConfigured = false;
@@ -171,6 +181,7 @@ public class ConfigViewSettings {
                 mCrosstPointsH[2] = offsetY + mConfigEndPercentY * smallerY / 100;
             }
         }
+        mNewCrossPoints = true;
 
     }
 

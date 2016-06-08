@@ -225,6 +225,7 @@ public class CameraViewFragment extends Fragment {
 //        updateBorderPercents();
         cameraProcessingShouldRun(true);
         mCamPreview.setDeviceOrientation(mDeviceOrientation);
+        mConfigLinesView.initializeLines();
 
     }
 

@@ -182,7 +182,7 @@ public class ConfigLinesView extends View {
             initializeLines();
     }
 
-    private void initializeLines(){
+    public void initializeLines() {
         if(mViewSettings.isConfigured()){
             mViewSettings.calcCrossPoints();
             mCrossPointsW = mViewSettings.getPointsW();

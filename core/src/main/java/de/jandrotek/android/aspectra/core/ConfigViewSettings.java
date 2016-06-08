@@ -91,7 +91,11 @@ public class ConfigViewSettings {
         mCamPreviewConfigured = true;
         mCameraPreviewWidth = (float) previewWidth;
         mCameraPreviewHeight = (float) previewHeight;
-        mConfigEndPercentY = mConfigStartPercentY + (mAmountLinesY * 100) / mCameraPreviewHeight;
+        if (mSpectrumOrientationLandscape) {
+            mConfigEndPercentY = mConfigStartPercentY + (mAmountLinesY * 100) / mCameraPreviewHeight;
+        } else { // Spectrum PORTRAIT
+            mConfigEndPercentY = mConfigStartPercentY + (mAmountLinesY * 100) / mCameraPreviewWidth;
+        }
     }
 
     public void calcCrossPoints() {
@@ -148,10 +152,10 @@ public class ConfigViewSettings {
 //                smallerY = previewInConfigY;
 //            }
             // for camera preview hidht should be considered as view-width, and preview-width as view-height
-            deltaY = mCameraPreviewWidth - mConfigViewHeight;
+            deltaY = mCameraPreviewHeight - mConfigViewHeight;
 //            if (deltaY > 1.0f) { // preViewY bigger then configY
-            faktorK = mConfigViewHeight / mCameraPreviewWidth;
-            previewInConfigX = mCameraPreviewHeight * faktorK;
+            faktorK = mConfigViewHeight / mCameraPreviewHeight;
+            previewInConfigX = mCameraPreviewWidth * faktorK;
                 offsetX = (mConfigViewWidth - previewInConfigX) / 2;
                 smallerX = previewInConfigX;
 //            }

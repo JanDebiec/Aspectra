@@ -19,6 +19,7 @@ public class ConfigViewSettings {
 
     public void setSpectrumOrientationLandscape(boolean spectrumOrientationLandscape) {
         mSpectrumOrientationLandscape = spectrumOrientationLandscape;
+        calcCrossPoints();
     }
 
     private boolean mSpectrumOrientationLandscape = true;
@@ -96,6 +97,7 @@ public class ConfigViewSettings {
         } else { // Spectrum PORTRAIT
             mConfigEndPercentY = mConfigStartPercentY + (mAmountLinesY * 100) / mCameraPreviewWidth;
         }
+        calcCrossPoints();
     }
 
     public void calcCrossPoints() {

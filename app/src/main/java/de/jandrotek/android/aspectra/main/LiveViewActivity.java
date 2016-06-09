@@ -114,7 +114,9 @@ public class LiveViewActivity extends BaseActivity
 
     private static void updatePreviewSizeInConfigView() {
 
-        mCameraViewFragment.mConfigLinesView.setPreviewDimensions(mPreviewWidthX, mPreviewHeightY);
+        // send to imageProcessing
+//        setPictureSizeWidth(mPreviewWidthX);
+//        mCameraViewFragment.mConfigLinesView.setPreviewDimensions(mPreviewWidthX, mPreviewHeightY);
     }
 
 
@@ -319,7 +321,8 @@ public class LiveViewActivity extends BaseActivity
                     int[] data = (int[])inputMessage.obj;
                     mPreviewWidthX = data[0];
                     mPreviewHeightY = data[1];
-                    updatePreviewSizeInConfigView();
+                    //TODO: check if needed and proper value
+//                    updatePreviewSizeInConfigView();
                 }
             }
         }

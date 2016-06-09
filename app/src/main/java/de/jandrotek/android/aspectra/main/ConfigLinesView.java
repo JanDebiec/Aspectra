@@ -30,6 +30,7 @@ public class ConfigLinesView extends View {
 
     public void setSpectrumOrientationLandscape(boolean spectrumOrientationLandscape) {
         mSpectrumOrientationLandscape = spectrumOrientationLandscape;
+        initializeLines();
     }
 
     private boolean mSpectrumOrientationLandscape = true;
@@ -93,14 +94,20 @@ public class ConfigLinesView extends View {
                 Log.e(TAG, "width = " + mConfigWidthX + ", height = " + mConfigHeightY);
             }
             setConfigViewDimensions(mConfigWidthX, mConfigHeightY);
+            mViewSettings.calcCrossPoints();
             initializeLines();
 
         }
     }
 
     public void setPreviewDimensions(int widthX, int heightY){
-        mViewSettings.setCameraPreviewDimensions(widthX, heightY);
+        //TODO hier is bug, these values are original camera values, not modified to view values
+//        mViewSettings.setCameraPreviewDimensions(widthX, heightY);
+
+
 //        mViewSettings.setSpectrumOrientationLandscape(mSpectrumOrientationLandscape);
+        mViewSettings.calcCrossPoints();
+
         initializeLines();
     }
 
@@ -184,7 +191,7 @@ public class ConfigLinesView extends View {
 
     public void initializeLines() {
         if(mViewSettings.isConfigured()){
-            mViewSettings.calcCrossPoints();
+//            mViewSettings.calcCrossPoints();
             mCrossPointsW = mViewSettings.getPointsW();
             mCrossPointsH = mViewSettings.getPointsH();
 

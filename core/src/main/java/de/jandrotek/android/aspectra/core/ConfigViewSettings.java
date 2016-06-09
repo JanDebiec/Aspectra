@@ -143,14 +143,6 @@ public class ConfigViewSettings {
                 mCrosstPointsH[2] = offsetY + mConfigEndPercentX * smallerY / 100;
             }
         } else if (mDeviceOrientation == AspectraGlobals.DEVICE_ORIENTATION_PORTRAIT) {
-//TODO: adapt to portrait orientation
-//            deltaX = mCameraPreviewWidth - mConfigViewWidth;
-//            if (deltaX > 1.0f) { // prefiewX bigger then configX
-//                faktorK = mConfigViewWidth / mCameraPreviewWidth;
-//                previewInConfigY = mCameraPreviewHeight * faktorK;
-//                offsetY = (mConfigViewHeight - previewInConfigY) / 2;
-//                smallerY = previewInConfigY;
-//            }
             // for camera preview hidht should be considered as view-width, and preview-width as view-height
             deltaY = mCameraPreviewHeight - mConfigViewHeight;
 //            if (deltaY > 1.0f) { // preViewY bigger then configY
@@ -201,22 +193,6 @@ public class ConfigViewSettings {
         mPersentsConfigured = true;
     }
 
-    public float getConfigStartPercentX() {
-        return mConfigStartPercentX;
-    }
-
-    public float getConfigEndPercentX() {
-        return mConfigEndPercentX;
-    }
-
-    public float getConfigStartPercentY() {
-        return mConfigStartPercentY;
-    }
-
-    public float getConfigEndPercentY() {
-        return mConfigEndPercentY;
-    }
-
     public void setConfigStartPercentX(int configStartPercentX) {
         mConfigStartPercentX = configStartPercentX;
     }
@@ -231,10 +207,6 @@ public class ConfigViewSettings {
 
     public void setConfigEndPercentY(int configEndPercentY) {
         mConfigEndPercentY = configEndPercentY;
-    }
-
-    public float getAmountLinesY() {
-        return mAmountLinesY;
     }
 
     public void setAmountLinesY(float amountLinesY) {

@@ -144,72 +144,9 @@ public class CameraPreview  extends ViewGroup implements SurfaceHolder.Callback,
 
             setCameraDisplayOrientation(0, mCamera);
             parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_INFINITY);
-            mCamera.setParameters(parameters);
 
             mCamera.startPreview();
-//            //if orientation portrait, change w with h
-//            if (mDeviceOrientation == AspectraGlobals.DEVICE_ORIENTATION_LANDSCAPE) {
-//                mCameraOwnPreviewWidth = mCameraPreviewSize.width;
-//                mCameraOwnPreviewHeight = mCameraPreviewSize.height;
-//                parameters.setPreviewSize(mCameraOwnPreviewWidth, mCameraOwnPreviewHeight);
-//                requestLayout();
-//
-//                // for later use, in ConfiActivity should be known globally
-//                AspectraGlobals.mPreviewWidthX = mCameraOwnPreviewWidth;
-//                AspectraGlobals.mPreviewHeightY = mCameraOwnPreviewHeight;
-//                if (BuildConfig.DEBUG) {
-//                    Log.i(TAG, "width = " + mCameraOwnPreviewWidth + ", height = " + mCameraOwnPreviewHeight);
-//                }
-//                // send message, that size is already known
-//                int[] previewSize = new int[2];
-//                previewSize[0] = mCameraOwnPreviewWidth;
-//                previewSize[1] = mCameraOwnPreviewHeight;
-//
-//                if (mLVActHandler != null) {
-//                    Message configMessage =
-//                            mLVActHandler.obtainMessage(AspectraGlobals.eMessagePreviewSize, previewSize);
-//                    configMessage.sendToTarget();
-//                }
-
-//                mImageProcessing.setPictureSizeWidth(mCameraOwnPreviewWidth);
-//                mImageProcessing.setPictureSizeHeight(mCameraOwnPreviewHeight);
-//                mImageFormat = parameters.getPreviewFormat();
-//
-//                setCameraDisplayOrientation(0, mCamera);
-//                parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_INFINITY);
-//            } else if (mDeviceOrientation == AspectraGlobals.DEVICE_ORIENTATION_PORTRAIT) {
-//                //TODO: adapt to portrait device orientation
-//                mCameraOwnPreviewWidth = mCameraPreviewSize.width;
-//                mCameraOwnPreviewHeight = mCameraPreviewSize.height;
-//                parameters.setPreviewSize(mCameraOwnPreviewWidth, mCameraOwnPreviewHeight);
-//                requestLayout();
-//
-//                // for later use, in ConfiActivity should be known globally
-//                AspectraGlobals.mPreviewWidthX = mCameraOwnPreviewWidth;
-//                AspectraGlobals.mPreviewHeightY = mCameraOwnPreviewHeight;
-//                if (BuildConfig.DEBUG) {
-//                    Log.i(TAG, "width = " + mCameraOwnPreviewWidth + ", height = " + mCameraOwnPreviewHeight);
-//                }
-//                // send message, that size is already known
-//                int[] previewSize = new int[2];
-//                previewSize[0] = mCameraOwnPreviewWidth;
-//                previewSize[1] = mCameraOwnPreviewHeight;
-//
-//                if (mLVActHandler != null) {
-//                    Message configMessage =
-//                            mLVActHandler.obtainMessage(AspectraGlobals.eMessagePreviewSize, previewSize);
-//                    configMessage.sendToTarget();
-//                }
-//
-//                mImageProcessing.setPictureSizeWidth(mCameraOwnPreviewWidth);
-//                mImageProcessing.setPictureSizeHeight(mCameraOwnPreviewHeight);
-//                mImageFormat = parameters.getPreviewFormat();
-//
-//                setCameraDisplayOrientation(0, mCamera);
-//                parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_INFINITY);
-//            } else {
-//
-//            }
+            mCamera.setParameters(parameters);
 
 
         } catch (Exception e) {

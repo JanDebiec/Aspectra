@@ -43,7 +43,7 @@ public class ViewConfigActivity extends BaseActivity
     private boolean mPrefsChanged = false;
     private boolean mSeekBarCreated = false;
 
-    private ConfigViewSettings mViewSettings = null;
+//    private ConfigViewSettings mViewSettings = null;
 
     //public Handler getHandler() {
     //    return mHandler;
@@ -61,8 +61,8 @@ public class ViewConfigActivity extends BaseActivity
             setContentView(R.layout.activity_view_config_cam_port);
         }
 
-        mViewSettings = ConfigViewSettings.getInstance();
-        mViewSettings.setSpectrumOrientationLandscape(mSpectrumLanscapeOrientation);
+//        mViewSettings = ConfigViewSettings.getInstance();
+//        mViewSettings.setSpectrumOrientationLandscape(mSpectrumLanscapeOrientation);
 
         // blocks
         mBlockStartW    = (RelativeLayout) findViewById(R.id.sbcWidthStart);
@@ -192,9 +192,9 @@ public class ViewConfigActivity extends BaseActivity
         // set both orientations in childs
         getScreenOrientation();
         mCameraViewFragment.setDeviceOrientation(mDeviceOrientation);
-        mViewSettings = ConfigViewSettings.getInstance();
-        mViewSettings.setDeviceOrientation(mDeviceOrientation);
-        mViewSettings.setSpectrumOrientationLandscape(mSpectrumLanscapeOrientation);
+//        mViewSettings = ConfigViewSettings.getInstance();
+//        mViewSettings.setDeviceOrientation(mDeviceOrientation);
+//        mViewSettings.setSpectrumOrientationLandscape(mSpectrumLanscapeOrientation);
 
     }
 

@@ -193,6 +193,7 @@ public class ConfigViewSettings {
             mConfigEndPercentY = mConfigStartPercentY + (mAmountLinesY * 100) / mCameraPreviewHeight;
         }
         mPersentsConfigured = true;
+        calcCrossPoints();
     }
 
     public void setConfigStartPercentX(int configStartPercentX) {

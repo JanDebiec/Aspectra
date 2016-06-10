@@ -11,6 +11,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import de.jandrotek.android.aspectra.core.AspectraGlobals;
+import de.jandrotek.android.aspectra.core.ConfigViewSettings;
 import de.jandrotek.android.aspectra.libprefs.AspectraLiveViewPrefs;
 import de.jandrotek.android.aspectra.libprefs.AspectraGlobalPrefsActivity;
 import de.jandrotek.android.aspectra.libspectrafiles.SpectrumFiles;
@@ -30,7 +31,14 @@ public class BaseActivity extends AppCompatActivity //ActionBarActivity
     protected boolean mSpectrumLanscapeOrientation = false;
     protected int mDeviceOrientation;
 
+    protected int mStartPercentX;
+    protected int mEndPercentX;
+    protected int mStartPercentY;
+    protected int mEndPercentY;
+    protected int mScanAreaWidth;
+
     protected boolean mCameraPresent = false;
+    protected ConfigViewSettings mViewSettings = null;
 
    @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,8 +51,15 @@ public class BaseActivity extends AppCompatActivity //ActionBarActivity
        mAspectraSettings.connectPrefs(context, prefs);
 
        updateFromPreferences();
+       setOrientationsInViewSettings();
 
    }
+
+    protected void setOrientationsInViewSettings() {
+        mViewSettings = ConfigViewSettings.getInstance();
+        mViewSettings.setDeviceOrientation(mDeviceOrientation);
+        mViewSettings.setSpectrumOrientationLandscape(mSpectrumLanscapeOrientation);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -95,6 +110,11 @@ public class BaseActivity extends AppCompatActivity //ActionBarActivity
         // used by all activities
         mFileFolder = mAspectraSettings.getPrefsSaveFolderName();
         mFileExt = mAspectraSettings.getPrefsExtensionName();
+        mStartPercentX = mAspectraSettings.getPrefsWidthStart();
+        mEndPercentX = mAspectraSettings.getPrefsWidthEnd();
+        mStartPercentY = mAspectraSettings.getPrefsHeightStart();
+        mScanAreaWidth = mAspectraSettings.getPrefsScanAreaWidth();
+
         mSpectrumLanscapeOrientation = mAspectraSettings.isPrefsLandscapeCameraOrientation();
         // the rest is updated local
     }

@@ -187,31 +187,38 @@ public class LiveViewActivity extends BaseActivity
 
 
         mPlotViewController.initDisplayInFragment();// must be called when fragment already exists
-        mViewSettings = ConfigViewSettings.getInstance();
-        mViewSettings.setSpectrumOrientationLandscape(mSpectrumLanscapeOrientation);
         getScreenOrientation();
         mCameraViewFragment.setDeviceOrientation(mDeviceOrientation);
-        mViewSettings.setDeviceOrientation(mDeviceOrientation);
+        setOrientationsInViewSettings();
     }
+
 
     //@Override
     protected void updateFromPreferences(){
         super.updateFromPreferences();
-        if(mCameraViewFragment != null){
-            mCameraViewFragment.setStartPercentHX(mAspectraSettings.getPrefsWidthStart());
-            mCameraViewFragment.setEndPercentHX(mAspectraSettings.getPrefsWidthEnd());
-            mCameraViewFragment.setStartPercentVY(mAspectraSettings.getPrefsHeightStart());
-            mCameraViewFragment.setEndPercentVY(mAspectraSettings.getPrefsHeightEnd());
-            mCameraViewFragment.setScanAreaWidth(mAspectraSettings.getPrefsScanAreaWidth());
-            mCameraViewFragment.updateBorderPercents();
-            mCameraViewFragment.updateOrientationInConfigView(mSpectrumLanscapeOrientation);
-        }
+//        if(mCameraViewFragment != null){
+//            mCameraViewFragment.setStartPercentHX(mAspectraSettings.getPrefsWidthStart());
+//            mCameraViewFragment.setEndPercentHX(mAspectraSettings.getPrefsWidthEnd());
+//            mCameraViewFragment.setStartPercentVY(mAspectraSettings.getPrefsHeightStart());
+//            mCameraViewFragment.setEndPercentVY(mAspectraSettings.getPrefsHeightEnd());
+//            mCameraViewFragment.setScanAreaWidth(mAspectraSettings.getPrefsScanAreaWidth());
+//            mCameraViewFragment.updateBorderPercents();
+//            mCameraViewFragment.updateOrientationInConfigView(mSpectrumLanscapeOrientation);
+//        }
         mSpectrumFiles.setFileFolder(mFileFolder);
         mSpectrumFiles.setFileExt(mFileExt);
         if (mImageProcessing == null) {
             mImageProcessing = ImageProcessing.getInstance();
         }
+        configureImageProcessing();
+    }
+
+    private void configureImageProcessing() {
         mImageProcessing.configureBinningArea(mSpectrumLanscapeOrientation);
+        mImageProcessing.setStartPercentX(mStartPercentX);
+        mImageProcessing.setEndPercentX(mEndPercentX);
+        mImageProcessing.setStartPercentY(mStartPercentY);
+        mImageProcessing.setScanAreaWidth(mScanAreaWidth);
     }
 
 //    //TODO: refactor: SpectrumAsp as parameter, work should be done in Spectrum

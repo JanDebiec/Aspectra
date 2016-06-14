@@ -136,6 +136,7 @@ public class BaseActivity extends AppCompatActivity //ActionBarActivity
         mViewSettings.setConfigEndPercentX(mEndPercentX);
         mViewSettings.setConfigStartPercentY(mStartPercentY);
         mViewSettings.setConfigEndPercentY(mEndPercentY);
+        mViewSettings.setPercentsConfigured(true);
         mViewSettings.calcCrossPoints();
     }
 

@@ -41,7 +41,12 @@ public class ConfigViewSettings {
 
     private  boolean mConfViewConfigured = false;
     private  boolean mCamPreviewConfigured = false;
-    private  boolean mPersentsConfigured = false;
+
+    public void setPercentsConfigured(boolean percentsConfigured) {
+        mPercentsConfigured = percentsConfigured;
+    }
+
+    private boolean mPercentsConfigured = false;
 
     private float mConfigViewWidth;
     private float mConfigViewHeight;
@@ -71,7 +76,7 @@ public class ConfigViewSettings {
     }
 
     public boolean isConfigured(){
-         return ((mConfViewConfigured) && (mCamPreviewConfigured) && (mPersentsConfigured));
+        return ((mConfViewConfigured) && (mCamPreviewConfigured) && (mPercentsConfigured));
     }
 
     public float[] getPointsW() {
@@ -192,7 +197,7 @@ public class ConfigViewSettings {
         if(mCamPreviewConfigured) {
             mConfigEndPercentY = mConfigStartPercentY + (mAmountLinesY * 100) / mCameraPreviewHeight;
         }
-        mPersentsConfigured = true;
+        mPercentsConfigured = true;
         calcCrossPoints();
     }
 

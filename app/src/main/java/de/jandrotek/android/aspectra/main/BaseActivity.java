@@ -24,10 +24,10 @@ public class BaseActivity extends AppCompatActivity //ActionBarActivity
 //    protected static final int ACT_ITEM_VIEW_PLOT   = 2;
 //    protected static final int ACT_ITEM_ANALYZE     = 3;
 
-    protected AspectraLiveViewPrefs mAspectraSettings;
+    protected AspectraLiveViewPrefs mAspectraSettings = null;
     protected String mFileFolder;
     protected String mFileExt;
-    protected SpectrumFiles mSpectrumFiles;
+    protected SpectrumFiles mSpectrumFiles = null;
     protected boolean mSpectrumLanscapeOrientation = false;
     protected int mDeviceOrientation;
 
@@ -43,22 +43,28 @@ public class BaseActivity extends AppCompatActivity //ActionBarActivity
    @Override
     protected void onCreate(Bundle savedInstanceState) {
        super.onCreate(savedInstanceState);
-       mAspectraSettings = new AspectraLiveViewPrefs();
-       mSpectrumFiles = new SpectrumFiles();
+       if (mAspectraSettings == null) {
+           mAspectraSettings = new AspectraLiveViewPrefs();
+       }
+       if (mSpectrumFiles == null) {
+           mSpectrumFiles = new SpectrumFiles();
+       }
        Context context = getApplicationContext();
        SharedPreferences prefs = PreferenceManager
                .getDefaultSharedPreferences(context);
        mAspectraSettings.connectPrefs(context, prefs);
 
        updateFromPreferences();
-       setOrientationsInViewSettings();
+       setDeviceOrientationInViewSettings();
 
    }
 
-    protected void setOrientationsInViewSettings() {
-        mViewSettings = ConfigViewSettings.getInstance();
+    protected void setDeviceOrientationInViewSettings() {
+        if (mViewSettings == null) {
+            mViewSettings = ConfigViewSettings.getInstance();
+        }
         mViewSettings.setDeviceOrientation(mDeviceOrientation);
-        mViewSettings.setSpectrumOrientationLandscape(mSpectrumLanscapeOrientation);
+//        mViewSettings.setSpectrumOrientationLandscape(mSpectrumLanscapeOrientation);
     }
 
     @Override
@@ -116,12 +122,26 @@ public class BaseActivity extends AppCompatActivity //ActionBarActivity
         mScanAreaWidth = mAspectraSettings.getPrefsScanAreaWidth();
 
         mSpectrumLanscapeOrientation = mAspectraSettings.isPrefsLandscapeCameraOrientation();
+
         // the rest is updated local
+//        updateConfViewSettings();
     }
 
-    protected void updateOrientationFromPrefs() {
-        mSpectrumLanscapeOrientation = mAspectraSettings.isPrefsLandscapeCameraOrientation();
+    protected void updateConfViewSettings() {
+        if (mViewSettings == null) {
+            mViewSettings = ConfigViewSettings.getInstance();
+        }
+        mViewSettings.setSpectrumOrientationLandscape(mSpectrumLanscapeOrientation);
+        mViewSettings.setConfigStartPercentX(mStartPercentX);
+        mViewSettings.setConfigEndPercentX(mEndPercentX);
+        mViewSettings.setConfigStartPercentY(mStartPercentY);
+        mViewSettings.setConfigEndPercentY(mEndPercentY);
+        mViewSettings.calcCrossPoints();
     }
+
+//    protected void updateOrientationFromPrefs() {
+//        mSpectrumLanscapeOrientation = mAspectraSettings.isPrefsLandscapeCameraOrientation();
+//    }
 
     public void getScreenOrientation() {
 // Query what the orientation currently really is.

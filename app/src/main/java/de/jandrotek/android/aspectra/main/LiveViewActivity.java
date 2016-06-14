@@ -70,8 +70,6 @@ public class LiveViewActivity extends BaseActivity
         // configure proper elements to work portrait or landscape mode
         // separate decide, how spectrum should be calculated, in X or in Y from camera view
 
-
-        updateOrientationFromPrefs();
         if (mSpectrumLanscapeOrientation) {
             setContentView(R.layout.activity_live_view_cam_land);
         } else {
@@ -95,9 +93,7 @@ public class LiveViewActivity extends BaseActivity
         // set both orientations in childs
         getScreenOrientation();
         mCameraViewFragment.setDeviceOrientation(mDeviceOrientation);
-        mViewSettings = ConfigViewSettings.getInstance();
-        mViewSettings.setDeviceOrientation(mDeviceOrientation);
-        mViewSettings.setSpectrumOrientationLandscape(mSpectrumLanscapeOrientation);
+        updateFromPreferences();
     }
 
     //TODO: set proper handling of configuration: portrait/landscape
@@ -189,7 +185,8 @@ public class LiveViewActivity extends BaseActivity
         mPlotViewController.initDisplayInFragment();// must be called when fragment already exists
         getScreenOrientation();
         mCameraViewFragment.setDeviceOrientation(mDeviceOrientation);
-        setOrientationsInViewSettings();
+        setDeviceOrientationInViewSettings();
+        updateConfViewSettings();
     }
 
 

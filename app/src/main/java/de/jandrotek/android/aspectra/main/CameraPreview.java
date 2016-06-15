@@ -288,6 +288,7 @@ public class CameraPreview  extends ViewGroup implements SurfaceHolder.Callback,
             // configure ImageProcessing
             mImageProcessing.setPictureSizeWidth(mCameraOwnPreviewWidth);
             mImageProcessing.setPictureSizeHeight(mCameraOwnPreviewHeight);
+            mImageProcessing.configureBinningArea();
 
         }
 

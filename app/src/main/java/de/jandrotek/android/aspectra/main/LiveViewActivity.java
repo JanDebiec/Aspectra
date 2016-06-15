@@ -187,6 +187,7 @@ public class LiveViewActivity extends BaseActivity
         mCameraViewFragment.setDeviceOrientation(mDeviceOrientation);
         setDeviceOrientationInViewSettings();
         updateConfViewSettings();
+        configureImageProcessing();
     }
 
 
@@ -211,11 +212,11 @@ public class LiveViewActivity extends BaseActivity
     }
 
     private void configureImageProcessing() {
-        mImageProcessing.configureBinningArea(mSpectrumLanscapeOrientation);
         mImageProcessing.setStartPercentX(mStartPercentX);
         mImageProcessing.setEndPercentX(mEndPercentX);
         mImageProcessing.setStartPercentY(mStartPercentY);
         mImageProcessing.setScanAreaWidth(mScanAreaWidth);
+        mImageProcessing.setSpectrumOrientation(mSpectrumLanscapeOrientation);
     }
 
 //    //TODO: refactor: SpectrumAsp as parameter, work should be done in Spectrum

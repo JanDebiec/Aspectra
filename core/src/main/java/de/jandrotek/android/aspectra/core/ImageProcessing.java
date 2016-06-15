@@ -152,8 +152,11 @@ public class ImageProcessing {
         return mBinnedLine;
     }
 
-    public void configureBinningArea(boolean _SpectrumOrientationLandscape) {
+    public void setSpectrumOrientation(boolean _SpectrumOrientationLandscape) {
         mSpectrumOrientationLandscape = _SpectrumOrientationLandscape;
+    }
+
+    public void configureBinningArea() {
         if (mSpectrumOrientationLandscape) {
             mSizeX = mPictureSizeWidth * (mEndPercentX - mStartPercentX) / 100;
             mIndexStartW = mPictureSizeWidth * mStartPercentX / 100;

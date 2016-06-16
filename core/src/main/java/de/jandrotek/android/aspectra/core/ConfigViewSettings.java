@@ -17,9 +17,34 @@ public class ConfigViewSettings {
 
     private static ConfigViewSettings mInstance = null;
 
+
+    // some helpers for control of configuration
+    private int mConfigStatus = 0;
+
+    public void clearConfigStatus() {
+        mConfigStatus = 0;
+    }
+
+    private final int eSpectrumOrientFlag = 0x01;
+    private final int eDeviceOrientFlag = 0x02;
+    private final int ePercentsFlag = 0x04;
+    private final int eCameraPreviewFlag = 0x08;
+    private final int eViewDimFlag = 0x10;
+    private final int eEndPercentFlag = 0x20;
+
+    private final int eNeededConfig =
+            eSpectrumOrientFlag +
+                    eDeviceOrientFlag +
+                    ePercentsFlag +
+                    eCameraPreviewFlag +
+                    eViewDimFlag +
+                    eEndPercentFlag;
+
     public void setSpectrumOrientationLandscape(boolean spectrumOrientationLandscape) {
         mSpectrumOrientationLandscape = spectrumOrientationLandscape;
-        calcCrossPoints();
+        mConfigStatus |= eSpectrumOrientFlag;
+        if (mConfigStatus == eNeededConfig)
+            calcCrossPoints();
     }
 
     private boolean mSpectrumOrientationLandscape = true;
@@ -27,6 +52,9 @@ public class ConfigViewSettings {
 
     public void setDeviceOrientation(int deviceOrientation) {
         mDeviceOrientation = deviceOrientation;
+        mConfigStatus |= eDeviceOrientFlag;
+        if (mConfigStatus == eNeededConfig)
+            calcCrossPoints();
     }
 
     public boolean isNewCrossPoints() {
@@ -38,15 +66,15 @@ public class ConfigViewSettings {
     }
 
     private boolean mNewCrossPoints = false;
-
-    private  boolean mConfViewConfigured = false;
-    private  boolean mCamPreviewConfigured = false;
-
-    public void setPercentsConfigured(boolean percentsConfigured) {
-        mPercentsConfigured = percentsConfigured;
-    }
-
-    private boolean mPercentsConfigured = false;
+//
+//    private  boolean mConfViewConfigured = false;
+//    private  boolean mCamPreviewConfigured = false;
+//
+//    public void setPercentsConfigured(boolean percentsConfigured) {
+//        mPercentsConfigured = percentsConfigured;
+//    }
+//
+//    private boolean mPercentsConfigured = false;
 
     private float mConfigViewWidth;
     private float mConfigViewHeight;
@@ -76,7 +104,10 @@ public class ConfigViewSettings {
     }
 
     public boolean isConfigured(){
-        return ((mConfViewConfigured) && (mCamPreviewConfigured) && (mPercentsConfigured));
+        if (mConfigStatus == eNeededConfig)
+            return true;
+        else
+            return false;
     }
 
     public float[] getPointsW() {
@@ -88,13 +119,14 @@ public class ConfigViewSettings {
     }
 
     public void setConfigViewDimensions(float widthX, float heightY) {
-        mConfViewConfigured = true;
+        mConfigStatus |= eViewDimFlag;
         mConfigViewWidth = widthX;
         mConfigViewHeight = heightY;
+        if (mConfigStatus == eNeededConfig)
+            calcCrossPoints();
     }
 
     public void setCameraPreviewDimensions(int previewWidth, int previewHeight) {
-        mCamPreviewConfigured = true;
         mCameraPreviewWidth = (float) previewWidth;
         mCameraPreviewHeight = (float) previewHeight;
         if (mSpectrumOrientationLandscape) {
@@ -102,7 +134,9 @@ public class ConfigViewSettings {
         } else { // Spectrum PORTRAIT
             mConfigEndPercentY = mConfigStartPercentY + (mAmountLinesY * 100) / mCameraPreviewWidth;
         }
-        calcCrossPoints();
+        mConfigStatus |= eCameraPreviewFlag;
+        if (mConfigStatus == eNeededConfig)
+            calcCrossPoints();
     }
 
     public void calcCrossPoints() {
@@ -189,20 +223,26 @@ public class ConfigViewSettings {
     }
 
     public void setPercent(float widthStartX, float widthEndX, float heightStartY, float deltaLinesY) {
-
+        mConfigStatus |= ePercentsFlag;
         mConfigStartPercentX = widthStartX;
         mConfigEndPercentX = widthEndX;
         mConfigStartPercentY = heightStartY;
         mAmountLinesY = deltaLinesY;
-        if(mCamPreviewConfigured) {
+//        if(mCamPreviewConfigured) {
+        if ((mConfigStatus & eCameraPreviewFlag) == eCameraPreviewFlag) {
             mConfigEndPercentY = mConfigStartPercentY + (mAmountLinesY * 100) / mCameraPreviewHeight;
+            mConfigStatus |= eEndPercentFlag;
         }
-        mPercentsConfigured = true;
+        if (mConfigStatus == eNeededConfig)
+            calcCrossPoints();
         calcCrossPoints();
     }
 
     public void setConfigStartPercentX(int configStartPercentX) {
         mConfigStartPercentX = configStartPercentX;
+        mConfigStatus |= ePercentsFlag;
+        if (mConfigStatus == eNeededConfig)
+            calcCrossPoints();
     }
 
     public void setConfigEndPercentX(int configEndPercentX) {

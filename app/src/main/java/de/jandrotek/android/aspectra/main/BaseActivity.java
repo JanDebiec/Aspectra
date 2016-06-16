@@ -100,6 +100,7 @@ public class BaseActivity extends AppCompatActivity //ActionBarActivity
     @Override
     public void onPause(){
         super.onPause();
+        mViewSettings.clearConfigStatus();
     }
 
     @Override
@@ -136,13 +137,9 @@ public class BaseActivity extends AppCompatActivity //ActionBarActivity
         mViewSettings.setConfigEndPercentX(mEndPercentX);
         mViewSettings.setConfigStartPercentY(mStartPercentY);
         mViewSettings.setConfigEndPercentY(mEndPercentY);
-        mViewSettings.setPercentsConfigured(true);
-        mViewSettings.calcCrossPoints();
+        if (mViewSettings.isConfigured())
+            mViewSettings.calcCrossPoints();
     }
-
-//    protected void updateOrientationFromPrefs() {
-//        mSpectrumLanscapeOrientation = mAspectraSettings.isPrefsLandscapeCameraOrientation();
-//    }
 
     public void getScreenOrientation() {
 // Query what the orientation currently really is.
@@ -154,6 +151,10 @@ public class BaseActivity extends AppCompatActivity //ActionBarActivity
         } else {
             mDeviceOrientation = AspectraGlobals.DEVICE_ORIENTATION_UNKNOWN;
         }
+        if (mViewSettings == null) {
+            mViewSettings = ConfigViewSettings.getInstance();
+        }
+        mViewSettings.setDeviceOrientation(mDeviceOrientation);
     }
 }
 

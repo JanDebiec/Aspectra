@@ -17,14 +17,13 @@ import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 
 import de.jandrotek.android.aspectra.core.AspectraGlobals;
-import de.jandrotek.android.aspectra.core.ConfigViewSettings;
+import de.jandrotek.android.aspectra.core.ImageProcessing;
 import de.jandrotek.android.aspectra.core.SpectrumAsp;
 import de.jandrotek.android.aspectra.libplotspectrav3.PlotViewController;
 import de.jandrotek.android.aspectra.libplotspectrav3.PlotViewControllerBuilder;
 import de.jandrotek.android.aspectra.libplotspectrav3.PlotViewFragment;
 import de.jandrotek.android.aspectra.libplotspectrav3.PlotViewPresenter;
 import de.jandrotek.android.aspectra.libspectrafiles.SpectrumFiles;
-import de.jandrotek.android.aspectra.core.ImageProcessing;
 
 //import de.jandrotek.android.aspectra.libplotspectra.PlotViewFragment_notToUse;
 //import de.jandrotek.android.aspectra.core.FileUtils;
@@ -42,7 +41,7 @@ public class LiveViewActivity extends BaseActivity
     private static CameraViewFragment mCameraViewFragment;
     private static PlotViewFragment mPlotViewFragment;
     private PlotViewPresenter mPlotViewPresenter;
-    private ConfigViewSettings mViewSettings = null;
+//    private ConfigViewSettings mViewSettings = null;
 
     private static int mPreviewWidthX;
     private static int mPreviewHeightY;

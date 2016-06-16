@@ -25,6 +25,22 @@ package de.jandrotek.android.aspectra.core;
 public class ImageProcessing {
     private static ImageProcessing mProcessing = null;
 
+    // helper for control configuration
+    private static const
+    int eCameraDimensionSet = 0x1;
+    private static const
+    int ePercensSet = 0x2;
+    private static const
+    int eNeededConfig = eCameraDimensionSet + ePercensSet;
+    private int mConfigStatus = 0;
+
+    public void clearCameraConfigFlag() {
+        mConfigStatus &= ~eCameraDimensionSet;
+    }
+
+    public void clearPercentConfigFlag() {
+        mConfigStatus &= ~ePercensSet;
+    }
     private int mAxisToBin; // axis "senkrecht" to spectrum
     private int mAxisToCalc; // axis parallel to spectrum
 
@@ -48,6 +64,9 @@ public class ImageProcessing {
     private int mEndPercentY = 50;
 
     private int[] mBinnedLine = null;
+    private int[] mDemoLine = null;
+    private static const
+    int eDemoLineSize = 100;
 
     private int mIndexStartW;
     private int mIndexStartH;
@@ -64,6 +83,11 @@ public class ImageProcessing {
 
 
     private ImageProcessing() {
+        // create DemoLine
+        mDemoLine = new int[eDemoLineSize];
+        for (int i = 0; i < eDemoLineSize; i++) {
+            mDemoLine[i] = i;
+        }
     }
 
 
@@ -80,10 +104,14 @@ public class ImageProcessing {
     }
 
     public int[] extractBinnedLine(byte[] inputArray) {
-        if (mSpectrumOrientationLandscape) {
-            return extractBinnedLineLand(inputArray);
+        if (mConfigStatus == eNeededConfig) {
+            if (mSpectrumOrientationLandscape) {
+                return extractBinnedLineLand(inputArray);
+            } else {
+                return extractBinnedLinePort(inputArray);
+            }
         } else {
-            return extractBinnedLinePort(inputArray);
+            return mBinnedLine;
         }
     }
 
@@ -114,7 +142,7 @@ public class ImageProcessing {
         } catch (ArrayIndexOutOfBoundsException e) {
 
         }
-        return mBinnedLine;
+        return mDemoLine;
     }
 
     private int[] extractBinnedLineLand(byte[] inputArray)
@@ -171,6 +199,7 @@ public class ImageProcessing {
         } else {
             mBinnedLine = (int[]) resizeArray(mBinnedLine, mSizeX);
         }
+        mConfigStatus |= eCameraDimensionSet;
     }
 
     /**
@@ -194,6 +223,7 @@ public class ImageProcessing {
     // getters, setters
     public void setEndPercentX(int endPercentX) {
         mEndPercentX = endPercentX;
+        mConfigStatus |= ePercensSet;
     }
 
     public void setStartPercentX(int startPercentX) {

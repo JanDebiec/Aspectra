@@ -11,7 +11,8 @@ def gitVersion() {
 
 
 android {
-    compileSdkVersion 22
+    compileSdkVersion 23
+//    compileSdkVersion 22
 //    buildToolsVersion "22.0.1"
 //    buildToolsVersion '23.0.0 rc3'
     buildToolsVersion tools.bTV

@@ -3,7 +3,8 @@ apply plugin: 'com.android.application'
 apply from: '../config/quality.gradle'
 
 android {
-    compileSdkVersion 22
+//    compileSdkVersion 22
+    compileSdkVersion 23
 //    compileSdkVersion tools.cSV
     buildToolsVersion tools.bTV
 //    buildToolsVersion '23'

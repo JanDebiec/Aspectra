@@ -6,7 +6,9 @@ ext {
 //    buildToolsVersion = '23.0.1'
     buildToolsVersion = '23.0.2'
 //    buildToolsVersion = '23'
-    compileSdkVersion = '22'
+
+//    compileSdkVersion = '22'
+    compileSdkVersion = 23
 
     tools = [
             bTV: "${buildToolsVersion}",

@@ -1,7 +1,8 @@
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 22
+//    compileSdkVersion tools.cSV
+    compileSdkVersion 23
 //    buildToolsVersion '23.0.0 rc3'
     buildToolsVersion tools.bTV
 

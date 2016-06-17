@@ -7,8 +7,8 @@ import java.util.ArrayList;
 
 import de.jandrotek.android.aspectra.core.AspectraGlobals;
 import de.jandrotek.android.aspectra.core.SpectrumBase;
-import de.jandrotek.android.aspectra.libplotspectrav3.PlotViewFragment;
-import de.jandrotek.android.aspectra.libplotspectrav3.PlotViewPresenter;
+//import de.jandrotek.android.aspectra.libplotspectrav3.PlotViewFragment;
+//import de.jandrotek.android.aspectra.libplotspectrav3.PlotViewPresenter;
 import de.jandrotek.android.aspectra.libspectrafiles.SpectrumFiles;
 
 /**

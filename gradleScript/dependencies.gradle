@@ -1,18 +1,14 @@
 ext {
     //Version
-    //   supportLibrary = '22.2.0'
     supportLibrary = '23.2.1'
 
-//    buildToolsVersion = '23.0.1'
     buildToolsVersion = '23.0.2'
-//    buildToolsVersion = '23'
 
-//    compileSdkVersion = '22'
-    compileSdkVersion = 23
+    compileSdkVersion = "android-23"
 
     tools = [
             bTV: "${buildToolsVersion}",
-            cSV: "${compileSdkVersion}",
+            cSV: "${compileSdkVersion}"
     ]
 
     //Support Libraries dependencies

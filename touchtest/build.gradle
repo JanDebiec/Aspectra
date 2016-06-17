@@ -2,7 +2,8 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 23
-    buildToolsVersion '23.0.2'
+    compileSdkVersion tools.cSV
+    buildToolsVersion tools.bTV
 
     defaultConfig {
         applicationId "de.jandrotek.android.aspectra.touch"

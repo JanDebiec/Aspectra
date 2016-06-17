@@ -1,6 +1,7 @@
 ext {
     //Version
-    supportLibrary = '22.2.0'
+    //   supportLibrary = '22.2.0'
+    supportLibrary = '23.2.1'
 
 //    buildToolsVersion = '23.0.1'
     buildToolsVersion = '23.0.2'

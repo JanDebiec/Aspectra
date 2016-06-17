@@ -26,12 +26,9 @@ public class ImageProcessing {
     private static ImageProcessing mProcessing = null;
 
     // helper for control configuration
-    private static const
-    int eCameraDimensionSet = 0x1;
-    private static const
-    int ePercensSet = 0x2;
-    private static const
-    int eNeededConfig = eCameraDimensionSet + ePercensSet;
+    private static final int eCameraDimensionSet = 0x1;
+    private static final int ePercensSet = 0x2;
+    private static final int eNeededConfig = eCameraDimensionSet + ePercensSet;
     private int mConfigStatus = 0;
 
     public void clearCameraConfigFlag() {
@@ -65,8 +62,7 @@ public class ImageProcessing {
 
     private int[] mBinnedLine = null;
     private int[] mDemoLine = null;
-    private static const
-    int eDemoLineSize = 100;
+    private static final int eDemoLineSize = 100;
 
     private int mIndexStartW;
     private int mIndexStartH;

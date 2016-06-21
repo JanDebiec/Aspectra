@@ -261,4 +261,8 @@ public class ConfigViewSettings {
         mConfigStatus |= eEndPercentFlag;
         mAmountLinesY = amountLinesY;
     }
+
+    public void clearSpectrumOrientFlag() {
+        mConfigStatus &= ~eSpectrumOrientFlag;
+    }
 }

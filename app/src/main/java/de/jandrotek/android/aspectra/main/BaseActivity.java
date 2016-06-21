@@ -34,7 +34,7 @@ public class BaseActivity extends AppCompatActivity //ActionBarActivity
     protected int mStartPercentX;
     protected int mEndPercentX;
     protected int mStartPercentY;
-    protected int mEndPercentY;
+    //    protected int mEndPercentY;
     protected int mScanAreaWidth;
 
     protected boolean mCameraPresent = false;
@@ -136,7 +136,7 @@ public class BaseActivity extends AppCompatActivity //ActionBarActivity
         mViewSettings.setConfigStartPercentX(mStartPercentX);
         mViewSettings.setConfigEndPercentX(mEndPercentX);
         mViewSettings.setConfigStartPercentY(mStartPercentY);
-        mViewSettings.setConfigEndPercentY(mEndPercentY);
+        mViewSettings.setAmountLinesY(mScanAreaWidth);
         if (mViewSettings.isConfigured())
             mViewSettings.calcCrossPoints();
     }

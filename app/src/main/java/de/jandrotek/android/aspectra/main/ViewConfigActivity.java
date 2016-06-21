@@ -289,7 +289,7 @@ public class ViewConfigActivity extends BaseActivity
             mAspectraSettings.setPrefsWidthStart(mStartPercentX);
             mAspectraSettings.setPrefsWidthEnd(mEndPercentX);
             mAspectraSettings.setPrefsHeightStart(mStartPercentY);
-            mAspectraSettings.setPrefsHeightEnd(mEndPercentY);
+//            mAspectraSettings.setPrefsHeightEnd(mEndPercentY);
             mAspectraSettings.setPrefsScanAreaWidth(mScanAreaWidth);
 
             mAspectraSettings.saveSettings();
@@ -309,7 +309,7 @@ public class ViewConfigActivity extends BaseActivity
             mCameraViewFragment.setStartPercentHX(mStartPercentX);
             mCameraViewFragment.setEndPercentHX(mEndPercentX);
             mCameraViewFragment.setStartPercentVY(mStartPercentY);
-            mCameraViewFragment.setEndPercentVY(mEndPercentY);
+//            mCameraViewFragment.setEndPercentVY(mEndPercentY);
             mCameraViewFragment.setScanAreaWidth(mScanAreaWidth);
         }
 //        if(mViewSettings != null){

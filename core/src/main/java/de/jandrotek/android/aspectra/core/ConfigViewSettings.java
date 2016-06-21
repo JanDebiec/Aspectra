@@ -253,11 +253,12 @@ public class ConfigViewSettings {
         mConfigStartPercentY = configStartPercentY;
     }
 
-    public void setConfigEndPercentY(int configEndPercentY) {
-        mConfigEndPercentY = configEndPercentY;
-    }
+//    public void setConfigEndPercentY(int configEndPercentY) {
+//        mConfigEndPercentY = configEndPercentY;
+//    }
 
     public void setAmountLinesY(float amountLinesY) {
+        mConfigStatus |= eEndPercentFlag;
         mAmountLinesY = amountLinesY;
     }
 }

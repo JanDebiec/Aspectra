@@ -22,7 +22,10 @@ public class ConfigViewSettings {
     private int mConfigStatus = 0;
 
     public void clearConfigStatus() {
-        mConfigStatus = 0;
+        mConfigStatus &= ~eSpectrumOrientFlag;
+        mConfigStatus &= ~eDeviceOrientFlag;
+        mConfigStatus &= ~ePercentsFlag;
+        mConfigStatus &= ~eEndPercentFlag;
     }
 
     private final int eSpectrumOrientFlag = 0x01;

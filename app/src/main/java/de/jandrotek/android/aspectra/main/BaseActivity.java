@@ -81,7 +81,7 @@ public class BaseActivity extends AppCompatActivity //ActionBarActivity
         if (id == R.id.action_settings) {
             Intent intent = new Intent(this, AspectraGlobalPrefsActivity.class);
             //TODO: clear SpectrumOrientationFlag
-            mViewSettings.clearSpectrumOrientFlag():
+            mViewSettings.clearSpectrumOrientFlag();
             startActivity(intent);
             return true;
         }

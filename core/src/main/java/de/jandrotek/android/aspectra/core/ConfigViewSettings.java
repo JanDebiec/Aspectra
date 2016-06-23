@@ -50,6 +50,7 @@ public class ConfigViewSettings {
             calcCrossPoints();
     }
 
+    // both orientations defines: device, spectrum
     private boolean mSpectrumOrientationLandscape = true;
     private int mDeviceOrientation = AspectraGlobals.DEVICE_ORIENTATION_LANDSCAPE;
 
@@ -69,27 +70,20 @@ public class ConfigViewSettings {
     }
 
     private boolean mNewCrossPoints = false;
-//
-//    private  boolean mConfViewConfigured = false;
-//    private  boolean mCamPreviewConfigured = false;
-//
-//    public void setPercentsConfigured(boolean percentsConfigured) {
-//        mPercentsConfigured = percentsConfigured;
-//    }
-//
-//    private boolean mPercentsConfigured = false;
 
+    //ConfigView dimensions
     private float mConfigViewWidth;
     private float mConfigViewHeight;
+
+    //CameraPreview dimensions
     private float mCameraPreviewWidth;
     private float mCameraPreviewHeight;
 
+    // percent settings (from prefs or configuration)
     private float mConfigStartPercentX = 10;
     private float mConfigEndPercentX = 90;
     private float mConfigStartPercentY = 49;
     private float mConfigEndPercentY = 51;
-
-
     private float mAmountLinesY;
 
     private float[] mCrossPointsW = new float[4];
@@ -255,10 +249,6 @@ public class ConfigViewSettings {
     public void setConfigStartPercentY(int configStartPercentY) {
         mConfigStartPercentY = configStartPercentY;
     }
-
-//    public void setConfigEndPercentY(int configEndPercentY) {
-//        mConfigEndPercentY = configEndPercentY;
-//    }
 
     public void setAmountLinesY(float amountLinesY) {
         mConfigStatus |= eEndPercentFlag;

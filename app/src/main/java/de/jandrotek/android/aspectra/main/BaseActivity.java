@@ -34,7 +34,6 @@ public class BaseActivity extends AppCompatActivity //ActionBarActivity
     protected int mStartPercentX;
     protected int mEndPercentX;
     protected int mStartPercentY;
-    //    protected int mEndPercentY;
     protected int mScanAreaWidth;
 
     protected boolean mCameraPresent = false;
@@ -64,7 +63,6 @@ public class BaseActivity extends AppCompatActivity //ActionBarActivity
             mViewSettings = ConfigViewSettings.getInstance();
         }
         mViewSettings.setDeviceOrientation(mDeviceOrientation);
-//        mViewSettings.setSpectrumOrientationLandscape(mSpectrumLanscapeOrientation);
     }
 
     @Override
@@ -80,7 +78,6 @@ public class BaseActivity extends AppCompatActivity //ActionBarActivity
 
         if (id == R.id.action_settings) {
             Intent intent = new Intent(this, AspectraGlobalPrefsActivity.class);
-            //TODO: clear SpectrumOrientationFlag
             mViewSettings.clearSpectrumOrientFlag();
             startActivity(intent);
             return true;
@@ -123,11 +120,7 @@ public class BaseActivity extends AppCompatActivity //ActionBarActivity
         mEndPercentX = mAspectraSettings.getPrefsWidthEnd();
         mStartPercentY = mAspectraSettings.getPrefsHeightStart();
         mScanAreaWidth = mAspectraSettings.getPrefsScanAreaWidth();
-
         mSpectrumLanscapeOrientation = mAspectraSettings.isPrefsLandscapeCameraOrientation();
-
-        // the rest is updated local
-//        updateConfViewSettings();
     }
 
     protected void updateConfViewSettings() {

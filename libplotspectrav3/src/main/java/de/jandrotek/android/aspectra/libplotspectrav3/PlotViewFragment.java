@@ -68,10 +68,10 @@ public class PlotViewFragment extends Fragment
     public static PlotViewFragment newInstance(int param1) {
         if (mFragment == null) {
             mFragment = new PlotViewFragment();
-        }
         Bundle args = new Bundle();
         args.putInt(ARG_PARAM1, param1);
         mFragment.setArguments(args);
+        }
         return mFragment;
     }
 

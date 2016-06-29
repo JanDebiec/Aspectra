@@ -90,8 +90,7 @@ public class ConfigLinesView extends View {
         mConfigWidthX = r - l;
         if(mConfigWidthX > 0){
             if(BuildConfig.DEBUG) {
-
-                Log.e(TAG, "width = " + mConfigWidthX + ", height = " + mConfigHeightY);
+                Log.d(TAG, "width = " + mConfigWidthX + ", height = " + mConfigHeightY);
             }
             setConfigViewDimensions(mConfigWidthX, mConfigHeightY);
             mViewSettings.calcCrossPoints();
@@ -191,9 +190,12 @@ public class ConfigLinesView extends View {
 
     public void initializeLines() {
         if(mViewSettings.isConfigured()){
-//            mViewSettings.calcCrossPoints();
             mCrossPointsW = mViewSettings.getPointsW();
             mCrossPointsH = mViewSettings.getPointsH();
+            if (BuildConfig.DEBUG) {
+                Log.d(TAG, "mCrossPointsW[1] = " + mCrossPointsW[1] + ", mCrossPointsW[2] = " + mCrossPointsW[2]);
+                Log.d(TAG, "mCrossPointsH[1] = " + mCrossPointsH[1] + ", mCrossPointsH[2] = " + mCrossPointsH[2]);
+            }
 
             mPath0.reset();
             mPath1.reset();

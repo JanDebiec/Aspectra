@@ -11,6 +11,8 @@ import static org.junit.Assert.assertEquals;
 /**
  * Created by jan on 30.03.15.
  */
+
+//@RunWith(AndroidJUnit4.class)
 public class ArrayModifyTest {
 //public class ArrayModifyTest extends TestCase {
 

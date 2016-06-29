@@ -8,6 +8,7 @@ import android.os.Bundle;
 //import android.app.Fragment;
 import android.support.v4.app.Fragment;
 //import android.util.Log;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -56,8 +57,8 @@ public class CameraViewFragment extends Fragment {
     private int mStartPercentHX = 0;
     private int mEndPercentHX = 100;
     private int mStartPercentVY = 44;
-    private int mEndPercentVY = 55;
-    private int mScanAreaWidth;
+    //    private int mEndPercentVY = 55;
+    private int mScanAreaWidth = 2;
 
     /// camera-preview's members
     private CameraPreview mCamPreview; //class
@@ -324,8 +325,12 @@ public class CameraViewFragment extends Fragment {
             mImageProcessing.setStartPercentX(mStartPercentHX);
             mImageProcessing.setEndPercentX(mEndPercentHX);
             mImageProcessing.setStartPercentY(mStartPercentVY);
-            mImageProcessing.setEndPercentY(mEndPercentVY);
+//            mImageProcessing.setEndPercentY(mEndPercentVY);
             mImageProcessing.setScanAreaWidth(mScanAreaWidth);
+            if (BuildConfig.DEBUG) {
+                Log.d(TAG, "mStartPercentHX = " + mStartPercentHX + ", mEndPercentHX = " + mEndPercentHX);
+                Log.d(TAG, "mStartPercentVY = " + mStartPercentVY + ", mStartPercentVY = " + mStartPercentVY);
+            }
         }
         if (mConfigLinesView != null) {
             mConfigLinesView.setPercent((float) mStartPercentHX, (float) mEndPercentHX, (float) mStartPercentVY, (float) mScanAreaWidth);
@@ -346,9 +351,9 @@ public class CameraViewFragment extends Fragment {
         mStartPercentVY = startPercentVY;
     }
 
-    public void setEndPercentVY(int endPercentVY) {
-        mEndPercentVY = endPercentVY;
-    }
+//    public void setEndPercentVY(int endPercentVY) {
+//        mEndPercentVY = endPercentVY;
+//    }
 
     public int getPreviewWidthX() {
         return mPreviewWidthX;

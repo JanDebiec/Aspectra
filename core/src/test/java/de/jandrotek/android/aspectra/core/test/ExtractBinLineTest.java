@@ -85,6 +85,13 @@ public class ExtractBinLineTest {
     public void extractLineLandscape() {
         int[] binnedLine;
         int lineSize = -1;
+        configLanscape();
+        binnedLine = oImageProcessing.extractBinnedLine(pictureData);
+        lineSize = binnedLine.length;
+        assertEquals(lineSize, 64);
+    }
+
+    private void configLanscape() {
         oImageProcessing.setStartPercentX(10);
         oImageProcessing.setStartPercentY(10);
         oImageProcessing.setEndPercentX(20);
@@ -93,9 +100,6 @@ public class ExtractBinLineTest {
         oImageProcessing.setSpectrumOrientationLandscape(true);
 //        boolean configFull = oImageProcessing.isConfigFull();
         oImageProcessing.configureBinningArea();
-        binnedLine = oImageProcessing.extractBinnedLine(pictureData);
-        lineSize = binnedLine.length;
-        assertEquals(lineSize, 64);
     }
 
 

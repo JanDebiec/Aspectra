@@ -41,6 +41,14 @@ public class ImageProcessing {
     private int mAxisToBin; // axis "senkrecht" to spectrum
     private int mAxisToCalc; // axis parallel to spectrum
 
+    // some devices (f.i. N7 have data mirrored in both axis, x, y
+    public void setCameraDataMirrored(boolean cameraDataMirrored) {
+        mCameraDataMirrored = cameraDataMirrored;
+    }
+
+    private boolean mCameraDataMirrored = false;
+
+
     public boolean isSpectrumOrientationLandscape() {
         return mSpectrumOrientationLandscape;
     }
@@ -102,16 +110,85 @@ public class ImageProcessing {
     public int[] extractBinnedLine(byte[] inputArray) {
         if (mConfigStatus == eNeededConfig) {
             if (mSpectrumOrientationLandscape) {
-                return extractBinnedLineLand(inputArray);
+                if (mCameraDataMirrored)
+                    return extractBinnedLineLandM(inputArray);
+                else
+                    return extractBinnedLineLand(inputArray);
             } else {
-                return extractBinnedLinePort(inputArray);
+                if (mCameraDataMirrored)
+                    return extractBinnedLinePortM(inputArray);
+                else
+                    return extractBinnedLinePort(inputArray);
             }
         } else {
             return mBinnedLine;
         }
     }
 
-    //TODO: adapt to spectrum in height
+    // version for N7 with flipped data in both axis
+    private int[] extractBinnedLinePortM(byte[] inputArray)
+            throws ArrayIndexOutOfBoundsException {
+        int indexW;
+        int indexH;
+
+        try {
+
+            // another method:
+            // main loop: every index of spectrum binned line
+            // internal loop:
+            // we add (bin) pixels for every spectrum index
+
+            for (int x = 0; x < mSizeX; x++) {
+                mBinnedLine[x] = 0;
+                indexH = mIndexStartH + x;
+                indexW = mIndexStartW + mPictureSizeWidth * indexH;
+
+                for (int y = 0; y < mSizeY; y++) {
+                    mBinnedLine[x] += inputArray[indexW] & 0xFF;
+                    indexW++;
+                }
+            }
+
+        } catch (ArrayIndexOutOfBoundsException e) {
+
+        }
+        return mBinnedLine;
+    }
+
+    // version for N7 with flipped data
+    private int[] extractBinnedLineLandM(byte[] inputArray)
+            throws ArrayIndexOutOfBoundsException {
+        int indexW;
+        int indexH = mIndexStartH;
+
+        try {
+
+            indexW = mIndexStartW + mPictureSizeWidth * indexH;
+
+            //first line
+            for (int x = 0; x < mSizeX; x++) {
+
+                mBinnedLine[x] = inputArray[indexW] & 0xFF;
+                indexW++;
+            }
+
+            //next lines
+            for (int y = 1; y < mSizeY; y++) {
+                indexH++;
+                indexW = mIndexStartW + mPictureSizeWidth * indexH;
+                for (int x = 0; x < mSizeX; x++) {
+                    mBinnedLine[x] += inputArray[indexW] & 0xFF;
+                    indexW++;
+                }
+            }
+
+        }
+        catch (ArrayIndexOutOfBoundsException e){
+
+        }
+        return mBinnedLine;
+    }
+
     private int[] extractBinnedLinePort(byte[] inputArray)
             throws ArrayIndexOutOfBoundsException {
         int indexW;
@@ -138,17 +215,17 @@ public class ImageProcessing {
         } catch (ArrayIndexOutOfBoundsException e) {
 
         }
-        return mDemoLine;
+        return mBinnedLine;
     }
 
     private int[] extractBinnedLineLand(byte[] inputArray)
-    throws ArrayIndexOutOfBoundsException {
+            throws ArrayIndexOutOfBoundsException {
         int indexW;
-        int indexH;
+        int indexH = mIndexStartH;
 
         try {
 
-            indexW = mIndexStartW + mPictureSizeWidth * mIndexStartH;
+            indexW = mIndexStartW + mPictureSizeWidth * indexH;
 
             //first line
             for (int x = 0; x < mSizeX; x++) {
@@ -158,19 +235,16 @@ public class ImageProcessing {
             }
 
             //next lines
-            indexH = mIndexStartH + 1;
-            indexW = mIndexStartW + mPictureSizeWidth * indexH;
             for (int y = 1; y < mSizeY; y++) {
+                indexH++;
+                indexW = mIndexStartW + mPictureSizeWidth * indexH;
                 for (int x = 0; x < mSizeX; x++) {
                     mBinnedLine[x] += inputArray[indexW] & 0xFF;
                     indexW++;
                 }
-                indexH++;
-                indexW = mIndexStartW + mPictureSizeWidth * indexH;
             }
 
-        }
-        catch (ArrayIndexOutOfBoundsException e){
+        } catch (ArrayIndexOutOfBoundsException e) {
 
         }
         return mBinnedLine;

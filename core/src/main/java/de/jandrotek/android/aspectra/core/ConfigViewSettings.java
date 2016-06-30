@@ -101,11 +101,13 @@ public class ConfigViewSettings {
     }
 
     public boolean isConfigured(){
-        if (mConfigStatus == eNeededConfig)
+        if (mConfigStatus == eNeededConfig) {
             return true;
-        else
+        } else {
             return false;
+        }
     }
+
 
     public float[] getPointsW() {
         return mCrossPointsW;
@@ -232,7 +234,7 @@ public class ConfigViewSettings {
         }
         if (mConfigStatus == eNeededConfig)
             calcCrossPoints();
-        calcCrossPoints();
+//        calcCrossPoints();
     }
 
     public void setConfigStartPercentX(int configStartPercentX) {

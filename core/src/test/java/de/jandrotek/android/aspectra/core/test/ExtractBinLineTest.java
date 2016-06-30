@@ -25,7 +25,7 @@ public class ExtractBinLineTest {
         oImageProcessing = ImageProcessing.getInstance();
         pictureData = new byte[nPictureDataSize];
         for (int y = 0; y < ePictureHeight; y++) {
-            int indexY = y + ePictureWidth;
+            int indexY = y * ePictureWidth;
             for (int x = 0; x < ePictureWidth; x++) {
                 pictureData[indexY + x] = (byte) (x & 0xFF);
             }
@@ -89,6 +89,19 @@ public class ExtractBinLineTest {
         binnedLine = oImageProcessing.extractBinnedLine(pictureData);
         lineSize = binnedLine.length;
         assertEquals(lineSize, 64);
+    }
+
+    @Test
+    public void extractLineLandscapeIndexZero() {
+        int[] binnedLine;
+        int lineSize = -1;
+        int valueAtZero = -1;
+        configLanscape();
+        binnedLine = oImageProcessing.extractBinnedLine(pictureData);
+        lineSize = binnedLine.length;
+        assertEquals(lineSize, 64);
+        valueAtZero = binnedLine[0];
+        assertEquals(valueAtZero, 256);
     }
 
     private void configLanscape() {

@@ -34,7 +34,9 @@ public class ExtractBinLineTest {
 
     @After
     public void tearDown() throws Exception {
-
+        oImageProcessing.clearCameraConfigFlag();
+        oImageProcessing.clearPercentConfigFlag();
+        oImageProcessing.clearSpectrumConfigFlag();
     }
 
     @Test
@@ -44,10 +46,39 @@ public class ExtractBinLineTest {
     }
 
     @Test
-    public void configureProcessing() {
+    public void confProcessingOrientation() {
         oImageProcessing.setSpectrumOrientationLandscape(true);
         boolean configFull = oImageProcessing.isConfigFull();
         assertEquals(configFull, false);
+    }
+
+    @Test
+    public void confProcessingSize() {
+        oImageProcessing.setPictureSize(ePictureWidth, ePictureHeight);
+        boolean configFull = oImageProcessing.isConfigFull();
+        assertEquals(configFull, false);
+    }
+
+    @Test
+    public void confProcessingPercent() {
+        oImageProcessing.setStartPercentX(10);
+        oImageProcessing.setStartPercentY(10);
+        oImageProcessing.setEndPercentX(20);
+        oImageProcessing.setScanAreaWidth(16);
+        boolean configFull = oImageProcessing.isConfigFull();
+        assertEquals(configFull, false);
+    }
+
+    @Test
+    public void confProcessingFull() {
+        oImageProcessing.setStartPercentX(10);
+        oImageProcessing.setStartPercentY(10);
+        oImageProcessing.setEndPercentX(20);
+        oImageProcessing.setScanAreaWidth(16);
+        oImageProcessing.setPictureSize(ePictureWidth, ePictureHeight);
+        oImageProcessing.setSpectrumOrientationLandscape(true);
+        boolean configFull = oImageProcessing.isConfigFull();
+        assertEquals(configFull, true);
     }
 
 

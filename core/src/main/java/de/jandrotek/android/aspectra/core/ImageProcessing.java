@@ -28,11 +28,16 @@ public class ImageProcessing {
     // helper for control configuration
     private static final int eCameraDimensionSet = 0x1;
     private static final int ePercensSet = 0x2;
-    private static final int eNeededConfig = eCameraDimensionSet + ePercensSet;
+    private static final int eSpectrumOrientationSet = 0x4;
+    private static final int eNeededConfig = eCameraDimensionSet + ePercensSet + eSpectrumOrientationSet;
     private int mConfigStatus = 0;
 
     public void clearCameraConfigFlag() {
         mConfigStatus &= ~eCameraDimensionSet;
+    }
+
+    public void clearSpectrumConfigFlag() {
+        mConfigStatus &= ~eSpectrumOrientationSet;
     }
 
     public void clearPercentConfigFlag() {
@@ -256,25 +261,29 @@ public class ImageProcessing {
     }
 
     public void setSpectrumOrientationLandscape(boolean _SpectrumOrientationLandscape) {
+        mConfigStatus |= eSpectrumOrientationSet;
         mSpectrumOrientationLandscape = _SpectrumOrientationLandscape;
     }
 
     public void configureBinningArea() {
-        if (mSpectrumOrientationLandscape) {
-            mSizeX = mPictureSizeWidth * (mEndPercentX - mStartPercentX) / 100;
-            mIndexStartW = mPictureSizeWidth * mStartPercentX / 100;
-            mIndexStartH = mPictureSizeHeight * mStartPercentY / 100;
-        } else {
-            mSizeX = mPictureSizeHeight * (mEndPercentX - mStartPercentX) / 100;
-            mIndexStartW = mPictureSizeWidth * mStartPercentY / 100;
-            mIndexStartH = mPictureSizeHeight * mStartPercentX / 100;
+        boolean configFull = isConfigFull();
+        if (configFull) {
+            if (mSpectrumOrientationLandscape) {
+                mSizeX = mPictureSizeWidth * (mEndPercentX - mStartPercentX) / 100;
+                mIndexStartW = mPictureSizeWidth * mStartPercentX / 100;
+                mIndexStartH = mPictureSizeHeight * mStartPercentY / 100;
+            } else {
+                mSizeX = mPictureSizeHeight * (mEndPercentX - mStartPercentX) / 100;
+                mIndexStartW = mPictureSizeWidth * mStartPercentY / 100;
+                mIndexStartH = mPictureSizeHeight * mStartPercentX / 100;
+            }
+            if (mBinnedLine == null) {
+                mBinnedLine = new int[mSizeX];
+            } else {
+                mBinnedLine = (int[]) resizeArray(mBinnedLine, mSizeX);
+            }
         }
-        if (mBinnedLine == null) {
-            mBinnedLine = new int[mSizeX];
-        } else {
-            mBinnedLine = (int[]) resizeArray(mBinnedLine, mSizeX);
-        }
-        mConfigStatus |= eCameraDimensionSet;
+//        mConfigStatus |= eCameraDimensionSet;
     }
 
     /**
@@ -313,11 +322,13 @@ public class ImageProcessing {
 //        mEndPercentY = endPercentW;
 //    }
 
-    public void setPictureSizeWidth(int pictureSizeWidth) {
-        mPictureSizeWidth = pictureSizeWidth;
-    }
+//    public void setPictureSizeWidth(int pictureSizeWidth) {
+//        mPictureSizeWidth = pictureSizeWidth;
+//    }
 
-    public void setPictureSizeHeight(int pictureSizeHeight) {
+    public void setPictureSize(int pictureSizeWidth, int pictureSizeHeight) {
+        mConfigStatus |= eCameraDimensionSet;
+        mPictureSizeWidth = pictureSizeWidth;
         mPictureSizeHeight = pictureSizeHeight;
     }
 

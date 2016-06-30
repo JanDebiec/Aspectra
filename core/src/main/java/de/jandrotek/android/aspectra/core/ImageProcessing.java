@@ -49,13 +49,13 @@ public class ImageProcessing {
     private boolean mCameraDataMirrored = false;
 
 
-    public boolean isSpectrumOrientationLandscape() {
-        return mSpectrumOrientationLandscape;
-    }
+//    public boolean isSpectrumOrientationLandscape() {
+//        return mSpectrumOrientationLandscape;
+//    }
 
-    public void setSpectrumOrientationLandscape(boolean spectrumOrientationLandscape) {
-        mSpectrumOrientationLandscape = spectrumOrientationLandscape;
-    }
+//    public void setSpectrumOrientationLandscape(boolean spectrumOrientationLandscape) {
+//        mSpectrumOrientationLandscape = spectrumOrientationLandscape;
+//    }
 
     private boolean mSpectrumOrientationLandscape = true;
 
@@ -107,8 +107,13 @@ public class ImageProcessing {
 
     }
 
+    public boolean isConfigFull() {
+        return (mConfigStatus == eNeededConfig);
+    }
+
     public int[] extractBinnedLine(byte[] inputArray) {
-        if (mConfigStatus == eNeededConfig) {
+        boolean configFull = isConfigFull();
+        if (configFull) {
             if (mSpectrumOrientationLandscape) {
                 if (mCameraDataMirrored)
                     return extractBinnedLineLandM(inputArray);
@@ -121,7 +126,7 @@ public class ImageProcessing {
                     return extractBinnedLinePort(inputArray);
             }
         } else {
-            return mBinnedLine;
+            return mDemoLine;
         }
     }
 
@@ -250,7 +255,7 @@ public class ImageProcessing {
         return mBinnedLine;
     }
 
-    public void setSpectrumOrientation(boolean _SpectrumOrientationLandscape) {
+    public void setSpectrumOrientationLandscape(boolean _SpectrumOrientationLandscape) {
         mSpectrumOrientationLandscape = _SpectrumOrientationLandscape;
     }
 
@@ -304,9 +309,9 @@ public class ImageProcessing {
         mStartPercentY = startPercentW;
     }
 
-    public void setEndPercentY(int endPercentW) {
-        mEndPercentY = endPercentW;
-    }
+//    public void setEndPercentY(int endPercentW) {
+//        mEndPercentY = endPercentW;
+//    }
 
     public void setPictureSizeWidth(int pictureSizeWidth) {
         mPictureSizeWidth = pictureSizeWidth;

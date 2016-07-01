@@ -154,6 +154,7 @@ public class ExtractBinLineTest {
     }
 
     private void configLanscape() {
+        oImageProcessing.setCameraDataMirrored(false);
         oImageProcessing.setStartPercentX(10);
         oImageProcessing.setStartPercentY(10);
         oImageProcessing.setEndPercentX(20);
@@ -164,6 +165,102 @@ public class ExtractBinLineTest {
     }
 
     private void configPortrait() {
+        oImageProcessing.setCameraDataMirrored(false);
+        oImageProcessing.setStartPercentX(10);
+        oImageProcessing.setStartPercentY(10);
+        oImageProcessing.setEndPercentX(20);
+        oImageProcessing.setScanAreaWidth(4);
+        oImageProcessing.setPictureSize(ePictureWidth, ePictureHeight);
+        oImageProcessing.setSpectrumOrientationLandscape(false);
+        oImageProcessing.configureBinningArea();
+    }
+
+    // mirror verrsions
+    @Test
+    public void extractLineLandscapeM() {
+        int[] binnedLine;
+        int lineSize = -1;
+        configLanscapeM();
+        binnedLine = oImageProcessing.extractBinnedLine(pictureData);
+        lineSize = binnedLine.length;
+        assertEquals(lineSize, 64);
+    }
+
+    @Test
+    public void extractLinePortraitM() {
+        int[] binnedLine;
+        int lineSize = -1;
+        configPortraitM();
+        binnedLine = oImageProcessing.extractBinnedLine(pictureData);
+        lineSize = binnedLine.length;
+        assertEquals(lineSize, 48);
+    }
+
+    @Test
+    public void extractLineLandscapeIndexZeroM() {
+        int[] binnedLine;
+        int lineSize = -1;
+        int valueAtZero = -1;
+        configLanscapeM();
+        binnedLine = oImageProcessing.extractBinnedLine(pictureData);
+        lineSize = binnedLine.length;
+        assertEquals(lineSize, 64);
+        valueAtZero = binnedLine[0];
+        assertEquals(valueAtZero, 256);
+    }
+
+    @Test
+    public void extractLinePortraitIndexZeroM() {
+        int[] binnedLine;
+        int lineSize = -1;
+        int valueAtZero = -1;
+        configPortraitM();
+        binnedLine = oImageProcessing.extractBinnedLine(pictureData);
+        lineSize = binnedLine.length;
+        assertEquals(lineSize, 48);
+        valueAtZero = binnedLine[0];
+        assertEquals(valueAtZero, 262);
+    }
+
+    @Test
+    public void extractLineLandscapeIndexTenM() {
+        int[] binnedLine;
+        int lineSize = -1;
+        int valueAtZero = -1;
+        configLanscapeM();
+        binnedLine = oImageProcessing.extractBinnedLine(pictureData);
+        lineSize = binnedLine.length;
+        assertEquals(lineSize, 64);
+        valueAtZero = binnedLine[10];
+        assertEquals(valueAtZero, 296);
+    }
+
+    @Test
+    public void extractLinePortraitIndexTenM() {
+        int[] binnedLine;
+        int lineSize = -1;
+        int valueAtZero = -1;
+        configPortraitM();
+        binnedLine = oImageProcessing.extractBinnedLine(pictureData);
+        lineSize = binnedLine.length;
+        assertEquals(lineSize, 48);
+        valueAtZero = binnedLine[10];
+        assertEquals(valueAtZero, 262);
+    }
+
+    private void configLanscapeM() {
+        oImageProcessing.setCameraDataMirrored(true);
+        oImageProcessing.setStartPercentX(10);
+        oImageProcessing.setStartPercentY(10);
+        oImageProcessing.setEndPercentX(20);
+        oImageProcessing.setScanAreaWidth(4);
+        oImageProcessing.setPictureSize(ePictureWidth, ePictureHeight);
+        oImageProcessing.setSpectrumOrientationLandscape(true);
+        oImageProcessing.configureBinningArea();
+    }
+
+    private void configPortraitM() {
+        oImageProcessing.setCameraDataMirrored(true);
         oImageProcessing.setStartPercentX(10);
         oImageProcessing.setStartPercentY(10);
         oImageProcessing.setEndPercentX(20);

@@ -268,14 +268,26 @@ public class ImageProcessing {
     public void configureBinningArea() {
         boolean configFull = isConfigFull();
         if (configFull) {
-            if (mSpectrumOrientationLandscape) {
-                mSizeX = mPictureSizeWidth * (mEndPercentX - mStartPercentX) / 100;
-                mIndexStartW = mPictureSizeWidth * mStartPercentX / 100;
-                mIndexStartH = mPictureSizeHeight * mStartPercentY / 100;
-            } else {
-                mSizeX = mPictureSizeHeight * (mEndPercentX - mStartPercentX) / 100;
-                mIndexStartW = mPictureSizeWidth * mStartPercentY / 100;
-                mIndexStartH = mPictureSizeHeight * mStartPercentX / 100;
+            if (mCameraDataMirrored) { // N7
+                if (mSpectrumOrientationLandscape) {
+                    mSizeX = mPictureSizeWidth * (mEndPercentX - mStartPercentX) / 100;
+                    mIndexStartW = mPictureSizeWidth * (100 - mStartPercentX) / 100;
+                    mIndexStartH = mPictureSizeHeight * (100 - mStartPercentY) / 100;
+                } else {
+                    mSizeX = mPictureSizeHeight * (mEndPercentX - mStartPercentX) / 100;
+                    mIndexStartW = mPictureSizeWidth * (100 - mStartPercentY) / 100;
+                    mIndexStartH = mPictureSizeHeight * (100 - mStartPercentX) / 100;
+                }
+            } else { // data not mirrored; N5, GalNex
+                if (mSpectrumOrientationLandscape) {
+                    mSizeX = mPictureSizeWidth * (mEndPercentX - mStartPercentX) / 100;
+                    mIndexStartW = mPictureSizeWidth * mStartPercentX / 100;
+                    mIndexStartH = mPictureSizeHeight * mStartPercentY / 100;
+                } else {
+                    mSizeX = mPictureSizeHeight * (mEndPercentX - mStartPercentX) / 100;
+                    mIndexStartW = mPictureSizeWidth * mStartPercentY / 100;
+                    mIndexStartH = mPictureSizeHeight * mStartPercentX / 100;
+                }
             }
             if (mBinnedLine == null) {
                 mBinnedLine = new int[mSizeX];
@@ -283,7 +295,6 @@ public class ImageProcessing {
                 mBinnedLine = (int[]) resizeArray(mBinnedLine, mSizeX);
             }
         }
-//        mConfigStatus |= eCameraDimensionSet;
     }
 
     /**

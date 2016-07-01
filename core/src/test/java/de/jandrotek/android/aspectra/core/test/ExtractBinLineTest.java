@@ -92,6 +92,16 @@ public class ExtractBinLineTest {
     }
 
     @Test
+    public void extractLinePortrait() {
+        int[] binnedLine;
+        int lineSize = -1;
+        configPortrait();
+        binnedLine = oImageProcessing.extractBinnedLine(pictureData);
+        lineSize = binnedLine.length;
+        assertEquals(lineSize, 48);
+    }
+
+    @Test
     public void extractLineLandscapeIndexZero() {
         int[] binnedLine;
         int lineSize = -1;
@@ -104,6 +114,45 @@ public class ExtractBinLineTest {
         assertEquals(valueAtZero, 256);
     }
 
+    @Test
+    public void extractLinePortraitIndexZero() {
+        int[] binnedLine;
+        int lineSize = -1;
+        int valueAtZero = -1;
+        configPortrait();
+        binnedLine = oImageProcessing.extractBinnedLine(pictureData);
+        lineSize = binnedLine.length;
+        assertEquals(lineSize, 48);
+        valueAtZero = binnedLine[0];
+        assertEquals(valueAtZero, 262);
+    }
+
+    @Test
+    public void extractLineLandscapeIndexTen() {
+        int[] binnedLine;
+        int lineSize = -1;
+        int valueAtZero = -1;
+        configLanscape();
+        binnedLine = oImageProcessing.extractBinnedLine(pictureData);
+        lineSize = binnedLine.length;
+        assertEquals(lineSize, 64);
+        valueAtZero = binnedLine[10];
+        assertEquals(valueAtZero, 296);
+    }
+
+    @Test
+    public void extractLinePortraitIndexTen() {
+        int[] binnedLine;
+        int lineSize = -1;
+        int valueAtZero = -1;
+        configPortrait();
+        binnedLine = oImageProcessing.extractBinnedLine(pictureData);
+        lineSize = binnedLine.length;
+        assertEquals(lineSize, 48);
+        valueAtZero = binnedLine[10];
+        assertEquals(valueAtZero, 262);
+    }
+
     private void configLanscape() {
         oImageProcessing.setStartPercentX(10);
         oImageProcessing.setStartPercentY(10);
@@ -111,7 +160,16 @@ public class ExtractBinLineTest {
         oImageProcessing.setScanAreaWidth(4);
         oImageProcessing.setPictureSize(ePictureWidth, ePictureHeight);
         oImageProcessing.setSpectrumOrientationLandscape(true);
-//        boolean configFull = oImageProcessing.isConfigFull();
+        oImageProcessing.configureBinningArea();
+    }
+
+    private void configPortrait() {
+        oImageProcessing.setStartPercentX(10);
+        oImageProcessing.setStartPercentY(10);
+        oImageProcessing.setEndPercentX(20);
+        oImageProcessing.setScanAreaWidth(4);
+        oImageProcessing.setPictureSize(ePictureWidth, ePictureHeight);
+        oImageProcessing.setSpectrumOrientationLandscape(false);
         oImageProcessing.configureBinningArea();
     }
 

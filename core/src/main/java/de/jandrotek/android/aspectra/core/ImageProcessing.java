@@ -150,12 +150,12 @@ public class ImageProcessing {
 
             for (int x = 0; x < mSizeX; x++) {
                 mBinnedLine[x] = 0;
-                indexH = mIndexStartH + x;
-                indexW = mIndexStartW + mPictureSizeWidth * indexH;
+                indexH = mIndexStartH - x;
+                indexW = mPictureSizeWidth * indexH + mIndexStartW;
 
                 for (int y = 0; y < mSizeY; y++) {
                     mBinnedLine[x] += inputArray[indexW] & 0xFF;
-                    indexW++;
+                    indexW--;
                 }
             }
 
@@ -179,16 +179,16 @@ public class ImageProcessing {
             for (int x = 0; x < mSizeX; x++) {
 
                 mBinnedLine[x] = inputArray[indexW] & 0xFF;
-                indexW++;
+                indexW--;
             }
 
             //next lines
             for (int y = 1; y < mSizeY; y++) {
-                indexH++;
+                indexH--;
                 indexW = mIndexStartW + mPictureSizeWidth * indexH;
                 for (int x = 0; x < mSizeX; x++) {
                     mBinnedLine[x] += inputArray[indexW] & 0xFF;
-                    indexW++;
+                    indexW--;
                 }
             }
 
@@ -328,14 +328,6 @@ public class ImageProcessing {
     public void setStartPercentY(int startPercentW) {
         mStartPercentY = startPercentW;
     }
-
-//    public void setEndPercentY(int endPercentW) {
-//        mEndPercentY = endPercentW;
-//    }
-
-//    public void setPictureSizeWidth(int pictureSizeWidth) {
-//        mPictureSizeWidth = pictureSizeWidth;
-//    }
 
     public void setPictureSize(int pictureSizeWidth, int pictureSizeHeight) {
         mConfigStatus |= eCameraDimensionSet;

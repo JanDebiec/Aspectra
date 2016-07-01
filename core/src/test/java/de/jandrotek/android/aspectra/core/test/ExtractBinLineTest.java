@@ -219,7 +219,7 @@ public class ExtractBinLineTest {
         lineSize = binnedLine.length;
         assertEquals(lineSize, 48);
         valueAtZero = binnedLine[0];
-        assertEquals(valueAtZero, 262);
+        assertEquals(valueAtZero, 250);
     }
 
     @Test
@@ -232,7 +232,7 @@ public class ExtractBinLineTest {
         lineSize = binnedLine.length;
         assertEquals(lineSize, 64);
         valueAtZero = binnedLine[10];
-        assertEquals(valueAtZero, 296);
+        assertEquals(valueAtZero, 216);
     }
 
     @Test
@@ -245,7 +245,7 @@ public class ExtractBinLineTest {
         lineSize = binnedLine.length;
         assertEquals(lineSize, 48);
         valueAtZero = binnedLine[10];
-        assertEquals(valueAtZero, 262);
+        assertEquals(valueAtZero, 250);
     }
 
     private void configLanscapeM() {

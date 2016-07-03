@@ -12,10 +12,10 @@ import static org.junit.Assert.assertEquals;
  * Created by jan on 30.06.16.
  */
 
-public class ExtractBinLineTest {
+public class ExtractBinLine256Test {
 
-    private final int ePictureWidth = 640;
-    private final int ePictureHeight = 480;
+    private final int ePictureWidth = 256;
+    private final int ePictureHeight = 192;
     private final int nPictureDataSize = ePictureWidth * ePictureHeight;
     byte[] pictureData;
     private ImageProcessing oImageProcessing;
@@ -88,7 +88,7 @@ public class ExtractBinLineTest {
         configLanscape();
         binnedLine = oImageProcessing.extractBinnedLine(pictureData);
         lineSize = binnedLine.length;
-        assertEquals(lineSize, 64);
+        assertEquals(25, lineSize);
     }
 
     @Test
@@ -98,7 +98,7 @@ public class ExtractBinLineTest {
         configPortrait();
         binnedLine = oImageProcessing.extractBinnedLine(pictureData);
         lineSize = binnedLine.length;
-        assertEquals(lineSize, 48);
+        assertEquals(19, lineSize);
     }
 
     @Test
@@ -109,9 +109,9 @@ public class ExtractBinLineTest {
         configLanscape();
         binnedLine = oImageProcessing.extractBinnedLine(pictureData);
         lineSize = binnedLine.length;
-        assertEquals(lineSize, 64);
+        assertEquals(25, lineSize);
         valueAtZero = binnedLine[0];
-        assertEquals(valueAtZero, 256);
+        assertEquals(100, valueAtZero);
     }
 
     @Test
@@ -122,9 +122,9 @@ public class ExtractBinLineTest {
         configPortrait();
         binnedLine = oImageProcessing.extractBinnedLine(pictureData);
         lineSize = binnedLine.length;
-        assertEquals(lineSize, 48);
+        assertEquals(19, lineSize);
         valueAtZero = binnedLine[0];
-        assertEquals(valueAtZero, 262);
+        assertEquals(106, valueAtZero);
     }
 
     @Test
@@ -135,9 +135,9 @@ public class ExtractBinLineTest {
         configLanscape();
         binnedLine = oImageProcessing.extractBinnedLine(pictureData);
         lineSize = binnedLine.length;
-        assertEquals(lineSize, 64);
+        assertEquals(25, lineSize);
         valueAtZero = binnedLine[10];
-        assertEquals(valueAtZero, 296);
+        assertEquals(140, valueAtZero);
     }
 
     @Test
@@ -148,9 +148,9 @@ public class ExtractBinLineTest {
         configPortrait();
         binnedLine = oImageProcessing.extractBinnedLine(pictureData);
         lineSize = binnedLine.length;
-        assertEquals(lineSize, 48);
+        assertEquals(19, lineSize);
         valueAtZero = binnedLine[10];
-        assertEquals(valueAtZero, 262);
+        assertEquals(106, valueAtZero);
     }
 
     private void configLanscape() {
@@ -183,7 +183,7 @@ public class ExtractBinLineTest {
         configLanscapeM();
         binnedLine = oImageProcessing.extractBinnedLine(pictureData);
         lineSize = binnedLine.length;
-        assertEquals(lineSize, 64);
+        assertEquals(25, lineSize);
     }
 
     @Test
@@ -193,7 +193,7 @@ public class ExtractBinLineTest {
         configPortraitM();
         binnedLine = oImageProcessing.extractBinnedLine(pictureData);
         lineSize = binnedLine.length;
-        assertEquals(lineSize, 48);
+        assertEquals(19, lineSize);
     }
 
     @Test
@@ -204,9 +204,9 @@ public class ExtractBinLineTest {
         configLanscapeM();
         binnedLine = oImageProcessing.extractBinnedLine(pictureData);
         lineSize = binnedLine.length;
-        assertEquals(lineSize, 64);
+        assertEquals(25, lineSize);
         valueAtZero = binnedLine[0];
-        assertEquals(valueAtZero, 256);
+        assertEquals(920, valueAtZero);
     }
 
     @Test
@@ -217,9 +217,9 @@ public class ExtractBinLineTest {
         configPortraitM();
         binnedLine = oImageProcessing.extractBinnedLine(pictureData);
         lineSize = binnedLine.length;
-        assertEquals(lineSize, 48);
+        assertEquals(19, lineSize);
         valueAtZero = binnedLine[0];
-        assertEquals(valueAtZero, 250);
+        assertEquals(914, valueAtZero);
     }
 
     @Test
@@ -230,9 +230,9 @@ public class ExtractBinLineTest {
         configLanscapeM();
         binnedLine = oImageProcessing.extractBinnedLine(pictureData);
         lineSize = binnedLine.length;
-        assertEquals(64, lineSize);
+        assertEquals(25, lineSize);
         valueAtZero = binnedLine[10];
-        assertEquals(216, valueAtZero);
+        assertEquals(880, valueAtZero);
     }
 
     @Test
@@ -243,9 +243,9 @@ public class ExtractBinLineTest {
         configPortraitM();
         binnedLine = oImageProcessing.extractBinnedLine(pictureData);
         lineSize = binnedLine.length;
-        assertEquals(48, lineSize);
+        assertEquals(19, lineSize);
         valueAtZero = binnedLine[10];
-        assertEquals(250, valueAtZero);
+        assertEquals(914, valueAtZero);
     }
 
     private void configLanscapeM() {

@@ -37,6 +37,8 @@
     <string name="pref_camera_orientation_title">Lanscape orientation of spectrograph</string>
     <string name="DEFAULT_KEY_LANDSCAPE_ORIENTATION">false</string>
     <string name="PREFS_KEY_LANDSCAPE_ORIENTATION">PREFS_KEY_LANDSCAPE_ORIENTATION</string>
+    <string name="pref_camera_mirror_title">data from camera mirrored</string>
+    <string name="PREFS_KEY_CAMERA_MIRROR">PREFS_KEY_CAMERA_MIRROR</string>
 
 
 </resources>

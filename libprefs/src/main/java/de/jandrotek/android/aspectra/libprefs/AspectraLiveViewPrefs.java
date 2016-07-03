@@ -29,6 +29,7 @@ public class AspectraLiveViewPrefs {
     private static String mPREFS_KEY_LANSCAPE_ORIENTATION;
     private static String mPREFS_KEY_FOLDER_NAME;
     private static String mPREFS_KEY_EXTENSION_NAME;
+    private static String mPREFS_KEY_CAMERA_MIRROR;
 
     //values
     private int mPrefsWidthStart;
@@ -36,7 +37,13 @@ public class AspectraLiveViewPrefs {
     private int mPrefsHeightStart;
     private int mPrefsHeightEnd;
     private boolean mPrefsLandscapeCameraOrientation;
-    private String mPrefsLandscapeCameraOrientationString;
+
+    public boolean isPrefsCameraDataMirror() {
+        return mPrefsCameraDataMirror;
+    }
+
+    private boolean mPrefsCameraDataMirror;
+//    private String mPrefsLandscapeCameraOrientationString;
 
     public String getPrefsExtensionName() {
         return mPrefsExtensionName;
@@ -152,9 +159,10 @@ public class AspectraLiveViewPrefs {
 
 //        mStrDefaultLandscapeOrientation = mContext.getResources().getString(R.string.DEFAULT_KEY_LANDSCAPE_ORIENTATION);
         mPREFS_KEY_LANSCAPE_ORIENTATION = mContext.getResources().getString(R.string.PREFS_KEY_LANDSCAPE_ORIENTATION);
-        this.mPrefsLandscapeCameraOrientation = mPrefs.getBoolean(mPREFS_KEY_LANSCAPE_ORIENTATION, true);
+        this.mPrefsLandscapeCameraOrientation = mPrefs.getBoolean(mPREFS_KEY_LANSCAPE_ORIENTATION, false);
 
-                //Boolean.getBoolean(mPrefsLandscapeCameraOrientationString);
+        mPREFS_KEY_CAMERA_MIRROR = mContext.getResources().getString(R.string.PREFS_KEY_CAMERA_MIRROR);
+        this.mPrefsCameraDataMirror = mPrefs.getBoolean(mPREFS_KEY_CAMERA_MIRROR, false);
 
         mDefaultFolderName = mContext.getResources().getString(R.string.DEFAULT_FOLDER_NAME);
         mPREFS_KEY_FOLDER_NAME = mContext.getResources().getString(R.string.PREFS_KEY_FOLDER_NAME);
@@ -191,11 +199,6 @@ public class AspectraLiveViewPrefs {
         mPREFS_KEY_SPECTRA_LENGTH =  mContext.getResources().getString(R.string.PREFS_KEY_SPECTRA_LENGTH);
         editor.putString(mPREFS_KEY_SPECTRA_LENGTH, Integer.toString(mPrefsSpectraLength));
         editor.apply();
-
-
-//        mPREFS_KEY_LANSCAPE_ORIENTATION = mContext.getResources().getString(R.string.PREFS_KEY_LANDSCAPE_ORIENTATION);
-//        editor.putString(mPREFS_KEY_LANSCAPE_ORIENTATION, Boolean.toString(mPrefsLandscapeCameraOrientation));
-//        editor.apply();
 
     }
 }

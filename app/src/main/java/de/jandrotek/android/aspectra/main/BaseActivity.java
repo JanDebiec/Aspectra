@@ -38,8 +38,9 @@ public class BaseActivity extends AppCompatActivity //ActionBarActivity
 
     protected boolean mCameraPresent = false;
     protected ConfigViewSettings mViewSettings = null;
+    protected boolean mCameraDataMirrored;
 
-   @Override
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
        super.onCreate(savedInstanceState);
        if (mAspectraSettings == null) {
@@ -121,6 +122,7 @@ public class BaseActivity extends AppCompatActivity //ActionBarActivity
         mStartPercentY = mAspectraSettings.getPrefsHeightStart();
         mScanAreaWidth = mAspectraSettings.getPrefsScanAreaWidth();
         mSpectrumLanscapeOrientation = mAspectraSettings.isPrefsLandscapeCameraOrientation();
+        mCameraDataMirrored = mAspectraSettings.isPrefsCameraDataMirror();
     }
 
     protected void updateConfViewSettings() {

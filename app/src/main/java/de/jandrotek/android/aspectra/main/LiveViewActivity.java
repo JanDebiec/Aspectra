@@ -216,6 +216,7 @@ public class LiveViewActivity extends BaseActivity
         mImageProcessing.setStartPercentY(mStartPercentY);
         mImageProcessing.setScanAreaWidth(mScanAreaWidth);
         mImageProcessing.setSpectrumOrientationLandscape(mSpectrumLanscapeOrientation);
+        mImageProcessing.setCameraDataMirrored(mCameraDataMirrored);
     }
 
 //    //TODO: refactor: SpectrumAsp as parameter, work should be done in Spectrum

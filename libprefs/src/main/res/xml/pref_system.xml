@@ -21,5 +21,8 @@
     <CheckBoxPreference
         android:title="@string/pref_camera_orientation_title"
         android:key="@string/PREFS_KEY_LANDSCAPE_ORIENTATION"/>
+    <CheckBoxPreference
+        android:title="@string/pref_camera_mirror_title"
+        android:key="@string/PREFS_KEY_CAMERA_MIRROR"/>
 
 </PreferenceScreen>

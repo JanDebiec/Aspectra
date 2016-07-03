@@ -29,7 +29,8 @@ public class ImageProcessing {
     private static final int eCameraDimensionSet = 0x1;
     private static final int ePercensSet = 0x2;
     private static final int eSpectrumOrientationSet = 0x4;
-    private static final int eNeededConfig = eCameraDimensionSet + ePercensSet + eSpectrumOrientationSet;
+    private static final int eCameraMirroredSet = 0x8;
+    private static final int eNeededConfig = eCameraDimensionSet + ePercensSet + eSpectrumOrientationSet + eCameraMirroredSet;
     private int mConfigStatus = 0;
 
     public void clearCameraConfigFlag() {
@@ -48,6 +49,7 @@ public class ImageProcessing {
 
     // some devices (f.i. N7 have data mirrored in both axis, x, y
     public void setCameraDataMirrored(boolean cameraDataMirrored) {
+        mConfigStatus |= eCameraMirroredSet;
         mCameraDataMirrored = cameraDataMirrored;
     }
 

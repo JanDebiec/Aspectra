@@ -1,10 +1,11 @@
 ext {
     //Version
-    supportLibrary = '23.2.1'
-
-    buildToolsVersion = '23.0.2'
-
-    compileSdkVersion = "android-23"
+//    supportLibrary = '23.2.1'
+//    buildToolsVersion = '23.0.2'
+//    compileSdkVersion = "android-23"
+    supportLibrary = '24.0.0'
+    buildToolsVersion = '24.0.0'
+    compileSdkVersion = "android-24"
 
     tools = [
             bTV: "${buildToolsVersion}",

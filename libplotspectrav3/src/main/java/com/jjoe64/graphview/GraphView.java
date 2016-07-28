@@ -19,11 +19,6 @@
 
 package com.jjoe64.graphview;
 
-import java.nio.charset.Charset;
-import java.text.NumberFormat;
-import java.util.ArrayList;
-import java.util.List;
-
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -38,8 +33,12 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 import com.jjoe64.graphview.GraphViewSeries.GraphViewSeriesStyle;
-import com.jjoe64.graphview.GraphViewStyle.GridStyle;
 import com.jjoe64.graphview.compatible.ScaleGestureDetector;
+
+import java.nio.charset.Charset;
+import java.text.NumberFormat;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * GraphView is a Android View for creating zoomable and scrollable graphs.
@@ -926,7 +925,7 @@ abstract public class GraphView extends LinearLayout {
 	 */
 	synchronized public void setScalable(boolean scalable) {
 		this.scalable = scalable;
-		if (scalable == true && scaleDetector == null) {
+		if (scalable && scaleDetector == null) {
 			scrollable = true; // automatically forces this
 			scaleDetector = new ScaleGestureDetector(getContext(), new ScaleGestureDetector.SimpleOnScaleGestureListener() {
 				@Override

@@ -26,6 +26,7 @@ import de.jandrotek.android.aspectra.core.AspectraGlobals;
 import de.jandrotek.android.aspectra.core.ConfigViewSettings;
 import de.jandrotek.android.aspectra.core.ImageProcessing;
 
+@SuppressWarnings({"ALL", "deprecation"})
 @SuppressLint("ViewConstructor")
 public class CameraPreview  extends ViewGroup implements SurfaceHolder.Callback,
         Camera.PreviewCallback {
@@ -335,12 +336,16 @@ public class CameraPreview  extends ViewGroup implements SurfaceHolder.Callback,
                         mCameraSizeinViewHeight = mCameraPreviewSize.height;
                     }
                 } else if (mDeviceOrientation == AspectraGlobals.DEVICE_ORIENTATION_PORTRAIT) {
+                    //noinspection SuspiciousNameCombination
                     mCameraSizeinViewHeight = viewOwnWidth;
+                    //noinspection SuspiciousNameCombination
                     mCameraSizeinViewWidth = viewOwnHeight;
 
                     // from camera, result of getOptiomalPreviewSize()
                     if (mCameraPreviewSize != null) {
+                        //noinspection SuspiciousNameCombination
                         mCameraSizeinViewHeight = mCameraPreviewSize.width;
+                        //noinspection SuspiciousNameCombination
                         mCameraSizeinViewWidth = mCameraPreviewSize.height;
                     }
                 }
@@ -357,8 +362,8 @@ public class CameraPreview  extends ViewGroup implements SurfaceHolder.Callback,
 
                     //alpha and beta are the angles between diagonals, on the right side
                     // alpha for parent, beta for child
-                    int angle_beta = 0;
-                    int angle_alpha = 0;
+                    int angle_beta;
+                    int angle_alpha;
 
                     //calculate beta
                     angle_beta = viewOwnWidth * mCameraSizeinViewHeight;

@@ -207,7 +207,7 @@ public class ViewConfigActivity extends BaseActivity
     }
 
     private int calcCountLinesY(int progress) {
-        int temp = 1;
+        int temp;
         if(progress < 2){
             temp = 1;
         } else if (progress < 4){
@@ -324,6 +324,7 @@ public class ViewConfigActivity extends BaseActivity
 
     protected void updateLinesInConfigView() {
         if (mCameraViewFragment != null) {
+            //noinspection SuspiciousNameCombination
             mCameraViewFragment.updateBorderInConfigView(mStartPercentX, mEndPercentX, mStartPercentY, mScanAreaWidth);
         }
     }

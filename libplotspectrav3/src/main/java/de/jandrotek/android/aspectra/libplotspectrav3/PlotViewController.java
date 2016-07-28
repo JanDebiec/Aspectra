@@ -93,7 +93,7 @@ public class PlotViewController
 
     private int findMaxDataLength() {
         int max = 0;
-        int i = 0;
+        int i;
         for(i = 0; i < mItemlistSizeAct; i++){
             if(mFilesDataLength[i] > max){
                 max = mFilesDataLength[i];

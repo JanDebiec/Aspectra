@@ -29,7 +29,7 @@ public class SpectrumLine {
         int MaxValue;
         int MaxPosition;
 
-        if(searchArea.getGo2Right() == true){
+        if (searchArea.getGo2Right()) {
             start = searchArea.getStart();
             end = searchArea.getEnd();
         } else {

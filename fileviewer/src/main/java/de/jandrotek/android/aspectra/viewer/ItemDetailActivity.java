@@ -41,7 +41,7 @@ public class ItemDetailActivity extends AppCompatActivity
 
             ArrayList<String> names = getIntent().getExtras().getStringArrayList(AspectraGlobals.ARG_ITEM_IDS);
             mPlotViewController = new PlotViewControllerBuilder().setParam1(AspectraGlobals.ACT_ITEM_VIEW_PLOT).setItems(names).createPlotViewController();
-            mPlotViewFragment = PlotViewFragment.newInstance(names.size());
+            mPlotViewFragment = PlotViewFragment.newInstance(names != null ? names.size() : 0);
             mPlotViewController.init(mPlotViewFragment);
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.item_detail_container, mPlotViewFragment)

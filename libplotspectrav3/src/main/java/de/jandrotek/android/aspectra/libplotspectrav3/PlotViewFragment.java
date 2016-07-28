@@ -89,8 +89,12 @@ public class PlotViewFragment extends Fragment
         }
         mItemlistSize = mParam1;
 //        mFileIntValues = new int[mItemlistSize][AspectraGlobals.eMaxSpectrumSize];
+
         realData = new GraphViewData[mItemlistSize][AspectraGlobals.eMaxSpectrumSize];
+
+        //TODO do we need instance here?
         mDataSeries = new GraphViewSeries[mItemlistSize];
+
 //        mFileDataLength = new int[mItemlistSize];
         mDataLengthMax = PLOT_DATA_SIZE;
         mColor = new int[3];
@@ -99,19 +103,6 @@ public class PlotViewFragment extends Fragment
         mColor[2] = Color.rgb(0, 0, 255);
     }
 
-    //    private int findMaxDataLength(){
-//        int max = 0;
-//        int index = -1;
-//        int i = 0;
-//        for(i = 0; i < mItemlistSize; i++){
-//            if(mFileDataLength[i] > max){
-//                max = mFileDataLength[i];
-//                index = i;
-//            }
-//        }
-//
-//        return max;
-//    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -185,18 +176,6 @@ public class PlotViewFragment extends Fragment
         return true;
     }
 
-//    public void updateSinglePlot(int index, int[] data){
-//        int length = data.length;
-//        mFileIntValues[index] = data;
-//        if (mDataSeries[index] != null) {
-//            if(length > realPlotDataSize) {
-//                realPlotDataSize = length;
-//            }
-//            generateData(index, mFileIntValues[index], length);
-//            mDataSeries[index].resetData(realData[index]);
-//        }
-//   }
-
     public void updateGraphView(int shownPlotLength) {
         realPlotDataSize = shownPlotLength;
         mGraphView.setViewPort(0, shownPlotLength);
@@ -207,51 +186,7 @@ public class PlotViewFragment extends Fragment
 
         mGraphView.setViewPort(start, end);
     }
-//    //TODO: check the index boundaries, move to presenter
-//    private void generateData(int index, int[] data, int length) {
-//        int realLength;
-//        if (length > AspectraGlobals.eMaxSpectrumSize) {
-//            realLength = AspectraGlobals.eMaxSpectrumSize;
-//        } else {
-//            realLength = length;
-//        }
-//        realLength = length;
-//        if(realData[index] == null){
-//            realData[index] = new GraphViewData[length];
-//        }
-//        for (int i=0; i<realLength; i++) {
-//
-//            realData[index][i] = new GraphViewData(i, data[i]);
-//        }
-//        //TODO: check in plot act length, and add needed data only for that length
-//        if(mParam1 > 1) {
-//            realPlotDataSize = findMaxDataLength();
-//        }
-//        else {
-//            realPlotDataSize = realLength;
-//        }
-//
-//
-//        for(int i = realLength; i < realPlotDataSize ; i++){
-//            realData[index][i] = new GraphViewData(i, 0);
-//        }
-//    }
 
-//    private GraphViewData[] generateDemoData(){
-//        GraphViewData[] demoData;
-//        mPlotIntValues = new int[PLOT_DATA_SIZE];
-//        for (int i = 0; i < PLOT_DATA_SIZE/2; i++)
-//            mPlotIntValues[i] = i;
-//        for (int i = PLOT_DATA_SIZE/2; i < PLOT_DATA_SIZE; i++)
-//            mPlotIntValues[i] = PLOT_DATA_SIZE - i;
-//
-//        demoData = new GraphViewData[PLOT_DATA_SIZE];
-//        for (int i=0; i<PLOT_DATA_SIZE; i++) {
-//
-//            demoData[i] = new GraphViewData(i, mPlotIntValues[i]);
-//        }
-//        return demoData;
-//    }
 }
 
 

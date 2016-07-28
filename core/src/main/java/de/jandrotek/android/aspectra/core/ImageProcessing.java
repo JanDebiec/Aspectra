@@ -102,17 +102,17 @@ public class ImageProcessing {
     }
 
 
-    public void processImage(byte[] inputArray){
-        int[] binnedLine;
-
-        binnedLine = extractBinnedLine(inputArray);
-//        mSpectrumLine = new com.jandrotek.android.aspectra.lib.SpectrumLine(binnedLine);
-//        //TODO: implement switch, what should be calculated,
-//        // if peakFind, or spectrum compare...
-//        mSpectrumLine.searchInSteps(2);
-//        List<Peak> listOfFoundPeaks = mSpectrumLine.getPeaks();
-
-    }
+//    public void processImage(byte[] inputArray){
+//        int[] binnedLine;
+//
+//        binnedLine = extractBinnedLine(inputArray);
+////        mSpectrumLine = new com.jandrotek.android.aspectra.lib.SpectrumLine(binnedLine);
+////        //TODO: implement switch, what should be calculated,
+////        // if peakFind, or spectrum compare...
+////        mSpectrumLine.searchInSteps(2);
+////        List<Peak> listOfFoundPeaks = mSpectrumLine.getPeaks();
+//
+//    }
 
     public boolean isConfigFull() {
         return (mConfigStatus == eNeededConfig);

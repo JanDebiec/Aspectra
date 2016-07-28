@@ -62,7 +62,8 @@ public class PlotViewPresenter {
             } else {
                 realLength = length;
             }
-            realLength = length;
+//            realLength = length;
+
 //        if(realData[index] == null){
 //            realData[index] = new GraphView.GraphViewData[length];
 //        }
@@ -93,12 +94,12 @@ public class PlotViewPresenter {
 
     private int findMaxDataLength() {
         int max = 0;
-        int index = -1;
-        int i = 0;
+//        int index = -1;
+        int i;
         for (i = 0; i < mSpectraPlotCount; i++) {
             if (mFileDataLength[i] > max) {
                 max = mFileDataLength[i];
-                index = i;
+//                index = i;
             }
         }
 

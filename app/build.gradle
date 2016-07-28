@@ -33,7 +33,7 @@ android {
 //    dexOptions {
 //        incremental true
 //    }
-    buildToolsVersion '23.0.2'
+//    buildToolsVersion '23.0.2'
 }
 
 dependencies {

@@ -101,11 +101,7 @@ public class ConfigViewSettings {
     }
 
     public boolean isConfigured(){
-        if (mConfigStatus == eNeededConfig) {
-            return true;
-        } else {
-            return false;
-        }
+        return mConfigStatus == eNeededConfig;
     }
 
 
@@ -150,7 +146,7 @@ public class ConfigViewSettings {
         float previewInConfigY;
 
         if (mDeviceOrientation == AspectraGlobals.DEVICE_ORIENTATION_LANDSCAPE) {
-            deltaX = mCameraPreviewWidth - mConfigViewWidth;
+//            deltaX = mCameraPreviewWidth - mConfigViewWidth;
 //            if (deltaX > 1.0f) { // prefiewX bigger then configX
                 faktorK = mConfigViewWidth / mCameraPreviewWidth;
                 previewInConfigY = mCameraPreviewHeight * faktorK;
@@ -184,7 +180,7 @@ public class ConfigViewSettings {
             }
         } else if (mDeviceOrientation == AspectraGlobals.DEVICE_ORIENTATION_PORTRAIT) {
             // for camera preview hidht should be considered as view-width, and preview-width as view-height
-            deltaY = mCameraPreviewHeight - mConfigViewHeight;
+//            deltaY = mCameraPreviewHeight - mConfigViewHeight;
 //            if (deltaY > 1.0f) { // preViewY bigger then configY
             faktorK = mConfigViewHeight / mCameraPreviewHeight;
             previewInConfigX = mCameraPreviewWidth * faktorK;

@@ -132,11 +132,11 @@ public class AnalyzeActivity extends AppCompatActivity
 
     //TODO: interaction with TouchView
     public void onTouchViewInteraction(int _toolId, float _value){
-        if(mSpectrumAlreadyEdited != true){
+        if (!mSpectrumAlreadyEdited) {
             mSpectrumAlreadyEdited = true;
             mSpectrumToEditBackup = mSpectrumToEdit;
         }
-        if(mCalcBusy != true) {
+        if (!mCalcBusy) {
             if (_toolId == TouchView.ePlotAction_Move) {
                 mCalcBusy = true;
                 new CalcTask(_toolId,_value, 0f).execute();

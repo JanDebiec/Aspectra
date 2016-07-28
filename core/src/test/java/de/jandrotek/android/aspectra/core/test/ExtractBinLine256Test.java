@@ -84,7 +84,7 @@ public class ExtractBinLine256Test {
     @Test
     public void extractLineLandscape() {
         int[] binnedLine;
-        int lineSize = -1;
+        @SuppressWarnings("UnusedAssignment") int lineSize = -1;
         configLanscape();
         binnedLine = oImageProcessing.extractBinnedLine(pictureData);
         lineSize = binnedLine.length;
@@ -94,7 +94,7 @@ public class ExtractBinLine256Test {
     @Test
     public void extractLinePortrait() {
         int[] binnedLine;
-        int lineSize = -1;
+        @SuppressWarnings("UnusedAssignment") int lineSize = -1;
         configPortrait();
         binnedLine = oImageProcessing.extractBinnedLine(pictureData);
         lineSize = binnedLine.length;
@@ -104,7 +104,7 @@ public class ExtractBinLine256Test {
     @Test
     public void extractLineLandscapeIndexZero() {
         int[] binnedLine;
-        int lineSize = -1;
+        @SuppressWarnings("UnusedAssignment") int lineSize = -1;
         int valueAtZero = -1;
         configLanscape();
         binnedLine = oImageProcessing.extractBinnedLine(pictureData);

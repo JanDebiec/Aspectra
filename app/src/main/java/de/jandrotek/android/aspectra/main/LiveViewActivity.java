@@ -44,7 +44,7 @@ public class LiveViewActivity extends BaseActivity
     private PlotViewPresenter mPlotViewPresenter;
 //    private ConfigViewSettings mViewSettings = null;
 
-    //    private static int mPreviewWidthX;
+    //        private static int mPreviewWidthX;
 //    private static int mPreviewHeightY;
     private PlotViewController mPlotViewController = null;
 
@@ -77,8 +77,8 @@ public class LiveViewActivity extends BaseActivity
         }
         //TODO: why use param = 2 ???. In AspectraMii we should use only 1.
         //TODO: check if controller already installed
-        if (mPlotViewController = null) {
-            mPlotViewController = new PlotViewControllerBuilder().setParam1(AspectraGlobals.ACT_ITEM_VIEW_PLOT).createPlotViewController();
+        if (mPlotViewController == null) {
+            mPlotViewController = new PlotViewControllerBuilder().setParam1(AspectraGlobals.ACT_ITEM_VIEW_PLOT).getInstancePlotViewController();
             Log.d(TAG, "new mPlotViewController created");
         }
         if (savedInstanceState == null) {
@@ -158,8 +158,8 @@ public class LiveViewActivity extends BaseActivity
         if(mCameraViewFragment != null){
             // get the preview size from CamPreview,
             // will be needed in ConfigView
-            mPreviewWidthX = mCameraViewFragment.getPreviewWidthX();
-            mPreviewHeightY = mCameraViewFragment.getPreviewHeightY();
+//            mPreviewWidthX = mCameraViewFragment.getPreviewWidthX();
+//            mPreviewHeightY = mCameraViewFragment.getPreviewHeightY();
 
             mCameraViewFragment.onPause();
         }
@@ -328,12 +328,12 @@ public class LiveViewActivity extends BaseActivity
                                 .show();
 
                     }
-                } else  if (messId == AspectraGlobals.eMessagePreviewSize){
-                    int[] data = (int[])inputMessage.obj;
-                    mPreviewWidthX = data[0];
-                    mPreviewHeightY = data[1];
-                    //TODO: check if needed and proper value
-//                    updatePreviewSizeInConfigView();
+//                } else  if (messId == AspectraGlobals.eMessagePreviewSize){
+//                    int[] data = (int[])inputMessage.obj;
+//                    mPreviewWidthX = data[0];
+//                    mPreviewHeightY = data[1];
+//                    //TODO: check if needed and proper value
+////                    updatePreviewSizeInConfigView();
                 }
             }
         }

@@ -23,7 +23,7 @@ public class PlotViewControllerBuilder {
         return this;
     }
 
-    public PlotViewController createPlotViewController() {
+    public PlotViewController getInstancePlotViewController() {
         if (mController == null) {
             mController = new PlotViewController(param1, items, intemsCount);
         }

@@ -37,15 +37,16 @@ public class LiveViewActivity extends BaseActivity
         implements CameraViewFragment.OnFragmentInteractionListener
 //        PlotViewFragment.OnFragmentInteractionListener
 {
+    private static final String TAG = "LiveViewActivity";
 
     private static CameraViewFragment mCameraViewFragment;
     private static PlotViewFragment mPlotViewFragment;
     private PlotViewPresenter mPlotViewPresenter;
 //    private ConfigViewSettings mViewSettings = null;
 
-    private static int mPreviewWidthX;
-    private static int mPreviewHeightY;
-    private PlotViewController mPlotViewController;
+    //    private static int mPreviewWidthX;
+//    private static int mPreviewHeightY;
+    private PlotViewController mPlotViewController = null;
 
     public Handler getHandler() {
         return mHandler;
@@ -74,7 +75,12 @@ public class LiveViewActivity extends BaseActivity
         } else {
             setContentView(R.layout.activity_live_view_cam_port);
         }
-        mPlotViewController = new PlotViewControllerBuilder().setParam1(AspectraGlobals.ACT_ITEM_VIEW_PLOT).createPlotViewController();
+        //TODO: why use param = 2 ???. In AspectraMii we should use only 1.
+        //TODO: check if controller already installed
+        if (mPlotViewController = null) {
+            mPlotViewController = new PlotViewControllerBuilder().setParam1(AspectraGlobals.ACT_ITEM_VIEW_PLOT).createPlotViewController();
+            Log.d(TAG, "new mPlotViewController created");
+        }
         if (savedInstanceState == null) {
             mCameraViewFragment = CameraViewFragment.newInstance( AspectraGlobals.ACT_ITEM_LIVE_VIEW);
             getSupportFragmentManager().beginTransaction()

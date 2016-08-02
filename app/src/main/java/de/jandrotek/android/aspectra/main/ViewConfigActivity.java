@@ -1,6 +1,5 @@
 package de.jandrotek.android.aspectra.main;
 
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -13,7 +12,8 @@ import de.jandrotek.android.aspectra.core.ConfigViewSettings;
 
 
 public class ViewConfigActivity extends BaseActivity
-        implements CameraViewFragment.OnFragmentInteractionListener {
+//        implements CameraViewFragment.OnFragmentInteractionListener
+{
 
     private CameraViewFragment mCameraViewFragment;
     private SeekBar mSbStartW;
@@ -277,11 +277,11 @@ public class ViewConfigActivity extends BaseActivity
         }
     }
 
-    @Override
-    public void onFragmentInteraction(Uri uri) {
-
-        // do whatever you wish with the uri
-    }
+//    @Override
+//    public void onFragmentInteraction(Uri uri) {
+//
+//        // do whatever you wish with the uri
+//    }
 
     public void acceptNewPercentSettings() {
 

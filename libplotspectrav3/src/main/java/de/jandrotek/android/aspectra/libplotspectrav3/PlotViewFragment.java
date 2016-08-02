@@ -46,7 +46,7 @@ public class PlotViewFragment extends Fragment
     private GraphView mGraphView;
     private int[] mPlotIntValues;
     //ver 3
-    public GraphViewSeries[] mDataSeries;
+    public GraphViewSeries[] mDataSeries = null;
     private GraphViewSeries.GraphViewSeriesStyle[] mGraphStyle;
     private GraphViewData[][] realData = null;
 
@@ -93,8 +93,9 @@ public class PlotViewFragment extends Fragment
         realData = new GraphViewData[mItemlistSize][AspectraGlobals.eMaxSpectrumSize];
 
         //TODO do we need instance here?
-        mDataSeries = new GraphViewSeries[mItemlistSize];
-
+        if (mDataSeries == null) {
+            mDataSeries = new GraphViewSeries[mItemlistSize];
+        }
 //        mFileDataLength = new int[mItemlistSize];
         mDataLengthMax = PLOT_DATA_SIZE;
         mColor = new int[3];

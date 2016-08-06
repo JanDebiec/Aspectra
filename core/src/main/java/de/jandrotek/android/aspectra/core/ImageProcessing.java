@@ -77,6 +77,7 @@ public class ImageProcessing {
     private int mEndPercentY = 50;
 
     private int[] mBinnedLine = null;
+    private int[] mTempLine = null;
     private int[] mDemoLine = null;
     private static final int eDemoLineSize = 100;
 
@@ -180,8 +181,6 @@ public class ImageProcessing {
             throws ArrayIndexOutOfBoundsException {
         int indexW;
         int indexH = mIndexStartH;
-        int temp;
-//TODO: not ready
         try {
 
             indexW = mIndexStartW + mPictureSizeWidth * indexH;
@@ -189,8 +188,7 @@ public class ImageProcessing {
             //first line
             for (int x = 0; x < mSizeX; x++) {
 
-                temp = inputArray[indexW] & 0xFF;
-//                mBinnedLine[x] = inputArray[indexW] & 0xFF;
+                mTempLine[x] = inputArray[indexW] & 0xFF;
                 indexW--;
             }
 
@@ -199,12 +197,17 @@ public class ImageProcessing {
                 indexH--;
                 indexW = mIndexStartW + mPictureSizeWidth * indexH;
                 for (int x = 0; x < mSizeX; x++) {
-                    temp += inputArray[indexW] & 0xFF;
-//                    mBinnedLine[x] += inputArray[indexW] & 0xFF;
+                    mTempLine[x] += inputArray[indexW] & 0xFF;
                     indexW--;
                 }
             }
-
+            for (int x = 0; x < mSizeX; x++) {
+                if (mShiftToNormalize <= 0) {
+                    mBinnedLine[x] = mTempLine[x] << -mShiftToNormalize;
+                } else {
+                    mBinnedLine[x] = mTempLine[x] >> mShiftToNormalize;
+                }
+            }
 
         }
         catch (ArrayIndexOutOfBoundsException e){
@@ -260,10 +263,26 @@ public class ImageProcessing {
 
             indexW = mIndexStartW + mPictureSizeWidth * indexH;
 
+//            //first line
+//            for (int x = 0; x < mSizeX; x++) {
+//
+//                mBinnedLine[x] = inputArray[indexW] & 0xFF;
+//                indexW++;
+//            }
+//
+//            //next lines
+//            for (int y = 1; y < mSizeY; y++) {
+//                indexH++;
+//                indexW = mIndexStartW + mPictureSizeWidth * indexH;
+//                for (int x = 0; x < mSizeX; x++) {
+//                    mBinnedLine[x] += inputArray[indexW] & 0xFF;
+//                    indexW++;
+//                }
+//            }
             //first line
             for (int x = 0; x < mSizeX; x++) {
 
-                mBinnedLine[x] = inputArray[indexW] & 0xFF;
+                mTempLine[x] = inputArray[indexW] & 0xFF;
                 indexW++;
             }
 
@@ -272,8 +291,15 @@ public class ImageProcessing {
                 indexH++;
                 indexW = mIndexStartW + mPictureSizeWidth * indexH;
                 for (int x = 0; x < mSizeX; x++) {
-                    mBinnedLine[x] += inputArray[indexW] & 0xFF;
+                    mTempLine[x] += inputArray[indexW] & 0xFF;
                     indexW++;
+                }
+            }
+            for (int x = 0; x < mSizeX; x++) {
+                if (mShiftToNormalize <= 0) {
+                    mBinnedLine[x] = mTempLine[x] << -mShiftToNormalize;
+                } else {
+                    mBinnedLine[x] = mTempLine[x] >> mShiftToNormalize;
                 }
             }
 
@@ -317,6 +343,12 @@ public class ImageProcessing {
             } else {
                 mBinnedLine = (int[]) resizeArray(mBinnedLine, mSizeX);
             }
+            if (mTempLine == null) {
+                mTempLine = new int[mSizeX];
+            } else {
+                mTempLine = (int[]) resizeArray(mTempLine, mSizeX);
+            }
+
         }
     }
 

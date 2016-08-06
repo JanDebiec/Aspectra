@@ -34,7 +34,7 @@ public class PlotViewFragment extends Fragment
     // TODO: Rename parameter arguments, choose names that match
     private static final String ARG_PARAM1 = "param1";
 
-    private static int mMaxValueY = 4096;
+//    private static int mMaxValueY = 2048;//4096;
 
     private static final int PLOT_DATA_SIZE = AspectraGlobals.eMaxSpectrumSize;
     private int realPlotDataSize = 0;//PLOT_DATA_SIZE;
@@ -180,7 +180,7 @@ public class PlotViewFragment extends Fragment
     public void updateGraphView(int shownPlotLength) {
         realPlotDataSize = shownPlotLength;
         mGraphView.setViewPort(0, shownPlotLength);
-        mGraphView.setManualYAxisBounds(mMaxValueY, 0);
+        mGraphView.setManualYAxisBounds(AspectraGlobals.mPlotMaxValueY, 0);
     }
 
     public void updateGraphViewPort(int start, int end) {

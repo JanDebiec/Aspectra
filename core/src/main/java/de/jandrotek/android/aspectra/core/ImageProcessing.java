@@ -69,6 +69,7 @@ public class ImageProcessing {
   //  private SpectrumLine mSpectrumLine;
     private int mSizeX;
     private int mSizeY;
+    private int mShiftToNormalize;
 
     private int mStartPercentX = 5;
     private int mEndPercentX = 95;
@@ -142,6 +143,7 @@ public class ImageProcessing {
             throws ArrayIndexOutOfBoundsException {
         int indexW;
         int indexH;
+        int temp;
 
         try {
 
@@ -154,11 +156,17 @@ public class ImageProcessing {
                 mBinnedLine[x] = 0;
                 indexH = mIndexStartH - x;
                 indexW = mPictureSizeWidth * indexH + mIndexStartW;
-
+                temp = 0;
                 for (int y = 0; y < mSizeY; y++) {
-                    mBinnedLine[x] += inputArray[indexW] & 0xFF;
+                    temp += inputArray[indexW] & 0xFF;
                     indexW--;
                 }
+                if (mShiftToNormalize <= 0) {
+                    mBinnedLine[x] = temp << -mShiftToNormalize;
+                } else {
+                    mBinnedLine[x] = temp >> mShiftToNormalize;
+                }
+//                mBinnedLine[x] += inputArray[indexW] & 0xFF;
             }
 
         } catch (ArrayIndexOutOfBoundsException e) {
@@ -172,7 +180,8 @@ public class ImageProcessing {
             throws ArrayIndexOutOfBoundsException {
         int indexW;
         int indexH = mIndexStartH;
-
+        int temp;
+//TODO: not ready
         try {
 
             indexW = mIndexStartW + mPictureSizeWidth * indexH;
@@ -180,7 +189,8 @@ public class ImageProcessing {
             //first line
             for (int x = 0; x < mSizeX; x++) {
 
-                mBinnedLine[x] = inputArray[indexW] & 0xFF;
+                temp = inputArray[indexW] & 0xFF;
+//                mBinnedLine[x] = inputArray[indexW] & 0xFF;
                 indexW--;
             }
 
@@ -189,10 +199,12 @@ public class ImageProcessing {
                 indexH--;
                 indexW = mIndexStartW + mPictureSizeWidth * indexH;
                 for (int x = 0; x < mSizeX; x++) {
-                    mBinnedLine[x] += inputArray[indexW] & 0xFF;
+                    temp += inputArray[indexW] & 0xFF;
+//                    mBinnedLine[x] += inputArray[indexW] & 0xFF;
                     indexW--;
                 }
             }
+
 
         }
         catch (ArrayIndexOutOfBoundsException e){
@@ -205,6 +217,7 @@ public class ImageProcessing {
             throws ArrayIndexOutOfBoundsException {
         int indexW;
         int indexH;
+        int temp;
 
         try {
 
@@ -215,12 +228,19 @@ public class ImageProcessing {
 
             for (int x = 0; x < mSizeX; x++) {
                 mBinnedLine[x] = 0;
+                temp = 0;
                 indexH = mIndexStartH + x;
                 indexW = mIndexStartW + mPictureSizeWidth * indexH;
 
                 for (int y = 0; y < mSizeY; y++) {
-                    mBinnedLine[x] += inputArray[indexW] & 0xFF;
+                    temp += inputArray[indexW] & 0xFF;
+//                    mBinnedLine[x] += inputArray[indexW] & 0xFF;
                     indexW++;
+                }
+                if (mShiftToNormalize <= 0) {
+                    mBinnedLine[x] = temp << -mShiftToNormalize;
+                } else {
+                    mBinnedLine[x] = temp >> mShiftToNormalize;
                 }
             }
 
@@ -235,6 +255,7 @@ public class ImageProcessing {
         int indexW;
         int indexH = mIndexStartH;
 
+        //TODO: not ready yet
         try {
 
             indexW = mIndexStartW + mPictureSizeWidth * indexH;
@@ -339,5 +360,24 @@ public class ImageProcessing {
 
     public void setScanAreaWidth(int scanAreaWidth) {
         mSizeY = scanAreaWidth;
+        if (mSizeY == 1) {
+            mShiftToNormalize = -2;
+        } else if (mSizeY == 2) {
+            mShiftToNormalize = -1;
+        } else if (mSizeY == 4) {
+            mShiftToNormalize = 0;
+        } else if (mSizeY == 8) {
+            mShiftToNormalize = 1;
+        } else if (mSizeY == 16) {
+            mShiftToNormalize = 2;
+        } else if (mSizeY == 32) {
+            mShiftToNormalize = 3;
+        } else if (mSizeY == 64) {
+            mShiftToNormalize = 4;
+        } else if (mSizeY == 128) {
+            mShiftToNormalize = 5;
+        } else {
+            mShiftToNormalize = 5;
+        }
     }
 }

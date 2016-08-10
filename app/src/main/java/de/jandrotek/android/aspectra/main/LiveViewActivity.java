@@ -88,6 +88,25 @@ public class LiveViewActivity extends BaseActivity
         mImageProcessing = ImageProcessing.getInstance();
         mCameraViewFragment.setImageProcessing(mImageProcessing);
 
+
+        // from on
+//        if(mPlotViewFragment == null) {
+//            mPlotViewFragment = PlotViewFragment.newInstance(1);
+//        }
+//        mPlotViewController.init(mPlotViewFragment);
+//
+//        mPlotViewPresenter = mPlotViewController.mPlotViewPresenter;
+//
+//
+//        mPlotViewController.initDisplayInFragment();// must be called when fragment already exists
+
+
+
+
+
+
+
+
         // set both orientations in childs
         getScreenOrientation();
         mCameraViewFragment.setDeviceOrientation(mDeviceOrientation);
@@ -176,11 +195,11 @@ public class LiveViewActivity extends BaseActivity
             mPlotViewFragment = PlotViewFragment.newInstance(1);
         }
         mPlotViewController.init(mPlotViewFragment);
-
         mPlotViewPresenter = mPlotViewController.mPlotViewPresenter;
-
-
+        //TODO: check if not the reason for multiply plots
         mPlotViewController.initDisplayInFragment();// must be called when fragment already exists
+
+
         getScreenOrientation();
         mCameraViewFragment.setDeviceOrientation(mDeviceOrientation);
         setDeviceOrientationInViewSettings();

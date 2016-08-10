@@ -121,8 +121,15 @@ public class PlotViewFragment extends Fragment
         return rootView;
     }
 
-    public void createPlotSeries() {// or here
+    public void createPlotSeries() {
+        int actCount;
+        if (mDataSeries != null) {
+            actCount = mDataSeries.length;
+        } else {
+            actCount = 0;
+        }
         for (int i = 0; i < mParam1; i++) {
+//        for (int i = actCount; i < mParam1; i++) {
             int colorIndex = i % 3;
 
             mDataSeries[i] = new GraphViewSeries(

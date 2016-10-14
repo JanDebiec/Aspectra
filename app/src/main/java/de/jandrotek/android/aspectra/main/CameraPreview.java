@@ -49,6 +49,7 @@ public class CameraPreview  extends ViewGroup implements SurfaceHolder.Callback,
         mDeviceOrientation = deviceOrientation;
     }
 
+
     private byte[] mFrameData = null;
     private int mImageFormat;
     private boolean mbProcessing = false;

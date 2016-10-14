@@ -30,6 +30,7 @@ public class AspectraGlobals {
     public static final int DEVICE_ORIENTATION_UNKNOWN = 0;
     public static final int DEVICE_ORIENTATION_PORTRAIT = 1;
     public static final int DEVICE_ORIENTATION_LANDSCAPE = 2;
+    public static final int mPlotMaxValueY = 1024;
 
 
 }

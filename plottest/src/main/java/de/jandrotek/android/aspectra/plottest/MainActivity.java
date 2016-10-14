@@ -20,7 +20,7 @@ public class MainActivity extends AppCompatActivity
 //=======
 //import de.jandrotek.android.aspectra.libplotspectrav3.PlotViewFragment;
 //
-//public class MainActivity extends AppCompatActivity
+//public class MainActivity_ntu extends AppCompatActivity
 //    implements ButtonHolderFragment.OnButtonClickListener,
 //        PlotViewFragment.OnFragmentInteractionListener
 //>>>>>>> 1cda1a3... back on master, after rescue, can be build and run
@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_main_ntu);
         ArrayList<String> dummyItems = null;
 
         mController = new PlotTestController(this);
@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        getMenuInflater().inflate(R.menu.menu_main_ntu, menu);
         return true;
     }
 

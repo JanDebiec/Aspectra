@@ -2,7 +2,6 @@ package de.jandrotek.android.aspectra.main;
 
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -34,7 +33,7 @@ import de.jandrotek.android.aspectra.libspectrafiles.SpectrumFiles;
  */
 
 public class LiveViewActivity extends BaseActivity
-        implements CameraViewFragment.OnFragmentInteractionListener
+//        implements CameraViewFragment.OnFragmentInteractionListener
 //        PlotViewFragment.OnFragmentInteractionListener
 {
 
@@ -74,7 +73,7 @@ public class LiveViewActivity extends BaseActivity
         } else {
             setContentView(R.layout.activity_live_view_cam_port);
         }
-        mPlotViewController = new PlotViewControllerBuilder().setParam1(AspectraGlobals.ACT_ITEM_VIEW_PLOT).createPlotViewController();
+        mPlotViewController = new PlotViewControllerBuilder().setParam1(AspectraGlobals.ACT_ITEM_VIEW_PLOT).getInstancePlotViewController();
         if (savedInstanceState == null) {
             mCameraViewFragment = CameraViewFragment.newInstance( AspectraGlobals.ACT_ITEM_LIVE_VIEW);
             getSupportFragmentManager().beginTransaction()
@@ -88,6 +87,25 @@ public class LiveViewActivity extends BaseActivity
         }
         mImageProcessing = ImageProcessing.getInstance();
         mCameraViewFragment.setImageProcessing(mImageProcessing);
+
+
+        // from on
+//        if(mPlotViewFragment == null) {
+//            mPlotViewFragment = PlotViewFragment.newInstance(1);
+//        }
+//        mPlotViewController.init(mPlotViewFragment);
+//
+//        mPlotViewPresenter = mPlotViewController.mPlotViewPresenter;
+//
+//
+//        mPlotViewController.initDisplayInFragment();// must be called when fragment already exists
+
+
+
+
+
+
+
 
         // set both orientations in childs
         getScreenOrientation();
@@ -140,11 +158,11 @@ public class LiveViewActivity extends BaseActivity
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public void onFragmentInteraction(Uri uri){
-
-    // do whatever you wish with the uri
-    }
+//    @Override
+//    public void onFragmentInteraction(Uri uri){
+//
+//    // do whatever you wish with the uri
+//    }
 
     @Override
     public void onPause(){
@@ -177,11 +195,11 @@ public class LiveViewActivity extends BaseActivity
             mPlotViewFragment = PlotViewFragment.newInstance(1);
         }
         mPlotViewController.init(mPlotViewFragment);
-
         mPlotViewPresenter = mPlotViewController.mPlotViewPresenter;
-
-
+        //TODO: check if not the reason for multiply plots
         mPlotViewController.initDisplayInFragment();// must be called when fragment already exists
+
+
         getScreenOrientation();
         mCameraViewFragment.setDeviceOrientation(mDeviceOrientation);
         setDeviceOrientationInViewSettings();
@@ -322,8 +340,8 @@ public class LiveViewActivity extends BaseActivity
                                 .show();
 
                     }
-                } else  if (messId == AspectraGlobals.eMessagePreviewSize){
-                    int[] data = (int[])inputMessage.obj;
+                } else if (messId == AspectraGlobals.eMessagePreviewSize) {
+                    int[] data = (int[]) inputMessage.obj;
                     mPreviewWidthX = data[0];
                     mPreviewHeightY = data[1];
                     //TODO: check if needed and proper value

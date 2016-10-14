@@ -34,7 +34,7 @@ public class PlotViewFragment extends Fragment
     // TODO: Rename parameter arguments, choose names that match
     private static final String ARG_PARAM1 = "param1";
 
-    private static int mMaxValueY = 4096;
+//    private static int mMaxValueY = 2048;//4096;
 
     private static final int PLOT_DATA_SIZE = AspectraGlobals.eMaxSpectrumSize;
     private int realPlotDataSize = 0;//PLOT_DATA_SIZE;
@@ -46,7 +46,7 @@ public class PlotViewFragment extends Fragment
     private GraphView mGraphView;
     private int[] mPlotIntValues;
     //ver 3
-    public GraphViewSeries[] mDataSeries;
+    public GraphViewSeries[] mDataSeries = null;
     private GraphViewSeries.GraphViewSeriesStyle[] mGraphStyle;
     private GraphViewData[][] realData = null;
 
@@ -93,8 +93,9 @@ public class PlotViewFragment extends Fragment
         realData = new GraphViewData[mItemlistSize][AspectraGlobals.eMaxSpectrumSize];
 
         //TODO do we need instance here?
-        mDataSeries = new GraphViewSeries[mItemlistSize];
-
+        if (mDataSeries == null) {
+            mDataSeries = new GraphViewSeries[mItemlistSize];
+        }
 //        mFileDataLength = new int[mItemlistSize];
         mDataLengthMax = PLOT_DATA_SIZE;
         mColor = new int[3];
@@ -120,8 +121,15 @@ public class PlotViewFragment extends Fragment
         return rootView;
     }
 
-    public void createPlotSeries() {// or here
+    public void createPlotSeries() {
+        int actCount;
+        if (mDataSeries != null) {
+            actCount = mDataSeries.length;
+        } else {
+            actCount = 0;
+        }
         for (int i = 0; i < mParam1; i++) {
+//        for (int i = actCount; i < mParam1; i++) {
             int colorIndex = i % 3;
 
             mDataSeries[i] = new GraphViewSeries(
@@ -179,7 +187,7 @@ public class PlotViewFragment extends Fragment
     public void updateGraphView(int shownPlotLength) {
         realPlotDataSize = shownPlotLength;
         mGraphView.setViewPort(0, shownPlotLength);
-        mGraphView.setManualYAxisBounds(mMaxValueY, 0);
+        mGraphView.setManualYAxisBounds(AspectraGlobals.mPlotMaxValueY, 0);
     }
 
     public void updateGraphViewPort(int start, int end) {

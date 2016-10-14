@@ -29,6 +29,7 @@ import de.jandrotek.android.aspectra.core.ImageProcessing;
  *
  * Here comes old co=de from MainFragment, to show CameraLiveView
  */
+@SuppressWarnings("deprecation")
 public class CameraViewFragment extends Fragment {
     /// constants
     private static final String TAG = "CameraViewFragment";
@@ -50,7 +51,7 @@ public class CameraViewFragment extends Fragment {
 
 //    private boolean mFlagConfigStarted = false;
 
-    private OnFragmentInteractionListener mListener;
+//    private OnFragmentInteractionListener mListener;
 
     /// Model's members, vars
     private ImageProcessing mImageProcessing;
@@ -67,6 +68,7 @@ public class CameraViewFragment extends Fragment {
     private int mPreviewHeightY;
 
     // camera,  shot dimensions\
+    @SuppressWarnings("deprecation")
     private Camera mCamera;
     private int mNumberOfCameras;
     private int mCurrentCamera;  // Camera ID currently chosen
@@ -99,6 +101,7 @@ public class CameraViewFragment extends Fragment {
         // Required empty public constructor
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -109,11 +112,13 @@ public class CameraViewFragment extends Fragment {
 
 //        mImageProcessing = new ImageProcessing();
         // Find the total number of cameras available
+        //noinspection deprecation,deprecation
         mNumberOfCameras = Camera.getNumberOfCameras();
 
         // Find the ID of the rear-facing ("default") camera
-        Camera.CameraInfo cameraInfo = new Camera.CameraInfo();
+        @SuppressWarnings("deprecation") Camera.CameraInfo cameraInfo = new Camera.CameraInfo();
         for (int i = 0; i < mNumberOfCameras; i++) {
+            //noinspection deprecation,deprecation
             Camera.getCameraInfo(i, cameraInfo);
             if (cameraInfo.facing == Camera.CameraInfo.CAMERA_FACING_BACK) {
                 mCurrentCamera = mDefaultCameraId = i;
@@ -261,18 +266,18 @@ public class CameraViewFragment extends Fragment {
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        try {
-            mListener = (OnFragmentInteractionListener) activity;
-        } catch (ClassCastException e) {
-            throw new ClassCastException(activity.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
+//        try {
+//            mListener = (OnFragmentInteractionListener) activity;
+//        } catch (ClassCastException e) {
+//            throw new ClassCastException(activity.toString()
+//                    + " must implement OnFragmentInteractionListener");
+//        }
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-        mListener = null;
+//        mListener = null;
     }
 
     public void cameraProcessingShouldRun(boolean flag){
@@ -291,10 +296,10 @@ public class CameraViewFragment extends Fragment {
      * "http://developer.android.com/training/basics/fragments/communicating.html"
      * >Communicating with Other Fragments</a> for more information.
      */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
-    }
+//    public interface OnFragmentInteractionListener {
+//        // TODO: Update argument type and name
+//        void onFragmentInteraction(Uri uri);
+//    }
 
     public void updateBorderInConfigView(float startPercentX, float endPercentX, float startPercentY, float deltaLinesY) {
 

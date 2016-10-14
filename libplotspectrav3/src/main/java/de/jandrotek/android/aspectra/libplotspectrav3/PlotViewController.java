@@ -58,7 +58,9 @@ public class PlotViewController
      */
     public void init(PlotViewFragment plotViewFragment) {
         mPlotViewFragment = plotViewFragment;
-        mPlotViewPresenter = new PlotViewPresenter(mItemlistSizeAct, mPlotViewFragment);
+        if (mPlotViewPresenter == null) {
+            mPlotViewPresenter = new PlotViewPresenter(mItemlistSizeAct, mPlotViewFragment);
+        }
         // get series count from fragment mItemlistSizeAct
         // in switch consider each case
         if (mItemlistSizeAct > 0) {// must be new

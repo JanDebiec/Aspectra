@@ -6,6 +6,7 @@ public class PlotViewControllerBuilder {
     private int param1;
     private ArrayList<String> items;
     private int intemsCount = 1; // minimal count if not initialized
+    private PlotViewController mController = null;
 
     public PlotViewControllerBuilder setParam1(int param1) {
         this.param1 = param1;
@@ -22,7 +23,14 @@ public class PlotViewControllerBuilder {
         return this;
     }
 
-    public PlotViewController createPlotViewController() {
-        return new PlotViewController(param1, items, intemsCount);
+    public PlotViewController getInstancePlotViewController() {
+        if (mController == null) {
+            mController = new PlotViewController(param1, items, intemsCount);
+        }
+        return mController;
     }
+
+//    public PlotViewController getPlotViewController() {
+//        return mController;
+//    }
 }

@@ -28,7 +28,7 @@ public class PlotInterface {
 
 
 //    // ver 3
-//    public void showPlot(int[] data, int length){
+//    public void updateSinglePlot(int[] data, int length){
 //        if(mDataSeries != null) {
 //            realPlotDataSize = length;
 //            GraphView.GraphViewData[] graphdata = generateData(data, length);// here explode

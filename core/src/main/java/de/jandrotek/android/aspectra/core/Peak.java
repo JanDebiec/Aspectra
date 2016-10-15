@@ -1,4 +1,4 @@
-package com.jandrotek.android.aspectra.lib;
+package de.jandrotek.android.aspectra.core;
 
 /**
  * Created by jan on 09.12.14.

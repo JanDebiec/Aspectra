@@ -1,13 +1,11 @@
 package de.jandrotek.android.aspectra.core;
 
+import org.apache.commons.lang3.ArrayUtils;
+
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 /**
  * class for reading Chroco-Spectra files.
@@ -20,8 +18,9 @@ import java.util.Date;
  *
  * 27.07.2015   class changed from abstract to normal class,
  *              can be used directly, f.i.as CHR spectrum
- *              Asp spectrumwill be ectended from Base
+ *              Asp spectrum will be extended from Base
  *
+ * TODO: where is saving? should be here
  */
 public class SpectrumBase {
     protected String mFileName;
@@ -39,14 +38,9 @@ public class SpectrumBase {
 
     protected static final int SPK_CHR_FILE_DEFAULT_SIZE = 800;
 
-//    public abstract int getDataSize();
-
-//	public void setDataSize(int dataSize)
-
     public int getDataSize() {
         return mEndIndex;//mValues.length;
     }
-
 
     public void setFileName(String fileName){
         mFileName = fileName;
@@ -56,9 +50,18 @@ public class SpectrumBase {
 		return mFileName;
 	}
 
+    /**
+     * @return only pure data, without zeros at the beginning, or end
+     */
     public int[] getValues(){
 
         return mValues;
+    }
+
+    public int[] getWholeSpectrum() {
+        int[] newData;
+        newData = ArrayFunctions.moveArrayRight(mValues, mStartIndex);
+        return newData;
     }
 
     public void setValues(int[] data){
@@ -67,10 +70,7 @@ public class SpectrumBase {
         this.mStartIndex = 0;
     }
 
-//    public abstract int readValuesFromFile() ;
-
     private int mSize = SPK_CHR_FILE_DEFAULT_SIZE;
-
 
     public SpectrumBase(String fileName){
         mFileName = fileName;
@@ -90,7 +90,8 @@ public class SpectrumBase {
         int i = 0;
         int k = 0;
         int value;
-        mValues = new int[AspectraGlobals.eMaxSpectrumSize];
+        int[] values = new int[AspectraGlobals.eMaxSpectrumSize];
+//        mValues = new int[AspectraGlobals.eMaxSpectrumSize];
         try {
             File file;
             file = new File(mFileName);// TODO:here we need the whole name with path
@@ -115,7 +116,7 @@ public class SpectrumBase {
                     value = 0;
                 }
 
-                mValues[k] = value;
+                values[k] = value;
 
                 i++;
                 k++;
@@ -126,6 +127,7 @@ public class SpectrumBase {
         }
         mStartIndex = 0;
         mEndIndex = k;
+        mValues = ArrayUtils.subarray(values, mStartIndex, mEndIndex);
         return k;
     }
 
@@ -135,17 +137,23 @@ public class SpectrumBase {
     }
 
     public int[] moveData(int offset) {
-        int[] newData;
-        if(offset >= 0) { // move to the right
-            newData = ArrayFunctions.moveArrayRight(mValues, offset);
-        } else { // move to the left
-            newData = ArrayFunctions.moveArrayLeft(mValues, - offset);
-        }
-        mValues = newData;
         mStartIndex += offset;
         mEndIndex += offset;
         return mValues;
     }
+
+//    public int[] moveData_oldVersion(int offset) {
+//        int[] newData;
+//        if(offset >= 0) { // move to the right
+//            newData = ArrayFunctions.moveArrayRight(mValues, offset);
+//        } else { // move to the left
+//            newData = ArrayFunctions.moveArrayLeft(mValues, - offset);
+//        }
+//        mValues = newData;
+//        mStartIndex += offset;
+//        mEndIndex += offset;
+//        return mValues;
+//    }
 
     //TODO: check working and update indexies, add offset
     public int[] stretchData(int offset, float factor) {

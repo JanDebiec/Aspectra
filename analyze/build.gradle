@@ -1,8 +1,10 @@
 apply plugin: 'com.android.application'
 
+apply from: '../config/quality.gradle'
+
 android {
-    compileSdkVersion 22
-    buildToolsVersion '23.0.0 rc3'
+    compileSdkVersion tools.cSV
+    buildToolsVersion tools.bTV
 
     defaultConfig {
         applicationId "de.jandrotek.android.aspectra.analyze"
@@ -17,14 +19,17 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    buildToolsVersion '23.0.2'
 }
 
 dependencies {
-    compile 'com.android.support:appcompat-v7:22.+'
+    compile supportDependencies.appCompat
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile project(':core')
     compile project(':libprefs')
     compile project(':libtouch')
     compile project(':libplotspectrav3')
     compile project(':libspectrafiles')
+
+    testCompile 'junit:junit:4.12'
 }

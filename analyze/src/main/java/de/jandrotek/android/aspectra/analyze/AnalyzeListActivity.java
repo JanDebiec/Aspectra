@@ -126,6 +126,9 @@ public class AnalyzeListActivity extends ActionBarActivity
         return false;
     }
 
+    //TODO:
+    // add check if RefSpectrum defined.
+    // if not, show a toast
     @Override
     public void onItemSelected(Map<String, String> spectraNames) {
 //        if (mTwoPane) {
@@ -135,8 +138,8 @@ public class AnalyzeListActivity extends ActionBarActivity
 //            // adding or replacing the detail fragment using a
 //            // fragment transaction.
 //            Bundle arguments = new Bundle();
-//            arguments.putStringArrayList(PlotViewFragment.ARG_ITEM_IDS, filesNames);
-//            PlotViewFragment fragment = new PlotViewFragment();
+//            arguments.putStringArrayList(PlotViewFragment_notToUse.ARG_ITEM_IDS, filesNames);
+//            PlotViewFragment_notToUse fragment = new PlotViewFragment_notToUse();
 //            fragment.setArguments(arguments);
 //            getFragmentManager().beginTransaction()
 //                    .replace(R.id.item_detail_container, fragment)
@@ -144,6 +147,11 @@ public class AnalyzeListActivity extends ActionBarActivity
 //
 //        } else {
             Bundle arguments = new Bundle();
+        //TODO check the condition, temporary workout
+        if (mSpectrumRef.equals("not defined")) {
+            mSpectrumRef = mSpectrumWork;
+        }
+
             if(spectraNames.containsKey(AnalyzeActivity.ARG_ITEM_EDIT)){
                 mSpectrumWork = spectraNames.get(AnalyzeActivity.ARG_ITEM_EDIT);
                 mAnalyzeSettings.setPrefsSpectrumEdited(mSpectrumWork);
@@ -154,7 +162,8 @@ public class AnalyzeListActivity extends ActionBarActivity
                 mAnalyzeSettings.setPrefsSpectrumReference(mSpectrumRef);
                 mAnalyzeSettings.saveSettings();
             }
-            arguments.putString(AnalyzeActivity.ARG_ITEM_EDIT, mSpectrumWork);
+
+        arguments.putString(AnalyzeActivity.ARG_ITEM_EDIT, mSpectrumWork);
             arguments.putString(AnalyzeActivity.ARG_ITEM_REFERENCE, mSpectrumRef);
             Intent detailIntent = new Intent(this, AnalyzeActivity.class);
             detailIntent.putExtras(arguments);

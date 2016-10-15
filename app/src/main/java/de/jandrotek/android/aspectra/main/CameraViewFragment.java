@@ -8,6 +8,7 @@ import android.os.Bundle;
 //import android.app.Fragment;
 import android.support.v4.app.Fragment;
 //import android.util.Log;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -28,6 +29,7 @@ import de.jandrotek.android.aspectra.core.ImageProcessing;
  *
  * Here comes old co=de from MainFragment, to show CameraLiveView
  */
+@SuppressWarnings("deprecation")
 public class CameraViewFragment extends Fragment {
     /// constants
     private static final String TAG = "CameraViewFragment";
@@ -38,17 +40,26 @@ public class CameraViewFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private static int mParam2;
 
+    public void setDeviceOrientation(int deviceOrientation) {
+        if (mCamPreview != null) {
+            mCamPreview.setDeviceOrientation(deviceOrientation);
+        }
+        CameraViewFragment.mDeviceOrientation = deviceOrientation;
+    }
+
+    private static int mDeviceOrientation;
+
 //    private boolean mFlagConfigStarted = false;
 
-    private OnFragmentInteractionListener mListener;
+//    private OnFragmentInteractionListener mListener;
 
     /// Model's members, vars
     private ImageProcessing mImageProcessing;
     private int mStartPercentHX = 0;
     private int mEndPercentHX = 100;
     private int mStartPercentVY = 44;
-    private int mEndPercentVY = 55;
-    private int mScanAreaWidth;
+    //    private int mEndPercentVY = 55;
+    private int mScanAreaWidth = 2;
 
     /// camera-preview's members
     private CameraPreview mCamPreview; //class
@@ -57,6 +68,7 @@ public class CameraViewFragment extends Fragment {
     private int mPreviewHeightY;
 
     // camera,  shot dimensions\
+    @SuppressWarnings("deprecation")
     private Camera mCamera;
     private int mNumberOfCameras;
     private int mCurrentCamera;  // Camera ID currently chosen
@@ -89,6 +101,7 @@ public class CameraViewFragment extends Fragment {
         // Required empty public constructor
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -97,13 +110,15 @@ public class CameraViewFragment extends Fragment {
             mParam2 = getArguments().getInt(ARG_PARAM2);
         }
 
-        mImageProcessing = new ImageProcessing();
+//        mImageProcessing = new ImageProcessing();
         // Find the total number of cameras available
+        //noinspection deprecation,deprecation
         mNumberOfCameras = Camera.getNumberOfCameras();
 
         // Find the ID of the rear-facing ("default") camera
-        Camera.CameraInfo cameraInfo = new Camera.CameraInfo();
+        @SuppressWarnings("deprecation") Camera.CameraInfo cameraInfo = new Camera.CameraInfo();
         for (int i = 0; i < mNumberOfCameras; i++) {
+            //noinspection deprecation,deprecation
             Camera.getCameraInfo(i, cameraInfo);
             if (cameraInfo.facing == Camera.CameraInfo.CAMERA_FACING_BACK) {
                 mCurrentCamera = mDefaultCameraId = i;
@@ -141,7 +156,7 @@ public class CameraViewFragment extends Fragment {
 
             mPreviewWidthX = AspectraGlobals.mPreviewWidthX;
             mPreviewHeightY = AspectraGlobals.mPreviewHeightY;
-            mConfigLinesView.setPreviewDimensions(mPreviewWidthX, mPreviewHeightY);
+//            mConfigLinesView.setPreviewDimensions(mPreviewWidthX, mPreviewHeightY);
         }
 
         mFramePreview = (FrameLayout) rootView.findViewById(R.id.liveViewFrame);
@@ -192,6 +207,8 @@ public class CameraViewFragment extends Fragment {
 
         });
         cameraProcessingShouldRun(true);
+        mCamPreview.setDeviceOrientation(mDeviceOrientation);
+
 
         return rootView;
     }
@@ -199,16 +216,22 @@ public class CameraViewFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-
+//TODO: add try catch if camera not to disposal, then toast and
 //        mFlagConfigStarted = false;
         // Use mCurrentCamera to select the camera desired to safely restore
         // the fragment after the camera has been changed
         mCamera = Camera.open(mCurrentCamera);
         mCameraCurrentlyLocked = mCurrentCamera;
         mCamPreview.setCamera(mCamera);
+        if (mImageProcessing == null) {
+
+            mImageProcessing = ImageProcessing.getInstance();
+        }
         mCamPreview.setProcessing(mImageProcessing);
-        updateBorderPercents();
+//        updateBorderPercents();
         cameraProcessingShouldRun(true);
+        mCamPreview.setDeviceOrientation(mDeviceOrientation);
+        mConfigLinesView.initializeLines();
 
     }
 
@@ -243,18 +266,18 @@ public class CameraViewFragment extends Fragment {
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        try {
-            mListener = (OnFragmentInteractionListener) activity;
-        } catch (ClassCastException e) {
-            throw new ClassCastException(activity.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
+//        try {
+//            mListener = (OnFragmentInteractionListener) activity;
+//        } catch (ClassCastException e) {
+//            throw new ClassCastException(activity.toString()
+//                    + " must implement OnFragmentInteractionListener");
+//        }
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-        mListener = null;
+//        mListener = null;
     }
 
     public void cameraProcessingShouldRun(boolean flag){
@@ -273,10 +296,10 @@ public class CameraViewFragment extends Fragment {
      * "http://developer.android.com/training/basics/fragments/communicating.html"
      * >Communicating with Other Fragments</a> for more information.
      */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
-    }
+//    public interface OnFragmentInteractionListener {
+//        // TODO: Update argument type and name
+//        void onFragmentInteraction(Uri uri);
+//    }
 
     public void updateBorderInConfigView(float startPercentX, float endPercentX, float startPercentY, float deltaLinesY) {
 
@@ -286,14 +309,33 @@ public class CameraViewFragment extends Fragment {
 
 
     }
+
+    public void updateOrientationInConfigView(boolean _SpectrumOrientationLandscape) {
+
+        if (mConfigLinesView != null) {
+            mConfigLinesView.setSpectrumOrientationLandscape(_SpectrumOrientationLandscape);
+        }
+
+
+    }
+
+    public void setImageProcessing(ImageProcessing imageProcessing) {
+        mImageProcessing = imageProcessing;
+    }
+
     public void updateBorderPercents() {
 
+        //TODO: move to activity
         if (mImageProcessing != null) {
             mImageProcessing.setStartPercentX(mStartPercentHX);
             mImageProcessing.setEndPercentX(mEndPercentHX);
             mImageProcessing.setStartPercentY(mStartPercentVY);
-            mImageProcessing.setEndPercentY(mEndPercentVY);
+//            mImageProcessing.setEndPercentY(mEndPercentVY);
             mImageProcessing.setScanAreaWidth(mScanAreaWidth);
+            if (BuildConfig.DEBUG) {
+                Log.d(TAG, "mStartPercentHX = " + mStartPercentHX + ", mEndPercentHX = " + mEndPercentHX);
+                Log.d(TAG, "mStartPercentVY = " + mStartPercentVY + ", mStartPercentVY = " + mStartPercentVY);
+            }
         }
         if (mConfigLinesView != null) {
             mConfigLinesView.setPercent((float) mStartPercentHX, (float) mEndPercentHX, (float) mStartPercentVY, (float) mScanAreaWidth);
@@ -314,9 +356,9 @@ public class CameraViewFragment extends Fragment {
         mStartPercentVY = startPercentVY;
     }
 
-    public void setEndPercentVY(int endPercentVY) {
-        mEndPercentVY = endPercentVY;
-    }
+//    public void setEndPercentVY(int endPercentVY) {
+//        mEndPercentVY = endPercentVY;
+//    }
 
     public int getPreviewWidthX() {
         return mPreviewWidthX;

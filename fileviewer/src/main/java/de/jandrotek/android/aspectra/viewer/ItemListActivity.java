@@ -12,7 +12,7 @@ import android.view.MenuItem;
 
 import java.util.ArrayList;
 
-import de.jandrotek.android.aspectra.libplotspectrav3.PlotViewFragment;
+import de.jandrotek.android.aspectra.core.AspectraGlobals;
 import de.jandrotek.android.aspectra.libprefs.AspectraGlobalPrefsActivity;
 import de.jandrotek.android.aspectra.libprefs.AspectraLiveViewPrefs;
 import de.jandrotek.android.aspectra.libspectrafiles.SpectrumFiles;
@@ -138,8 +138,8 @@ public class ItemListActivity extends ActionBarActivity
 //            // adding or replacing the detail fragment using a
 //            // fragment transaction.
 //            Bundle arguments = new Bundle();
-//            arguments.putStringArrayList(PlotViewFragment.ARG_ITEM_IDS, filesNames);
-//            PlotViewFragment fragment = new PlotViewFragment();
+//            arguments.putStringArrayList(PlotViewFragment_notToUse.ARG_ITEM_IDS, filesNames);
+//            PlotViewFragment_notToUse fragment = new PlotViewFragment_notToUse();
 //            fragment.setArguments(arguments);
 //            getFragmentManager().beginTransaction()
 //                    .replace(R.id.item_detail_container, fragment)
@@ -147,7 +147,7 @@ public class ItemListActivity extends ActionBarActivity
 //
 //        } else {
             Bundle arguments = new Bundle();
-            arguments.putStringArrayList(PlotViewFragment.ARG_ITEM_IDS, filesNames);
+            arguments.putStringArrayList(AspectraGlobals.ARG_ITEM_IDS, filesNames);
             Intent detailIntent = new Intent(this, ItemDetailActivity.class);
             detailIntent.putExtras(arguments);
             startActivity(detailIntent);
@@ -156,7 +156,7 @@ public class ItemListActivity extends ActionBarActivity
 
     protected void updateFromPreferences() {
         mAspectraSettings.loadSettings();
-        mFileFolder = mAspectraSettings.getPrefsSpectraBasePath();
-        mFileExt = mAspectraSettings.getPrefsSpectraExt();
+        mFileFolder = mAspectraSettings.getPrefsSaveFolderName();
+        mFileExt = mAspectraSettings.getPrefsExtensionName();
     }
 }

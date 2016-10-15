@@ -1,0 +1,52 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion tools.cSV
+    buildToolsVersion tools.bTV
+
+    defaultConfig {
+        applicationId "de.jandrotek.android.aspectra.espressofirsttest"
+        minSdkVersion 19
+        targetSdkVersion 22
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+//    android {
+    packagingOptions {
+        exclude 'LICENSE.txt'
+    }
+//    }
+
+    buildToolsVersion '23.0.2'
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile supportDependencies.appCompat
+    compile supportDependencies.supportAnnotation
+
+    // App's dependencies, including test
+
+    // Testing-only dependencies
+    androidTestCompile('com.android.support.test:runner:0.3') {
+        exclude module: 'support-annotations'
+    }
+    androidTestCompile('com.android.support.test:rules:0.3') {
+        exclude module: 'support-annotations'
+    }
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2') {
+        exclude module: 'support-annotations'
+    }
+//        exclude group: 'javax.inject'
+
+}

@@ -2,7 +2,6 @@ package de.jandrotek.android.aspectra.main;
 
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -16,32 +15,42 @@ import java.io.File;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 
-//import de.jandrotek.android.aspectra.libplotspectra.PlotViewFragment;
-import de.jandrotek.android.aspectra.libplotspectrav3.PlotViewFragment;
 import de.jandrotek.android.aspectra.core.AspectraGlobals;
-//import de.jandrotek.android.aspectra.core.FileUtils;
+import de.jandrotek.android.aspectra.core.ImageProcessing;
 import de.jandrotek.android.aspectra.core.SpectrumAsp;
+import de.jandrotek.android.aspectra.libplotspectrav3.PlotViewController;
+import de.jandrotek.android.aspectra.libplotspectrav3.PlotViewControllerBuilder;
+import de.jandrotek.android.aspectra.libplotspectrav3.PlotViewFragment;
+import de.jandrotek.android.aspectra.libplotspectrav3.PlotViewPresenter;
 import de.jandrotek.android.aspectra.libspectrafiles.SpectrumFiles;
+
+//import de.jandrotek.android.aspectra.libplotspectra.PlotViewFragment_notToUse;
+//import de.jandrotek.android.aspectra.core.FileUtils;
 
 /**
  * here comes the source from MainActivity_libprefs, handling CameraViewFragment,
- * and PlotViewFragment
+ * and PlotViewFragment_notToUse
  */
 
 public class LiveViewActivity extends BaseActivity
-        implements CameraViewFragment.OnFragmentInteractionListener,
-        PlotViewFragment.OnFragmentInteractionListener
+//        implements CameraViewFragment.OnFragmentInteractionListener
+//        PlotViewFragment.OnFragmentInteractionListener
 {
 
     private static CameraViewFragment mCameraViewFragment;
     private static PlotViewFragment mPlotViewFragment;
+    private PlotViewPresenter mPlotViewPresenter;
+//    private ConfigViewSettings mViewSettings = null;
 
     private static int mPreviewWidthX;
     private static int mPreviewHeightY;
+    private PlotViewController mPlotViewController;
 
     public Handler getHandler() {
         return mHandler;
     }
+
+    private ImageProcessing mImageProcessing;
 
     /**
      * Instances of static inner classes do not hold an implicit
@@ -55,18 +64,52 @@ public class LiveViewActivity extends BaseActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ArrayList<String> dummyItems = null;
-        setContentView(R.layout.activity_live_view);
+        //TODO call prefs, to see which orientation should we use,
+        // configure proper elements to work portrait or landscape mode
+        // separate decide, how spectrum should be calculated, in X or in Y from camera view
+
+        if (mSpectrumLanscapeOrientation) {
+            setContentView(R.layout.activity_live_view_cam_land);
+        } else {
+            setContentView(R.layout.activity_live_view_cam_port);
+        }
+        mPlotViewController = new PlotViewControllerBuilder().setParam1(AspectraGlobals.ACT_ITEM_VIEW_PLOT).getInstancePlotViewController();
         if (savedInstanceState == null) {
             mCameraViewFragment = CameraViewFragment.newInstance( AspectraGlobals.ACT_ITEM_LIVE_VIEW);
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.fragmentHolderCameraView, mCameraViewFragment)
                     .commit();
-            mPlotViewFragment = PlotViewFragment.newInstance(AspectraGlobals.ACT_ITEM_LIVE_VIEW, dummyItems);
+            mPlotViewFragment = PlotViewFragment.newInstance(1);
+//            mPlotViewController.init(mPlotViewFragment);
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.fvPlotView, mPlotViewFragment)
                     .commit();
         }
+        mImageProcessing = ImageProcessing.getInstance();
+        mCameraViewFragment.setImageProcessing(mImageProcessing);
 
+
+        // from on
+//        if(mPlotViewFragment == null) {
+//            mPlotViewFragment = PlotViewFragment.newInstance(1);
+//        }
+//        mPlotViewController.init(mPlotViewFragment);
+//
+//        mPlotViewPresenter = mPlotViewController.mPlotViewPresenter;
+//
+//
+//        mPlotViewController.initDisplayInFragment();// must be called when fragment already exists
+
+
+
+
+
+
+
+
+        // set both orientations in childs
+        getScreenOrientation();
+        mCameraViewFragment.setDeviceOrientation(mDeviceOrientation);
         updateFromPreferences();
     }
 
@@ -84,7 +127,9 @@ public class LiveViewActivity extends BaseActivity
 
     private static void updatePreviewSizeInConfigView() {
 
-        mCameraViewFragment.mConfigLinesView.setPreviewDimensions(mPreviewWidthX, mPreviewHeightY);
+        // send to imageProcessing
+//        setPictureSizeWidth(mPreviewWidthX);
+//        mCameraViewFragment.mConfigLinesView.setPreviewDimensions(mPreviewWidthX, mPreviewHeightY);
     }
 
 
@@ -113,11 +158,11 @@ public class LiveViewActivity extends BaseActivity
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public void onFragmentInteraction(Uri uri){
-
-    // do whatever you wish with the uri
-    }
+//    @Override
+//    public void onFragmentInteraction(Uri uri){
+//
+//    // do whatever you wish with the uri
+//    }
 
     @Override
     public void onPause(){
@@ -145,22 +190,85 @@ public class LiveViewActivity extends BaseActivity
     public void onResume(){
         super.onResume();
         updateFromPreferences();
-        mSpectrumFiles.setFileFolder(mFileFolder);
-        mSpectrumFiles.setFileExt(mFileExt);
+
+        if(mPlotViewFragment == null) {
+            mPlotViewFragment = PlotViewFragment.newInstance(1);
+        }
+        mPlotViewController.init(mPlotViewFragment);
+        mPlotViewPresenter = mPlotViewController.mPlotViewPresenter;
+        //TODO: check if not the reason for multiply plots
+        mPlotViewController.initDisplayInFragment();// must be called when fragment already exists
+
+
+        getScreenOrientation();
+        mCameraViewFragment.setDeviceOrientation(mDeviceOrientation);
+        setDeviceOrientationInViewSettings();
+        updateConfViewSettings();
+        configureImageProcessing();
     }
+
 
     //@Override
     protected void updateFromPreferences(){
         super.updateFromPreferences();
-        if(mCameraViewFragment != null){
-            mCameraViewFragment.setStartPercentHX(mAspectraSettings.getPrefsWidthStart());
-            mCameraViewFragment.setEndPercentHX(mAspectraSettings.getPrefsWidthEnd());
-            mCameraViewFragment.setStartPercentVY(mAspectraSettings.getPrefsHeightStart());
-            mCameraViewFragment.setEndPercentVY(mAspectraSettings.getPrefsHeightEnd());
-            mCameraViewFragment.setScanAreaWidth(mAspectraSettings.getPrefsScanAreaWidth());
-            mCameraViewFragment.updateBorderPercents();
+//        if(mCameraViewFragment != null){
+//            mCameraViewFragment.setStartPercentHX(mAspectraSettings.getPrefsWidthStart());
+//            mCameraViewFragment.setEndPercentHX(mAspectraSettings.getPrefsWidthEnd());
+//            mCameraViewFragment.setStartPercentVY(mAspectraSettings.getPrefsHeightStart());
+//            mCameraViewFragment.setEndPercentVY(mAspectraSettings.getPrefsHeightEnd());
+//            mCameraViewFragment.setScanAreaWidth(mAspectraSettings.getPrefsScanAreaWidth());
+//            mCameraViewFragment.updateBorderPercents();
+//            mCameraViewFragment.updateOrientationInConfigView(mSpectrumLanscapeOrientation);
+//        }
+        mSpectrumFiles.setFileFolder(mFileFolder);
+        mSpectrumFiles.setFileExt(mFileExt);
+        if (mImageProcessing == null) {
+            mImageProcessing = ImageProcessing.getInstance();
         }
+        configureImageProcessing();
     }
+
+    private void configureImageProcessing() {
+        mImageProcessing.setStartPercentX(mStartPercentX);
+        mImageProcessing.setEndPercentX(mEndPercentX);
+        mImageProcessing.setStartPercentY(mStartPercentY);
+        mImageProcessing.setScanAreaWidth(mScanAreaWidth);
+        mImageProcessing.setSpectrumOrientationLandscape(mSpectrumLanscapeOrientation);
+        mImageProcessing.setCameraDataMirrored(mCameraDataMirrored);
+    }
+
+//    //TODO: refactor: SpectrumAsp as parameter, work should be done in Spectrum
+//    public class SaveSpectrumTask extends AsyncTask<Void, Void, Void> {
+//        private Exception e = null;
+//        private final SpectrumAsp spectrum;
+//        private final File target;
+//
+//        SaveSpectrumTask(SpectrumAsp spectrum, File target) {
+//            this.spectrum = spectrum;
+//            this.target = target;
+//        }
+//        @Override
+//        protected Void doInBackground(Void... args) {
+//            try {
+////                spectrum.saveFile(target);
+////                SpectrumFiles.saveStringToFile(text, target);
+//            }
+//            catch (Exception e) {
+//                this.e=e;
+//            }
+//            finally {
+//                AspectraGlobals.mSavePlotInFile = false;
+//            }
+//            return(null);
+//        }
+//
+//        @Override
+//        protected void onPostExecute(Void arg0) {
+//            if (e != null) {
+//                boom(e);
+//            }
+//        }
+//    }
 
     public class SaveSpectrumTask extends AsyncTask<Void, Void, Void> {
         private Exception e=null;
@@ -216,8 +324,11 @@ public class LiveViewActivity extends BaseActivity
                 if(messId == AspectraGlobals.eMessageCompleteLine) {
                     int[] data = (int[])inputMessage.obj;
                     int length = data.length;
-                    mPlotViewFragment.showPlot(0, data, length);
+                    mPlotViewPresenter.updateSinglePlot(0, data);//TODO:
+                    mPlotViewPresenter.updateFragmentPort(0, length);
                     if(AspectraGlobals.mSavePlotInFile){
+                        //TODO: run task in controller, the only input: data
+                        // but to make a toast we need fileName
                         File f;
                         AspectraGlobals.mSavePlotInFile = false;
                         String fileName = SpectrumFiles.generateSpectrumAspFileName(mFileExt);
@@ -229,11 +340,12 @@ public class LiveViewActivity extends BaseActivity
                                 .show();
 
                     }
-                } else  if (messId == AspectraGlobals.eMessagePreviewSize){
-                    int[] data = (int[])inputMessage.obj;
+                } else if (messId == AspectraGlobals.eMessagePreviewSize) {
+                    int[] data = (int[]) inputMessage.obj;
                     mPreviewWidthX = data[0];
                     mPreviewHeightY = data[1];
-                    updatePreviewSizeInConfigView();
+                    //TODO: check if needed and proper value
+//                    updatePreviewSizeInConfigView();
                 }
             }
         }

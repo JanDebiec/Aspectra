@@ -5,7 +5,7 @@ import android.app.ListFragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
-import android.util.SparseBooleanArray;
+//import android.util.SparseBooleanArray;
 import android.view.ActionMode;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -146,6 +146,14 @@ public class AnalyzeListFragment extends ListFragment {
         execOnClick(position);
     }
 
+    /**
+     * TODO:
+     * on short click, item wirll be selected to analyze
+     * on long click: options menu:
+     * set as reference, delete, ...
+     *
+     * @param position
+     */
     private void execOnClick(int position) {
         Map<String, String> spectraNames = new HashMap<>();
         ListContent.SpectrumItem spectrum = ListContent.getItem(position);

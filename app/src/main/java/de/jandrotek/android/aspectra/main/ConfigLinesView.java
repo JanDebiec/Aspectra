@@ -15,17 +15,33 @@ import de.jandrotek.android.aspectra.core.ConfigViewSettings;
 
 /**
  * Created by jan on 12.01.15.
+ * changed 30.05.2016
+ * we have dimensions and settings :
+ * X : spectrum length, Y spectrum width
+ * and
+ * width: camera longer side, height: camera shorter side.
+ * For SpectrumLanscapeOrientation:
+ * X == width, Y == height
+ * For SpectrumPortraitOrientation
+ * X == height, Y = width
  */
 public class ConfigLinesView extends View {
     private static final String TAG = "ConfigView";
 
-        private ConfigViewSettings mViewSettings = null;
+    public void setSpectrumOrientationLandscape(boolean spectrumOrientationLandscape) {
+        mSpectrumOrientationLandscape = spectrumOrientationLandscape;
+        initializeLines();
+    }
+
+    private boolean mSpectrumOrientationLandscape = true;
+    private ConfigViewSettings mViewSettings = null;
 
     private float mConfigWidthX;
     private float mConfigHeightY;
 
-    private float[] mWidthPointsX = new float[4];
-    private float[] mHeightPointsY = new float[4];
+
+    private float[] mCrossPointsW = new float[4];
+    private float[] mCrossPointsH = new float[4];
 
     private final Paint mLinePaint0 = new Paint();
     private final Paint mLinePaint1 = new Paint();
@@ -74,22 +90,29 @@ public class ConfigLinesView extends View {
         mConfigWidthX = r - l;
         if(mConfigWidthX > 0){
             if(BuildConfig.DEBUG) {
-
-                Log.e(TAG, "width = " + mConfigWidthX + ", height = " + mConfigHeightY);
+                Log.d(TAG, "width = " + mConfigWidthX + ", height = " + mConfigHeightY);
             }
-            setConfigDimensions(mConfigWidthX, mConfigHeightY);
+            setConfigViewDimensions(mConfigWidthX, mConfigHeightY);
+            mViewSettings.calcCrossPoints();
             initializeLines();
 
         }
     }
 
     public void setPreviewDimensions(int widthX, int heightY){
-        mViewSettings.setPreviewDimensions(widthX, heightY);
+        //TODO hier is bug, these values are original camera values, not modified to view values
+//        mViewSettings.setCameraPreviewDimensions(widthX, heightY);
+
+
+//        mViewSettings.setSpectrumOrientationLandscape(mSpectrumOrientationLandscape);
+        mViewSettings.calcCrossPoints();
+
         initializeLines();
     }
 
-    private void setConfigDimensions(float widthX, float heightY){
-        mViewSettings.setConfigDimensions(widthX, heightY);
+    private void setConfigViewDimensions(float widthX, float heightY) {
+        mViewSettings.setConfigViewDimensions(widthX, heightY);
+//        mViewSettings.setSpectrumOrientationLandscape(mSpectrumOrientationLandscape);
         initializeLines();
     }
 
@@ -144,6 +167,11 @@ public class ConfigLinesView extends View {
 
     @Override
     protected void onDraw(Canvas canvas) {
+        boolean newCrossPoints = mViewSettings.isNewCrossPoints();
+        if (newCrossPoints) {
+            initializeLines();
+            mViewSettings.setNewCrossPoints(false);
+        }
         canvas.drawPath(mPath0, mLinePaint0);
         canvas.drawPath(mPath1, mLinePaint1);
         canvas.drawPath(mPath2, mLinePaint2);
@@ -160,11 +188,14 @@ public class ConfigLinesView extends View {
             initializeLines();
     }
 
-    private void initializeLines(){
+    public void initializeLines() {
         if(mViewSettings.isConfigured()){
-            mViewSettings.calcXYPoints();
-            mWidthPointsX = mViewSettings.getPointsX();
-            mHeightPointsY = mViewSettings.getPointsY();
+            mCrossPointsW = mViewSettings.getPointsW();
+            mCrossPointsH = mViewSettings.getPointsH();
+            if (BuildConfig.DEBUG) {
+                Log.d(TAG, "mCrossPointsW[1] = " + mCrossPointsW[1] + ", mCrossPointsW[2] = " + mCrossPointsW[2]);
+                Log.d(TAG, "mCrossPointsH[1] = " + mCrossPointsH[1] + ", mCrossPointsH[2] = " + mCrossPointsH[2]);
+            }
 
             mPath0.reset();
             mPath1.reset();
@@ -177,34 +208,34 @@ public class ConfigLinesView extends View {
             mPath8.reset();
 
 
-            mPath0.moveTo(mWidthPointsX[0], mHeightPointsY[1]);
-            mPath0.lineTo(mWidthPointsX[1], mHeightPointsY[1]);
+            mPath0.moveTo(mCrossPointsW[0], mCrossPointsH[1]);
+            mPath0.lineTo(mCrossPointsW[1], mCrossPointsH[1]);
 
-            mPath1.moveTo(mWidthPointsX[2], mHeightPointsY[1]);
-            mPath1.lineTo(mWidthPointsX[3], mHeightPointsY[1]);
+            mPath1.moveTo(mCrossPointsW[2], mCrossPointsH[1]);
+            mPath1.lineTo(mCrossPointsW[3], mCrossPointsH[1]);
 
-            mPath2.moveTo(mWidthPointsX[0], mHeightPointsY[2]);
-            mPath2.lineTo(mWidthPointsX[1], mHeightPointsY[2]);
+            mPath2.moveTo(mCrossPointsW[0], mCrossPointsH[2]);
+            mPath2.lineTo(mCrossPointsW[1], mCrossPointsH[2]);
 
-            mPath3.moveTo(mWidthPointsX[2], mHeightPointsY[2]);
-            mPath3.lineTo(mWidthPointsX[3], mHeightPointsY[2]);
+            mPath3.moveTo(mCrossPointsW[2], mCrossPointsH[2]);
+            mPath3.lineTo(mCrossPointsW[3], mCrossPointsH[2]);
 
-            mPath4.moveTo(mWidthPointsX[1], mHeightPointsY[0]);
-            mPath4.lineTo(mWidthPointsX[1], mHeightPointsY[1]);
+            mPath4.moveTo(mCrossPointsW[1], mCrossPointsH[0]);
+            mPath4.lineTo(mCrossPointsW[1], mCrossPointsH[1]);
 
-            mPath5.moveTo(mWidthPointsX[1], mHeightPointsY[2]);
-            mPath5.lineTo(mWidthPointsX[1], mHeightPointsY[3]);
+            mPath5.moveTo(mCrossPointsW[1], mCrossPointsH[2]);
+            mPath5.lineTo(mCrossPointsW[1], mCrossPointsH[3]);
 
-            mPath6.moveTo(mWidthPointsX[2], mHeightPointsY[0]);
-            mPath6.lineTo(mWidthPointsX[2], mHeightPointsY[1]);
+            mPath6.moveTo(mCrossPointsW[2], mCrossPointsH[0]);
+            mPath6.lineTo(mCrossPointsW[2], mCrossPointsH[1]);
 
-            mPath7.moveTo(mWidthPointsX[2], mHeightPointsY[2]);
-            mPath7.lineTo(mWidthPointsX[2], mHeightPointsY[3]);
+            mPath7.moveTo(mCrossPointsW[2], mCrossPointsH[2]);
+            mPath7.lineTo(mCrossPointsW[2], mCrossPointsH[3]);
 
-            mPath8.moveTo(mWidthPointsX[1], mHeightPointsY[1]);
-            mPath8.lineTo(mWidthPointsX[2], mHeightPointsY[1]);
-            mPath8.lineTo(mWidthPointsX[2], mHeightPointsY[2]);
-            mPath8.lineTo(mWidthPointsX[1], mHeightPointsY[2]);
+            mPath8.moveTo(mCrossPointsW[1], mCrossPointsH[1]);
+            mPath8.lineTo(mCrossPointsW[2], mCrossPointsH[1]);
+            mPath8.lineTo(mCrossPointsW[2], mCrossPointsH[2]);
+            mPath8.lineTo(mCrossPointsW[1], mCrossPointsH[2]);
             mPath8.close();
 
             invalidate();

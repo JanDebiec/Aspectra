@@ -10,6 +10,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import de.jandrotek.android.aspectra.core.AspectraGlobals;
+import de.jandrotek.android.aspectra.core.ConfigViewSettings;
 import de.jandrotek.android.aspectra.libprefs.AspectraLiveViewPrefs;
 import de.jandrotek.android.aspectra.libprefs.AspectraGlobalPrefsActivity;
 import de.jandrotek.android.aspectra.libspectrafiles.SpectrumFiles;
@@ -22,26 +24,47 @@ public class BaseActivity extends AppCompatActivity //ActionBarActivity
 //    protected static final int ACT_ITEM_VIEW_PLOT   = 2;
 //    protected static final int ACT_ITEM_ANALYZE     = 3;
 
-    protected AspectraLiveViewPrefs mAspectraSettings;
+    protected AspectraLiveViewPrefs mAspectraSettings = null;
     protected String mFileFolder;
     protected String mFileExt;
-    protected SpectrumFiles mSpectrumFiles;
+    protected SpectrumFiles mSpectrumFiles = null;
+    protected boolean mSpectrumLanscapeOrientation = false;
+    protected int mDeviceOrientation;
+
+    protected int mStartPercentX;
+    protected int mEndPercentX;
+    protected int mStartPercentY;
+    protected int mScanAreaWidth;
 
     protected boolean mCameraPresent = false;
+    protected ConfigViewSettings mViewSettings = null;
+    protected boolean mCameraDataMirrored;
 
-   @Override
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
        super.onCreate(savedInstanceState);
-       mAspectraSettings = new AspectraLiveViewPrefs();
-       mSpectrumFiles = new SpectrumFiles();
+       if (mAspectraSettings == null) {
+           mAspectraSettings = new AspectraLiveViewPrefs();
+       }
+       if (mSpectrumFiles == null) {
+           mSpectrumFiles = new SpectrumFiles();
+       }
        Context context = getApplicationContext();
        SharedPreferences prefs = PreferenceManager
                .getDefaultSharedPreferences(context);
        mAspectraSettings.connectPrefs(context, prefs);
 
        updateFromPreferences();
+       setDeviceOrientationInViewSettings();
 
    }
+
+    protected void setDeviceOrientationInViewSettings() {
+        if (mViewSettings == null) {
+            mViewSettings = ConfigViewSettings.getInstance();
+        }
+        mViewSettings.setDeviceOrientation(mDeviceOrientation);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -56,6 +79,7 @@ public class BaseActivity extends AppCompatActivity //ActionBarActivity
 
         if (id == R.id.action_settings) {
             Intent intent = new Intent(this, AspectraGlobalPrefsActivity.class);
+            mViewSettings.clearSpectrumOrientFlag();
             startActivity(intent);
             return true;
         }
@@ -76,6 +100,7 @@ public class BaseActivity extends AppCompatActivity //ActionBarActivity
     @Override
     public void onPause(){
         super.onPause();
+        mViewSettings.clearConfigStatus();
     }
 
     @Override
@@ -90,10 +115,43 @@ public class BaseActivity extends AppCompatActivity //ActionBarActivity
     protected void updateFromPreferences() {
         mAspectraSettings.loadSettings();
         // used by all activities
-        mFileFolder = mAspectraSettings.getPrefsSpectraBasePath();
-        mFileExt = mAspectraSettings.getPrefsSpectraExt();
-        // the rest is updated local
+        mFileFolder = mAspectraSettings.getPrefsSaveFolderName();
+        mFileExt = mAspectraSettings.getPrefsExtensionName();
+        mStartPercentX = mAspectraSettings.getPrefsWidthStart();
+        mEndPercentX = mAspectraSettings.getPrefsWidthEnd();
+        mStartPercentY = mAspectraSettings.getPrefsHeightStart();
+        mScanAreaWidth = mAspectraSettings.getPrefsScanAreaWidth();
+        mSpectrumLanscapeOrientation = mAspectraSettings.isPrefsLandscapeCameraOrientation();
+        mCameraDataMirrored = mAspectraSettings.isPrefsCameraDataMirror();
     }
 
+    protected void updateConfViewSettings() {
+        if (mViewSettings == null) {
+            mViewSettings = ConfigViewSettings.getInstance();
+        }
+        mViewSettings.setSpectrumOrientationLandscape(mSpectrumLanscapeOrientation);
+        mViewSettings.setConfigStartPercentX(mStartPercentX);
+        mViewSettings.setConfigEndPercentX(mEndPercentX);
+        mViewSettings.setConfigStartPercentY(mStartPercentY);
+        mViewSettings.setAmountLinesY(mScanAreaWidth);
+        if (mViewSettings.isConfigured())
+            mViewSettings.calcCrossPoints();
+    }
+
+    public void getScreenOrientation() {
+// Query what the orientation currently really is.
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+            mDeviceOrientation = AspectraGlobals.DEVICE_ORIENTATION_PORTRAIT; // Portrait Mode
+
+        } else if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            mDeviceOrientation = AspectraGlobals.DEVICE_ORIENTATION_LANDSCAPE;   // Landscape mode
+        } else {
+            mDeviceOrientation = AspectraGlobals.DEVICE_ORIENTATION_UNKNOWN;
+        }
+        if (mViewSettings == null) {
+            mViewSettings = ConfigViewSettings.getInstance();
+        }
+        mViewSettings.setDeviceOrientation(mDeviceOrientation);
+    }
 }
 

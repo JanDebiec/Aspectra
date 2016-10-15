@@ -2,12 +2,9 @@ package de.jandrotek.android.aspectra.viewer;
 
 import android.annotation.TargetApi;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-//import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
-
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -15,15 +12,20 @@ import android.view.MenuItem;
 import java.util.ArrayList;
 
 import de.jandrotek.android.aspectra.core.AspectraGlobals;
+import de.jandrotek.android.aspectra.libplotspectrav3.PlotViewController;
+import de.jandrotek.android.aspectra.libplotspectrav3.PlotViewControllerBuilder;
 import de.jandrotek.android.aspectra.libplotspectrav3.PlotViewFragment;
 import de.jandrotek.android.aspectra.libprefs.AspectraGlobalPrefsActivity;
 
+//import de.jandrotek.android.aspectra.libplotspectrav3.PlotViewFragment_notToUse;
+
 public class ItemDetailActivity extends AppCompatActivity
-        implements PlotViewFragment.OnFragmentInteractionListener
+//        implements PlotViewFragment_notToUse.OnFragmentInteractionListener
+//        implements PlotViewFragment.OnFragmentInteractionListener
 {
     private static final String TAG = "DetailItemsAct";
     private static PlotViewFragment mPlotViewFragment;
-    public int mPlotsCount = 1;// default = 1, can be changed in ListFragment
+    private static PlotViewController mPlotViewController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,21 +39,25 @@ public class ItemDetailActivity extends AppCompatActivity
         if (savedInstanceState == null) {
             Bundle arguments = new Bundle();
 
-            ArrayList<String> names = getIntent().getExtras().getStringArrayList(PlotViewFragment.ARG_ITEM_IDS);
-            mPlotViewFragment = PlotViewFragment.newInstance(AspectraGlobals.ACT_ITEM_VIEW_PLOT, names);
+            ArrayList<String> names = getIntent().getExtras().getStringArrayList(AspectraGlobals.ARG_ITEM_IDS);
+            mPlotViewController = new PlotViewControllerBuilder().setParam1(AspectraGlobals.ACT_ITEM_VIEW_PLOT).setItems(names).getInstancePlotViewController();
+            mPlotViewFragment = PlotViewFragment.newInstance(names != null ? names.size() : 0);
+            mPlotViewController.init(mPlotViewFragment);
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.item_detail_container, mPlotViewFragment)
                     .commit();
+
+            //TODO: display content
         }
         // Show the Up button in the action bar.
 //        getActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
-    @Override
-    public void onFragmentInteraction(Uri uri){
-
-        // do whatever you wish with the uri
-    }
+//    @Override
+//    public void onFragmentInteraction(Uri uri){
+//
+//        // do whatever you wish with the uri
+//    }
 
     @Override
     public void onStart() {
@@ -61,6 +67,7 @@ public class ItemDetailActivity extends AppCompatActivity
     @Override
     public void onResume() {
         super.onResume();
+        mPlotViewController.initDisplayInFragment();// must be called when fragment already exists
     }
 
     @Override

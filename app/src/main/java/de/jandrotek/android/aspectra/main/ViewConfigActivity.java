@@ -1,6 +1,5 @@
 package de.jandrotek.android.aspectra.main;
 
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -13,7 +12,8 @@ import de.jandrotek.android.aspectra.core.ConfigViewSettings;
 
 
 public class ViewConfigActivity extends BaseActivity
-        implements CameraViewFragment.OnFragmentInteractionListener {
+//        implements CameraViewFragment.OnFragmentInteractionListener
+{
 
     private CameraViewFragment mCameraViewFragment;
     private SeekBar mSbStartW;
@@ -35,15 +35,15 @@ public class ViewConfigActivity extends BaseActivity
     private RelativeLayout mBlockStartH;
     private RelativeLayout mBlockAreaY;
 
-    private int mPersentStartW;
-    private int mPersentEndW;
-    private int mPersentStartH;
-    private int mPersentEndH;
-    private int mDeltaLinesY;
+    //    private int mPercentStartW;
+//    private int mPercentEndW;
+//    private int mPercentStartH;
+//    private int mPercentEndH;
+//    private int mDeltaLinesY;
     private boolean mPrefsChanged = false;
     private boolean mSeekBarCreated = false;
 
-    private ConfigViewSettings mViewSettings = null;
+//    private ConfigViewSettings mViewSettings = null;
 
     //public Handler getHandler() {
     //    return mHandler;
@@ -54,9 +54,12 @@ public class ViewConfigActivity extends BaseActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_view_config);
-
-        mViewSettings = ConfigViewSettings.getInstance();
+        updateFromPreferences();
+        if (mSpectrumLanscapeOrientation) {
+            setContentView(R.layout.activity_view_config_cam_land);
+        } else {
+            setContentView(R.layout.activity_view_config_cam_port);
+        }
 
         // blocks
         mBlockStartW    = (RelativeLayout) findViewById(R.id.sbcWidthStart);
@@ -91,11 +94,11 @@ public class ViewConfigActivity extends BaseActivity
         mSbStartW.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                if (progress < mPersentEndW) {
-                    mPersentStartW = progress;
+                if (progress < mEndPercentX) {
+                    mStartPercentX = progress;
                     mPrefsChanged = true;
-                    mSbStartWValue.setText(Integer.toString(mPersentStartW));
-                    updateConfigView();
+                    mSbStartWValue.setText(Integer.toString(mStartPercentX));
+                    updateLinesInConfigView();
                 }
             }
 
@@ -113,11 +116,11 @@ public class ViewConfigActivity extends BaseActivity
         mSbEndW.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                if (progress > mPersentStartW) {
-                    mPersentEndW = progress;
+                if (progress > mStartPercentX) {
+                    mEndPercentX = progress;
                     mPrefsChanged = true;
-                    mSbEndWValue.setText(Integer.toString(mPersentEndW));
-                    updateConfigView();
+                    mSbEndWValue.setText(Integer.toString(mEndPercentX));
+                    updateLinesInConfigView();
                 }
             }
 
@@ -134,10 +137,10 @@ public class ViewConfigActivity extends BaseActivity
         mSbStartH.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                    mPersentStartH = progress;
+                mStartPercentY = progress;
                     mPrefsChanged = true;
-                    mSbStartHValue.setText(Integer.toString(mPersentStartH));
-                    updateConfigView();
+                mSbStartHValue.setText(Integer.toString(mStartPercentY));
+                updateLinesInConfigView();
             }
 
             @Override
@@ -155,9 +158,9 @@ public class ViewConfigActivity extends BaseActivity
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 mPrefsChanged = true;
-                mDeltaLinesY = calcCountLinesY(progress);
-                mSbAreaYValue.setText(Integer.toString(mDeltaLinesY));
-                updateConfigView();
+                mScanAreaWidth = calcCountLinesY(progress);
+                mSbAreaYValue.setText(Integer.toString(mScanAreaWidth));
+                updateLinesInConfigView();
             }
 
             @Override
@@ -181,7 +184,10 @@ public class ViewConfigActivity extends BaseActivity
                             // .add(R.id.container, new PlaceholderFragment())
                     .commit();
         }
-        updateFromPreferences();
+        getScreenOrientation();
+        mCameraViewFragment.setDeviceOrientation(mDeviceOrientation);
+        setDeviceOrientationInViewSettings();
+        updateConfViewSettings();
 
     }
 
@@ -189,10 +195,19 @@ public class ViewConfigActivity extends BaseActivity
     public void onResume(){
         super.onResume();
         updateFromPreferences();
+        mViewSettings = ConfigViewSettings.getInstance();
+        mViewSettings.setSpectrumOrientationLandscape(mSpectrumLanscapeOrientation);
+        getScreenOrientation();
+        mCameraViewFragment.setDeviceOrientation(mDeviceOrientation);
+        mViewSettings.setDeviceOrientation(mDeviceOrientation);
+        updateLinesInConfigView();
+        setDeviceOrientationInViewSettings();
+        updateConfViewSettings();
+
     }
 
     private int calcCountLinesY(int progress) {
-        int temp = 1;
+        int temp;
         if(progress < 2){
             temp = 1;
         } else if (progress < 4){
@@ -244,7 +259,7 @@ public class ViewConfigActivity extends BaseActivity
         super.onPause();
 
         //get params from ConfigView
-        acceptNewPersentSettings();
+        acceptNewPercentSettings();
 
         if ((mPrefsChanged) && (mAspectraSettings != null)) {
             mAspectraSettings.saveSettings();
@@ -262,20 +277,20 @@ public class ViewConfigActivity extends BaseActivity
         }
     }
 
-    @Override
-    public void onFragmentInteraction(Uri uri) {
+//    @Override
+//    public void onFragmentInteraction(Uri uri) {
+//
+//        // do whatever you wish with the uri
+//    }
 
-        // do whatever you wish with the uri
-    }
-
-    public void acceptNewPersentSettings() {
+    public void acceptNewPercentSettings() {
 
         if (mPrefsChanged) {
-            mAspectraSettings.setPrefsWidthStart(mPersentStartW);
-            mAspectraSettings.setPrefsWidthEnd(mPersentEndW);
-            mAspectraSettings.setPrefsHeightStart(mPersentStartH);
-            mAspectraSettings.setPrefsHeightEnd(mPersentEndH);
-            mAspectraSettings.setPrefsScanAreaWidth(mDeltaLinesY);
+            mAspectraSettings.setPrefsWidthStart(mStartPercentX);
+            mAspectraSettings.setPrefsWidthEnd(mEndPercentX);
+            mAspectraSettings.setPrefsHeightStart(mStartPercentY);
+//            mAspectraSettings.setPrefsHeightEnd(mEndPercentY);
+            mAspectraSettings.setPrefsScanAreaWidth(mScanAreaWidth);
 
             mAspectraSettings.saveSettings();
         }
@@ -284,47 +299,47 @@ public class ViewConfigActivity extends BaseActivity
 
     protected void updateFromPreferences() {
         super.updateFromPreferences();
-        mPersentStartW = mAspectraSettings.getPrefsWidthStart();
-        mPersentEndW = mAspectraSettings.getPrefsWidthEnd();
-        mPersentStartH = mAspectraSettings.getPrefsHeightStart();
-        mPersentEndH = mAspectraSettings.getPrefsHeightEnd();
-        mDeltaLinesY = mAspectraSettings.getPrefsScanAreaWidth();
+//        mPercentStartW = mAspectraSettings.getPrefsWidthStart();
+//        mPercentEndW = mAspectraSettings.getPrefsWidthEnd();
+//        mPercentStartH = mAspectraSettings.getPrefsHeightStart();
+//        mPercentEndH = mAspectraSettings.getPrefsHeightEnd();
+//        mDeltaLinesY = mAspectraSettings.getPrefsScanAreaWidth();
         updateSeekBars();
         if (mCameraViewFragment != null) {
-            mCameraViewFragment.setStartPercentHX(mPersentStartW);
-            mCameraViewFragment.setEndPercentHX(mPersentEndW);
-            mCameraViewFragment.setStartPercentVY(mPersentStartH);
-            mCameraViewFragment.setEndPercentVY(mPersentEndH);
-            mCameraViewFragment.setScanAreaWidth(mDeltaLinesY);
+            mCameraViewFragment.setStartPercentHX(mStartPercentX);
+            mCameraViewFragment.setEndPercentHX(mEndPercentX);
+            mCameraViewFragment.setStartPercentVY(mStartPercentY);
+//            mCameraViewFragment.setEndPercentVY(mEndPercentY);
+            mCameraViewFragment.setScanAreaWidth(mScanAreaWidth);
         }
-        if(mViewSettings != null){
-            mViewSettings.setWidthStartPercentX(mPersentStartW);
-            mViewSettings.setWidthEndPercentX(mPersentEndW);
-            mViewSettings.setHeightStartPercentY(mPersentStartH);
-            mViewSettings.setHeightEndPercentY(mPersentEndH);
-            mViewSettings.setAmountLinesY(mDeltaLinesY);
-        }
+//        if(mViewSettings != null){
+//            mViewSettings.setConfigStartPercentX(mStartPercentX);
+//            mViewSettings.setConfigEndPercentX(mPercentEndW);
+//            mViewSettings.setConfigStartPercentY(mPercentStartH);
+//            mViewSettings.setConfigEndPercentY(mPercentEndH);
+//            mViewSettings.setAmountLinesY(mDeltaLinesY);
+//        }
 
     }
 
-    protected void updateConfigView() {
+    protected void updateLinesInConfigView() {
         if (mCameraViewFragment != null) {
-//            mCameraViewFragment.updateBorderInConfigView(mPersentStartW, mPersentEndW, mPersentStartH, mPersentEndH);
-            mCameraViewFragment.updateBorderInConfigView(mPersentStartW, mPersentEndW, mPersentStartH, mDeltaLinesY);
+            //noinspection SuspiciousNameCombination
+            mCameraViewFragment.updateBorderInConfigView(mStartPercentX, mEndPercentX, mStartPercentY, mScanAreaWidth);
         }
     }
 
     private void updateSeekBars() {
     // start values for bars
         if(mSeekBarCreated) {
-            mSbStartW.setProgress(mPersentStartW);
-            mSbEndW.setProgress(mPersentEndW);
-            mSbStartH.setProgress(mPersentStartH);
-            mSbAreaY.setProgress(mDeltaLinesY);
-            mSbStartWValue.setText(Integer.toString(mPersentStartW));
-            mSbEndWValue.setText(Integer.toString(mPersentEndW));
-            mSbStartHValue.setText(Integer.toString(mPersentStartH));
-            mSbAreaYValue.setText(Integer.toString(mDeltaLinesY));
+            mSbStartW.setProgress(mStartPercentX);
+            mSbEndW.setProgress(mEndPercentX);
+            mSbStartH.setProgress(mStartPercentY);
+            mSbAreaY.setProgress(mScanAreaWidth);
+            mSbStartWValue.setText(Integer.toString(mStartPercentX));
+            mSbEndWValue.setText(Integer.toString(mEndPercentX));
+            mSbStartHValue.setText(Integer.toString(mStartPercentY));
+            mSbAreaYValue.setText(Integer.toString(mScanAreaWidth));
         }
     }
 }

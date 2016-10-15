@@ -1,19 +1,27 @@
 package de.jandrotek.android.aspectra.core.test;
 
-import junit.framework.TestCase;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 
 import de.jandrotek.android.aspectra.core.ArrayFunctions;
+
+import static org.junit.Assert.assertEquals;
 
 /**
  * Created by jan on 30.03.15.
  */
-public class ArrayModifyTest extends TestCase {
+
+//@RunWith(AndroidJUnit4.class)
+public class ArrayModifyTest {
+//public class ArrayModifyTest extends TestCase {
 
     private final int nInputDataSizeMinusOne = 256;
     int[] inputData;
 
-    protected void setUp() throws Exception {
-        super.setUp();
+    @Before
+    public void setUp() throws Exception {
+//        super.setUp();
 
         inputData = new int[nInputDataSizeMinusOne + 1];
         for(int i = 0; i < nInputDataSizeMinusOne /2; i++){
@@ -23,13 +31,15 @@ public class ArrayModifyTest extends TestCase {
         inputData[nInputDataSizeMinusOne/2] = nInputDataSizeMinusOne/2;
     }
 
-    protected void tearDown() throws Exception {
+    @After
+    public void tearDown() throws Exception {
         // do termination here, run on every test method
 
-        super.tearDown();
+//        super.tearDown();
     }
 
-    private int findMaxInArray(int[] array){
+
+    protected int findMaxInArray(int[] array) {
         int pos = 0;
         int max = 0;
         int val;
@@ -43,16 +53,19 @@ public class ArrayModifyTest extends TestCase {
         return pos;
     }
 
+    @Test
     public void testInputData(){
         int size = inputData.length;
         assertEquals(size, nInputDataSizeMinusOne + 1);
     }
 
+    @Test
     public void testFindMaxInInput(){
         int maxPos = findMaxInArray(inputData);
         assertEquals(nInputDataSizeMinusOne/2, maxPos);
     }
 
+    @Test
     public void testMoveRight64(){
         int[] newData = ArrayFunctions.moveArrayRight(inputData, 64);
         int maxPos = findMaxInArray(newData);
@@ -61,6 +74,7 @@ public class ArrayModifyTest extends TestCase {
         assertEquals(nInputDataSizeMinusOne/2 + 64, maxPos);
     }
 
+    @Test
     public void testMoveLeft64(){
         int[] newData = ArrayFunctions.moveArrayRight(inputData, 64);
         int[] newData2 = ArrayFunctions.moveArrayLeft(newData, 64);
@@ -70,6 +84,7 @@ public class ArrayModifyTest extends TestCase {
         assertEquals(nInputDataSizeMinusOne/2, maxPos);
     }
 
+    @Test
     public void testMoveRight3(){
         int[] newData = ArrayFunctions.moveArrayRight(inputData, 3);
         int maxPos = findMaxInArray(newData);
@@ -78,6 +93,7 @@ public class ArrayModifyTest extends TestCase {
         assertEquals(nInputDataSizeMinusOne/2 + 3, maxPos);
     }
 
+    @Test
     public void testMoveLeft3(){
         int[] newData = ArrayFunctions.moveArrayRight(inputData, 3);
         int[] newData2 = ArrayFunctions.moveArrayLeft(newData, 3);
@@ -87,6 +103,7 @@ public class ArrayModifyTest extends TestCase {
         assertEquals(nInputDataSizeMinusOne/2, maxPos);
     }
 
+    @Test
     public  void testStretch2(){
         int[] newData = ArrayFunctions.stretchArray(inputData, 2.0f);
         int maxPos = findMaxInArray(newData);
@@ -96,6 +113,7 @@ public class ArrayModifyTest extends TestCase {
 
     }
 
+    @Test
     public  void testSqueez2(){
         int[] newData = ArrayFunctions.stretchArray(inputData, 0.5f);
         int maxPos = findMaxInArray(newData);

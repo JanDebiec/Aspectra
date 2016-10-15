@@ -55,6 +55,7 @@ public class ListViewerModeListener implements
     @Override
     public void onItemCheckedStateChanged(ActionMode mode, int position,
                                           long id, boolean checked) {
+        //TODO use checked to changed the state of view
         updateSubtitle(mode);
     }
 

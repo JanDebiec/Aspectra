@@ -4,6 +4,9 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 /**
+ * Aspectra live view prefs.
+ * Global prefs are handled in AspGlobalPrefsActivity
+ *
  * Created by jan on 01.01.15. similar concept to ArobotSettings.
  * with one KEY and DEFAULT defined in R.string
  * This class is responsible for loading the last used settings for
@@ -22,30 +25,48 @@ public class AspectraLiveViewPrefs {
     private static String mPREFS_KEY_HEIGHT_START;
     private static String mPREFS_KEY_HEIGHT_END;
     private static String mPREFS_KEY_SCAN_AREA_WIDTH;
-    private static String mPREFS_KEY_SPECTRA_BASEPATH;
     private static String mPREFS_KEY_SPECTRA_LENGTH;
-    private static String mPREFS_KEY_SPECTRA_EXTENSION;
-
-    //DEFAULTs
-//    private String mDefaultWidthStart;
-//    private String mDefaultWidthEnd;
-//    private String mDefaultHeightStart;
-//    private String mDefaultHeightEnd;
-//    private String mDefaultScanAreaWidth;
-//    private String mDefaultSpectraLength;
-    private String mDefaultSpectraBasePath;
-    private String mDefaultSpectraExtension;
+    private static String mPREFS_KEY_LANSCAPE_ORIENTATION;
+    private static String mPREFS_KEY_FOLDER_NAME;
+    private static String mPREFS_KEY_EXTENSION_NAME;
+    private static String mPREFS_KEY_CAMERA_MIRROR;
 
     //values
     private int mPrefsWidthStart;
     private int mPrefsWidthEnd;
     private int mPrefsHeightStart;
     private int mPrefsHeightEnd;
+    private boolean mPrefsLandscapeCameraOrientation;
+
+    public boolean isPrefsCameraDataMirror() {
+        return mPrefsCameraDataMirror;
+    }
+
+    private boolean mPrefsCameraDataMirror;
+//    private String mPrefsLandscapeCameraOrientationString;
+
+    public String getPrefsExtensionName() {
+        return mPrefsExtensionName;
+    }
+
+    public String getPrefsSaveFolderName() {
+        return mPrefsSaveFolderName;
+    }
+
+    private String mPrefsExtensionName;
+    private String mPrefsSaveFolderName;
 
     private int mPrefsSpectraLength;
-    private String mPrefsSpectraBasePath;
-    private String mPrefsSpectraExt;
     private int mPrefsScanAreaWidth;
+
+    public boolean isPrefsLandscapeCameraOrientation() {
+        return mPrefsLandscapeCameraOrientation;
+    }
+
+    public void setPrefsLandscapeCameraOrientation(boolean prefsLandscapeCameraOrientation) {
+        mPrefsLandscapeCameraOrientation = prefsLandscapeCameraOrientation;
+    }
+
 
     public int getPrefsWidthStart() {
         return mPrefsWidthStart;
@@ -94,23 +115,6 @@ public class AspectraLiveViewPrefs {
         this.mPrefsSpectraLength = mPrefsSpectraLength;
     }
 
-    public String getPrefsSpectraBasePath() {
-        return mPrefsSpectraBasePath;
-    }
-
-//    public void setPrefsSpectraBasePath(String mPrefsSpectraBasePath) {
-//        this.mPrefsSpectraBasePath = mPrefsSpectraBasePath;
-//    }
-
-    public String getPrefsSpectraExt() {
-        return mPrefsSpectraExt;
-    }
-
-//    public void setPrefsSpectraExt(String mPrefsSpectraExt) {
-//        this.mPrefsSpectraExt = mPrefsSpectraExt;
-//    }
-
-
     public void connectPrefs(Context context, SharedPreferences prefs){
         mContext = context;
         mPrefs = prefs;
@@ -125,6 +129,9 @@ public class AspectraLiveViewPrefs {
         String mDefaultHeightEnd;
         String mDefaultScanAreaWidth;
         String mDefaultSpectraLength;
+        String mDefaultFolderName;
+        String mDefaultExtensionName;
+//        Boolean mDefaultLandscapeOrientation = false;
 
         mDefaultWidthStart = mContext.getResources().getString(R.string.DEFAULT_WIDTH_START);
         mPREFS_KEY_WIDTH_START =  mContext.getResources().getString(R.string.PREFS_KEY_WIDTH_START);
@@ -150,15 +157,20 @@ public class AspectraLiveViewPrefs {
         mPREFS_KEY_SPECTRA_LENGTH =  mContext.getResources().getString(R.string.PREFS_KEY_SPECTRA_LENGTH);
         this.mPrefsSpectraLength = Integer.parseInt(mPrefs.getString(mPREFS_KEY_SPECTRA_LENGTH, mDefaultSpectraLength));
 
-        mDefaultSpectraBasePath = mContext.getResources().getString(R.string.DEFAULT_KEY_SPECTRA_BASEPATH);
-        mPREFS_KEY_SPECTRA_BASEPATH =  mContext.getResources().getString(R.string.PREFS_KEY_SPECTRA_BASEPATH);
-        this.mPrefsSpectraBasePath = mPrefs.getString(mPREFS_KEY_SPECTRA_BASEPATH, mDefaultSpectraBasePath);
+//        mStrDefaultLandscapeOrientation = mContext.getResources().getString(R.string.DEFAULT_KEY_LANDSCAPE_ORIENTATION);
+        mPREFS_KEY_LANSCAPE_ORIENTATION = mContext.getResources().getString(R.string.PREFS_KEY_LANDSCAPE_ORIENTATION);
+        this.mPrefsLandscapeCameraOrientation = mPrefs.getBoolean(mPREFS_KEY_LANSCAPE_ORIENTATION, false);
 
+        mPREFS_KEY_CAMERA_MIRROR = mContext.getResources().getString(R.string.PREFS_KEY_CAMERA_MIRROR);
+        this.mPrefsCameraDataMirror = mPrefs.getBoolean(mPREFS_KEY_CAMERA_MIRROR, false);
 
-        mDefaultSpectraExtension = mContext.getResources().getString(R.string.DEFAULT_KEY_SPECTRA_EXTENSION);
-        mPREFS_KEY_SPECTRA_EXTENSION =  mContext.getResources().getString(R.string.PREFS_KEY_SPECTRA_EXTENSION);
-        this.mPrefsSpectraExt = mPrefs.getString(mPREFS_KEY_SPECTRA_EXTENSION, mDefaultSpectraExtension);
+        mDefaultFolderName = mContext.getResources().getString(R.string.DEFAULT_FOLDER_NAME);
+        mPREFS_KEY_FOLDER_NAME = mContext.getResources().getString(R.string.PREFS_KEY_FOLDER_NAME);
+        this.mPrefsSaveFolderName = mPrefs.getString(mPREFS_KEY_FOLDER_NAME, mDefaultFolderName);
 
+        mDefaultExtensionName = mContext.getResources().getString(R.string.DEFAULT_EXTENSION_NAME);
+        mPREFS_KEY_EXTENSION_NAME = mContext.getResources().getString(R.string.PREFS_KEY_EXTENSION_NAME);
+        this.mPrefsSaveFolderName = mPrefs.getString(mPREFS_KEY_EXTENSION_NAME, mDefaultExtensionName);
     }
 
     public void saveSettings(){
@@ -188,13 +200,6 @@ public class AspectraLiveViewPrefs {
         editor.putString(mPREFS_KEY_SPECTRA_LENGTH, Integer.toString(mPrefsSpectraLength));
         editor.apply();
 
-//        mPREFS_KEY_SPECTRA_BASEPATH =  mContext.getResources().getString(R.string.PREFS_KEY_SPECTRA_BASEPATH);
-//        editor.putString(mPREFS_KEY_SPECTRA_BASEPATH, (mDefaultSpectraBasePath));
-//        editor.apply();
-//
-//        mPREFS_KEY_SPECTRA_EXTENSION =  mContext.getResources().getString(R.string.PREFS_KEY_SPECTRA_EXTENSION);
-//        editor.putString(mPREFS_KEY_SPECTRA_EXTENSION, (mDefaultSpectraExtension));
-//        editor.apply();
     }
 }
 

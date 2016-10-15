@@ -1,8 +1,8 @@
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 22
-    buildToolsVersion '23.0.0 rc3'
+    compileSdkVersion tools.cSV
+    buildToolsVersion tools.bTV
 
     defaultConfig {
         minSdkVersion 15
@@ -16,13 +16,14 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    buildToolsVersion '23.0.2'
 }
 
 dependencies {
-    //    compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile files('libs/GraphView-3.1.2.jar')
+//    compile files('libs/GraphView-3.1.2.jar')
+//    compile project(':GraphView')
     compile project(':libprefs')
     compile project(':libspectrafiles')
     compile project(':core')
-    compile 'com.android.support:appcompat-v7:22.2.0'
+    compile supportDependencies.appCompat
 }

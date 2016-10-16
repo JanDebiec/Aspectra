@@ -176,7 +176,7 @@ public class PlotViewFragment extends Fragment
         return true;
     }
 
-    public void updateGraphView(int shownPlotLength) {
+    public void updateGraphViewLength(int shownPlotLength) {
         realPlotDataSize = shownPlotLength;
         mGraphView.setViewPort(0, shownPlotLength);
         mGraphView.setManualYAxisBounds(AspectraGlobals.mPlotMaxValueY, 0);

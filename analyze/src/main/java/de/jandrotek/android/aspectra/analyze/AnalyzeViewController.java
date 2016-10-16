@@ -88,7 +88,7 @@ public class AnalyzeViewController {
         if (mPlotViewFragment != null) {
             mPlotViewPresenter.updateSinglePlot(eSpectrumReference, mSpectrumToEditValues[eSpectrumReference]);
             mPlotViewPresenter.updateSinglePlot(eSpectrumToEdit, mSpectrumToEditValues[eSpectrumToEdit]);
-            mPlotViewFragment.updateGraphView(spectrumLengthMax);
+            mPlotViewFragment.updateGraphViewLength(spectrumLengthMax);
         }
     }
 
@@ -118,7 +118,7 @@ public class AnalyzeViewController {
         mSpectrumToEditValues[eSpectrumToEdit] = mSpectrumToShow[eSpectrumToEdit].getWholeSpectrum();
         mSpectrumToEditValues[eSpectrumReference] = mSpectrumToShow[eSpectrumReference].getWholeSpectrum();
         updateSpectraView(mSpectrumLengthMax);
-        mPlotViewFragment.updateGraphView(mSpectrumLengthMax);
+        mPlotViewFragment.updateGraphViewLength(mSpectrumLengthMax);
     }
 
     /**

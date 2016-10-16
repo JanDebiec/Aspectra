@@ -30,7 +30,4 @@ public class PlotViewControllerBuilder {
         return mController;
     }
 
-//    public PlotViewController getPlotViewController() {
-//        return mController;
-//    }
 }

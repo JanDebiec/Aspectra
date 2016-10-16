@@ -40,7 +40,6 @@ public class LiveViewActivity extends BaseActivity
     private static CameraViewFragment mCameraViewFragment;
     private static PlotViewFragment mPlotViewFragment;
     private PlotViewPresenter mPlotViewPresenter;
-//    private ConfigViewSettings mViewSettings = null;
 
     private static int mPreviewWidthX;
     private static int mPreviewHeightY;
@@ -80,32 +79,12 @@ public class LiveViewActivity extends BaseActivity
                     .add(R.id.fragmentHolderCameraView, mCameraViewFragment)
                     .commit();
             mPlotViewFragment = PlotViewFragment.newInstance(1);
-//            mPlotViewController.init(mPlotViewFragment);
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.fvPlotView, mPlotViewFragment)
                     .commit();
         }
         mImageProcessing = ImageProcessing.getInstance();
         mCameraViewFragment.setImageProcessing(mImageProcessing);
-
-
-        // from on
-//        if(mPlotViewFragment == null) {
-//            mPlotViewFragment = PlotViewFragment.newInstance(1);
-//        }
-//        mPlotViewController.init(mPlotViewFragment);
-//
-//        mPlotViewPresenter = mPlotViewController.mPlotViewPresenter;
-//
-//
-//        mPlotViewController.initDisplayInFragment();// must be called when fragment already exists
-
-
-
-
-
-
-
 
         // set both orientations in childs
         getScreenOrientation();

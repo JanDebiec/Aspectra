@@ -11,8 +11,6 @@ import de.jandrotek.android.aspectra.core.AspectraGlobals;
  */
 public class PlotViewPresenter {
 
-    //    private GraphView.GraphViewData[][] realData = null;
-//    private int realPlotDataSize = 0;//PLOT_DATA_SIZE;
     private static final String TAG = "PlotViewPresenter";
     private PlotViewFragment mFragment;
     private int mSpectraPlotCount = 0;
@@ -25,7 +23,6 @@ public class PlotViewPresenter {
     public PlotViewPresenter(int spectraPlotCount, PlotViewFragment fragment) {
         this.mSpectraPlotCount = spectraPlotCount;
         mFragment = fragment;
-//        realData = new GraphView.GraphViewData[mSpectraPlotCount][AspectraGlobals.eMaxSpectrumSize];
         mFileDataLength = new int[mSpectraPlotCount];
         mFileIntValues = new int[mSpectraPlotCount][AspectraGlobals.eMaxSpectrumSize];
 
@@ -34,16 +31,13 @@ public class PlotViewPresenter {
     public void updateSinglePlot(int index, int[] data) {
         int length = data.length;
         mFileIntValues[index] = data;
-//        if (mDataSeries[index] != null) {
         if (length > realPlotDataSize) {
             realPlotDataSize = length;
         }
         GraphView.GraphViewData[] realData = generateData(index, mFileIntValues[index], length);
         if (mFragment.mInitialized) {
-//            mFragment.createPlotSeries();
             mFragment.mDataSeries[index].resetData(realData);// in live view, here we get null exception
         }
-//        }
     }
 
     public void updateFragmentPort(int start, int end) {
@@ -62,11 +56,6 @@ public class PlotViewPresenter {
             } else {
                 realLength = length;
             }
-//            realLength = length;
-
-//        if(realData[index] == null){
-//            realData[index] = new GraphView.GraphViewData[length];
-//        }
             for (int i = 0; i < realLength; i++) {
 
                 realData[i] = new GraphView.GraphViewData(i, data[i]);
@@ -80,7 +69,6 @@ public class PlotViewPresenter {
 
 
             for (int i = realLength; i < AspectraGlobals.eMaxSpectrumSize; i++) {
-//        for (int i = realLength; i < realPlotDataSize; i++) {
                 realData[i] = new GraphView.GraphViewData(i, 0);
             }
         } catch (Exception exception) {
@@ -94,12 +82,10 @@ public class PlotViewPresenter {
 
     private int findMaxDataLength() {
         int max = 0;
-//        int index = -1;
         int i;
         for (i = 0; i < mSpectraPlotCount; i++) {
             if (mFileDataLength[i] > max) {
                 max = mFileDataLength[i];
-//                index = i;
             }
         }
 

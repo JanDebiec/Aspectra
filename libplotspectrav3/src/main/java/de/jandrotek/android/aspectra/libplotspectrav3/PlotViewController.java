@@ -36,7 +36,6 @@ public class PlotViewController
             if (items != null) {
                 mItems = items;
                 mItemlistSizeAct = mItems.size();
-//                mItemlistSizeNew = mItems.size();
             } else {
                 mItemlistSizeAct = intemsCount;
             }

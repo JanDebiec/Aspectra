@@ -34,8 +34,6 @@ public class PlotViewFragment extends Fragment
     // TODO: Rename parameter arguments, choose names that match
     private static final String ARG_PARAM1 = "param1";
 
-//    private static int mMaxValueY = 2048;//4096;
-
     private static final int PLOT_DATA_SIZE = AspectraGlobals.eMaxSpectrumSize;
     private int realPlotDataSize = 0;//PLOT_DATA_SIZE;
     private int mDataLengthMax = 0;
@@ -50,9 +48,7 @@ public class PlotViewFragment extends Fragment
     private GraphViewSeries.GraphViewSeriesStyle[] mGraphStyle;
     private GraphViewData[][] realData = null;
 
-    //    private OnFragmentInteractionListener mListener;
     private ArrayList<String> mItems;
-    //    private int[][] mFileIntValues;
     private int[] mFileDataLength;
     private int mItemlistSize = 0;
     private int[] mColor;
@@ -88,7 +84,6 @@ public class PlotViewFragment extends Fragment
             mParam1 = 1;
         }
         mItemlistSize = mParam1;
-//        mFileIntValues = new int[mItemlistSize][AspectraGlobals.eMaxSpectrumSize];
 
         realData = new GraphViewData[mItemlistSize][AspectraGlobals.eMaxSpectrumSize];
 
@@ -96,7 +91,6 @@ public class PlotViewFragment extends Fragment
         if (mDataSeries == null) {
             mDataSeries = new GraphViewSeries[mItemlistSize];
         }
-//        mFileDataLength = new int[mItemlistSize];
         mDataLengthMax = PLOT_DATA_SIZE;
         mColor = new int[3];
         mColor[0] = Color.rgb(255, 0, 0);
@@ -129,7 +123,6 @@ public class PlotViewFragment extends Fragment
             actCount = 0;
         }
         for (int i = 0; i < mParam1; i++) {
-//        for (int i = actCount; i < mParam1; i++) {
             int colorIndex = i % 3;
 
             mDataSeries[i] = new GraphViewSeries(
@@ -140,7 +133,6 @@ public class PlotViewFragment extends Fragment
         }
         realPlotDataSize = 0;
         mInitialized = true;
-//        mGraphView.setViewPort(0, mDataLengthMax);
     }
 
 

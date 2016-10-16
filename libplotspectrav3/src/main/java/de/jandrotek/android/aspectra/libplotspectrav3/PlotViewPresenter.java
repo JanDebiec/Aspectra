@@ -34,7 +34,7 @@ public class PlotViewPresenter {
         if (length > realPlotDataSize) {
             realPlotDataSize = length;
         }
-        GraphView.GraphViewData[] realData = generateData(index, mFileIntValues[index], length);
+        GraphView.GraphViewData[] realData = generateData( mFileIntValues[index], length);
         if (mFragment.mInitialized) {
             mFragment.mDataSeries[index].resetData(realData);// in live view, here we get null exception
         }
@@ -44,9 +44,7 @@ public class PlotViewPresenter {
         mFragment.updateGraphViewPort(start, end);
     }
 
-
-    //TODO: check the index boundaries, move to presenter
-    private GraphView.GraphViewData[] generateData(int index, int[] data, int length) {
+    private GraphView.GraphViewData[] generateData( int[] data, int length) {
         int realLength;
         GraphView.GraphViewData[] realData = new GraphView.GraphViewData[AspectraGlobals.eMaxSpectrumSize];
 
@@ -66,8 +64,6 @@ public class PlotViewPresenter {
             } else {
                 realPlotDataSize = realLength;
             }
-
-
             for (int i = realLength; i < AspectraGlobals.eMaxSpectrumSize; i++) {
                 realData[i] = new GraphView.GraphViewData(i, 0);
             }
@@ -76,7 +72,6 @@ public class PlotViewPresenter {
                 Log.e(TAG, "Exception caused by generateData()", exception);
             }
         }
-
         return realData;
     }
 
@@ -88,25 +83,24 @@ public class PlotViewPresenter {
                 max = mFileDataLength[i];
             }
         }
-
         return max;
     }
 
-    private GraphView.GraphViewData[] generateDemoData() {
-        GraphView.GraphViewData[] demoData;
-        mPlotIntDemoValues = new int[PLOT_DATA_SIZE];
-        for (int i = 0; i < PLOT_DATA_SIZE / 2; i++)
-            mPlotIntDemoValues[i] = i;
-        for (int i = PLOT_DATA_SIZE / 2; i < PLOT_DATA_SIZE; i++)
-            mPlotIntDemoValues[i] = PLOT_DATA_SIZE - i;
-
-        demoData = new GraphView.GraphViewData[PLOT_DATA_SIZE];
-        for (int i = 0; i < PLOT_DATA_SIZE; i++) {
-
-            demoData[i] = new GraphView.GraphViewData(i, mPlotIntDemoValues[i]);
-        }
-        return demoData;
-    }
+//    private GraphView.GraphViewData[] generateDemoData() {
+//        GraphView.GraphViewData[] demoData;
+//        mPlotIntDemoValues = new int[PLOT_DATA_SIZE];
+//        for (int i = 0; i < PLOT_DATA_SIZE / 2; i++)
+//            mPlotIntDemoValues[i] = i;
+//        for (int i = PLOT_DATA_SIZE / 2; i < PLOT_DATA_SIZE; i++)
+//            mPlotIntDemoValues[i] = PLOT_DATA_SIZE - i;
+//
+//        demoData = new GraphView.GraphViewData[PLOT_DATA_SIZE];
+//        for (int i = 0; i < PLOT_DATA_SIZE; i++) {
+//
+//            demoData[i] = new GraphView.GraphViewData(i, mPlotIntDemoValues[i]);
+//        }
+//        return demoData;
+//    }
 
 
 }

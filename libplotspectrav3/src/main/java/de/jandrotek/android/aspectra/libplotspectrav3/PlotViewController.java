@@ -28,7 +28,7 @@ public class PlotViewController
     private int mItemListSizeAct = 0;// actually used
 
     private int mDataLengthMax = 0;
-    private int mIndex = -1;
+    private int mIndexMax = -1;
 
     public PlotViewController(int param1, ArrayList<String> items, int itemsCount) {
         if (param1 == AspectraGlobals.ACT_ITEM_VIEW_PLOT) {
@@ -124,7 +124,7 @@ public class PlotViewController
         for(i = 0; i < mItemListSizeAct; i++){
             if(mPlotDataLength[i] > max){
                 max = mPlotDataLength[i];
-                mIndex = i;
+                mIndexMax = i;
             }
         }
         return max;

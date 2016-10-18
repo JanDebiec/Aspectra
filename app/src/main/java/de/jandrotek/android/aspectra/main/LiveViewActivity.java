@@ -24,9 +24,6 @@ import de.jandrotek.android.aspectra.libplotspectrav3.PlotViewFragment;
 import de.jandrotek.android.aspectra.libplotspectrav3.PlotViewPresenter;
 import de.jandrotek.android.aspectra.libspectrafiles.SpectrumFiles;
 
-//import de.jandrotek.android.aspectra.libplotspectra.PlotViewFragment_notToUse;
-//import de.jandrotek.android.aspectra.core.FileUtils;
-
 /**
  * here comes the source from MainActivity_libprefs, handling CameraViewFragment,
  * and PlotViewFragment_notToUse
@@ -43,13 +40,13 @@ public class LiveViewActivity extends BaseActivity
 
     private static int mPreviewWidthX;
     private static int mPreviewHeightY;
-    private PlotViewController mPlotViewController;
+    private PlotViewController mPlotViewController = null;
 
     public Handler getHandler() {
         return mHandler;
     }
 
-    private ImageProcessing mImageProcessing;
+    private ImageProcessing mImageProcessing = null;
 
     /**
      * Instances of static inner classes do not hold an implicit
@@ -63,16 +60,14 @@ public class LiveViewActivity extends BaseActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ArrayList<String> dummyItems = null;
-        //TODO call prefs, to see which orientation should we use,
-        // configure proper elements to work portrait or landscape mode
-        // separate decide, how spectrum should be calculated, in X or in Y from camera view
 
         if (mSpectrumLanscapeOrientation) {
             setContentView(R.layout.activity_live_view_cam_land);
         } else {
             setContentView(R.layout.activity_live_view_cam_port);
         }
-        mPlotViewController = new PlotViewControllerBuilder().setParam1(AspectraGlobals.ACT_ITEM_VIEW_PLOT).getInstancePlotViewController();
+        // moved to onResume, with check if null
+//        mPlotViewController = new PlotViewControllerBuilder().setParam1(AspectraGlobals.ACT_ITEM_VIEW_PLOT).getInstancePlotViewController();
         if (savedInstanceState == null) {
             mCameraViewFragment = CameraViewFragment.newInstance( AspectraGlobals.ACT_ITEM_LIVE_VIEW);
             getSupportFragmentManager().beginTransaction()
@@ -83,7 +78,9 @@ public class LiveViewActivity extends BaseActivity
                     .add(R.id.fvPlotView, mPlotViewFragment)
                     .commit();
         }
-        mImageProcessing = ImageProcessing.getInstance();
+        if(mImageProcessing == null) {
+            mImageProcessing = ImageProcessing.getInstance();
+        }
         mCameraViewFragment.setImageProcessing(mImageProcessing);
 
         // set both orientations in childs
@@ -92,7 +89,6 @@ public class LiveViewActivity extends BaseActivity
         updateFromPreferences();
     }
 
-    //TODO: set proper handling of configuration: portrait/landscape
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
@@ -102,15 +98,6 @@ public class LiveViewActivity extends BaseActivity
             Toast.makeText(this, "portrait", Toast.LENGTH_SHORT).show();
         }
     }
-
-
-    private static void updatePreviewSizeInConfigView() {
-
-        // send to imageProcessing
-//        setPictureSizeWidth(mPreviewWidthX);
-//        mCameraViewFragment.mConfigLinesView.setPreviewDimensions(mPreviewWidthX, mPreviewHeightY);
-    }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -137,12 +124,6 @@ public class LiveViewActivity extends BaseActivity
         return super.onOptionsItemSelected(item);
     }
 
-//    @Override
-//    public void onFragmentInteraction(Uri uri){
-//
-//    // do whatever you wish with the uri
-//    }
-
     @Override
     public void onPause(){
         super.onPause();
@@ -162,7 +143,6 @@ public class LiveViewActivity extends BaseActivity
         if(mCameraViewFragment != null){
             mCameraViewFragment.onStop();
         }
-
     }
 
     @Override
@@ -173,11 +153,13 @@ public class LiveViewActivity extends BaseActivity
         if(mPlotViewFragment == null) {
             mPlotViewFragment = PlotViewFragment.newInstance(1);
         }
+        if (mPlotViewController == null) {
+            mPlotViewController = new PlotViewControllerBuilder().setParam1(AspectraGlobals.ACT_ITEM_VIEW_PLOT).getInstancePlotViewController();
+        }
         mPlotViewController.init(mPlotViewFragment);
         mPlotViewPresenter = mPlotViewController.mPlotViewPresenter;
         //TODO: check if not the reason for multiply plots
         mPlotViewController.initDisplayInFragment();// must be called when fragment already exists
-
 
         getScreenOrientation();
         mCameraViewFragment.setDeviceOrientation(mDeviceOrientation);

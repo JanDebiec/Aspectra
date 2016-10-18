@@ -35,21 +35,8 @@ public class ViewConfigActivity extends BaseActivity
     private RelativeLayout mBlockStartH;
     private RelativeLayout mBlockAreaY;
 
-    //    private int mPercentStartW;
-//    private int mPercentEndW;
-//    private int mPercentStartH;
-//    private int mPercentEndH;
-//    private int mDeltaLinesY;
     private boolean mPrefsChanged = false;
     private boolean mSeekBarCreated = false;
-
-//    private ConfigViewSettings mViewSettings = null;
-
-    //public Handler getHandler() {
-    //    return mHandler;
-    //}
-
-    //Handler mHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -229,28 +216,16 @@ public class ViewConfigActivity extends BaseActivity
 
     }
 
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_view_config, menu);
-        return true;
-    }
-
+// 18.10.16 i suppose not needed here, we have settngs in BaseActivity-menu
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        // Inflate the menu; this adds items to the action bar if it is present.
+//        getMenuInflater().inflate(R.menu.menu_view_config, menu);
+//        return true;
+//    }
+//
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-//        //noinspection SimplifiableIfStatement
-//        if (id == R.id.action_settings) {
-//            Intent intent = new Intent(this, AspectraGlobalPrefsActivity.class);
-//            startActivity(intent);
-//            return true;
-//        }
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -277,39 +252,25 @@ public class ViewConfigActivity extends BaseActivity
         }
     }
 
-//    @Override
-//    public void onFragmentInteraction(Uri uri) {
-//
-//        // do whatever you wish with the uri
-//    }
-
     public void acceptNewPercentSettings() {
 
         if (mPrefsChanged) {
             mAspectraSettings.setPrefsWidthStart(mStartPercentX);
             mAspectraSettings.setPrefsWidthEnd(mEndPercentX);
             mAspectraSettings.setPrefsHeightStart(mStartPercentY);
-//            mAspectraSettings.setPrefsHeightEnd(mEndPercentY);
             mAspectraSettings.setPrefsScanAreaWidth(mScanAreaWidth);
 
             mAspectraSettings.saveSettings();
         }
     }
 
-
     protected void updateFromPreferences() {
         super.updateFromPreferences();
-//        mPercentStartW = mAspectraSettings.getPrefsWidthStart();
-//        mPercentEndW = mAspectraSettings.getPrefsWidthEnd();
-//        mPercentStartH = mAspectraSettings.getPrefsHeightStart();
-//        mPercentEndH = mAspectraSettings.getPrefsHeightEnd();
-//        mDeltaLinesY = mAspectraSettings.getPrefsScanAreaWidth();
         updateSeekBars();
         if (mCameraViewFragment != null) {
             mCameraViewFragment.setStartPercentHX(mStartPercentX);
             mCameraViewFragment.setEndPercentHX(mEndPercentX);
             mCameraViewFragment.setStartPercentVY(mStartPercentY);
-//            mCameraViewFragment.setEndPercentVY(mEndPercentY);
             mCameraViewFragment.setScanAreaWidth(mScanAreaWidth);
         }
 //        if(mViewSettings != null){

@@ -18,9 +18,6 @@ package de.jandrotek.android.aspectra.core;
  * Camera picture width = longer side of camera picture
  * height = smaller side of camera picture
  */
-//import com.jandrotek.android.aspectra.lib.ExtendedLine;
-//import com.jandrotek.android.aspectra.lib.SpectrumLine;
-
 
 public class ImageProcessing {
     private static ImageProcessing mProcessing = null;
@@ -55,18 +52,8 @@ public class ImageProcessing {
 
     private boolean mCameraDataMirrored = false;
 
-
-//    public boolean isSpectrumOrientationLandscape() {
-//        return mSpectrumOrientationLandscape;
-//    }
-
-//    public void setSpectrumOrientationLandscape(boolean spectrumOrientationLandscape) {
-//        mSpectrumOrientationLandscape = spectrumOrientationLandscape;
-//    }
-
     private boolean mSpectrumOrientationLandscape = true;
 
-  //  private SpectrumLine mSpectrumLine;
     private int mSizeX;
     private int mSizeY;
     private int mShiftToNormalize;

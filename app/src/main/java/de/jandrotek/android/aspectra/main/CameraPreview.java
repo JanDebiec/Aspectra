@@ -32,10 +32,8 @@ public class CameraPreview  extends ViewGroup implements SurfaceHolder.Callback,
         Camera.PreviewCallback {
     private static final String TAG = "CameraPreview";
     private Camera mCamera = null;
-//    private SurfaceView mSurfaceView;
     private SurfaceHolder mCameraHolder;
     private ConfigViewSettings mViewSettings = null;
-    //private static FragmentActivity mActivity = null;
     private Size mCameraPreviewSize;
     private List<Size> mSupportedPreviewSizes;
     private boolean mSurfaceCreated = false;
@@ -104,9 +102,8 @@ public class CameraPreview  extends ViewGroup implements SurfaceHolder.Callback,
                         mLVActHandler.post(doImageProcessing);
                     }
                 }
-            }
+            }// else TODO add info, toast
         }
-
     }
 
     public void setCamera(Camera camera) {
@@ -126,7 +123,6 @@ public class CameraPreview  extends ViewGroup implements SurfaceHolder.Callback,
             if(BuildConfig.DEBUG) {
                 Log.e(TAG, "IOException caused by setPreviewDisplay()", exception);
             }
-
         }
     }
 

@@ -266,18 +266,11 @@ public class CameraViewFragment extends Fragment {
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-//        try {
-//            mListener = (OnFragmentInteractionListener) activity;
-//        } catch (ClassCastException e) {
-//            throw new ClassCastException(activity.toString()
-//                    + " must implement OnFragmentInteractionListener");
-//        }
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-//        mListener = null;
     }
 
     public void cameraProcessingShouldRun(boolean flag){
@@ -306,8 +299,6 @@ public class CameraViewFragment extends Fragment {
         if (mConfigLinesView != null) {
             mConfigLinesView.setPercent(startPercentX, endPercentX, startPercentY, deltaLinesY);
         }
-
-
     }
 
     public void updateOrientationInConfigView(boolean _SpectrumOrientationLandscape) {
@@ -315,32 +306,31 @@ public class CameraViewFragment extends Fragment {
         if (mConfigLinesView != null) {
             mConfigLinesView.setSpectrumOrientationLandscape(_SpectrumOrientationLandscape);
         }
-
-
     }
 
     public void setImageProcessing(ImageProcessing imageProcessing) {
         mImageProcessing = imageProcessing;
     }
 
-    public void updateBorderPercents() {
-
-        //TODO: move to activity
-        if (mImageProcessing != null) {
-            mImageProcessing.setStartPercentX(mStartPercentHX);
-            mImageProcessing.setEndPercentX(mEndPercentHX);
-            mImageProcessing.setStartPercentY(mStartPercentVY);
-//            mImageProcessing.setEndPercentY(mEndPercentVY);
-            mImageProcessing.setScanAreaWidth(mScanAreaWidth);
-            if (BuildConfig.DEBUG) {
-                Log.d(TAG, "mStartPercentHX = " + mStartPercentHX + ", mEndPercentHX = " + mEndPercentHX);
-                Log.d(TAG, "mStartPercentVY = " + mStartPercentVY + ", mStartPercentVY = " + mStartPercentVY);
-            }
-        }
-        if (mConfigLinesView != null) {
-            mConfigLinesView.setPercent((float) mStartPercentHX, (float) mEndPercentHX, (float) mStartPercentVY, (float) mScanAreaWidth);
-        }
-    }
+    // not used ??
+//    public void updateBorderPercents() {
+//
+//        //TODO: move to activity
+//        if (mImageProcessing != null) {
+//            mImageProcessing.setStartPercentX(mStartPercentHX);
+//            mImageProcessing.setEndPercentX(mEndPercentHX);
+//            mImageProcessing.setStartPercentY(mStartPercentVY);
+////            mImageProcessing.setEndPercentY(mEndPercentVY);
+//            mImageProcessing.setScanAreaWidth(mScanAreaWidth);
+//            if (BuildConfig.DEBUG) {
+//                Log.d(TAG, "mStartPercentHX = " + mStartPercentHX + ", mEndPercentHX = " + mEndPercentHX);
+//                Log.d(TAG, "mStartPercentVY = " + mStartPercentVY + ", mStartPercentVY = " + mStartPercentVY);
+//            }
+//        }
+//        if (mConfigLinesView != null) {
+//            mConfigLinesView.setPercent((float) mStartPercentHX, (float) mEndPercentHX, (float) mStartPercentVY, (float) mScanAreaWidth);
+//        }
+//    }
 
 
     // getter setters
@@ -355,10 +345,6 @@ public class CameraViewFragment extends Fragment {
     public void setStartPercentVY(int startPercentVY) {
         mStartPercentVY = startPercentVY;
     }
-
-//    public void setEndPercentVY(int endPercentVY) {
-//        mEndPercentVY = endPercentVY;
-//    }
 
     public int getPreviewWidthX() {
         return mPreviewWidthX;

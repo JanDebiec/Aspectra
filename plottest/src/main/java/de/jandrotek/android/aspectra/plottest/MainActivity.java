@@ -11,26 +11,15 @@ import java.util.ArrayList;
 import de.jandrotek.android.aspectra.libplotspectrav3.PlotViewFragment;
 import de.jandrotek.android.aspectra.libplotspectrav3.PlotViewPresenter;
 
-//<<<<<<< HEAD
-//import de.jandrotek.android.aspectra.libplotspectrav3.PlotViewFragment_notToUse;
-
 public class MainActivity extends AppCompatActivity
     implements ButtonHolderFragment.OnButtonClickListener
-//        PlotViewFragment_notToUse.OnFragmentInteractionListener
-//=======
-//import de.jandrotek.android.aspectra.libplotspectrav3.PlotViewFragment;
-//
-//public class MainActivity_ntu extends AppCompatActivity
-//    implements ButtonHolderFragment.OnButtonClickListener,
-//        PlotViewFragment.OnFragmentInteractionListener
-//>>>>>>> 1cda1a3... back on master, after rescue, can be build and run
 {
 
     public PlotTestController mController = null;
-    private PlotViewPresenter mPlotViewPresenter;
+    private PlotViewPresenter mPlotViewPresenter = null;
 
-    private static PlotViewFragment mPlotViewFragment;
-    private static ButtonHolderFragment mButtonHolderFragment;
+    private static PlotViewFragment mPlotViewFragment = null;
+    private static ButtonHolderFragment mButtonHolderFragment = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main_ntu);
+        setContentView(R.layout.activity_main);
         ArrayList<String> dummyItems = null;
 
         mController = new PlotTestController(this);

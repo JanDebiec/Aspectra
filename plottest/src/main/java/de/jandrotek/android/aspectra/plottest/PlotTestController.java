@@ -9,7 +9,7 @@ public class PlotTestController {
 
     private final  MainActivity mContext;
     private final static int PLOT_DATA_SIZE = 800;
-    int[] mData;
+    int[] mData;// some spectra
 
     public PlotTestController(MainActivity context){
         mContext = context;
@@ -33,9 +33,10 @@ public class PlotTestController {
         for (int i = PLOT_DATA_SIZE/2; i < PLOT_DATA_SIZE; i++)
             mPlotIntValues[i] = PLOT_DATA_SIZE - i;
         mSpectrum.setValues(mPlotIntValues);
+        mData = mSpectrum.getValues();
     }
 
-    public void onButtonMoveLeft(){
+    public void onButtonMoveLeft(int i){
         if(mMoveAbs >= eMoveDistance) {
             mMoveAbs -= eMoveDistance;
             mSpectrum.moveData(-eMoveDistance);

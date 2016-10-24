@@ -61,6 +61,7 @@ public class PlotViewController
         }
         // get series count from fragment mItemListSizeAct
         // in switch consider each case
+        mPlotIntValues = new int[mItemListSizeAct][AspectraGlobals.eMaxSpectrumSize];
         int i = 0;
         if (mItems != null) {
             for (String item : mItems) {

@@ -1,5 +1,6 @@
 package de.jandrotek.android.aspectra.plottest;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -10,31 +11,21 @@ import java.util.ArrayList;
 
 import de.jandrotek.android.aspectra.libplotspectrav3.PlotViewFragment;
 import de.jandrotek.android.aspectra.libplotspectrav3.PlotViewPresenter;
-
-//<<<<<<< HEAD
-//import de.jandrotek.android.aspectra.libplotspectrav3.PlotViewFragment_notToUse;
+import de.jandrotek.android.aspectra.libprefs.AspectraGlobalPrefsActivity;
 
 public class MainActivity extends AppCompatActivity
     implements ButtonHolderFragment.OnButtonClickListener
-//        PlotViewFragment_notToUse.OnFragmentInteractionListener
-//=======
-//import de.jandrotek.android.aspectra.libplotspectrav3.PlotViewFragment;
-//
-//public class MainActivity_ntu extends AppCompatActivity
-//    implements ButtonHolderFragment.OnButtonClickListener,
-//        PlotViewFragment.OnFragmentInteractionListener
-//>>>>>>> 1cda1a3... back on master, after rescue, can be build and run
 {
 
     public PlotTestController mController = null;
-    private PlotViewPresenter mPlotViewPresenter;
+    private PlotViewPresenter mPlotViewPresenter = null;
 
-    private static PlotViewFragment mPlotViewFragment;
-    private static ButtonHolderFragment mButtonHolderFragment;
+    private static PlotViewFragment mPlotViewFragment = null;
+    private static ButtonHolderFragment mButtonHolderFragment = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main_ntu);
+        setContentView(R.layout.activity_main);
         ArrayList<String> dummyItems = null;
 
         mController = new PlotTestController(this);
@@ -55,7 +46,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main_ntu, menu);
+        getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 
@@ -68,6 +59,8 @@ public class MainActivity extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            Intent intent = new Intent(this, AspectraGlobalPrefsActivity.class);
+            startActivity(intent);
             return true;
         }
 

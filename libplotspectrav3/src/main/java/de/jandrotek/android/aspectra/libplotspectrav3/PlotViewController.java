@@ -13,8 +13,11 @@ import de.jandrotek.android.aspectra.libspectrafiles.SpectrumFiles;
 
 /**
  * The Controller-Part of PlotViewFragment
- * THe controller will be only used if interface through SpectrumFile
+ * The controller will be only used if interface through SpectrumFile
+ * 24.10.2016. The role of controller will be moved to ModelController,
+ * similar as in PlotTestApp: PlotTestModelController
  */
+//TODO: NOT_TO_USE
 public class PlotViewController
 {
     private PlotViewFragment mPlotViewFragment;
@@ -42,7 +45,9 @@ public class PlotViewController
     }
 
     /**
-     * TODO:
+     * TODO: move part of the control functionality to app fileviewer oder analyze
+     * TODO: move the part of view functionality to presenter
+     *
      * Function must consider more use cases:
      * 0. start: fragment has 0 series
      * 1. restart: fragment has the same amount of series
@@ -119,25 +124,25 @@ public class PlotViewController
 //        }
     }
 
-    private int findMaxDataLength() {
-        int max = 0;
-        int i;
-        for(i = 0; i < mItemListSizeAct; i++){
-            if(mPlotDataLength[i] > max){
-                max = mPlotDataLength[i];
-                mIndexMax = i;
-            }
-        }
-        return max;
-    }
+//    private int findMaxDataLength() {
+//        int max = 0;
+//        int i;
+//        for(i = 0; i < mItemListSizeAct; i++){
+//            if(mPlotDataLength[i] > max){
+//                max = mPlotDataLength[i];
+//                mIndexMax = i;
+//            }
+//        }
+//        return max;
+//    }
 
-    public void initDisplayInFragment() {
-        mPlotViewFragment.createPlotSeries();
-        for (int i = 0; i < mItemListSizeAct; i++) {
-            mPlotViewPresenter.updateSinglePlot(i, mPlotIntValues[i]);
-        }
-        mPlotViewFragment.updateGraphViewLength(mDataLengthMax);
-    }
+//    public void initDisplayInFragment() {
+//        mPlotViewFragment.createPlotSeries();
+//        for (int i = 0; i < mItemListSizeAct; i++) {
+//            mPlotViewPresenter.updateSinglePlot(i, mPlotIntValues[i]);
+//        }
+//        mPlotViewFragment.updateGraphViewLength(mDataLengthMax);
+//    }
 
 }
 

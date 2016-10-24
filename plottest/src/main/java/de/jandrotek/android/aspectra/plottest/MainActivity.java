@@ -17,7 +17,7 @@ public class MainActivity extends AppCompatActivity
     implements ButtonHolderFragment.OnButtonClickListener
 {
 
-    public PlotTestController mController = null;
+    public PlotTestModelController mModelController = null;
     private PlotViewPresenter mPlotViewPresenter = null;
 
     private static PlotViewFragment mPlotViewFragment = null;
@@ -28,7 +28,6 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         ArrayList<String> dummyItems = null;
 
-        mController = new PlotTestController(this);
 
         mButtonHolderFragment = ButtonHolderFragment.newInstance(this);
         getSupportFragmentManager().beginTransaction()
@@ -40,6 +39,7 @@ public class MainActivity extends AppCompatActivity
                 .add(R.id.fvPlotView, mPlotViewFragment)
                 .commit();
         mPlotViewPresenter = new PlotViewPresenter(1, mPlotViewFragment);
+        mModelController = new PlotTestModelController(this);
     }
 
 
@@ -70,19 +70,19 @@ public class MainActivity extends AppCompatActivity
     public void onButtonClickListener(int _buttonId){
         switch (_buttonId) {
             case ButtonHolderFragment.eButtonMoveLeft:{
-                mController.onButtonMoveLeft();
+                mModelController.onButtonMoveLeft();
                 break;
             }
             case ButtonHolderFragment.eButtonMoveRight:{
-                mController.onButtonMoveRight();
+                mModelController.onButtonMoveRight();
                 break;
             }
             case ButtonHolderFragment.eButtonStretch:{
-                mController.onButtonStretch();
+                mModelController.onButtonStretch();
                 break;
             }
             case ButtonHolderFragment.eButtonSqueeze:{
-                mController.onButtonSqeeze();
+                mModelController.onButtonSqeeze();
                 break;
             }
         } // switch

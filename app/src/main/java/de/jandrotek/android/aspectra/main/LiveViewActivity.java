@@ -153,13 +153,18 @@ public class LiveViewActivity extends BaseActivity
         if(mPlotViewFragment == null) {
             mPlotViewFragment = PlotViewFragment.newInstance(1);
         }
-        if (mPlotViewController == null) {
-            mPlotViewController = new PlotViewControllerBuilder().setParam1(AspectraGlobals.ACT_ITEM_VIEW_PLOT).getInstancePlotViewController();
+        if(mPlotViewPresenter == null){
+            mPlotViewPresenter = new PlotViewPresenter(AspectraGlobals.ACT_ITEM_VIEW_PLOT,mPlotViewFragment );
         }
-        mPlotViewController.init(mPlotViewFragment);
-        mPlotViewPresenter = mPlotViewController.mPlotViewPresenter;
-        //TODO: check if not the reason for multiply plots
-        mPlotViewController.initDisplayInFragment();// must be called when fragment already exists
+
+
+//        if (mPlotViewController == null) {
+//            mPlotViewController = new PlotViewControllerBuilder().setParam1(AspectraGlobals.ACT_ITEM_VIEW_PLOT).getInstancePlotViewController();
+//        }
+//        mPlotViewController.init(mPlotViewFragment);
+//        mPlotViewPresenter = mPlotViewController.mPlotViewPresenter;
+//        //TODO: check if not the reason for multiply plots
+//        mPlotViewController.initDisplayInFragment();// must be called when fragment already exists
 
         getScreenOrientation();
         mCameraViewFragment.setDeviceOrientation(mDeviceOrientation);

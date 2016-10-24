@@ -1,6 +1,5 @@
 package de.jandrotek.android.aspectra.plottest;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -33,14 +32,14 @@ public class ButtonHolderFragment extends Fragment {
     public static final int eButtonClear = 6;
     public static final int eButtonAuto = 7;
 
-    PlotTestController mController = null;
+    PlotTestModelController mController = null;
 
     public static ButtonHolderFragment newInstance(MainActivity context) {
         ButtonHolderFragment  fragment = new ButtonHolderFragment();
 
 
         fragment.mCallback = (OnButtonClickListener)context;
-        fragment.mController = context.mController;
+        fragment.mController = context.mModelController;
         return fragment;
     }
 

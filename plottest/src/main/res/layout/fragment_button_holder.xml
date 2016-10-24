@@ -8,14 +8,14 @@
     android:orientation="vertical"
     tools:context="de.jandrotek.android.aspectra.plottest.MainActivity">
 
-    <EditText
+    <TextView
         android:layout_width="147dp"
         android:layout_height="wrap_content"
         android:text="Move"
         android:ems="10"
         android:layout_column="1"
         android:layout_row="0"
-        android:id="@+id/editText" />
+        android:id="@+id/TextView" />
 
     <Button
         android:layout_width="wrap_content"
@@ -36,14 +36,14 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
-    <EditText
+    <TextView
         android:layout_width="149dp"
         android:layout_height="wrap_content"
         android:text="Squeeze"
         android:ems="10"
         android:layout_column="1"
         android:layout_row="2"
-        android:id="@+id/editText" />
+        android:id="@+id/TextView" />
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -61,13 +61,13 @@
         android:layout_column="1"
         android:layout_row="3"
         />
-    <EditText
+    <TextView
         android:layout_width="149dp"
         android:layout_height="wrap_content"
         android:text="Run"
         android:layout_column="1"
         android:layout_row="4"
-        android:id="@+id/editText" />
+        android:id="@+id/TextView" />
     <Button
         android:text="Single"
         android:layout_width="wrap_content"

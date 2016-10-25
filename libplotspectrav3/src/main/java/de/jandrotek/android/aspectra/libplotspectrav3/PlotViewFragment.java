@@ -116,6 +116,7 @@ public class PlotViewFragment extends Fragment
     }
 
     public void createPlotSeries() {
+        //TODO control the funtion from presenter
         int actCount;
         if (mDataSeries != null) {
             actCount = mDataSeries.length;

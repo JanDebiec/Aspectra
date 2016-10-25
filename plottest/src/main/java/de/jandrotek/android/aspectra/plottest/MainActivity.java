@@ -40,6 +40,8 @@ public class MainActivity extends AppCompatActivity
                 .commit();
         mPlotViewPresenter = new PlotViewPresenter(1, mPlotViewFragment);
         mModelController = new PlotTestModelController(this);
+
+        //TODO initialize presenter
     }
 
 

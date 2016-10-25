@@ -4,7 +4,11 @@ import android.util.Log;
 
 import com.jjoe64.graphview.GraphView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import de.jandrotek.android.aspectra.core.AspectraGlobals;
+import de.jandrotek.android.aspectra.core.SpectrumBase;
 
 /**
  * Created by jan on 03.09.15.
@@ -17,7 +21,8 @@ public class PlotViewPresenter {
 //    private int mItemListSizeAct = 0;
     private int mItemListSizeAct = 0;// actually used
     private int mDataLengthMax = 0;
-    private int[] mFileDataLength;
+    private List<Integer> mPlotDataLength;
+    private List<GraphView.GraphViewData[]> mGraphViewData;
     private int[] mPlotIntDemoValues;
     private static final int PLOT_DATA_SIZE = AspectraGlobals.eMaxSpectrumSize;
     private int realPlotDataSize = 0;//PLOT_DATA_SIZE;
@@ -27,16 +32,31 @@ public class PlotViewPresenter {
     public PlotViewPresenter(int callerActivity, PlotViewFragment fragment) {
         mCallerActivity = callerActivity;
         mPlotViewFragment = fragment;
+
 //        mFileDataLength = new int[mSpectraPlotCount];
 //        mFileIntValues = new int[mSpectraPlotCount][AspectraGlobals.eMaxSpectrumSize];
 
     }
 
-//    public void init(PlotViewFragment plotViewFragment) {
-//            mPlotViewFragment = plotViewFragment;
-//    }
+    public void init(int plotCount, int [][] data) {
+        mItemListSizeAct = plotCount;
+        mPlotDataLength = new ArrayList<int>(mItemListSizeAct);
+        mGraphViewData = new ArrayList<GraphView.GraphViewData[]>(mItemListSizeAct);
 
-        public void updateSinglePlot(int index, int[] data) {
+        for (int i = 0; i < mItemListSizeAct; i++) {// must be new
+            mPlotIntValues[i] = new int[AspectraGlobals.eMaxSpectrumSize];
+            mPlotDataLength[i] = AspectraGlobals.eMaxSpectrumSize;
+        }
+    }
+
+    public void addPlot(int [] data){
+        generateData(data);
+        mItemListSizeAct++;
+        mPlotIntValues[mItemListSizeAct-1] = new int[AspectraGlobals.eMaxSpectrumSize];
+        mPlotDataLength.add(AspectraGlobals.eMaxSpectrumSize);
+    }
+
+    public void updateSinglePlot(int index, int[] data) {
         int length = data.length;
         mPlotIntValues[index] = data;
         if (length > realPlotDataSize) {
@@ -96,29 +116,10 @@ public class PlotViewPresenter {
         int max = 0;
         int i;
         for (i = 0; i < mItemListSizeAct; i++) {
-            if (mFileDataLength[i] > max) {
-                max = mFileDataLength[i];
+            if (mPlotDataLength[i] > max) {
+                max = mPlotDataLength[i];
             }
         }
         return max;
     }
-
-    // demoData should be generated in Model
-//    private GraphView.GraphViewData[] generateDemoData() {
-//        GraphView.GraphViewData[] demoData;
-//        mPlotIntDemoValues = new int[PLOT_DATA_SIZE];
-//        for (int i = 0; i < PLOT_DATA_SIZE / 2; i++)
-//            mPlotIntDemoValues[i] = i;
-//        for (int i = PLOT_DATA_SIZE / 2; i < PLOT_DATA_SIZE; i++)
-//            mPlotIntDemoValues[i] = PLOT_DATA_SIZE - i;
-//
-//        demoData = new GraphView.GraphViewData[PLOT_DATA_SIZE];
-//        for (int i = 0; i < PLOT_DATA_SIZE; i++) {
-//
-//            demoData[i] = new GraphView.GraphViewData(i, mPlotIntDemoValues[i]);
-//        }
-//        return demoData;
-//    }
-
-
 }

@@ -42,14 +42,14 @@ public class PlotViewFragment extends Fragment
     private int mParam1;
 
     private GraphView mGraphView;
-    private int[] mPlotIntValues;
+//    private int[] mPlotIntValues;
     //ver 3
     public GraphViewSeries[] mDataSeries = null;
     private GraphViewSeries.GraphViewSeriesStyle[] mGraphStyle;
     private GraphViewData[][] realData = null;
 
     private ArrayList<String> mItems;
-    private int[] mFileDataLength;
+//    private int[] mFileDataLength;
     private int mItemlistSize = 0;
     private int[] mColor;
     public boolean mInitialized = false;

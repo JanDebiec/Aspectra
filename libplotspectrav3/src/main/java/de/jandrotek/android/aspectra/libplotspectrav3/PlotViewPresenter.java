@@ -18,51 +18,47 @@ public class PlotViewPresenter {
 
     private static final String TAG = "PlotViewPresenter";
     private PlotViewFragment mPlotViewFragment;
-//    private int mItemListSizeAct = 0;
     private int mItemListSizeAct = 0;// actually used
     private int mDataLengthMax = 0;
     private List<Integer> mPlotDataLength;
-    private List<GraphView.GraphViewData[]> mGraphViewData;
-    private int[] mPlotIntDemoValues;
     private static final int PLOT_DATA_SIZE = AspectraGlobals.eMaxSpectrumSize;
     private int realPlotDataSize = 0;//PLOT_DATA_SIZE;
-    private int[][] mPlotIntValues;
     private int mCallerActivity = -1;
 
     public PlotViewPresenter(int callerActivity, PlotViewFragment fragment) {
         mCallerActivity = callerActivity;
         mPlotViewFragment = fragment;
 
-//        mFileDataLength = new int[mSpectraPlotCount];
-//        mFileIntValues = new int[mSpectraPlotCount][AspectraGlobals.eMaxSpectrumSize];
-
     }
 
     public void init(int plotCount, int [][] data) {
+        //TODO message to fragment, how many spectra
         mItemListSizeAct = plotCount;
-        mPlotDataLength = new ArrayList<int>(mItemListSizeAct);
-        mGraphViewData = new ArrayList<GraphView.GraphViewData[]>(mItemListSizeAct);
+        mPlotDataLength = new ArrayList<Integer>(mItemListSizeAct);
 
         for (int i = 0; i < mItemListSizeAct; i++) {// must be new
-            mPlotIntValues[i] = new int[AspectraGlobals.eMaxSpectrumSize];
-            mPlotDataLength[i] = AspectraGlobals.eMaxSpectrumSize;
+            addPlot(data[i]);
         }
+        mPlotViewFragment.createPlotSeries();
+        for (int i = 0; i < mItemListSizeAct; i++) {
+            mItemListSizeAct++;
+            updateSinglePlot(i, data[i]);
+        }
+        mPlotViewFragment.updateGraphViewLength(mDataLengthMax);
     }
 
     public void addPlot(int [] data){
-        generateData(data);
+        //TODO increment spectra count in fragment
         mItemListSizeAct++;
-        mPlotIntValues[mItemListSizeAct-1] = new int[AspectraGlobals.eMaxSpectrumSize];
-        mPlotDataLength.add(AspectraGlobals.eMaxSpectrumSize);
+        updateSinglePlot(mItemListSizeAct - 1, data);
     }
 
     public void updateSinglePlot(int index, int[] data) {
         int length = data.length;
-        mPlotIntValues[index] = data;
         if (length > realPlotDataSize) {
             realPlotDataSize = length;
         }
-        GraphView.GraphViewData[] realData = generateData( mPlotIntValues[index], length);
+        GraphView.GraphViewData[] realData = generateData(data, length);
         if (mPlotViewFragment.mInitialized) {
             mPlotViewFragment.mDataSeries[index].resetData(realData);// in live view, here we get null exception
         }
@@ -71,15 +67,6 @@ public class PlotViewPresenter {
     public void updateFragmentPort(int start, int end) {
         mPlotViewFragment.updateGraphViewPort(start, end);
     }
-
-    public void initDisplayInFragment() {
-        mPlotViewFragment.createPlotSeries();
-        for (int i = 0; i < mItemListSizeAct; i++) {
-            updateSinglePlot(i, mPlotIntValues[i]);
-        }
-        mPlotViewFragment.updateGraphViewLength(mDataLengthMax);
-    }
-
 
     private GraphView.GraphViewData[] generateData( int[] data, int length) {
         int realLength;
@@ -116,8 +103,8 @@ public class PlotViewPresenter {
         int max = 0;
         int i;
         for (i = 0; i < mItemListSizeAct; i++) {
-            if (mPlotDataLength[i] > max) {
-                max = mPlotDataLength[i];
+            if (mPlotDataLength.get(i) > max) {
+                max = mPlotDataLength.get(i);
             }
         }
         return max;

@@ -48,7 +48,7 @@ public class PlotViewFragment extends Fragment
     private GraphViewSeries.GraphViewSeriesStyle[] mGraphStyle;
     private GraphViewData[][] realData = null;
 
-    private ArrayList<String> mItems;
+//    private ArrayList<String> mItems;
 //    private int[] mFileDataLength;
     private int mItemlistSize = 0;
     private int[] mColor;

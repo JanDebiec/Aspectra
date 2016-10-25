@@ -42,14 +42,15 @@ public class PlotViewFragment extends Fragment
     private int mParam1;
 
     private GraphView mGraphView;
-//    private int[] mPlotIntValues;
     //ver 3
     public GraphViewSeries[] mDataSeries = null;
+    public GraphViewSeries mSignleSerie = null;
     private GraphViewSeries.GraphViewSeriesStyle[] mGraphStyle;
-    private GraphViewData[][] realData = null;
 
-//    private ArrayList<String> mItems;
-//    private int[] mFileDataLength;
+    public void setItemlistSize(int mItemlistSize) {
+        this.mItemlistSize = mItemlistSize;
+    }
+
     private int mItemlistSize = 0;
     private int[] mColor;
     public boolean mInitialized = false;
@@ -78,19 +79,21 @@ public class PlotViewFragment extends Fragment
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getInt(ARG_PARAM1);
-        } else {
-            mParam1 = 1;
-        }
-        mItemlistSize = mParam1;
 
-        realData = new GraphViewData[mItemlistSize][AspectraGlobals.eMaxSpectrumSize];
+        // presenter handles the creation of plots
+//        if (getArguments() != null) {
+//            mParam1 = getArguments().getInt(ARG_PARAM1);
+//        } else {
+//            mParam1 = 1;
+//        }
+//        mItemlistSize = mParam1;
+
+//        realData = new GraphViewData[mItemlistSize][AspectraGlobals.eMaxSpectrumSize];
 
         //TODO do we need instance here?
-        if (mDataSeries == null) {
-            mDataSeries = new GraphViewSeries[mItemlistSize];
-        }
+//        if (mDataSeries == null) {
+//            mDataSeries = new GraphViewSeries[mItemlistSize];
+//        }
         mDataLengthMax = PLOT_DATA_SIZE;
         mColor = new int[3];
         mColor[0] = Color.rgb(255, 0, 0);
@@ -103,7 +106,6 @@ public class PlotViewFragment extends Fragment
                              Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.fragment_plot_view, container, false);
-// here i can create series too
         mGraphView = new LineGraphView(getActivity(), "");
         mGraphView.getGraphViewStyle().setTextSize(20);
         mGraphView.getGraphViewStyle().setNumHorizontalLabels(5);
@@ -115,26 +117,37 @@ public class PlotViewFragment extends Fragment
         return rootView;
     }
 
-    public void createPlotSeries() {
-        //TODO control the funtion from presenter
-        int actCount;
-        if (mDataSeries != null) {
-            actCount = mDataSeries.length;
-        } else {
-            actCount = 0;
-        }
-        for (int i = 0; i < mParam1; i++) {
-            int colorIndex = i % 3;
 
-            mDataSeries[i] = new GraphViewSeries(
+    public void createPlotSerie(GraphView.GraphViewData[] realData, int index) {
+        int colorIndex = index % 3;
+
+        mSignleSerie = new GraphViewSeries(
                     "",
                     new GraphViewSeries.GraphViewSeriesStyle(mColor[colorIndex], 1),
-                    realData[i]);
-            mGraphView.addSeries(mDataSeries[i]);
-        }
-        realPlotDataSize = 0;
-        mInitialized = true;
+                    realData);
+            mGraphView.addSeries(mSignleSerie);
     }
+
+//    public void createPlotSeries() {
+//        //TODO control the funtion from presenter
+//        int actCount;
+//        if (mDataSeries != null) {
+//            actCount = mDataSeries.length;
+//        } else {
+//            actCount = 0;
+//        }
+//        for (int i = 0; i < mParam1; i++) {
+//            int colorIndex = i % 3;
+//
+//            mDataSeries[i] = new GraphViewSeries(
+//                    "",
+//                    new GraphViewSeries.GraphViewSeriesStyle(mColor[colorIndex], 1),
+//                    realData[i]);
+//            mGraphView.addSeries(mDataSeries[i]);
+//        }
+//        realPlotDataSize = 0;
+//        mInitialized = true;
+//    }
 
 
     @Override

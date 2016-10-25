@@ -33,16 +33,17 @@ public class PlotViewPresenter {
 
     public void init(int plotCount, int [][] data) {
         //TODO message to fragment, how many spectra
+        mPlotViewFragment.setItemlistSize(plotCount);
         mItemListSizeAct = plotCount;
         mPlotDataLength = new ArrayList<Integer>(mItemListSizeAct);
 
         for (int i = 0; i < mItemListSizeAct; i++) {// must be new
             addPlot(data[i]);
         }
-        mPlotViewFragment.createPlotSeries();
+//        mPlotViewFragment.createPlotSeries();
         for (int i = 0; i < mItemListSizeAct; i++) {
             mItemListSizeAct++;
-            updateSinglePlot(i, data[i]);
+            createSinglePlot(i, data[i]);
         }
         mPlotViewFragment.updateGraphViewLength(mDataLengthMax);
     }
@@ -50,7 +51,7 @@ public class PlotViewPresenter {
     public void addPlot(int [] data){
         //TODO increment spectra count in fragment
         mItemListSizeAct++;
-        updateSinglePlot(mItemListSizeAct - 1, data);
+        createSinglePlot(mItemListSizeAct - 1, data);
     }
 
     public void updateSinglePlot(int index, int[] data) {
@@ -62,6 +63,15 @@ public class PlotViewPresenter {
         if (mPlotViewFragment.mInitialized) {
             mPlotViewFragment.mDataSeries[index].resetData(realData);// in live view, here we get null exception
         }
+    }
+
+    public void createSinglePlot(int index, int[] data) {
+        int length = data.length;
+        if (length > realPlotDataSize) {
+            realPlotDataSize = length;
+        }
+        GraphView.GraphViewData[] realData = generateData(data, length);
+        mPlotViewFragment.createPlotSerie(realData, index);
     }
 
     public void updateFragmentPort(int start, int end) {

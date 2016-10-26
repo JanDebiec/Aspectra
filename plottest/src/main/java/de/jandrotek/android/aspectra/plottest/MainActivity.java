@@ -42,8 +42,12 @@ public class MainActivity extends AppCompatActivity
         mModelController = new PlotTestModelController(this);
 
         //TODO initialize presenter
+        mModelController.initInterfaceToPresenter();
     }
 
+    public void initPlotPresenter( int[] data){
+        mPlotViewPresenter.initSinglePlot(data);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

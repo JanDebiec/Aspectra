@@ -121,11 +121,11 @@ public class PlotViewFragment extends Fragment
     public void createPlotSerie(GraphView.GraphViewData[] realData, int index) {
         int colorIndex = index % 3;
 
-        mSignleSerie = new GraphViewSeries(
+        GraphViewSeries signleSerie = new GraphViewSeries(
                     "",
                     new GraphViewSeries.GraphViewSeriesStyle(mColor[colorIndex], 1),
                     realData);
-            mGraphView.addSeries(mSignleSerie);
+            mGraphView.addSeries(signleSerie);
     }
 
 //    public void createPlotSeries() {

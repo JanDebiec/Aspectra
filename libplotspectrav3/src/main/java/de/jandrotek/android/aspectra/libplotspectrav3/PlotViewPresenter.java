@@ -48,6 +48,17 @@ public class PlotViewPresenter {
         mPlotViewFragment.updateGraphViewLength(mDataLengthMax);
     }
 
+    public void initSinglePlot( int [] data) {
+        //TODO message to fragment, how many spectra
+        mPlotViewFragment.setItemlistSize(1);
+        mItemListSizeAct = 1;
+        mPlotDataLength = new ArrayList<Integer>(mItemListSizeAct);
+
+        addPlot(data);
+        createSinglePlot(1, data);
+        mPlotViewFragment.updateGraphViewLength(mDataLengthMax);
+    }
+
     public void addPlot(int [] data){
         //TODO increment spectra count in fragment
         mItemListSizeAct++;

@@ -45,8 +45,8 @@ public class MainActivity extends AppCompatActivity
         mModelController.initInterfaceToPresenter();
     }
 
-    public void initPlotPresenter( int[] data){
-        mPlotViewPresenter.initSinglePlot(data);
+    public void initPlotPresenter( int[][] data){
+        mPlotViewPresenter.init(1, data);
     }
 
     @Override

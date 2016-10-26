@@ -22,6 +22,8 @@ public class AspectraGlobals {
     public static final int ACT_ITEM_VIEW_CONFIG = 1;
     public static final int ACT_ITEM_VIEW_PLOT   = 2;
     public static final int ACT_ITEM_ANALYZE     = 3;
+    public static final int eMaxPlotCount = 5;
+
 
     public static final int eMaxSpectrumSize = 1024;
 

@@ -20,7 +20,7 @@ public class PlotViewPresenter {
     private PlotViewFragment mPlotViewFragment;
     private int mItemListSizeAct = 0;// actually used
     private int mDataLengthMax = 0;
-    private List<Integer> mPlotDataLength;
+    private int[] mPlotDataLength;
     private static final int PLOT_DATA_SIZE = AspectraGlobals.eMaxSpectrumSize;
     private int realPlotDataSize = 0;//PLOT_DATA_SIZE;
     private int mCallerActivity = -1;
@@ -32,15 +32,19 @@ public class PlotViewPresenter {
     }
 
     public void init(int plotCount, int [][] data) {
-        //TODO message to fragment, how many spectra
-        mPlotViewFragment.setItemlistSize(plotCount);
-        mItemListSizeAct = plotCount;
-        mPlotDataLength = new ArrayList<Integer>(mItemListSizeAct);
+        if(plotCount <= AspectraGlobals.eMaxPlotCount) {
+            //TODO message to fragment, how many spectra
+            mPlotViewFragment.setItemlistSize(plotCount);
+            mItemListSizeAct = plotCount;
+        } else {
+            mPlotViewFragment.setItemlistSize(AspectraGlobals.eMaxPlotCount);
+            mItemListSizeAct = AspectraGlobals.eMaxPlotCount;
+        }
+        mPlotDataLength = new int[AspectraGlobals.eMaxPlotCount];
 
         for (int i = 0; i < mItemListSizeAct; i++) {// must be new
             addPlot(data[i]);
         }
-//        mPlotViewFragment.createPlotSeries();
         for (int i = 0; i < mItemListSizeAct; i++) {
             mItemListSizeAct++;
             createSinglePlot(i, data[i]);
@@ -48,16 +52,16 @@ public class PlotViewPresenter {
         mPlotViewFragment.updateGraphViewLength(mDataLengthMax);
     }
 
-    public void initSinglePlot( int [] data) {
-        //TODO message to fragment, how many spectra
-        mPlotViewFragment.setItemlistSize(1);
-        mItemListSizeAct = 1;
-        mPlotDataLength = new ArrayList<Integer>(mItemListSizeAct);
-
-        addPlot(data);
-        createSinglePlot(1, data);
-        mPlotViewFragment.updateGraphViewLength(mDataLengthMax);
-    }
+//    public void initSinglePlot( int [] data) {
+//        //TODO message to fragment, how many spectra
+//        mPlotViewFragment.setItemlistSize(1);
+//        mItemListSizeAct = 1;
+//        mPlotDataLength = new int(mItemListSizeAct);
+//
+//        addPlot(data);
+//        createSinglePlot(1, data);
+//        mPlotViewFragment.updateGraphViewLength(mDataLengthMax);
+//    }
 
     public void addPlot(int [] data){
         //TODO increment spectra count in fragment
@@ -124,8 +128,8 @@ public class PlotViewPresenter {
         int max = 0;
         int i;
         for (i = 0; i < mItemListSizeAct; i++) {
-            if (mPlotDataLength.get(i) > max) {
-                max = mPlotDataLength.get(i);
+            if (mPlotDataLength[i] > max) {
+                max = mPlotDataLength[i];
             }
         }
         return max;

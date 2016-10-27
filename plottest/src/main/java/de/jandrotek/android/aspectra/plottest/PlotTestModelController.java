@@ -53,11 +53,6 @@ public class PlotTestModelController {
         mSpectraCount++;
     }
 
-    public void initInterfaceToPresenter(){
-        mData[0] = mSpectrum.getValues();
-        mPlotViewPresenter.init(1,mData);
-    }
-
     public void onButtonMoveLeft(){
         if(mMoveAbs >= eMoveDistance) {
             mMoveAbs -= eMoveDistance;

@@ -96,9 +96,7 @@ public class MainActivity extends AppCompatActivity
 
 
             case ButtonHolderFragment.eButtonSingle:{
-//                mModelController.onButtonSingle();
-                //TODO initialize presenter
-                mModelController.initInterfaceToPresenter();
+                mModelController.onButtonSingle();
                 break;
             }
             case ButtonHolderFragment.eButtonAdd:{

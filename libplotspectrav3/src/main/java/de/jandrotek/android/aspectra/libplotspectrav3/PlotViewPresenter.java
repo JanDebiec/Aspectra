@@ -45,11 +45,13 @@ public class PlotViewPresenter {
         for (int i = 0; i < mItemListSizeAct; i++) {// must be new
             addPlot(data[i]);
         }
-        for (int i = 0; i < mItemListSizeAct; i++) {
-            mItemListSizeAct++;
-            createSinglePlot(i, data[i]);
-        }
-        mPlotViewFragment.updateGraphViewLength(mDataLengthMax);
+//        for (int i = 0; i < mItemListSizeAct; i++) {
+////            mItemListSizeAct++;
+//            createSinglePlot(i, data[i]);
+//        }
+
+
+//        mPlotViewFragment.updateGraphViewLength(mDataLengthMax);
     }
 
 //    public void initSinglePlot( int [] data) {
@@ -65,7 +67,7 @@ public class PlotViewPresenter {
 
     public void addPlot(int [] data){
         //TODO increment spectra count in fragment
-        mItemListSizeAct++;
+//        mItemListSizeAct++;
         createSinglePlot(mItemListSizeAct - 1, data);
     }
 

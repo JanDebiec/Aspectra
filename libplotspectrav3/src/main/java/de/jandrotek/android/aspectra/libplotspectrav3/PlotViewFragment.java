@@ -54,7 +54,7 @@ public class PlotViewFragment extends Fragment
     private int mItemlistSize = 0;
     private int[] mColor;
     public boolean mInitialized = false;
-
+    private GraphViewSeries signleSerie = null;
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
@@ -114,6 +114,10 @@ public class PlotViewFragment extends Fragment
         FrameLayout mFrameLayout = (FrameLayout) rootView.findViewById(R.id.flPlotView);
         mFrameLayout.addView(mGraphView);
 
+        if (signleSerie != null) {
+            //TODO first possible after onCreateView
+            mGraphView.addSeries(signleSerie);
+        }
         return rootView;
     }
 
@@ -121,11 +125,10 @@ public class PlotViewFragment extends Fragment
     public void createPlotSerie(GraphView.GraphViewData[] realData, int index) {
         int colorIndex = index % 3;
 
-        GraphViewSeries signleSerie = new GraphViewSeries(
+        signleSerie = new GraphViewSeries(
                     "",
-                    new GraphViewSeries.GraphViewSeriesStyle(mColor[colorIndex], 1),
+                    new GraphViewSeries.GraphViewSeriesStyle(Color.rgb(255, 0, 0), 1),
                     realData);
-            mGraphView.addSeries(signleSerie);
     }
 
 //    public void createPlotSeries() {

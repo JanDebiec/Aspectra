@@ -5,6 +5,7 @@ import java.util.List;
 
 import de.jandrotek.android.aspectra.core.AspectraGlobals;
 import de.jandrotek.android.aspectra.core.SpectrumBase;
+import de.jandrotek.android.aspectra.libplotspectrav3.PlotViewPresenter;
 
 /**
  * Created by jan on 04.08.15.
@@ -60,7 +61,8 @@ public class PlotTestModelController {
             // get mData from spectrum
             int[] data = mSpectrum.getValues();
             // push to PlotView
-            mContext.updatePlot(data);
+//            mContext.updatePlot(data);
+            mPlotViewPresenter.updateSinglePlot(0, data);
         }
 
     }
@@ -84,7 +86,8 @@ public class PlotTestModelController {
         int[] data = mSpectrum.getValues();
 
         // push to PlotView
-        mContext.updatePlot(data);
+//        mContext.updatePlot(data);
+        mPlotViewPresenter.updateSinglePlot(0, data);
     }
 
     public void onButtonSqeeze(){
@@ -94,7 +97,8 @@ public class PlotTestModelController {
         int[] data = mSpectrum.getValues();
 
         // push to PlotView
-        mContext.updatePlot(data);
+//        mContext.updatePlot(data);
+        mPlotViewPresenter.updateSinglePlot(0, data);
     }
 
     public void onButtonSingle(){

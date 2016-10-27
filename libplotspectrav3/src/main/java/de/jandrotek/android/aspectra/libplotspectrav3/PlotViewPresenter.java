@@ -60,7 +60,7 @@ public class PlotViewPresenter {
             realPlotDataSize = length;
         }
         GraphView.GraphViewData[] realData = generateData(data, length);
-        if (mPlotViewFragment.mInitialized) {
+        if (mPlotViewFragment.isInitialized()) {
             mPlotViewFragment.mDataSeries[index].resetData(realData);// in live view, here we get null exception
         }
     }

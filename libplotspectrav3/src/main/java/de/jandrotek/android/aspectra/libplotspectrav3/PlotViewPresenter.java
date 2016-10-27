@@ -45,11 +45,6 @@ public class PlotViewPresenter {
         for (int i = 0; i < mItemListSizeAct; i++) {// must be new
             addPlot(data[i]);
         }
-//        for (int i = 0; i < mItemListSizeAct; i++) {
-////            mItemListSizeAct++;
-//            createSinglePlot(i, data[i]);
-//        }
-
 
 //        mPlotViewFragment.updateGraphViewLength(mDataLengthMax);
     }

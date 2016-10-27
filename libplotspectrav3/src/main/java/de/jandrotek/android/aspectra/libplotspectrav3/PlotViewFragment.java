@@ -31,6 +31,15 @@ import de.jandrotek.android.aspectra.core.AspectraGlobals;
 public class PlotViewFragment extends Fragment
         implements View.OnCreateContextMenuListener {
     private static PlotViewFragment mFragment = null;
+
+    private static final int eClassCreated = 0x01;
+    private static final int eViewInitialized = 0x02;
+    private static final int eContentInitialized = 0x04;
+    private static final int eMinimalInitialization = eClassCreated
+        | eViewInitialized
+         | eContentInitialized;
+    private static int mInitialization = 0;
+
     // TODO: Rename parameter arguments, choose names that match
     private static final String ARG_PARAM1 = "param1";
 
@@ -53,7 +62,11 @@ public class PlotViewFragment extends Fragment
 
     private int mItemlistSize = 0;
     private int[] mColor;
-    public boolean mInitialized = false;
+
+    public boolean isInitialized() {
+        return (mInitialization == eMinimalInitialization);
+    }
+
     private GraphViewSeries signleSerie = null;
     /**
      * Use this factory method to create a new instance of
@@ -99,6 +112,7 @@ public class PlotViewFragment extends Fragment
         mColor[0] = Color.rgb(255, 0, 0);
         mColor[1] = Color.rgb(0, 255, 0);
         mColor[2] = Color.rgb(0, 0, 255);
+        mInitialization |= eClassCreated;
     }
 
     @Override
@@ -114,6 +128,7 @@ public class PlotViewFragment extends Fragment
         FrameLayout mFrameLayout = (FrameLayout) rootView.findViewById(R.id.flPlotView);
         mFrameLayout.addView(mGraphView);
 
+        mInitialization |= eViewInitialized;
         if (signleSerie != null) {
             //TODO first possible after onCreateView
             mGraphView.addSeries(signleSerie);
@@ -129,28 +144,8 @@ public class PlotViewFragment extends Fragment
                     "",
                     new GraphViewSeries.GraphViewSeriesStyle(Color.rgb(255, 0, 0), 1),
                     realData);
+        mInitialization |= eContentInitialized;
     }
-
-//    public void createPlotSeries() {
-//        //TODO control the funtion from presenter
-//        int actCount;
-//        if (mDataSeries != null) {
-//            actCount = mDataSeries.length;
-//        } else {
-//            actCount = 0;
-//        }
-//        for (int i = 0; i < mParam1; i++) {
-//            int colorIndex = i % 3;
-//
-//            mDataSeries[i] = new GraphViewSeries(
-//                    "",
-//                    new GraphViewSeries.GraphViewSeriesStyle(mColor[colorIndex], 1),
-//                    realData[i]);
-//            mGraphView.addSeries(mDataSeries[i]);
-//        }
-//        realPlotDataSize = 0;
-//        mInitialized = true;
-//    }
 
 
     @Override
@@ -162,7 +157,7 @@ public class PlotViewFragment extends Fragment
     @Override
     public void onDetach() {
         super.onDetach();
-        mInitialized = false;
+//        mInitialized = false;
     }
 
     @Override

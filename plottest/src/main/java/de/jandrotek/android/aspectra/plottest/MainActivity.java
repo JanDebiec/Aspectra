@@ -40,18 +40,16 @@ public class MainActivity extends AppCompatActivity
                 .commit();
         mPlotViewPresenter = new PlotViewPresenter(1, mPlotViewFragment);
         mModelController = new PlotTestModelController(this);
-
-        //TODO initialize presenter
-        mModelController.initInterfaceToPresenter();
-    }
+        mModelController.setPlotViewPresenter(mPlotViewPresenter);
+   }
 
     public boolean isPlotFragmentInitialized(){
         return mPlotViewFragment.isInitialized();
     }
 
-    public void initPlotPresenter( int[][] data){
-        mPlotViewPresenter.init(1, data);
-    }
+//    public void initPlotPresenter( int[][] data){
+//        mPlotViewPresenter.init(1, data);
+//    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -95,12 +93,33 @@ public class MainActivity extends AppCompatActivity
                 mModelController.onButtonSqeeze();
                 break;
             }
+
+
+            case ButtonHolderFragment.eButtonSingle:{
+//                mModelController.onButtonSingle();
+                //TODO initialize presenter
+                mModelController.initInterfaceToPresenter();
+                break;
+            }
+            case ButtonHolderFragment.eButtonAdd:{
+                mModelController.onButtonAdd();
+                break;
+            }
+            case ButtonHolderFragment.eButtonClear:{
+                mModelController.onButtonClear();
+                break;
+            }
+            case ButtonHolderFragment.eButtonAuto:{
+                mModelController.onButtonAuto();
+                break;
+            }
+
         } // switch
     }
 
-    public void updatePlot(int[] data){
-        mPlotViewPresenter.updateSinglePlot(0, data);
-    }
+//    public void updatePlot(int[] data){
+//        mPlotViewPresenter.updateSinglePlot(0, data);
+//    }
 
     public void onFragmentInteraction(Uri uri){
 

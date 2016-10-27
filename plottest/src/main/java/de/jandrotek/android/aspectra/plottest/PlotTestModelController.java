@@ -17,6 +17,13 @@ public class PlotTestModelController {
     int mSpectraCount = 0;
     List<SpectrumBase> mSpectraList;
 
+    public void setPlotViewPresenter(PlotViewPresenter plotViewPresenter) {
+        this.mPlotViewPresenter = plotViewPresenter;
+    }
+
+    private PlotViewPresenter mPlotViewPresenter = null;
+
+
     public PlotTestModelController(MainActivity context){
         mContext = context;
         mData = new int[AspectraGlobals.eMaxPlotCount][];
@@ -48,7 +55,7 @@ public class PlotTestModelController {
 
     public void initInterfaceToPresenter(){
         mData[0] = mSpectrum.getValues();
-        mContext.initPlotPresenter(mData);
+        mPlotViewPresenter.init(1,mData);
     }
 
     public void onButtonMoveLeft(){
@@ -71,7 +78,8 @@ public class PlotTestModelController {
         int[] data = mSpectrum.getValues();
 
         // push to PlotView
-        mContext.updatePlot(data);
+//        mContext.updatePlot(data);
+        mPlotViewPresenter.updateSinglePlot(0, data);
     }
 
     public void onButtonStretch(){
@@ -92,5 +100,22 @@ public class PlotTestModelController {
 
         // push to PlotView
         mContext.updatePlot(data);
+    }
+
+    public void onButtonSingle(){
+        mData[0] = mSpectrum.getValues();
+        mPlotViewPresenter.init(1,mData);
+    }
+
+    public void onButtonAdd(){
+
+    }
+
+    public void onButtonClear(){
+
+    }
+
+    public void onButtonAuto(){
+
     }
 }

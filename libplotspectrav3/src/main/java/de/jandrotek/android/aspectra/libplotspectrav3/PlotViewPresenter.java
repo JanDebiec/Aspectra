@@ -71,7 +71,7 @@ public class PlotViewPresenter {
             realPlotDataSize = length;
         }
         GraphView.GraphViewData[] realData = generateData(data, length);
-        mPlotViewFragment.createPlotSerie(realData, index);
+        mPlotViewFragment.createPlotSerie(index, realData);
     }
 
     public void updateFragmentPort(int start, int end) {

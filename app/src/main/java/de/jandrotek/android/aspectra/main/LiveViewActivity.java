@@ -18,8 +18,8 @@ import java.util.ArrayList;
 import de.jandrotek.android.aspectra.core.AspectraGlobals;
 import de.jandrotek.android.aspectra.core.ImageProcessing;
 import de.jandrotek.android.aspectra.core.SpectrumAsp;
-import de.jandrotek.android.aspectra.libplotspectrav3.PlotViewController;
-import de.jandrotek.android.aspectra.libplotspectrav3.PlotViewControllerBuilder;
+//import de.jandrotek.android.aspectra.libplotspectrav3.PlotViewController;
+//import de.jandrotek.android.aspectra.libplotspectrav3.PlotViewControllerBuilder;
 import de.jandrotek.android.aspectra.libplotspectrav3.PlotViewFragment;
 import de.jandrotek.android.aspectra.libplotspectrav3.PlotViewPresenter;
 import de.jandrotek.android.aspectra.libspectrafiles.SpectrumFiles;
@@ -40,7 +40,7 @@ public class LiveViewActivity extends BaseActivity
 
     private static int mPreviewWidthX;
     private static int mPreviewHeightY;
-    private PlotViewController mPlotViewController = null;
+ //   private PlotViewController mPlotViewController = null;
 
     public Handler getHandler() {
         return mHandler;
@@ -82,6 +82,8 @@ public class LiveViewActivity extends BaseActivity
             mImageProcessing = ImageProcessing.getInstance();
         }
         mCameraViewFragment.setImageProcessing(mImageProcessing);
+
+        mPlotViewPresenter = new PlotViewPresenter(1, mPlotViewFragment);
 
         // set both orientations in childs
         getScreenOrientation();
@@ -150,21 +152,13 @@ public class LiveViewActivity extends BaseActivity
         super.onResume();
         updateFromPreferences();
 
+        //TODO: suppose it os not needed:
         if(mPlotViewFragment == null) {
             mPlotViewFragment = PlotViewFragment.newInstance(1);
         }
-        if(mPlotViewPresenter == null){
-            mPlotViewPresenter = new PlotViewPresenter(AspectraGlobals.ACT_ITEM_VIEW_PLOT,mPlotViewFragment );
-        }
-
-
-//        if (mPlotViewController == null) {
-//            mPlotViewController = new PlotViewControllerBuilder().setParam1(AspectraGlobals.ACT_ITEM_VIEW_PLOT).getInstancePlotViewController();
+//        if(mPlotViewPresenter == null){
+//            mPlotViewPresenter = new PlotViewPresenter(AspectraGlobals.ACT_ITEM_VIEW_PLOT,mPlotViewFragment );
 //        }
-//        mPlotViewController.init(mPlotViewFragment);
-//        mPlotViewPresenter = mPlotViewController.mPlotViewPresenter;
-//        //TODO: check if not the reason for multiply plots
-//        mPlotViewController.initDisplayInFragment();// must be called when fragment already exists
 
         getScreenOrientation();
         mCameraViewFragment.setDeviceOrientation(mDeviceOrientation);
@@ -177,15 +171,6 @@ public class LiveViewActivity extends BaseActivity
     //@Override
     protected void updateFromPreferences(){
         super.updateFromPreferences();
-//        if(mCameraViewFragment != null){
-//            mCameraViewFragment.setStartPercentHX(mAspectraSettings.getPrefsWidthStart());
-//            mCameraViewFragment.setEndPercentHX(mAspectraSettings.getPrefsWidthEnd());
-//            mCameraViewFragment.setStartPercentVY(mAspectraSettings.getPrefsHeightStart());
-//            mCameraViewFragment.setEndPercentVY(mAspectraSettings.getPrefsHeightEnd());
-//            mCameraViewFragment.setScanAreaWidth(mAspectraSettings.getPrefsScanAreaWidth());
-//            mCameraViewFragment.updateBorderPercents();
-//            mCameraViewFragment.updateOrientationInConfigView(mSpectrumLanscapeOrientation);
-//        }
         mSpectrumFiles.setFileFolder(mFileFolder);
         mSpectrumFiles.setFileExt(mFileExt);
         if (mImageProcessing == null) {
@@ -288,6 +273,12 @@ public class LiveViewActivity extends BaseActivity
             if (activity != null) {
                 int messId = inputMessage.what;
                 if(messId == AspectraGlobals.eMessageCompleteLine) {
+                    //TODO: interface to presenter
+                    // check if PlotFragment already prepared for data
+                    // by first run presenter.init
+                    // by next runs update plot
+
+
                     int[] data = (int[])inputMessage.obj;
                     int length = data.length;
                     mPlotViewPresenter.updateSinglePlot(0, data);//TODO:

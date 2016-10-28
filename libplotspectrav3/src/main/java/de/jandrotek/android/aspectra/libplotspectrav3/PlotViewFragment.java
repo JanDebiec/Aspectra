@@ -188,7 +188,7 @@ public class PlotViewFragment extends Fragment
         mGraphView.setViewPort(start, end);
     }
 
-    public void createPlotSerie(GraphView.GraphViewData[] realData, int index) {
+    public void createPlotSerie( int index, GraphView.GraphViewData[] realData) {
         int colorIndex = index % 3;
 
         mDataSeries[index] = new GraphViewSeries(

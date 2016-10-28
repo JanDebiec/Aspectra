@@ -18,6 +18,9 @@ android {
         }
     }
     buildToolsVersion '23.0.2'
+    lintOptions {
+        abortOnError false
+    }
 }
 
 dependencies {

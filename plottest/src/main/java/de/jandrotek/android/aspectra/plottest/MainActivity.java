@@ -43,9 +43,9 @@ public class MainActivity extends AppCompatActivity
         mModelController.setPlotViewPresenter(mPlotViewPresenter);
    }
 
-    public boolean isPlotFragmentInitialized(){
-        return mPlotViewFragment.isInitialized();
-    }
+//    public boolean isPlotFragmentInitialized(){
+//        return mPlotViewFragment.isInitialized();
+//    }
 
 //    public void initPlotPresenter( int[][] data){
 //        mPlotViewPresenter.init(1, data);

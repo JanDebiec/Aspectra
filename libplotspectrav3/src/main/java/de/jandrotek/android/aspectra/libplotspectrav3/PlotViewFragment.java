@@ -63,7 +63,7 @@ public class PlotViewFragment extends Fragment
     private int mItemlistSize = 0;
     private int[] mColor;
 
-    public boolean isInitialized() {
+    public boolean isFullInitialized() {
         return (mInitialization == eFUllInitialized);
     }
 

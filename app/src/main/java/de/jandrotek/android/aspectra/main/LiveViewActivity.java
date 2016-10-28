@@ -277,12 +277,20 @@ public class LiveViewActivity extends BaseActivity
                     // check if PlotFragment already prepared for data
                     // by first run presenter.init
                     // by next runs update plot
-
-
                     int[] data = (int[])inputMessage.obj;
                     int length = data.length;
-                    mPlotViewPresenter.updateSinglePlot(0, data);//TODO:
-                    mPlotViewPresenter.updateFragmentPort(0, length);
+                    if(mPlotViewFragment.isReady4Plot()){
+                        // input for presenter.input is 2 dimensional array
+                        int [][] arrayOfData = new int[1][];
+                        arrayOfData[0] = data;
+                        mPlotViewPresenter.init(1, arrayOfData);//TODO:
+                        mPlotViewPresenter.updateFragmentPort(0, length);
+                    } else if (mPlotViewFragment.isFullInitialized()){
+                        mPlotViewPresenter.updateSinglePlot(0, data);//TODO:
+                        mPlotViewPresenter.updateFragmentPort(0, length);
+                    }
+
+
                     if(AspectraGlobals.mSavePlotInFile){
                         //TODO: run task in controller, the only input: data
                         // but to make a toast we need fileName

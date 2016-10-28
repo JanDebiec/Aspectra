@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity
    }
 
 //    public boolean isPlotFragmentInitialized(){
-//        return mPlotViewFragment.isInitialized();
+//        return mPlotViewFragment.isFullInitialized();
 //    }
 
 //    public void initPlotPresenter( int[][] data){

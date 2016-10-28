@@ -4,11 +4,7 @@ import android.util.Log;
 
 import com.jjoe64.graphview.GraphView;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import de.jandrotek.android.aspectra.core.AspectraGlobals;
-import de.jandrotek.android.aspectra.core.SpectrumBase;
 
 /**
  * Created by jan on 03.09.15.
@@ -60,7 +56,7 @@ public class PlotViewPresenter {
             realPlotDataSize = length;
         }
         GraphView.GraphViewData[] realData = generateData(data, length);
-        if (mPlotViewFragment.isInitialized()) {
+        if (mPlotViewFragment.isFullInitialized()) {
             mPlotViewFragment.updateSinglePlot(index, realData);// in live view, here we get null exception
         }
     }

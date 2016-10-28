@@ -50,7 +50,7 @@ public class PlotViewFragment extends Fragment
     private GraphView mGraphView;
     //ver 3
     public GraphViewSeries[] mDataSeries = null;
-    public GraphViewSeries mSignleSerie = null;
+//    public GraphViewSeries mSignleSerie = null;
     private GraphViewSeries.GraphViewSeriesStyle[] mGraphStyle;
 
     public void setItemlistSize(int mItemlistSize) {
@@ -104,6 +104,8 @@ public class PlotViewFragment extends Fragment
 //        if (mDataSeries == null) {
 //            mDataSeries = new GraphViewSeries[mItemlistSize];
 //        }
+
+        mDataSeries = new GraphViewSeries[AspectraGlobals.eMaxPlotCount];
         mDataLengthMax = PLOT_DATA_SIZE;
         mColor = new int[3];
         mColor[0] = Color.rgb(255, 0, 0);
@@ -133,17 +135,6 @@ public class PlotViewFragment extends Fragment
         return rootView;
     }
 
-
-    public void createPlotSerie(GraphView.GraphViewData[] realData, int index) {
-        int colorIndex = index % 3;
-
-        singleSerie = new GraphViewSeries(
-                    "",
-                    new GraphViewSeries.GraphViewSeriesStyle(Color.rgb(255, 0, 0), 1),
-                    realData);
-        mInitialization |= eContentInitialized;
-        mGraphView.addSeries(singleSerie);
-    }
 
 
     @Override
@@ -197,6 +188,20 @@ public class PlotViewFragment extends Fragment
         mGraphView.setViewPort(start, end);
     }
 
+    public void createPlotSerie(GraphView.GraphViewData[] realData, int index) {
+        int colorIndex = index % 3;
+
+        mDataSeries[index] = new GraphViewSeries(
+                "",
+                new GraphViewSeries.GraphViewSeriesStyle(Color.rgb(255, 0, 0), 1),
+                realData);
+        mInitialization |= eContentInitialized;
+        mGraphView.addSeries(mDataSeries[index]);
+    }
+
+    public void updateSinglePlot(int index, GraphView.GraphViewData[] realData){
+        mDataSeries[index].resetData(realData);// in live view, here we get null exception
+    }
 }
 
 

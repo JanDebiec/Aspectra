@@ -16,11 +16,8 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
 import com.jjoe64.graphview.GraphView;
-import com.jjoe64.graphview.GraphView.GraphViewData;
 import com.jjoe64.graphview.GraphViewSeries;
 import com.jjoe64.graphview.LineGraphView;
-
-import java.util.ArrayList;
 
 import de.jandrotek.android.aspectra.core.AspectraGlobals;
 
@@ -67,7 +64,7 @@ public class PlotViewFragment extends Fragment
         return (mInitialization == eMinimalInitialization);
     }
 
-    private GraphViewSeries signleSerie = null;
+    private GraphViewSeries singleSerie = null;
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
@@ -129,9 +126,9 @@ public class PlotViewFragment extends Fragment
         mFrameLayout.addView(mGraphView);
 
         mInitialization |= eViewInitialized;
-        if (signleSerie != null) {
+        if (singleSerie != null) {
             //TODO first possible after onCreateView
-            mGraphView.addSeries(signleSerie);
+            mGraphView.addSeries(singleSerie);
         }
         return rootView;
     }
@@ -140,11 +137,12 @@ public class PlotViewFragment extends Fragment
     public void createPlotSerie(GraphView.GraphViewData[] realData, int index) {
         int colorIndex = index % 3;
 
-        signleSerie = new GraphViewSeries(
+        singleSerie = new GraphViewSeries(
                     "",
                     new GraphViewSeries.GraphViewSeriesStyle(Color.rgb(255, 0, 0), 1),
                     realData);
         mInitialization |= eContentInitialized;
+        mGraphView.addSeries(singleSerie);
     }
 
 

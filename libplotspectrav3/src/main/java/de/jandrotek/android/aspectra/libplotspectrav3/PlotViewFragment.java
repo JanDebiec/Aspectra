@@ -32,9 +32,13 @@ public class PlotViewFragment extends Fragment
     private static final int eClassCreated = 0x01;
     private static final int eViewInitialized = 0x02;
     private static final int eContentInitialized = 0x04;
-    private static final int eMinimalInitialization = eClassCreated
-        | eViewInitialized
-         | eContentInitialized;
+    private static final int eFUllInitialized =
+            eClassCreated
+            | eViewInitialized
+            | eContentInitialized;
+    private static final int eReady4Plot =
+            eClassCreated
+            | eViewInitialized;
     private static int mInitialization = 0;
 
     // TODO: Rename parameter arguments, choose names that match
@@ -50,7 +54,6 @@ public class PlotViewFragment extends Fragment
     private GraphView mGraphView;
     //ver 3
     public GraphViewSeries[] mDataSeries = null;
-//    public GraphViewSeries mSignleSerie = null;
     private GraphViewSeries.GraphViewSeriesStyle[] mGraphStyle;
 
     public void setItemlistSize(int mItemlistSize) {
@@ -61,7 +64,11 @@ public class PlotViewFragment extends Fragment
     private int[] mColor;
 
     public boolean isInitialized() {
-        return (mInitialization == eMinimalInitialization);
+        return (mInitialization == eFUllInitialized);
+    }
+
+    public boolean isReady4Plot() {
+        return (mInitialization == eReady4Plot);
     }
 
     private GraphViewSeries singleSerie = null;
@@ -90,21 +97,7 @@ public class PlotViewFragment extends Fragment
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // presenter handles the creation of plots
-//        if (getArguments() != null) {
-//            mParam1 = getArguments().getInt(ARG_PARAM1);
-//        } else {
-//            mParam1 = 1;
-//        }
-//        mItemlistSize = mParam1;
-
-//        realData = new GraphViewData[mItemlistSize][AspectraGlobals.eMaxSpectrumSize];
-
-        //TODO do we need instance here?
-//        if (mDataSeries == null) {
-//            mDataSeries = new GraphViewSeries[mItemlistSize];
-//        }
-
+        // empty array created
         mDataSeries = new GraphViewSeries[AspectraGlobals.eMaxPlotCount];
         mDataLengthMax = PLOT_DATA_SIZE;
         mColor = new int[3];
@@ -128,10 +121,10 @@ public class PlotViewFragment extends Fragment
         mFrameLayout.addView(mGraphView);
 
         mInitialization |= eViewInitialized;
-        if (singleSerie != null) {
-            //TODO first possible after onCreateView
-            mGraphView.addSeries(singleSerie);
-        }
+//        if (singleSerie != null) {
+//            //TODO first possible after onCreateView
+//            mGraphView.addSeries(singleSerie);
+//        }
         return rootView;
     }
 
@@ -140,19 +133,21 @@ public class PlotViewFragment extends Fragment
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-//        mInitialized = false;
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-//        mInitialized = false;
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
     }
 
     @Override
     public void onResume() {
         super.onResume();
-//        mInitialized = false;
     }
 
     //TODO will not working

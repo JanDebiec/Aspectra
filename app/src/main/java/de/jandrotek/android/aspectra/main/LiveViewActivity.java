@@ -288,7 +288,11 @@ public class LiveViewActivity extends BaseActivity
                     } else if (mPlotViewFragment.isFullInitialized()){
                         mPlotViewPresenter.updateSinglePlot(0, data);//TODO:
                         mPlotViewPresenter.updateFragmentPort(0, length);
+                    } else {
+                        Toast.makeText(activity, "PlotFragment not ready", Toast.LENGTH_SHORT)
+                                .show();
                     }
+
 
 
                     if(AspectraGlobals.mSavePlotInFile){

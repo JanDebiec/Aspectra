@@ -138,6 +138,7 @@ public class PlotViewFragment extends Fragment
     @Override
     public void onDetach() {
         super.onDetach();
+        mInitialization = 0;
     }
 
     @Override

@@ -33,6 +33,7 @@ public class LiveViewActivity extends BaseActivity
 //        implements CameraViewFragment.OnFragmentInteractionListener
 //        PlotViewFragment.OnFragmentInteractionListener
 {
+    private static final String TAG = "LiveViewActivity";
 
     private static CameraViewFragment mCameraViewFragment;
     private static PlotViewFragment mPlotViewFragment;
@@ -40,7 +41,6 @@ public class LiveViewActivity extends BaseActivity
 
     private static int mPreviewWidthX;
     private static int mPreviewHeightY;
- //   private PlotViewController mPlotViewController = null;
 
     public Handler getHandler() {
         return mHandler;
@@ -53,7 +53,7 @@ public class LiveViewActivity extends BaseActivity
      * reference to their outer class.
      */
 
-    private final MyHandler mHandler = new MyHandler(this);
+    private final SpectrumHandler mHandler = new SpectrumHandler(this);
 
 
     @Override
@@ -66,8 +66,6 @@ public class LiveViewActivity extends BaseActivity
         } else {
             setContentView(R.layout.activity_live_view_cam_port);
         }
-        // moved to onResume, with check if null
-//        mPlotViewController = new PlotViewControllerBuilder().setParam1(AspectraGlobals.ACT_ITEM_VIEW_PLOT).getInstancePlotViewController();
         if (savedInstanceState == null) {
             mCameraViewFragment = CameraViewFragment.newInstance( AspectraGlobals.ACT_ITEM_LIVE_VIEW);
             getSupportFragmentManager().beginTransaction()
@@ -85,7 +83,7 @@ public class LiveViewActivity extends BaseActivity
 
         mPlotViewPresenter = new PlotViewPresenter(1, mPlotViewFragment);
 
-        // set both orientations in childs
+        // set both orientations in child
         getScreenOrientation();
         mCameraViewFragment.setDeviceOrientation(mDeviceOrientation);
         updateFromPreferences();
@@ -156,10 +154,6 @@ public class LiveViewActivity extends BaseActivity
         if(mPlotViewFragment == null) {
             mPlotViewFragment = PlotViewFragment.newInstance(1);
         }
-//        if(mPlotViewPresenter == null){
-//            mPlotViewPresenter = new PlotViewPresenter(AspectraGlobals.ACT_ITEM_VIEW_PLOT,mPlotViewFragment );
-//        }
-
         getScreenOrientation();
         mCameraViewFragment.setDeviceOrientation(mDeviceOrientation);
         setDeviceOrientationInViewSettings();
@@ -260,10 +254,10 @@ public class LiveViewActivity extends BaseActivity
         Log.e(getClass().getSimpleName(), "Exception saving file", e);
     }
 
-    private class MyHandler extends Handler {
+    private class SpectrumHandler extends Handler {
         private final WeakReference<LiveViewActivity> mActivity;
 
-        public MyHandler(LiveViewActivity activity) {
+        public SpectrumHandler(LiveViewActivity activity) {
             mActivity = new WeakReference<LiveViewActivity>(activity);
         }
 
@@ -289,12 +283,10 @@ public class LiveViewActivity extends BaseActivity
                         mPlotViewPresenter.updateSinglePlot(0, data);//TODO:
                         mPlotViewPresenter.updateFragmentPort(0, length);
                     } else {
-                        Toast.makeText(activity, "PlotFragment not ready", Toast.LENGTH_SHORT)
-                                .show();
+                        if(BuildConfig.DEBUG) {
+                            Log.e(TAG, "PVPresenter is not initialized");
+                        }
                     }
-
-
-
                     if(AspectraGlobals.mSavePlotInFile){
                         //TODO: run task in controller, the only input: data
                         // but to make a toast we need fileName

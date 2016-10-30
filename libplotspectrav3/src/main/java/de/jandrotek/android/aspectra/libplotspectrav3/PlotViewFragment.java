@@ -121,10 +121,6 @@ public class PlotViewFragment extends Fragment
         mFrameLayout.addView(mGraphView);
 
         mInitialization |= eViewInitialized;
-//        if (singleSerie != null) {
-//            //TODO first possible after onCreateView
-//            mGraphView.addSeries(singleSerie);
-//        }
         return rootView;
     }
 

@@ -37,7 +37,6 @@ public class PlotViewPresenter {
             mItemListSizeAct = AspectraGlobals.eMaxPlotCount;
         }
         mPlotDataLength = new int[AspectraGlobals.eMaxPlotCount];
-
         for (int i = 0; i < mItemListSizeAct; i++) {// must be new
             addPlot(data[i]);
         }
@@ -52,9 +51,7 @@ public class PlotViewPresenter {
 
     public void updateSinglePlot(int index, int[] data) {
         int length = data.length;
-        if (length > realPlotDataSize) {
-            realPlotDataSize = length;
-        }
+        mPlotDataLength[index] = length;
         GraphView.GraphViewData[] realData = generateData(data, length);
         if (mPlotViewFragment.isFullInitialized()) {
             mPlotViewFragment.updateSinglePlot(index, realData);// in live view, here we get null exception
@@ -63,9 +60,7 @@ public class PlotViewPresenter {
 
     public void createSinglePlot(int index, int[] data) {
         int length = data.length;
-        if (length > realPlotDataSize) {
-            realPlotDataSize = length;
-        }
+        mPlotDataLength[index] = length;
         GraphView.GraphViewData[] realData = generateData(data, length);
         mPlotViewFragment.createPlotSerie(index, realData);
     }

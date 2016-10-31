@@ -22,8 +22,9 @@ import com.jjoe64.graphview.LineGraphView;
 import de.jandrotek.android.aspectra.core.AspectraGlobals;
 
 /**
- * Modified version of fragment, here only View, Controller is moved to
- * PlotViewController
+ * Modified version of fragment, here only View,
+ * Presenter is in PlotViewPresenter
+ * Controller is moved to app-specific PlotViewController
  */
 public class PlotViewFragment extends Fragment
         implements View.OnCreateContextMenuListener {

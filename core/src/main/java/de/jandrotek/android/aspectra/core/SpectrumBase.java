@@ -51,12 +51,34 @@ public class SpectrumBase {
 	}
 
     /**
-     * @return only pure data, without zeros at the beginning, or end
+     * function updates the mData, returns data moved to Start/Stop indexy
+     * base mData is not changed
+     * @return
+     *
      */
     public int[] getValues(){
 
-        return mValues;
+        int[] newData;
+        if(mStartIndex >= 0) { // move to the right
+           newData = ArrayFunctions.moveArrayRight(mValues, mStartIndex);
+        } else { // move to the left
+            newData = ArrayFunctions.moveArrayLeft(mValues, - mStartIndex);
+        }
+         return newData;
     }
+
+//    public int[] moveData_oldVersion(int offset) {
+//        int[] newData;
+//        if(offset >= 0) { // move to the right
+//            newData = ArrayFunctions.moveArrayRight(mValues, offset);
+//        } else { // move to the left
+//            newData = ArrayFunctions.moveArrayLeft(mValues, - offset);
+//        }
+//        mValues = newData;
+//        mStartIndex += offset;
+//        mEndIndex += offset;
+//        return mValues;
+//    }
 
     public int[] getWholeSpectrum() {
         int[] newData;
@@ -142,18 +164,6 @@ public class SpectrumBase {
         return mValues;
     }
 
-//    public int[] moveData_oldVersion(int offset) {
-//        int[] newData;
-//        if(offset >= 0) { // move to the right
-//            newData = ArrayFunctions.moveArrayRight(mValues, offset);
-//        } else { // move to the left
-//            newData = ArrayFunctions.moveArrayLeft(mValues, - offset);
-//        }
-//        mValues = newData;
-//        mStartIndex += offset;
-//        mEndIndex += offset;
-//        return mValues;
-//    }
 
     //TODO: check working and update indexies, add offset
     public int[] stretchData(int offset, float factor) {

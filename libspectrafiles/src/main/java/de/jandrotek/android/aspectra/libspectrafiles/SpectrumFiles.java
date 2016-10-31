@@ -2,6 +2,7 @@ package de.jandrotek.android.aspectra.libspectrafiles;
 
 /** android part of SpectraFiles */
 
+import android.os.AsyncTask;
 import android.os.Environment;
 import android.util.Log;
 
@@ -13,7 +14,9 @@ import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
 
+import de.jandrotek.android.aspectra.core.AspectraGlobals;
 import de.jandrotek.android.aspectra.core.FileWalker;
+import de.jandrotek.android.aspectra.core.SpectrumAsp;
 
 public class SpectrumFiles {
     private static final String TAG = "SpectraFiles";
@@ -163,5 +166,53 @@ public class SpectrumFiles {
         return (f);
 
     }
+
+    public String savePlotToFile(int[] data) {
+        String fileName = generateSpectrumAspFileName(mFileExt);
+        File f;
+        SpectrumAsp mSpectrum = new SpectrumAsp(fileName);
+        mSpectrum.setData(data, AspectraGlobals.eNoNormalize);
+        f = getTarget(fileName);
+        new SaveSpectrumTask(mSpectrum.toString(), f).execute();
+        return fileName;
+    }
+
+    //    //TODO: refactor: SpectrumAsp as parameter, work should be done in Spectrum
+    public class SaveSpectrumTask extends AsyncTask<Void, Void, Void> {
+        private Exception e = null;
+        private final String text;
+        private final File target;
+
+        SaveSpectrumTask(String text, File target) {
+            this.text = text;
+            this.target = target;
+        }
+
+        @Override
+        protected Void doInBackground(Void... args) {
+            try {
+                SpectrumFiles.saveStringToFile(text, target);
+            } catch (Exception e) {
+                this.e = e;
+            } finally {
+                AspectraGlobals.mSavePlotInFile = false;
+            }
+            return (null);
+        }
+
+        @Override
+        protected void onPostExecute(Void arg0) {
+//            if (e != null) {
+//                boom(e);
+//            }
+        }
+    }
+
+
+//    private void boom(Exception e) {
+//        Toast.makeText(this, e.toString(), Toast.LENGTH_LONG)
+//                .show();
+//        Log.e(getClass().getSimpleName(), "Exception saving file", e);
+//    }
 
 }

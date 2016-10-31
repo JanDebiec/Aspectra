@@ -2,7 +2,6 @@ package de.jandrotek.android.aspectra.main;
 
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -11,18 +10,16 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import java.io.File;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 
 import de.jandrotek.android.aspectra.core.AspectraGlobals;
 import de.jandrotek.android.aspectra.core.ImageProcessing;
-import de.jandrotek.android.aspectra.core.SpectrumAsp;
-//import de.jandrotek.android.aspectra.libplotspectrav3.PlotViewController;
-//import de.jandrotek.android.aspectra.libplotspectrav3.PlotViewControllerBuilder;
 import de.jandrotek.android.aspectra.libplotspectrav3.PlotViewFragment;
 import de.jandrotek.android.aspectra.libplotspectrav3.PlotViewPresenter;
-import de.jandrotek.android.aspectra.libspectrafiles.SpectrumFiles;
+
+//import de.jandrotek.android.aspectra.libplotspectrav3.PlotViewController;
+//import de.jandrotek.android.aspectra.libplotspectrav3.PlotViewControllerBuilder;
 
 /**
  * here comes the source from MainActivity_libprefs, handling CameraViewFragment,
@@ -182,21 +179,21 @@ public class LiveViewActivity extends BaseActivity
         mImageProcessing.setCameraDataMirrored(mCameraDataMirrored);
     }
 
-//    //TODO: refactor: SpectrumAsp as parameter, work should be done in Spectrum
+// moved to SpectrumFiles
 //    public class SaveSpectrumTask extends AsyncTask<Void, Void, Void> {
-//        private Exception e = null;
-//        private final SpectrumAsp spectrum;
+//        private Exception e=null;
+//        private final String text;
 //        private final File target;
 //
-//        SaveSpectrumTask(SpectrumAsp spectrum, File target) {
-//            this.spectrum = spectrum;
-//            this.target = target;
+//        SaveSpectrumTask(String text, File target) {
+//            this.text=text;
+//            this.target=target;
 //        }
+//
 //        @Override
 //        protected Void doInBackground(Void... args) {
 //            try {
-////                spectrum.saveFile(target);
-////                SpectrumFiles.saveStringToFile(text, target);
+//                SpectrumFiles.saveStringToFile(text, target);
 //            }
 //            catch (Exception e) {
 //                this.e=e;
@@ -214,45 +211,13 @@ public class LiveViewActivity extends BaseActivity
 //            }
 //        }
 //    }
-
-    public class SaveSpectrumTask extends AsyncTask<Void, Void, Void> {
-        private Exception e=null;
-        private final String text;
-        private final File target;
-
-        SaveSpectrumTask(String text, File target) {
-            this.text=text;
-            this.target=target;
-        }
-
-        @Override
-        protected Void doInBackground(Void... args) {
-            try {
-                SpectrumFiles.saveStringToFile(text, target);
-            }
-            catch (Exception e) {
-                this.e=e;
-            }
-            finally {
-                AspectraGlobals.mSavePlotInFile = false;
-            }
-            return(null);
-        }
-
-        @Override
-        protected void onPostExecute(Void arg0) {
-            if (e != null) {
-                boom(e);
-            }
-        }
-    }
-
-
-     private void boom(Exception e) {
-        Toast.makeText(this, e.toString(), Toast.LENGTH_LONG)
-                .show();
-        Log.e(getClass().getSimpleName(), "Exception saving file", e);
-    }
+//
+//
+//     private void boom(Exception e) {
+//        Toast.makeText(this, e.toString(), Toast.LENGTH_LONG)
+//                .show();
+//        Log.e(getClass().getSimpleName(), "Exception saving file", e);
+//    }
 
     private class SpectrumHandler extends Handler {
         private final WeakReference<LiveViewActivity> mActivity;
@@ -288,17 +253,26 @@ public class LiveViewActivity extends BaseActivity
                         }
                     }
                     if(AspectraGlobals.mSavePlotInFile){
-                        //TODO: run task in controller, the only input: data
-                        // but to make a toast we need fileName
-                        File f;
+                        try {
+                            String fileName = mSpectrumFiles.savePlotToFile(data);
+                            Toast.makeText(activity, fileName, Toast.LENGTH_SHORT)
+                                    .show();
+                        } catch (Exception e) {
+                            Toast.makeText(activity, e.toString(), Toast.LENGTH_LONG)
+                                    .show();
+                            Log.e(getClass().getSimpleName(), "Exception saving file", e);
+
+                        }
+
                         AspectraGlobals.mSavePlotInFile = false;
-                        String fileName = SpectrumFiles.generateSpectrumAspFileName(mFileExt);
-                        SpectrumAsp mSpectrum = new SpectrumAsp(fileName);
-                        mSpectrum.setData(data, AspectraGlobals.eNoNormalize);
-                        f =  mSpectrumFiles.getTarget(fileName);
-                        new SaveSpectrumTask(mSpectrum.toString(),f).execute();
-                        Toast.makeText(activity, f.toString(), Toast.LENGTH_SHORT)
-                                .show();
+//                        //TODO: run task in controller, the only input: data
+//                        // but to make a toast we need fileName
+//                        File f;
+//                        String fileName = SpectrumFiles.generateSpectrumAspFileName(mFileExt);
+//                        SpectrumAsp mSpectrum = new SpectrumAsp(fileName);
+//                        mSpectrum.setData(data, AspectraGlobals.eNoNormalize);
+//                        f =  mSpectrumFiles.getTarget(fileName);
+//                        new SaveSpectrumTask(mSpectrum.toString(),f).execute();
 
                     }
                 } else if (messId == AspectraGlobals.eMessagePreviewSize) {

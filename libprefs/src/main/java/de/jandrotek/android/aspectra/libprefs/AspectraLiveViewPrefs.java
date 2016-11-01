@@ -37,6 +37,8 @@ public class AspectraLiveViewPrefs {
     private int mPrefsHeightStart;
     private int mPrefsHeightEnd;
     private boolean mPrefsLandscapeCameraOrientation;
+    private String mPrefsExtensionName;
+    private String mPrefsSaveFolderName;
 
     public boolean isPrefsCameraDataMirror() {
         return mPrefsCameraDataMirror;
@@ -53,8 +55,6 @@ public class AspectraLiveViewPrefs {
         return mPrefsSaveFolderName;
     }
 
-    private String mPrefsExtensionName;
-    private String mPrefsSaveFolderName;
 
     private int mPrefsSpectraLength;
     private int mPrefsScanAreaWidth;
@@ -170,7 +170,7 @@ public class AspectraLiveViewPrefs {
 
         mDefaultExtensionName = mContext.getResources().getString(R.string.DEFAULT_EXTENSION_NAME);
         mPREFS_KEY_EXTENSION_NAME = mContext.getResources().getString(R.string.PREFS_KEY_EXTENSION_NAME);
-        this.mPrefsSaveFolderName = mPrefs.getString(mPREFS_KEY_EXTENSION_NAME, mDefaultExtensionName);
+        this.mPrefsExtensionName = mPrefs.getString(mPREFS_KEY_EXTENSION_NAME, mDefaultExtensionName);
     }
 
     public void saveSettings(){

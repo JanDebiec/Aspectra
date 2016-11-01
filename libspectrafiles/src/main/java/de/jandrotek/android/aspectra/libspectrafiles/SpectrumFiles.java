@@ -107,7 +107,8 @@ public class SpectrumFiles {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss");
         String currentDateandTime = sdf.format(new Date());
 
-        return mPath  + "/" + currentDateandTime + "." + fileExt;
+        return currentDateandTime + "." + fileExt;
+//        return mPath  + "/" + currentDateandTime + "." + fileExt;
     }
 
     /**

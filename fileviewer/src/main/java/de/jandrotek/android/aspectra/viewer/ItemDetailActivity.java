@@ -18,6 +18,7 @@ import de.jandrotek.android.aspectra.core.AspectraGlobals;
 import de.jandrotek.android.aspectra.libplotspectrav3.PlotViewFragment;
 import de.jandrotek.android.aspectra.libplotspectrav3.PlotViewPresenter;
 import de.jandrotek.android.aspectra.libprefs.AspectraGlobalPrefsActivity;
+import de.jandrotek.android.aspectra.libspectrafiles.File2PlotConverter;
 
 
 public class ItemDetailActivity extends AppCompatActivity
@@ -28,7 +29,7 @@ public class ItemDetailActivity extends AppCompatActivity
     private static PlotViewFragment mPlotViewFragment;
     private PlotViewPresenter mPlotViewPresenter;
 
-    private static FileViewerController mPlotViewController;
+    private static File2PlotConverter mFile2PlotConverter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,9 +44,9 @@ public class ItemDetailActivity extends AppCompatActivity
             Bundle arguments = new Bundle();
 
             ArrayList<String> names = getIntent().getExtras().getStringArrayList(AspectraGlobals.ARG_ITEM_IDS);
-            mPlotViewController = new FileViewerController(names);
+            mFile2PlotConverter = new File2PlotConverter(names);
             mPlotViewFragment = PlotViewFragment.newInstance(names != null ? names.size() : 0);
-            mPlotViewController.init();
+            mFile2PlotConverter.init();
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.item_detail_container, mPlotViewFragment)
                     .commit();
@@ -71,9 +72,10 @@ public class ItemDetailActivity extends AppCompatActivity
     @Override
     public void onResume() {
         super.onResume();
-        int[][] arrayOfData = mPlotViewController.getPlotData();
-        int length = arrayOfData[0].length;
+        int[][] arrayOfData = mFile2PlotConverter.getPlotData();
         mPlotViewPresenter.init(1, arrayOfData);
+        int length = mPlotViewPresenter.getmDataLengthMax();
+
         mPlotViewPresenter.updateFragmentPort(0, length);
     }
 

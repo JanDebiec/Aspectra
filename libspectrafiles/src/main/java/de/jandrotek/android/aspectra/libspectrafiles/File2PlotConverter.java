@@ -1,4 +1,4 @@
-package de.jandrotek.android.aspectra.viewer;
+package de.jandrotek.android.aspectra.libspectrafiles;
 
 import java.util.ArrayList;
 
@@ -8,13 +8,13 @@ import de.jandrotek.android.aspectra.core.AspectraGlobals;
  * Created by PanJan on 02.11.2016.
  */
 
-public class FileViewerController {
+public class File2PlotConverter {
 
     private ArrayList<String> mFileNamesList = null;
 
     int[][] mPlotdataArray = null;
 
-    public FileViewerController(ArrayList<String> fileNamesList) {
+    public File2PlotConverter(ArrayList<String> fileNamesList) {
         mFileNamesList = fileNamesList;
     }
 

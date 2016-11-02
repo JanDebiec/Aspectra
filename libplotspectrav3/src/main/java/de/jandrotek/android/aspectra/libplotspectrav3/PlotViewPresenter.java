@@ -15,6 +15,11 @@ public class PlotViewPresenter {
     private static final String TAG = "PlotViewPresenter";
     private PlotViewFragment mPlotViewFragment;
     private int mItemListSizeAct = 0;// actually used
+
+    public int getmDataLengthMax() {
+        return mDataLengthMax;
+    }
+
     private int mDataLengthMax = 0;
     private int[] mPlotDataLength;
     private static final int PLOT_DATA_SIZE = AspectraGlobals.eMaxSpectrumSize;

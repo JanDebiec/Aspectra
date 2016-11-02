@@ -1,7 +1,5 @@
 package de.jandrotek.android.aspectra.core;
 
-import org.apache.commons.lang3.ArrayUtils;
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -113,7 +111,7 @@ public class SpectrumBase {
         int k = 0;
         int value;
         int[] values = new int[AspectraGlobals.eMaxSpectrumSize];
-//        mValues = new int[AspectraGlobals.eMaxSpectrumSize];
+        mValues = new int[AspectraGlobals.eMaxSpectrumSize];
         try {
             File file;
             file = new File(mFileName);// TODO:here we need the whole name with path
@@ -149,7 +147,8 @@ public class SpectrumBase {
         }
         mStartIndex = 0;
         mEndIndex = k;
-        mValues = ArrayUtils.subarray(values, mStartIndex, mEndIndex);
+        mValues = values;
+//        mValues = ArrayUtils.subarray(values, mStartIndex, mEndIndex);
         return k;
     }
 

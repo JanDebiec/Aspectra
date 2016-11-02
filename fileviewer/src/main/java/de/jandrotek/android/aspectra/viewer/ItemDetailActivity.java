@@ -45,7 +45,7 @@ public class ItemDetailActivity extends AppCompatActivity
 
             ArrayList<String> names = getIntent().getExtras().getStringArrayList(AspectraGlobals.ARG_ITEM_IDS);
             mFile2PlotConverter = new File2PlotConverter(names);
-            mPlotViewFragment = PlotViewFragment.newInstance(names != null ? names.size() : 0);
+            mPlotViewFragment = PlotViewFragment.newInstance(1);//TODO parameter?
             mFile2PlotConverter.init();
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.item_detail_container, mPlotViewFragment)

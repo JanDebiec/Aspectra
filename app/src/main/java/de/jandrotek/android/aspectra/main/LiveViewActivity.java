@@ -18,9 +18,6 @@ import de.jandrotek.android.aspectra.core.ImageProcessing;
 import de.jandrotek.android.aspectra.libplotspectrav3.PlotViewFragment;
 import de.jandrotek.android.aspectra.libplotspectrav3.PlotViewPresenter;
 
-//import de.jandrotek.android.aspectra.libplotspectrav3.PlotViewController;
-//import de.jandrotek.android.aspectra.libplotspectrav3.PlotViewControllerBuilder;
-
 /**
  * here comes the source from MainActivity_libprefs, handling CameraViewFragment,
  * and PlotViewFragment_notToUse
@@ -114,7 +111,7 @@ public class LiveViewActivity extends BaseActivity
                 AspectraGlobals.mSavePlotInFile = true;
                 return true;
             } else if (id == R.id.action_list) {
-                Intent LaunchIntent = getPackageManager().getLaunchIntentForPackage("de.jandrotek.android.aspectra.viewer");
+                Intent LaunchIntent = getPackageManager().getLaunchIntentForPackage("de.jandrotek.android.aspectra.viewer.ItemListActivity");
                 startActivity( LaunchIntent );
                 return true;
            }

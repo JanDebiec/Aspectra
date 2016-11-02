@@ -1,3 +1,6 @@
+//TODO we do need PlotViewController for that activity
+// input fileNames, output int[] data for presenter
+
 package de.jandrotek.android.aspectra.viewer;
 
 import android.annotation.TargetApi;
@@ -12,12 +15,10 @@ import android.view.MenuItem;
 import java.util.ArrayList;
 
 import de.jandrotek.android.aspectra.core.AspectraGlobals;
-import de.jandrotek.android.aspectra.libplotspectrav3.PlotViewController;
-import de.jandrotek.android.aspectra.libplotspectrav3.PlotViewControllerBuilder;
 import de.jandrotek.android.aspectra.libplotspectrav3.PlotViewFragment;
+import de.jandrotek.android.aspectra.libplotspectrav3.PlotViewPresenter;
 import de.jandrotek.android.aspectra.libprefs.AspectraGlobalPrefsActivity;
 
-//import de.jandrotek.android.aspectra.libplotspectrav3.PlotViewFragment_notToUse;
 
 public class ItemDetailActivity extends AppCompatActivity
 //        implements PlotViewFragment_notToUse.OnFragmentInteractionListener
@@ -25,7 +26,9 @@ public class ItemDetailActivity extends AppCompatActivity
 {
     private static final String TAG = "DetailItemsAct";
     private static PlotViewFragment mPlotViewFragment;
-    private static PlotViewController mPlotViewController;
+    private PlotViewPresenter mPlotViewPresenter;
+
+    private static FileViewerController mPlotViewController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,12 +43,13 @@ public class ItemDetailActivity extends AppCompatActivity
             Bundle arguments = new Bundle();
 
             ArrayList<String> names = getIntent().getExtras().getStringArrayList(AspectraGlobals.ARG_ITEM_IDS);
-            mPlotViewController = new PlotViewControllerBuilder().setParam1(AspectraGlobals.ACT_ITEM_VIEW_PLOT).setItems(names).getInstancePlotViewController();
+            mPlotViewController = new FileViewerController(names);
             mPlotViewFragment = PlotViewFragment.newInstance(names != null ? names.size() : 0);
-            mPlotViewController.init(mPlotViewFragment);
+            mPlotViewController.init();
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.item_detail_container, mPlotViewFragment)
                     .commit();
+            mPlotViewPresenter = new PlotViewPresenter(1, mPlotViewFragment);
 
             //TODO: display content
         }
@@ -67,7 +71,10 @@ public class ItemDetailActivity extends AppCompatActivity
     @Override
     public void onResume() {
         super.onResume();
-        mPlotViewController.initDisplayInFragment();// must be called when fragment already exists
+        int[][] arrayOfData = mPlotViewController.getPlotData();
+        int length = arrayOfData[0].length;
+        mPlotViewPresenter.init(1, arrayOfData);
+        mPlotViewPresenter.updateFragmentPort(0, length);
     }
 
     @Override

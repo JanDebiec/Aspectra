@@ -27,9 +27,10 @@ public class ItemDetailActivity extends AppCompatActivity
 {
     private static final String TAG = "DetailItemsAct";
     private static PlotViewFragment mPlotViewFragment;
-    private PlotViewPresenter mPlotViewPresenter;
+    private static PlotViewPresenter mPlotViewPresenter = null;
+    private static ArrayList<String> mNames = null;
 
-    private static File2PlotConverter mFile2PlotConverter;
+    private static File2PlotConverter mFile2PlotConverter = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,16 +44,20 @@ public class ItemDetailActivity extends AppCompatActivity
         if (savedInstanceState == null) {
             Bundle arguments = new Bundle();
 
-            ArrayList<String> names = getIntent().getExtras().getStringArrayList(AspectraGlobals.ARG_ITEM_IDS);
-            mFile2PlotConverter = new File2PlotConverter(names);
+            mNames = getIntent().getExtras().getStringArrayList(AspectraGlobals.ARG_ITEM_IDS);
             mPlotViewFragment = PlotViewFragment.newInstance(1);//TODO parameter?
-            mFile2PlotConverter.init();
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.item_detail_container, mPlotViewFragment)
                     .commit();
-            mPlotViewPresenter = new PlotViewPresenter(1, mPlotViewFragment);
 
             //TODO: display content
+        }
+        if (mFile2PlotConverter == null) {
+            mFile2PlotConverter = new File2PlotConverter(mNames);
+        }
+        mFile2PlotConverter.init();
+        if (mPlotViewPresenter == null) {
+            mPlotViewPresenter = new PlotViewPresenter(1, mPlotViewFragment);
         }
         // Show the Up button in the action bar.
 //        getActionBar().setDisplayHomeAsUpEnabled(true);

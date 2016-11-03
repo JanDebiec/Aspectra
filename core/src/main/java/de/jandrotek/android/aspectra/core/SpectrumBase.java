@@ -1,5 +1,7 @@
 package de.jandrotek.android.aspectra.core;
 
+import org.apache.commons.lang3.ArrayUtils;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -147,8 +149,8 @@ public class SpectrumBase {
         }
         mStartIndex = 0;
         mEndIndex = k;
-        mValues = values;
-//        mValues = ArrayUtils.subarray(values, mStartIndex, mEndIndex);
+//        mValues = values;
+        mValues = ArrayUtils.subarray(values, mStartIndex, mEndIndex);
         return k;
     }
 

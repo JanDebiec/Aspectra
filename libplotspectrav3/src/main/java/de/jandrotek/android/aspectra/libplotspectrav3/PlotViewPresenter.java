@@ -16,6 +16,12 @@ public class PlotViewPresenter {
     private PlotViewFragment mPlotViewFragment;
     private int mItemListSizeAct = 0;// actually used
 
+    public boolean isInitialized() {
+        return mInitialized;
+    }
+
+    private boolean mInitialized = false;
+
     public int getmDataLengthMax() {
         return mDataLengthMax;
     }
@@ -45,7 +51,7 @@ public class PlotViewPresenter {
         for (int i = 0; i < mItemListSizeAct; i++) {// must be new
             addPlot(data[i]);
         }
-
+        mInitialized = true;
     }
 
     public void addPlot(int [] data){

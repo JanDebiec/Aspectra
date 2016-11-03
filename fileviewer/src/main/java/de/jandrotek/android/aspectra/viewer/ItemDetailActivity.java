@@ -78,10 +78,14 @@ public class ItemDetailActivity extends AppCompatActivity
     public void onResume() {
         super.onResume();
         int[][] arrayOfData = mFile2PlotConverter.getPlotData();
-        mPlotViewPresenter.init(1, arrayOfData);
-        int length = mPlotViewPresenter.getmDataLengthMax();
+        if (!mPlotViewPresenter.isInitialized()) {
+            mPlotViewPresenter.init(1, arrayOfData);
+            int length = mPlotViewPresenter.getmDataLengthMax();
 
-        mPlotViewPresenter.updateFragmentPort(0, length);
+            mPlotViewPresenter.updateFragmentPort(0, length);
+        } else {
+            mPlotViewPresenter.createSinglePlot(0, arrayOfData[0]);
+        }
     }
 
     @Override

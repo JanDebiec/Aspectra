@@ -52,7 +52,7 @@ public class PlotViewFragment extends Fragment
     // TODO: Rename and change types of parameters
     private int mParam1;
 
-    private GraphView mGraphView;
+    private GraphView mGraphView = null;
     //ver 3
     public GraphViewSeries[] mDataSeries = null;
     private GraphViewSeries.GraphViewSeriesStyle[] mGraphStyle;

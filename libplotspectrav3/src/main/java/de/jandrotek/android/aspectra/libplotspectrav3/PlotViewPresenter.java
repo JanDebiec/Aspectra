@@ -20,7 +20,7 @@ public class PlotViewPresenter {
         return mInitialized;
     }
 
-    private boolean mInitialized = false;
+    private static boolean mInitialized = false;
 
     public int getmDataLengthMax() {
         return mDataLengthMax;

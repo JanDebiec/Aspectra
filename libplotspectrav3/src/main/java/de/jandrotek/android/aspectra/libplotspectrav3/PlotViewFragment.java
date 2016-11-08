@@ -52,7 +52,7 @@ public class PlotViewFragment extends Fragment
     // TODO: Rename and change types of parameters
     private int mParam1;
 
-    private GraphView mGraphView = null;
+    private static GraphView mGraphView = null;
     //ver 3
     public GraphViewSeries[] mDataSeries = null;
     private GraphViewSeries.GraphViewSeriesStyle[] mGraphStyle;
@@ -113,13 +113,16 @@ public class PlotViewFragment extends Fragment
                              Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.fragment_plot_view, container, false);
-        mGraphView = new LineGraphView(getActivity(), "");
-        mGraphView.getGraphViewStyle().setTextSize(20);
-        mGraphView.getGraphViewStyle().setNumHorizontalLabels(5);
-        mGraphView.getGraphViewStyle().setNumVerticalLabels(5);
-        registerForContextMenu(mGraphView);
-        FrameLayout mFrameLayout = (FrameLayout) rootView.findViewById(R.id.flPlotView);
-        mFrameLayout.addView(mGraphView);
+        if (mGraphView == null) {
+            mGraphView = new LineGraphView(getActivity(), "");
+
+            mGraphView.getGraphViewStyle().setTextSize(20);
+            mGraphView.getGraphViewStyle().setNumHorizontalLabels(5);
+            mGraphView.getGraphViewStyle().setNumVerticalLabels(5);
+            registerForContextMenu(mGraphView);
+            FrameLayout mFrameLayout = (FrameLayout) rootView.findViewById(R.id.flPlotView);
+            mFrameLayout.addView(mGraphView);
+        }
 
         mInitialization |= eViewInitialized;
         return rootView;

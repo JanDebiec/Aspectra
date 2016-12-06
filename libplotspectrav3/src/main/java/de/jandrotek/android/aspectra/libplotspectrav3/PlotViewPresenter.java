@@ -49,31 +49,39 @@ public class PlotViewPresenter {
         }
         mPlotDataLength = new int[AspectraGlobals.eMaxPlotCount];
         for (int i = 0; i < mItemListSizeAct; i++) {// must be new
-            addPlot(data[i]);
+            addPlot(i, data[i]);
         }
         mInitialized = true;
     }
 
-    public void addPlot(int [] data){
+    public void addPlot(int index,int [] data){
         //TODO increment spectra count in fragment
 //        mItemListSizeAct++;
-        createSinglePlot(mItemListSizeAct - 1, data);
+        int length = data.length;
+        if(length > 0) {
+            mPlotDataLength[index] = length;
+            GraphView.GraphViewData[] realData = createSinglePlot(data);
+            mPlotViewFragment.createPlotSerie(index, realData);
+        }
     }
 
     public void updateSinglePlot(int index, int[] data) {
         int length = data.length;
-        mPlotDataLength[index] = length;
-        GraphView.GraphViewData[] realData = generateData(data, length);
-        if (mPlotViewFragment.isFullInitialized()) {
-            mPlotViewFragment.updateSinglePlot(index, realData);// in live view, here we get null exception
+        if(length > 0) {
+            mPlotDataLength[index] = length;
+            GraphView.GraphViewData[] realData = generateData(data, length);
+            if (mPlotViewFragment.isFullInitialized()) {
+                mPlotViewFragment.updateSinglePlot(index, realData);// in live view, here we get null exception
+            }
         }
     }
 
-    public void createSinglePlot(int index, int[] data) {
+    public GraphView.GraphViewData[] createSinglePlot(int[] data) {
         int length = data.length;
-        mPlotDataLength[index] = length;
+//        mPlotDataLength[index] = length;
         GraphView.GraphViewData[] realData = generateData(data, length);
-        mPlotViewFragment.createPlotSerie(index, realData);
+        return realData;
+//        mPlotViewFragment.createPlotSerie(index, realData);
     }
 
     public void updateFragmentPort(int start, int end) {

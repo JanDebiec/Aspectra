@@ -84,7 +84,7 @@ public class ItemDetailActivity extends AppCompatActivity
 
             mPlotViewPresenter.updateFragmentPort(0, length);
         } else {
-            mPlotViewPresenter.createSinglePlot(0, arrayOfData[0]);
+            mPlotViewPresenter.addPlot(0, arrayOfData[0]);
         }
     }
 

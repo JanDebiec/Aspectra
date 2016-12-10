@@ -53,8 +53,9 @@ public class PlotViewFragment extends Fragment
     private int mParam1;
 
     private static GraphView mGraphView = null;
+    private FrameLayout mFrameLayout = null;
     //ver 3
-    public GraphViewSeries[] mDataSeries = null;
+    private GraphViewSeries[] mDataSeries = null;
     private GraphViewSeries.GraphViewSeriesStyle[] mGraphStyle;
 
     public void setItemlistSize(int mItemlistSize) {
@@ -69,7 +70,7 @@ public class PlotViewFragment extends Fragment
     }
 
     public boolean isReady4Plot() {
-        return (mInitialization == eReady4Plot);
+        return (mInitialization >= eReady4Plot);
     }
 
     private GraphViewSeries singleSerie = null;
@@ -99,7 +100,9 @@ public class PlotViewFragment extends Fragment
         super.onCreate(savedInstanceState);
 
         // empty array created
-        mDataSeries = new GraphViewSeries[AspectraGlobals.eMaxPlotCount];
+        if(mDataSeries == null) {
+            mDataSeries = new GraphViewSeries[AspectraGlobals.eMaxPlotCount];
+        }
         mDataLengthMax = PLOT_DATA_SIZE;
         mColor = new int[3];
         mColor[0] = Color.rgb(255, 0, 0);
@@ -119,11 +122,16 @@ public class PlotViewFragment extends Fragment
             mGraphView.getGraphViewStyle().setTextSize(20);
             mGraphView.getGraphViewStyle().setNumHorizontalLabels(5);
             mGraphView.getGraphViewStyle().setNumVerticalLabels(5);
-            registerForContextMenu(mGraphView);
-            FrameLayout mFrameLayout = (FrameLayout) rootView.findViewById(R.id.flPlotView);
+        }
+        registerForContextMenu(mGraphView);
+        if(mFrameLayout == null) {
+            mFrameLayout = (FrameLayout) rootView.findViewById(R.id.flPlotView);
+            mFrameLayout.addView(mGraphView);
+        } else {
+            mFrameLayout = (FrameLayout) rootView.findViewById(R.id.flPlotView);
+            mFrameLayout.removeView(mGraphView);
             mFrameLayout.addView(mGraphView);
         }
-
         mInitialization |= eViewInitialized;
         return rootView;
     }
@@ -141,6 +149,16 @@ public class PlotViewFragment extends Fragment
         mInitialization = 0;
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        if (mGraphView != null) {
+            ViewGroup parentViewGroup = (ViewGroup) mGraphView.getParent();
+            if (parentViewGroup != null) {
+                parentViewGroup.removeAllViews();
+            }
+        }
+    }
     @Override
     public void onStop() {
         super.onStop();
@@ -196,7 +214,12 @@ public class PlotViewFragment extends Fragment
     }
 
     public void updateSinglePlot(int index, GraphView.GraphViewData[] realData){
-        mDataSeries[index].resetData(realData);// in live view, here we get null exception
+        if(mDataSeries[index] == null){
+            createPlotSerie(index, realData);
+        } else {
+            mDataSeries[index].resetData(realData);// in live view, here we get null exception
+            mGraphView.redrawAll();
+        }
     }
 }
 

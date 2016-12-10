@@ -70,9 +70,10 @@ public class PlotViewPresenter {
         if(length > 0) {
             mPlotDataLength[index] = length;
             GraphView.GraphViewData[] realData = generateData(data, length);
-            if (mPlotViewFragment.isFullInitialized()) {
+            if (mPlotViewFragment.isReady4Plot()) {
                 mPlotViewFragment.updateSinglePlot(index, realData);// in live view, here we get null exception
             }
+            updateFragmentPort(0,length);
         }
     }
 

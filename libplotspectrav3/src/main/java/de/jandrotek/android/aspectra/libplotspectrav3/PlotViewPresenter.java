@@ -60,7 +60,7 @@ public class PlotViewPresenter {
         int length = data.length;
         if(length > 0) {
             mPlotDataLength[index] = length;
-            GraphView.GraphViewData[] realData = createSinglePlot(data);
+            GraphView.GraphViewData[] realData = createSinglePlotData(data);
             mPlotViewFragment.createPlotSerie(index, realData);
         }
     }
@@ -77,12 +77,10 @@ public class PlotViewPresenter {
         }
     }
 
-    public GraphView.GraphViewData[] createSinglePlot(int[] data) {
+    public GraphView.GraphViewData[] createSinglePlotData(int[] data) {
         int length = data.length;
-//        mPlotDataLength[index] = length;
         GraphView.GraphViewData[] realData = generateData(data, length);
         return realData;
-//        mPlotViewFragment.createPlotSerie(index, realData);
     }
 
     public void updateFragmentPort(int start, int end) {

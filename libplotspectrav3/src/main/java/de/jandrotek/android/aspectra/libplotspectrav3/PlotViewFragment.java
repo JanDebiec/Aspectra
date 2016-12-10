@@ -52,6 +52,7 @@ public class PlotViewFragment extends Fragment
     // TODO: Rename and change types of parameters
     private int mParam1;
 
+    private View mRootView = null;
     private static GraphView mGraphView = null;
     private FrameLayout mFrameLayout = null;
     //ver 3
@@ -114,8 +115,7 @@ public class PlotViewFragment extends Fragment
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
-        View rootView = inflater.inflate(R.layout.fragment_plot_view, container, false);
+        mRootView = inflater.inflate(R.layout.fragment_plot_view, container, false);
         if (mGraphView == null) {
             mGraphView = new LineGraphView(getActivity(), "");
 
@@ -125,15 +125,15 @@ public class PlotViewFragment extends Fragment
         }
         registerForContextMenu(mGraphView);
         if(mFrameLayout == null) {
-            mFrameLayout = (FrameLayout) rootView.findViewById(R.id.flPlotView);
+            mFrameLayout = (FrameLayout) mRootView.findViewById(R.id.flPlotView);
             mFrameLayout.addView(mGraphView);
         } else {
-            mFrameLayout = (FrameLayout) rootView.findViewById(R.id.flPlotView);
+            mFrameLayout = (FrameLayout) mRootView.findViewById(R.id.flPlotView);
             mFrameLayout.removeView(mGraphView);
             mFrameLayout.addView(mGraphView);
         }
         mInitialization |= eViewInitialized;
-        return rootView;
+        return mRootView;
     }
 
 
@@ -218,7 +218,7 @@ public class PlotViewFragment extends Fragment
             createPlotSerie(index, realData);
         } else {
             mDataSeries[index].resetData(realData);// in live view, here we get null exception
-            mGraphView.redrawAll();
+    //        mGraphView.redrawAll();
         }
     }
 }

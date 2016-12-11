@@ -53,9 +53,9 @@ public class ItemDetailActivity extends AppCompatActivity
             //TODO: display content
         }
         if (mFile2PlotConverter == null) {
-            mFile2PlotConverter = new File2PlotConverter(mNames);
+            mFile2PlotConverter = new File2PlotConverter();
         }
-        mFile2PlotConverter.init();
+        mFile2PlotConverter.init(mNames);
         if (mPlotViewPresenter == null) {
             mPlotViewPresenter = new PlotViewPresenter(1, mPlotViewFragment);
         }

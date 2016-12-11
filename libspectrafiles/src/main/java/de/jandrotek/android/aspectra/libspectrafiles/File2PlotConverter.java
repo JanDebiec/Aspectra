@@ -18,16 +18,16 @@ public class File2PlotConverter {
     private SpectrumBase[] mSpectrumFiles = null;
     private int[] mPlotDataLength;
 
-    public File2PlotConverter(ArrayList<String> fileNamesList) {
+    public File2PlotConverter() {
         mPlotdataArray = new int[AspectraGlobals.eMaxPlotCount][];
         mFileNames = new String[AspectraGlobals.eMaxPlotCount];
         mSpectrumFiles = new SpectrumBase[AspectraGlobals.eMaxPlotCount];
         mPlotDataLength = new int[AspectraGlobals.eMaxPlotCount];
         mPlotdataArray = new int[AspectraGlobals.eMaxPlotCount][];
-        mFileNamesList = fileNamesList;
     }
 
-    public void init() {
+    public void init(ArrayList<String> fileNamesList) {
+        mFileNamesList = fileNamesList;
         int size = mFileNamesList.size();
         if (size > AspectraGlobals.eMaxPlotCount) {
             size = AspectraGlobals.eMaxSpectrumSize;
@@ -46,6 +46,7 @@ public class File2PlotConverter {
             }
         }
     }
+
 
     public int[][] getPlotData() {
         return mPlotdataArray;

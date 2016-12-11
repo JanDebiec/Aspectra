@@ -211,6 +211,7 @@ public class PlotViewFragment extends Fragment
                 realData);
         mInitialization |= eContentInitialized;
         mGraphView.addSeries(mDataSeries[index]);
+
     }
 
     public void updateSinglePlot(int index, GraphView.GraphViewData[] realData){

@@ -31,6 +31,7 @@ public class ItemDetailActivity extends AppCompatActivity
     private static ArrayList<String> mNames = null;
 
     private static File2PlotConverter mFile2PlotConverter = null;
+    private int mPlotCount = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,9 +56,10 @@ public class ItemDetailActivity extends AppCompatActivity
         if (mFile2PlotConverter == null) {
             mFile2PlotConverter = new File2PlotConverter();
         }
+        mPlotCount = mNames.size();
         mFile2PlotConverter.init(mNames);
         if (mPlotViewPresenter == null) {
-            mPlotViewPresenter = new PlotViewPresenter(1, mPlotViewFragment);
+            mPlotViewPresenter = new PlotViewPresenter(mPlotCount, mPlotViewFragment);
         }
         // Show the Up button in the action bar.
 //        getActionBar().setDisplayHomeAsUpEnabled(true);
@@ -78,13 +80,19 @@ public class ItemDetailActivity extends AppCompatActivity
     public void onResume() {
         super.onResume();
         int[][] arrayOfData = mFile2PlotConverter.getPlotData();
+//        mPlotCount = arrayOfData.length;
         if (!mPlotViewPresenter.isInitialized()) {
-            mPlotViewPresenter.init(1, arrayOfData);
+            mPlotViewPresenter.init(mPlotCount, arrayOfData);
             int length = mPlotViewPresenter.getmDataLengthMax();
 
             mPlotViewPresenter.updateFragmentPort(0, length);
         } else {
-            mPlotViewPresenter.updateSinglePlot(0, arrayOfData[0]);
+            // clear all plots
+            //        mGraphView.removeAllSeries();
+
+            for(int i = 0; i < mPlotCount; i++) {
+                mPlotViewPresenter.updateSinglePlot(i, arrayOfData[i]);
+            }
         }
     }
 

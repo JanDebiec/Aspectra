@@ -8,8 +8,7 @@ import de.jandrotek.android.aspectra.core.AspectraGlobals;
 
 /**
  * Created by jan on 03.09.15.
- * TODO: mSpectraPlotCount must be able to handle more sprectra as only one
- */
+// */
 public class PlotViewPresenter {
 
     private static final String TAG = "PlotViewPresenter";
@@ -28,7 +27,7 @@ public class PlotViewPresenter {
 
     private int mDataLengthMax = 0;
     private int[] mPlotDataLength;
-    private static final int PLOT_DATA_SIZE = AspectraGlobals.eMaxSpectrumSize;
+//    private static final int PLOT_DATA_SIZE = AspectraGlobals.eMaxSpectrumSize;
     private int realPlotDataSize = 0;//PLOT_DATA_SIZE;
     private int mCallerActivity = -1;
 
@@ -40,7 +39,6 @@ public class PlotViewPresenter {
 
     public void init(int plotCount, int [][] data) {
         if(plotCount <= AspectraGlobals.eMaxPlotCount) {
-            //TODO message to fragment, how many spectra
             mPlotViewFragment.setItemlistSize(plotCount);
             mItemListSizeAct = plotCount;
         } else {
@@ -55,8 +53,6 @@ public class PlotViewPresenter {
     }
 
     public void addPlot(int index,int [] data){
-        //TODO increment spectra count in fragment
-//        mItemListSizeAct++;
         int length = data.length;
         if(length > 0) {
             mPlotDataLength[index] = length;
@@ -127,5 +123,9 @@ public class PlotViewPresenter {
             }
         }
         return max;
+    }
+
+    public void clearAllSeries(){
+        mPlotViewFragment.clearPlotSeries();
     }
 }

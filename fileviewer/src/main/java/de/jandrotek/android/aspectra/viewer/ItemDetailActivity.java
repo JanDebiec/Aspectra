@@ -80,20 +80,11 @@ public class ItemDetailActivity extends AppCompatActivity
     public void onResume() {
         super.onResume();
         int[][] arrayOfData = mFile2PlotConverter.getPlotData();
-//        mPlotCount = arrayOfData.length;
-        if (!mPlotViewPresenter.isInitialized()) {
-            mPlotViewPresenter.init(mPlotCount, arrayOfData);
-            int length = mPlotViewPresenter.getmDataLengthMax();
+        mPlotViewPresenter.clearAllSeries();
+        mPlotViewPresenter.init(mPlotCount, arrayOfData);
+        int length = mPlotViewPresenter.getmDataLengthMax();
 
-            mPlotViewPresenter.updateFragmentPort(0, length);
-        } else {
-            // clear all plots
-            //        mGraphView.removeAllSeries();
-
-            for(int i = 0; i < mPlotCount; i++) {
-                mPlotViewPresenter.updateSinglePlot(i, arrayOfData[i]);
-            }
-        }
+        mPlotViewPresenter.updateFragmentPort(0, length);
     }
 
     @Override

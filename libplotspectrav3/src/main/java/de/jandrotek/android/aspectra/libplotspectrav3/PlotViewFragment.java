@@ -169,7 +169,6 @@ public class PlotViewFragment extends Fragment
         super.onResume();
     }
 
-    //TODO will not working
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v,
                                     ContextMenu.ContextMenuInfo menuInfo) {
@@ -207,7 +206,8 @@ public class PlotViewFragment extends Fragment
 
         mDataSeries[index] = new GraphViewSeries(
                 "",
-                new GraphViewSeries.GraphViewSeriesStyle(Color.rgb(255, 0, 0), 1),
+                new GraphViewSeries.GraphViewSeriesStyle(mColor[colorIndex],1),
+
                 realData);
         mInitialization |= eContentInitialized;
         mGraphView.addSeries(mDataSeries[index]);
@@ -219,8 +219,11 @@ public class PlotViewFragment extends Fragment
             createPlotSerie(index, realData);
         } else {
             mDataSeries[index].resetData(realData);// in live view, here we get null exception
-    //        mGraphView.redrawAll();
         }
+    }
+
+    public void clearPlotSeries(){
+        mGraphView.removeAllSeries();
     }
 }
 

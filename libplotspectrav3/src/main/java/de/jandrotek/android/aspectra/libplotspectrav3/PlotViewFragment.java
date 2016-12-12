@@ -158,12 +158,14 @@ public class PlotViewFragment extends Fragment
                 parentViewGroup.removeAllViews();
             }
         }
+        mInitialization = eClassCreated;
     }
     @Override
     public void onStop() {
         super.onStop();
         clearPlotSeries();
         mInitialization = eClassCreated;
+        mInitialization |= eViewInitialized;
     }
 
     @Override

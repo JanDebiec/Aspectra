@@ -71,7 +71,7 @@ public class PlotViewFragment extends Fragment
     }
 
     public boolean isReady4Plot() {
-        return (mInitialization >= eReady4Plot);
+        return (mInitialization == eReady4Plot);
     }
 
     private GraphViewSeries singleSerie = null;
@@ -162,6 +162,8 @@ public class PlotViewFragment extends Fragment
     @Override
     public void onStop() {
         super.onStop();
+        clearPlotSeries();
+        mInitialization = eClassCreated;
     }
 
     @Override

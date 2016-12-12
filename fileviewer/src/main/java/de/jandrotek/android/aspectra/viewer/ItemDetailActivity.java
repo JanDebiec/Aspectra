@@ -79,6 +79,7 @@ public class ItemDetailActivity extends AppCompatActivity
     @Override
     public void onResume() {
         super.onResume();
+        mPlotViewPresenter.clearAllSeries();
         int[][] arrayOfData = mFile2PlotConverter.getPlotData();
         mPlotViewPresenter.clearAllSeries();
         mPlotViewPresenter.init(mPlotCount, arrayOfData);

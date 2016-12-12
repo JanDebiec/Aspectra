@@ -45,7 +45,10 @@ public class PlotViewPresenter {
             mPlotViewFragment.setItemlistSize(AspectraGlobals.eMaxPlotCount);
             mItemListSizeAct = AspectraGlobals.eMaxPlotCount;
         }
-        mPlotDataLength = new int[AspectraGlobals.eMaxPlotCount];
+        if (mPlotDataLength == null) {
+            mPlotDataLength = new int[AspectraGlobals.eMaxPlotCount];
+        }
+
         for (int i = 0; i < mItemListSizeAct; i++) {// must be new
             addPlot(i, data[i]);
         }
@@ -64,9 +67,12 @@ public class PlotViewPresenter {
     public void updateSinglePlot(int index, int[] data) {
         int length = data.length;
         if(length > 0) {
+            if (mPlotDataLength == null) {
+                mPlotDataLength = new int[AspectraGlobals.eMaxPlotCount];
+            }
             mPlotDataLength[index] = length;
             GraphView.GraphViewData[] realData = generateData(data, length);
-            if (mPlotViewFragment.isReady4Plot()) {
+            if (mPlotViewFragment.isFullInitialized()) {
                 mPlotViewFragment.updateSinglePlot(index, realData);// in live view, here we get null exception
             }
             updateFragmentPort(0,length);

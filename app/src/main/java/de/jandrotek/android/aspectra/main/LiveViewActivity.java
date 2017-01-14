@@ -10,6 +10,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import java.io.IOException;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 
@@ -111,8 +112,14 @@ public class LiveViewActivity extends BaseActivity
                 AspectraGlobals.mSavePlotInFile = true;
                 return true;
             } else if (id == R.id.action_list) {
-                Intent LaunchIntent = getPackageManager().getLaunchIntentForPackage("de.jandrotek.android.aspectra.viewer.ItemListActivity");
-                startActivity( LaunchIntent );
+
+                Intent LaunchIntent = getPackageManager().getLaunchIntentForPackage("de.jandrotek.android.aspectra.viewer");
+                if (LaunchIntent != null) {
+                    startActivity(LaunchIntent);
+                } else {
+                    Toast.makeText(this, R.string.viewerWarning, Toast.LENGTH_LONG)
+                            .show();
+                }
                 return true;
            }
         return super.onOptionsItemSelected(item);

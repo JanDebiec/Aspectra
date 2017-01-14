@@ -35,6 +35,7 @@
     <string name="action_analyze">Analyze</string>
     <string name="action_list">List</string>
     <string name="title_activity_global_prefs">global preferences</string>
+    <string name="viewerWarning">Viewer can not be started</string>
 
 
 </resources>

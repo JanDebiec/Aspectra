@@ -1,26 +1,42 @@
 apply plugin: 'com.android.application'
 
-def gitVersion() {
-    if (!System.getenv('CI_BUILD')) {
-        // don't care
-        return 1
-    }
-    def cmd = 'git rev-list HEAD --first-parent --count'
-    cmd.execute().text.trim().toInteger()
-}
+//def gitVersion() {
+//    if (!System.getenv('CI_BUILD')) {
+//        // don't care
+//        return 1
+//    }
+//    def cmd = 'git rev-list HEAD --first-parent --count'
+//    cmd.execute().text.trim().toInteger()
+//}
 
 
 android {
     compileSdkVersion tools.cSV
     buildToolsVersion tools.bTV
 
-    defaultConfig {
-        applicationId "de.jandrotek.android.aspectra.mini"
-        minSdkVersion 15
-        targetSdkVersion 22
-//        versionCode 1
-        versionCode gitVersion()
-        versionName "1.0"
+    def versionPropsFile = file('version.properties')
+    if (versionPropsFile.canRead()) {
+        def Properties versionProps = new Properties()
+
+        versionProps.load(new FileInputStream(versionPropsFile))
+
+
+        def versionMajor = versionProps['VERSION_MAJOR'].toInteger()
+        def versionMinor = versionProps['VERSION_MINOR'].toInteger()
+        def versionBuild = versionProps['VERSION_BUILD'].toInteger()
+        def versionNumber = versionProps['VERSION_CODE'].toInteger()
+
+        defaultConfig {
+
+            applicationId "de.jandrotek.android.aspectra.mini"
+            minSdkVersion 15
+            targetSdkVersion 22
+            versionCode versionNumber
+            versionName "${versionMajor}.${versionMinor}.${versionBuild} Release"
+
+        }
+    }  else {
+        throw new GradleException("Could not read version.properties!")
     }
     buildTypes {
         release {

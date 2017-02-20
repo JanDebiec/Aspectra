@@ -49,6 +49,7 @@
     <string name="error_no_email_app">No email app found</string>
     <string name="feedback_body">[Your feedback here]</string>
     <string name="argument_error">Error: %s</string>
+    <string name="content_version">App version = </string>
 
 
 </resources>

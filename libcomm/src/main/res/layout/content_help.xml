@@ -13,4 +13,24 @@
     tools:context="de.jandrotek.android.aspectra.libcomm.HelpActivity"
     tools:showIn="@layout/activity_help">
 
+    <TextView
+        android:text="@string/helpText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="78dp"
+        android:id="@+id/textView3" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="www.jandrotek.de"
+        android:autoLink="web"
+        android:ems="10"
+        android:id="@+id/webpageAddr"
+        android:layout_below="@+id/textView3"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp" />
+
 </RelativeLayout>

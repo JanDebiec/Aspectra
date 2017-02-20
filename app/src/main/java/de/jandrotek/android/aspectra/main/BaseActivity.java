@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import de.jandrotek.android.aspectra.core.AspectraGlobals;
 import de.jandrotek.android.aspectra.core.ConfigViewSettings;
+import de.jandrotek.android.aspectra.libcomm.HelpActivity;
 import de.jandrotek.android.aspectra.libprefs.AspectraLiveViewPrefs;
 import de.jandrotek.android.aspectra.libprefs.AspectraGlobalPrefsActivity;
 import de.jandrotek.android.aspectra.libspectrafiles.SpectrumFiles;
@@ -94,6 +95,10 @@ public class BaseActivity extends AppCompatActivity //ActionBarActivity
             sendFeedback();
         } else if (id == R.id.action_about){
             showVersion();
+        } else if (id == R.id.action_help) {
+            Intent intent = new Intent(this, HelpActivity.class);
+            startActivity(intent);
+            return true;
         }
         return super.onOptionsItemSelected(item);
 

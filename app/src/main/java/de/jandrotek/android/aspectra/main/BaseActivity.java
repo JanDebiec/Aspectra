@@ -6,9 +6,11 @@ import android.content.res.Configuration;
 import android.preference.PreferenceManager;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import de.jandrotek.android.aspectra.core.AspectraGlobals;
 import de.jandrotek.android.aspectra.core.ConfigViewSettings;
@@ -16,9 +18,11 @@ import de.jandrotek.android.aspectra.libprefs.AspectraLiveViewPrefs;
 import de.jandrotek.android.aspectra.libprefs.AspectraGlobalPrefsActivity;
 import de.jandrotek.android.aspectra.libspectrafiles.SpectrumFiles;
 
+import de.cketti.mailto.EmailIntentBuilder;
+
 public class BaseActivity extends AppCompatActivity //ActionBarActivity
 {
-
+    protected View mainContent;
 //    protected static final int ACT_ITEM_LIVE_VIEW   = 0;
 //    protected static final int ACT_ITEM_VIEW_CONFIG = 1;
 //    protected static final int ACT_ITEM_VIEW_PLOT   = 2;
@@ -82,6 +86,8 @@ public class BaseActivity extends AppCompatActivity //ActionBarActivity
             mViewSettings.clearSpectrumOrientFlag();
             startActivity(intent);
             return true;
+        } else if (id == R.id.menu_feedback){
+            sendFeedback();
         }
         return super.onOptionsItemSelected(item);
 
@@ -152,6 +158,17 @@ public class BaseActivity extends AppCompatActivity //ActionBarActivity
             mViewSettings = ConfigViewSettings.getInstance();
         }
         mViewSettings.setDeviceOrientation(mDeviceOrientation);
+    }
+    protected void sendFeedback() {
+        boolean success = EmailIntentBuilder.from(this)
+                .to("jan.debiec@ue-mail.de")
+                .subject(getString(R.string.feedback_subject))
+                .body(getString(R.string.feedback_body))
+                .start();
+
+        if (!success) {
+            Snackbar.make(mainContent, R.string.error_no_email_app, Snackbar.LENGTH_LONG).show();
+        }
     }
 }
 

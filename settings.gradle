@@ -1,1 +1,1 @@
-include ':app', ':core', ':touchtest', ':fileviewer', ':libtouch', ':libprefs', ':libspectrafiles', ':libplotspectrav3', ':analyze', ':plottest', ':espressofirsttest'
+include ':app', ':core', ':touchtest', ':fileviewer', ':libtouch', ':libprefs', ':libspectrafiles', ':libplotspectrav3', ':analyze', ':plottest', ':espressofirsttest', ':mailtest', ':libmail'

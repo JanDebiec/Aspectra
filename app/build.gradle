@@ -62,5 +62,6 @@ dependencies {
     compile project(':libspectrafiles')
     compile project(':core')
     compile project(':libprefs')
+    compile project(':libmail')
 }
 

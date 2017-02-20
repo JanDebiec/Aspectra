@@ -25,7 +25,8 @@ import de.cketti.mailto.EmailIntentBuilder;
 
 public class BaseActivity extends AppCompatActivity //ActionBarActivity
 {
-    protected View mainContent;
+    protected View topView;
+
 //    protected static final int ACT_ITEM_LIVE_VIEW   = 0;
 //    protected static final int ACT_ITEM_VIEW_CONFIG = 1;
 //    protected static final int ACT_ITEM_VIEW_PLOT   = 2;
@@ -165,6 +166,7 @@ public class BaseActivity extends AppCompatActivity //ActionBarActivity
         mViewSettings.setDeviceOrientation(mDeviceOrientation);
     }
     protected void sendFeedback() {
+        topView =  getWindow().getDecorView().getRootView();
         boolean success = EmailIntentBuilder.from(this)
                 .to("jan.debiec@ue-mail.de")
                 .subject(getString(R.string.feedback_subject))
@@ -172,7 +174,7 @@ public class BaseActivity extends AppCompatActivity //ActionBarActivity
                 .start();
 
         if (!success) {
-            Snackbar.make(mainContent, R.string.error_no_email_app, Snackbar.LENGTH_LONG).show();
+            Snackbar.make(topView, R.string.error_no_email_app, Snackbar.LENGTH_LONG).show();
         }
     }
 
@@ -181,9 +183,14 @@ public class BaseActivity extends AppCompatActivity //ActionBarActivity
         PackageInfo pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
         String version = pInfo.versionName;
         int verCode = pInfo.versionCode;
+            topView =  getWindow().getDecorView().getRootView();
         String stringToDisplay = getString(R.string.content_version) + version;
-        Toast.makeText(this, stringToDisplay, Toast.LENGTH_LONG)
-                .show();
+
+            // this snackbar overlaps the action bar in portrait mode
+            Snackbar.make(topView, stringToDisplay, Snackbar.LENGTH_LONG).show();
+
+//            Toast.makeText(this, stringToDisplay, Toast.LENGTH_LONG)
+//                .show();
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }

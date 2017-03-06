@@ -38,4 +38,4 @@ This project is licensed under GNU Lesser General Public License
 - cketti (mailto in libcomm)
 
 ## Aspectra webpage
-[Aspectra] (www.jandroitek.de)
+[Aspectra] (www.jandrotek.de)

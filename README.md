@@ -31,8 +31,11 @@ This project is licensed under GNU Lesser General Public License
 ## Acknowledgments
 
 - [Dietrich Hubert] (http://dietrich-huebert.de.tl/) who helped me to construct the spectrograph 
-- Matthias Kunkel, Philipp Nimtsch, for inspiration and help in optics
+- Matthias Kunkel, Philipp Nimtsch, for inspiration and help in the optics
 
 ### Some open source code was used from:
 - Jonas Gehring (libplot in libplotspectra)
 - cketti (mailto in libcomm)
+
+## Aspectra webpage
+[Aspectra] (www.jandroitek.de)

@@ -53,6 +53,7 @@ android {
 //        incremental true
 //    }
 //    buildToolsVersion '23.0.2'
+    buildToolsVersion '25.0.0'
 }
 
 dependencies {

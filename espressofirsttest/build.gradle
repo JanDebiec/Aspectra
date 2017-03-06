@@ -21,13 +21,10 @@ android {
         }
     }
 
-//    android {
     packagingOptions {
         exclude 'LICENSE.txt'
     }
-//    }
 
-    buildToolsVersion '23.0.2'
 }
 
 dependencies {

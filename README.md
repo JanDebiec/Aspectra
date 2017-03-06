@@ -5,7 +5,7 @@ Aspectra system Android sources
 
 Project is a "living Object" consists of main apps, some libraries and some helper apps.
 
-A Github Aspectra repo is more my "personal scratch pad" as official public repository.
+A Github Aspectra repo is more my "personal scratch pad" as a official public repository.
 
 ## Main apps
   - app: Aspectra-Mini, the main application LiveViewer

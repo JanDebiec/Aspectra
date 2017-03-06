@@ -1,12 +1,20 @@
 # Aspectra
-aspectra apps with flavors
+aspectra system
 2015.04.14 init
-  based on AspectraMini, with separate modules; core (pure java lib) and some android libs. 
+Project is a "living Object" consists of main apps, some libraries and some testing apps.
+## Main apps
+  - app: LiveViewer
+  - fileviewer: 
+  - analyze:
+## Libraries  
+  - core (pure java)
+  - libcomm
+  - libplotspectra
+  - libprefs
+  - libspectrafiles
+  - libtouch
+### Helper apps (helper to learn som android aspects, f.i. multitouch)  
+  - plottest
+  - touchtest
+  - webtest
   
-  Applications:
-  
-  app: LiveViewer
-  
-  fileviewer: 
-  
-  analyze:

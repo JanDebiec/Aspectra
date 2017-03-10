@@ -19,6 +19,9 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+//    dexOptions {
+//        preDexLibraries = false
+//    }
 }
 
 dependencies {
@@ -26,10 +29,12 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile 'com.android.support:appcompat-v7:24.2.1'
-    compile 'com.android.support:design:24.2.1'
-    compile 'com.jakewharton:butterknife:7.0.1'
+    compile supportDependencies.appCompat
+//    compile 'com.android.support:appcompat-v7:24.2.1'
+    compile supportDependencies.design
+//    compile 'com.android.support:design:24.2.1'
+//    compile 'com.jakewharton:butterknife:7.0.1'
 
-    compile 'de.cketti.mailto:email-intent-builder:1.0.0'
+//    compile 'de.cketti.mailto:email-intent-builder:1.0.0'
     testCompile 'junit:junit:4.12'
 }

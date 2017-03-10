@@ -54,12 +54,18 @@ android {
 //    }
 //    buildToolsVersion '23.0.2'
     buildToolsVersion '25.0.0'
+
+    dexOptions {
+        preDexLibraries = false
+    }
 }
 
 dependencies {
     // new one
     compile supportDependencies.appCompat
     compile project(':libplotspectrav3')
+//    compile supportDependencies.design
+//    compile supportDependencies.support
     compile project(':libspectrafiles')
     compile project(':core')
     compile project(':libprefs')

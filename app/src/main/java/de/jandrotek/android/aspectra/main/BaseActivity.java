@@ -191,7 +191,7 @@ public class BaseActivity extends AppCompatActivity //ActionBarActivity
     protected void sendFeedback() {
         topView =  getWindow().getDecorView().getRootView();
         boolean success = EmailIntentBuilder.from(this)
-                .to("jan.debiec@ue-mail.de")
+                .to(getString(R.string.content_to))
                 .subject(getString(R.string.feedback_subject))
                 .body(getString(R.string.feedback_body))
                 .start();

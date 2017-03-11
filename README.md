@@ -38,4 +38,4 @@ This project is licensed under GNU Lesser General Public License
 - cketti (mailto in libcomm)
 
 ## Aspectra webpage
-[Github-Aspectra] (https://www.jandrotek.de/android-apps/aspectra/)
+[Aspectra] (https://www.jandrotek.de/android-apps/aspectra/)

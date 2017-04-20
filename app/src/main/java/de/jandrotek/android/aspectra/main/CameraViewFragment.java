@@ -32,6 +32,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.Toast;
 
 import de.jandrotek.android.aspectra.core.AspectraGlobals;
 import de.jandrotek.android.aspectra.core.ImageProcessing;
@@ -234,23 +235,24 @@ public class CameraViewFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-//TODO: add try catch if camera not to disposal, then toast and
-//        mFlagConfigStarted = false;
         // Use mCurrentCamera to select the camera desired to safely restore
         // the fragment after the camera has been changed
-        mCamera = Camera.open(mCurrentCamera);
-        mCameraCurrentlyLocked = mCurrentCamera;
-        mCamPreview.setCamera(mCamera);
-        if (mImageProcessing == null) {
+        try {
+            mCamera = Camera.open(mCurrentCamera);
+            mCameraCurrentlyLocked = mCurrentCamera;
+            mCamPreview.setCamera(mCamera);
+            if (mImageProcessing == null) {
 
-            mImageProcessing = ImageProcessing.getInstance();
+                mImageProcessing = ImageProcessing.getInstance();
+            }
+            mCamPreview.setProcessing(mImageProcessing);
+            cameraProcessingShouldRun(true);
+            mCamPreview.setDeviceOrientation(mDeviceOrientation);
+            mConfigLinesView.initializeLines();
         }
-        mCamPreview.setProcessing(mImageProcessing);
-//        updateBorderPercents();
-        cameraProcessingShouldRun(true);
-        mCamPreview.setDeviceOrientation(mDeviceOrientation);
-        mConfigLinesView.initializeLines();
-
+        catch (Exception e){
+            Toast.makeText(getActivity(), R.string.camera_exception, Toast.LENGTH_LONG).show();
+        }
     }
 
     @Override

@@ -130,7 +130,7 @@ public class PlotViewFragment extends Fragment
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        mRootView = inflater.inflate(R.layout.fragment_plot_view, container, false);
+        mRootView = inflater.inflate(R.layout.fragment_plot_view_with_color_bar, container, false);
         if (mGraphView == null) {
             mGraphView = new LineGraphView(getActivity(), "");
 

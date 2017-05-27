@@ -149,8 +149,8 @@ public class PlotViewFragment extends Fragment
             mFrameLayout.addView(mGraphView);
         }
 
-        TouchImageView img = new TouchImageView(this);
-        img.setImageResource(R.drawable.ice_age_2);
+        TouchImageView img = new TouchImageView(getActivity());
+        img.setImageResource(R.drawable.spectrum_color);
         img.setMaxZoom(4f);
 //        setContentView(img);
 

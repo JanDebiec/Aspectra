@@ -25,5 +25,6 @@ dependencies {
     compile project(':libprefs')
     compile project(':libspectrafiles')
     compile project(':core')
+    compile project(':libtouch')
     compile supportDependencies.appCompat
 }

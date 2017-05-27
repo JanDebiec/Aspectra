@@ -35,6 +35,7 @@ import com.jjoe64.graphview.GraphViewSeries;
 import com.jjoe64.graphview.LineGraphView;
 
 import de.jandrotek.android.aspectra.core.AspectraGlobals;
+import de.jandrotek.android.aspectra.libtouch.TouchImageView;
 
 /**
  * Modified version of fragment, here only View,
@@ -147,6 +148,14 @@ public class PlotViewFragment extends Fragment
             mFrameLayout.removeView(mGraphView);
             mFrameLayout.addView(mGraphView);
         }
+
+        TouchImageView img = new TouchImageView(this);
+        img.setImageResource(R.drawable.ice_age_2);
+        img.setMaxZoom(4f);
+//        setContentView(img);
+
+
+
         mInitialization |= eViewInitialized;
         return mRootView;
     }

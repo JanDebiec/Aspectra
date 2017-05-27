@@ -2,7 +2,7 @@
     android:layout_height="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <SurfaceView
+    <de.jandrotek.android.aspectra.libtouch.TouchImageView
         android:id="@+id/surfaceView"
         android:layout_alignParentBottom="true"
         android:layout_width="match_parent"

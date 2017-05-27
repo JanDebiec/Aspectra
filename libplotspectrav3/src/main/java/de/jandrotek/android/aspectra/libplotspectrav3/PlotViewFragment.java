@@ -22,10 +22,12 @@ import android.app.Activity;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.Layout;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.SurfaceView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
@@ -149,9 +151,12 @@ public class PlotViewFragment extends Fragment
             mFrameLayout.addView(mGraphView);
         }
 
-        TouchImageView img = new TouchImageView(getActivity());
-        img.setImageResource(R.drawable.spectrum_color);
-        img.setMaxZoom(4f);
+//        SurfaceView surfaceView = (TouchImageView) mRootView.findViewById(R.id.surfaceView);
+
+        TouchImageView mColorImg = new TouchImageView(getActivity());
+        mColorImg.setImageResource(R.drawable.spectrum_color);
+        mColorImg.setMaxZoom(4f);
+
 //        setContentView(img);
 
 

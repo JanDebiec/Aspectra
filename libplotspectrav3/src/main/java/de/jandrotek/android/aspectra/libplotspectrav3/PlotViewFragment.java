@@ -152,8 +152,8 @@ public class PlotViewFragment extends Fragment
         }
 
 //        SurfaceView surfaceView = (TouchImageView) mRootView.findViewById(R.id.surfaceView);
-
-        TouchImageView mColorImg = new TouchImageView(getActivity());
+        TouchImageView mColorImg = (TouchImageView) mRootView.findViewById(R.id.surfaceView);
+//        TouchImageView mColorImg = new TouchImageView(getActivity());
         mColorImg.setImageResource(R.drawable.spectrum_color);
         mColorImg.setMaxZoom(4f);
 

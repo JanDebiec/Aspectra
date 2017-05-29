@@ -38,6 +38,7 @@ import com.jjoe64.graphview.LineGraphView;
 
 import de.jandrotek.android.aspectra.core.AspectraGlobals;
 import de.jandrotek.android.aspectra.libtouch.TouchImageView;
+import de.jandrotek.android.aspectra.libtouch.TouchZoomXImageView;
 
 /**
  * Modified version of fragment, here only View,
@@ -152,7 +153,7 @@ public class PlotViewFragment extends Fragment
         }
 
 //        SurfaceView surfaceView = (TouchImageView) mRootView.findViewById(R.id.surfaceView);
-        TouchImageView mColorImg = (TouchImageView) mRootView.findViewById(R.id.surfaceView);
+        TouchZoomXImageView mColorImg = (TouchImageView) mRootView.findViewById(R.id.surfaceView);
 //        TouchImageView mColorImg = new TouchImageView(getActivity());
         mColorImg.setImageResource(R.drawable.spectrum_color);
         mColorImg.setMaxZoom(4f);

@@ -79,12 +79,16 @@ public class LiveViewActivity extends BaseActivity
         } else {
             setContentView(R.layout.activity_live_view_cam_port);
         }
-        if (savedInstanceState == null) {
+        if(mCameraViewFragment == null) {
             mCameraViewFragment = CameraViewFragment.newInstance( AspectraGlobals.ACT_ITEM_LIVE_VIEW);
+        }
+        if(mPlotViewFragment == null) {
+            mPlotViewFragment = PlotViewFragment.newInstance(1);
+        }
+        if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.fragmentHolderCameraView, mCameraViewFragment)
                     .commit();
-            mPlotViewFragment = PlotViewFragment.newInstance(1);
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.fvPlotView, mPlotViewFragment)
                     .commit();

@@ -301,9 +301,7 @@ public class CameraPreview  extends ViewGroup implements SurfaceHolder.Callback,
             }
             mCameraOwnPreviewWidth = mCameraPreviewSize.width;
             mCameraOwnPreviewHeight = mCameraPreviewSize.height;
-            // configure ImageProcessing
             mImageProcessing.setPictureSize(mCameraOwnPreviewWidth, mCameraOwnPreviewHeight);
-//            mImageProcessing.setPictureSizeHeight(mCameraOwnPreviewHeight);
             mImageProcessing.configureBinningArea();
             if (BuildConfig.DEBUG) {
                 Log.d(TAG, "mCameraOwnPreviewWidth = " + mCameraOwnPreviewWidth + ", mCameraOwnPreviewHeight = " + mCameraOwnPreviewHeight);
@@ -312,18 +310,13 @@ public class CameraPreview  extends ViewGroup implements SurfaceHolder.Callback,
         }
 
         if ((mCamera != null) && (mCameraPreviewSize != null)) {
-            Camera.Parameters parameters = mCamera.getParameters();
-            parameters.setPreviewSize(mCameraPreviewSize.width, mCameraPreviewSize.height);
-            parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_INFINITY);
-
             try {
-
+                Camera.Parameters parameters = mCamera.getParameters();
+                parameters.setPreviewSize(mCameraPreviewSize.width, mCameraPreviewSize.height);
+                parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_INFINITY);
                 mCamera.setParameters(parameters);
             } catch (Exception exception) {
-//                if(BuildConfig.DEBUG) {
-
                     Log.e(TAG, "IOException caused by mCamera.setParameters()", exception);
-  //              }
             }
         }
     }
@@ -366,10 +359,6 @@ public class CameraPreview  extends ViewGroup implements SurfaceHolder.Callback,
                 }
 
                 if ((mCameraSizeinViewWidth > 0) && (mCameraSizeinViewHeight > 0)) {
-
-//                    // configure ImageProcessing
-//                    mImageProcessing.setPictureSizeWidth(mCameraOwnPreviewWidth);
-//                    mImageProcessing.setPictureSizeHeight(mCameraOwnPreviewHeight);
 
                     // Center the child SurfaceView within the parent.
                     // resolve the variables for debugging:

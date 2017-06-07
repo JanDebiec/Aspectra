@@ -1,17 +1,30 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 22
- //   buildToolsVersion "22.0.1"
-//    buildToolsVersion '23.0.0 rc3'
+    compileSdkVersion tools.cSV
     buildToolsVersion tools.bTV
 
-    defaultConfig {
+    def versionPropsFile = file('version.properties')
+    if (versionPropsFile.canRead()) {
+        def Properties versionProps = new Properties()
+
+        versionProps.load(new FileInputStream(versionPropsFile))
+
+
+        def versionMajor = versionProps['VERSION_MAJOR'].toInteger()
+        def versionMinor = versionProps['VERSION_MINOR'].toInteger()
+        def versionBuild = versionProps['VERSION_BUILD'].toInteger()
+        def versionNumber = versionProps['VERSION_CODE'].toInteger()
+
+        defaultConfig {
         applicationId "de.jandrotek.android.aspectra.viewer"
         minSdkVersion 15
         targetSdkVersion 22
-        versionCode 1
-        versionName "1.0"
+            versionCode versionNumber
+            versionName "${versionMajor}.${versionMinor}.${versionBuild} Release"
+        }
+    }  else {
+        throw new GradleException("Could not read version.properties!")
     }
     buildTypes {
         release {
@@ -19,9 +32,15 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+//    buildToolsVersion '23.0.2'
+    lintOptions {
+        abortOnError false
+    }
+//    buildToolsVersion '25.0.0'
 }
 
 dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
     compile supportDependencies.appCompat
     compile project(':core')
     compile project(':libprefs')

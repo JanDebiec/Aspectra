@@ -1,4 +1,22 @@
-package com.jandrotek.android.aspectra.lib;
+/**
+ * This file is part of Aspectra.
+ *
+ * Aspectra is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Aspectra is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Aspectra.  If not, see <http://www.gnu.org/licenses/lgpl.html>.
+ *
+ * Copyright Jan Debiec
+ */
+package de.jandrotek.android.aspectra.core;
 
 import java.util.List;
 
@@ -8,7 +26,7 @@ import java.util.List;
 public class SpectrumLine {
     private int mSize = 0;
     private int[] mLine = null;
-    private List<com.jandrotek.android.aspectra.lib.Peak> mPeakList;
+    private List<de.jandrotek.android.aspectra.core.Peak> mPeakList;
 
     public SpectrumLine(int[] inputLine){
         mLine = inputLine;
@@ -29,7 +47,7 @@ public class SpectrumLine {
         int MaxValue;
         int MaxPosition;
 
-        if(searchArea.getGo2Right() == true){
+        if (searchArea.getGo2Right()) {
             start = searchArea.getStart();
             end = searchArea.getEnd();
         } else {

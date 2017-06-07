@@ -1,17 +1,80 @@
+/**
+ * This file is part of Aspectra.
+ *
+ * Aspectra is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Aspectra is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Aspectra.  If not, see <http://www.gnu.org/licenses/lgpl.html>.
+ *
+ * Copyright Jan Debiec
+ */
 package de.jandrotek.android.aspectra.core;
 
 /**
  * Created by jan on 21.12.14.
  */
 
-//import com.jandrotek.android.aspectra.lib.ExtendedLine;
-//import com.jandrotek.android.aspectra.lib.SpectrumLine;
+//TODO: add possibility to change axis
 
+/**
+ * for changing axis in picture, new names conventions will be used:
+ * X = axis for lenth of spectrum, can be width of camera picture by landscape
+ * or height of camera picture by portrait
+ * <p>
+ * Y = axis for width of spectrum (count of lines to bin)
+ * can be height of camera picture bu landscape orientation
+ * or width of camera picture by portrait
+ * <p>
+ * Camera picture width = longer side of camera picture
+ * height = smaller side of camera picture
+ */
 
 public class ImageProcessing {
-  //  private SpectrumLine mSpectrumLine;
+    private static ImageProcessing mProcessing = null;
+
+    // helper for control configuration
+    private static final int eCameraDimensionSet = 0x1;
+    private static final int ePercensSet = 0x2;
+    private static final int eSpectrumOrientationSet = 0x4;
+    private static final int eCameraMirroredSet = 0x8;
+    private static final int eNeededConfig = eCameraDimensionSet + ePercensSet + eSpectrumOrientationSet + eCameraMirroredSet;
+    private int mConfigStatus = 0;
+
+    public void clearCameraConfigFlag() {
+        mConfigStatus &= ~eCameraDimensionSet;
+    }
+
+    public void clearSpectrumConfigFlag() {
+        mConfigStatus &= ~eSpectrumOrientationSet;
+    }
+
+    public void clearPercentConfigFlag() {
+        mConfigStatus &= ~ePercensSet;
+    }
+    private int mAxisToBin; // axis "senkrecht" to spectrum
+    private int mAxisToCalc; // axis parallel to spectrum
+
+    // some devices (f.i. N7 have data mirrored in both axis, x, y
+    public void setCameraDataMirrored(boolean cameraDataMirrored) {
+        mConfigStatus |= eCameraMirroredSet;
+        mCameraDataMirrored = cameraDataMirrored;
+    }
+
+    private boolean mCameraDataMirrored = false;
+
+    private boolean mSpectrumOrientationLandscape = true;
+
     private int mSizeX;
     private int mSizeY;
+    private int mShiftToNormalize;
 
     private int mStartPercentX = 5;
     private int mEndPercentX = 95;
@@ -19,63 +82,135 @@ public class ImageProcessing {
     private int mEndPercentY = 50;
 
     private int[] mBinnedLine = null;
+    private int[] mTempLine = null;
+    private int[] mDemoLine = null;
+    private static final int eDemoLineSize = 100;
 
-
+    private int mIndexStartW;
+    private int mIndexStartH;
     // camera shot dimensions
-    private int mPictureWidthX;
-    private int mPictureHeightY;
+    private int mPictureSizeWidth; // before mPicureWidthX
+    private int mPictureSizeHeight; // before mPictureSizeHeight
 
-    public ImageProcessing() {
+    public static ImageProcessing getInstance() {
+        if (mProcessing == null) {
+            mProcessing = new ImageProcessing();
+        }
+        return mProcessing;
     }
 
 
-    public void processImage(byte[] inputArray){
-        int[] binnedLine;
-
-        binnedLine = extractBinnedLine(inputArray);
-//        mSpectrumLine = new com.jandrotek.android.aspectra.lib.SpectrumLine(binnedLine);
-//        //TODO: implement switch, what should be calculated,
-//        // if peakFind, or spectrum compare...
-//        mSpectrumLine.searchInSteps(2);
-//        List<Peak> listOfFoundPeaks = mSpectrumLine.getPeaks();
-
+    private ImageProcessing() {
+        // create DemoLine
+        mDemoLine = new int[eDemoLineSize];
+        for (int i = 0; i < eDemoLineSize; i++) {
+            mDemoLine[i] = i;
+        }
     }
 
-    public int[] extractBinnedLine(byte[] inputArray)
-    throws ArrayIndexOutOfBoundsException {
-        int indexStartX, indexW, index;
-        int indexStartY, indexY;
+
+//    public void processImage(byte[] inputArray){
+//        int[] binnedLine;
+//
+//        binnedLine = extractBinnedLine(inputArray);
+////        mSpectrumLine = new com.jandrotek.android.aspectra.lib.SpectrumLine(binnedLine);
+////        //TODO: implement switch, what should be calculated,
+////        // if peakFind, or spectrum compare...
+////        mSpectrumLine.searchInSteps(2);
+////        List<Peak> listOfFoundPeaks = mSpectrumLine.getPeaks();
+//
+//    }
+
+    public boolean isConfigFull() {
+        return (mConfigStatus == eNeededConfig);
+    }
+
+    public int[] extractBinnedLine(byte[] inputArray) {
+        boolean configFull = isConfigFull();
+        if (configFull) {
+            if (mSpectrumOrientationLandscape) {
+                if (mCameraDataMirrored)
+                    return extractBinnedLineLandM(inputArray);
+                else
+                    return extractBinnedLineLand(inputArray);
+            } else {
+                if (mCameraDataMirrored)
+                    return extractBinnedLinePortM(inputArray);
+                else
+                    return extractBinnedLinePort(inputArray);
+            }
+        } else {
+            return mDemoLine;
+        }
+    }
+
+    // version for N7 with flipped data in both axis
+    private int[] extractBinnedLinePortM(byte[] inputArray)
+            throws ArrayIndexOutOfBoundsException {
+        int indexW;
+        int indexH;
+        int temp;
 
         try {
-            mSizeX = mPictureWidthX * (mEndPercentX - mStartPercentX) / 100;
-            //mSizeY = mPictureHeightY * (mEndPercentY - mStartPercentY) / 100;
-            indexStartX = mPictureWidthX * mStartPercentX / 100;
-            indexStartY = mPictureHeightY * mStartPercentY / 100;
-            if (mBinnedLine == null) {
-                mBinnedLine = new int[mSizeX];
-            } else {
-                mBinnedLine = (int[]) resizeArray(mBinnedLine, mSizeX);
+
+            // another method:
+            // main loop: every index of spectrum binned line
+            // internal loop:
+            // we add (bin) pixels for every spectrum index
+
+            for (int x = 0; x < mSizeX; x++) {
+                mBinnedLine[x] = 0;
+                indexH = mIndexStartH - x;
+                indexW = mPictureSizeWidth * indexH + mIndexStartW;
+                temp = 0;
+                for (int y = 0; y < mSizeY; y++) {
+                    temp += inputArray[indexW] & 0xFF;
+                    indexW--;
+                }
+                if (mShiftToNormalize <= 0) {
+                    mBinnedLine[x] = temp << -mShiftToNormalize;
+                } else {
+                    mBinnedLine[x] = temp >> mShiftToNormalize;
+                }
             }
 
-            index = indexStartX + mPictureWidthX * indexStartY;
+        } catch (ArrayIndexOutOfBoundsException e) {
+
+        }
+        return mBinnedLine;
+    }
+
+    // version for N7 with flipped data
+    private int[] extractBinnedLineLandM(byte[] inputArray)
+            throws ArrayIndexOutOfBoundsException {
+        int indexW;
+        int indexH = mIndexStartH;
+        try {
+
+            indexW = mIndexStartW + mPictureSizeWidth * indexH;
 
             //first line
             for (int x = 0; x < mSizeX; x++) {
 
-                mBinnedLine[x] = inputArray[index] & 0xFF;
-                index++;
+                mTempLine[x] = inputArray[indexW] & 0xFF;
+                indexW--;
             }
 
             //next lines
-            indexY = indexStartY + 1;
-            index = indexStartX + mPictureWidthX * indexY;
             for (int y = 1; y < mSizeY; y++) {
+                indexH--;
+                indexW = mIndexStartW + mPictureSizeWidth * indexH;
                 for (int x = 0; x < mSizeX; x++) {
-                    mBinnedLine[x] += inputArray[index] & 0xFF;
-                    index++;
+                    mTempLine[x] += inputArray[indexW] & 0xFF;
+                    indexW--;
                 }
-                indexY++;
-                index = indexStartX + mPictureWidthX * indexY;
+            }
+            for (int x = 0; x < mSizeX; x++) {
+                if (mShiftToNormalize <= 0) {
+                    mBinnedLine[x] = mTempLine[x] << -mShiftToNormalize;
+                } else {
+                    mBinnedLine[x] = mTempLine[x] >> mShiftToNormalize;
+                }
             }
 
         }
@@ -83,6 +218,126 @@ public class ImageProcessing {
 
         }
         return mBinnedLine;
+    }
+
+    private int[] extractBinnedLinePort(byte[] inputArray)
+            throws ArrayIndexOutOfBoundsException {
+        int indexW;
+        int indexH;
+        int temp;
+
+        try {
+
+            // another method:
+            // main loop: every index of spectrum binned line
+            // internal loop:
+            // we add (bin) pixels for every spectrum index
+
+            for (int x = 0; x < mSizeX; x++) {
+                mBinnedLine[x] = 0;
+                temp = 0;
+                indexH = mIndexStartH + x;
+                indexW = mIndexStartW + mPictureSizeWidth * indexH;
+
+                for (int y = 0; y < mSizeY; y++) {
+                    temp += inputArray[indexW] & 0xFF;
+                    indexW++;
+                }
+                // normalize
+                if (mShiftToNormalize <= 0) {
+                    mBinnedLine[x] = temp << -mShiftToNormalize;
+                } else {
+                    mBinnedLine[x] = temp >> mShiftToNormalize;
+                }
+            }
+
+        } catch (ArrayIndexOutOfBoundsException e) {
+
+        }
+        return mBinnedLine;
+    }
+
+    private int[] extractBinnedLineLand(byte[] inputArray)
+            throws ArrayIndexOutOfBoundsException {
+        int indexW;
+        int indexH = mIndexStartH;
+
+        try {
+
+            indexW = mIndexStartW + mPictureSizeWidth * indexH;
+
+            //first line
+            for (int x = 0; x < mSizeX; x++) {
+
+                mTempLine[x] = inputArray[indexW] & 0xFF;
+                indexW++;
+            }
+
+            //next lines
+            for (int y = 1; y < mSizeY; y++) {
+                indexH++;
+                indexW = mIndexStartW + mPictureSizeWidth * indexH;
+                for (int x = 0; x < mSizeX; x++) {
+                    mTempLine[x] += inputArray[indexW] & 0xFF;
+                    indexW++;
+                }
+            }
+            // normalize
+            for (int x = 0; x < mSizeX; x++) {
+                if (mShiftToNormalize <= 0) {
+                    mBinnedLine[x] = mTempLine[x] << -mShiftToNormalize;
+                } else {
+                    mBinnedLine[x] = mTempLine[x] >> mShiftToNormalize;
+                }
+            }
+
+        } catch (ArrayIndexOutOfBoundsException e) {
+
+        }
+        return mBinnedLine;
+    }
+
+    public void setSpectrumOrientationLandscape(boolean _SpectrumOrientationLandscape) {
+        mConfigStatus |= eSpectrumOrientationSet;
+        mSpectrumOrientationLandscape = _SpectrumOrientationLandscape;
+    }
+
+    public void configureBinningArea() {
+        boolean configFull = isConfigFull();
+        if (configFull) {
+            if (mCameraDataMirrored) { // N7
+                if (mSpectrumOrientationLandscape) {
+                    mSizeX = mPictureSizeWidth * (mEndPercentX - mStartPercentX) / 100;
+                    mIndexStartW = mPictureSizeWidth * (100 - mStartPercentX) / 100;
+                    mIndexStartH = mPictureSizeHeight * (100 - mStartPercentY) / 100;
+                } else {
+                    mSizeX = mPictureSizeHeight * (mEndPercentX - mStartPercentX) / 100;
+                    mIndexStartW = mPictureSizeWidth * (100 - mStartPercentY) / 100;
+                    mIndexStartH = mPictureSizeHeight * (100 - mStartPercentX) / 100;
+                }
+            } else { // data not mirrored; N5, GalNex
+                if (mSpectrumOrientationLandscape) {
+                    mSizeX = mPictureSizeWidth * (mEndPercentX - mStartPercentX) / 100;
+                    mIndexStartW = mPictureSizeWidth * mStartPercentX / 100;
+                    mIndexStartH = mPictureSizeHeight * mStartPercentY / 100;
+                } else {
+                    mSizeX = mPictureSizeHeight * (mEndPercentX - mStartPercentX) / 100;
+                    mIndexStartW = mPictureSizeWidth * mStartPercentY / 100;
+                    mIndexStartH = mPictureSizeHeight * mStartPercentX / 100;
+                }
+            }
+            if (mBinnedLine == null) {
+                mBinnedLine = new int[mSizeX];
+            } else {
+                mBinnedLine = (int[]) resizeArray(mBinnedLine, mSizeX);
+            }
+            if (mTempLine == null) {
+                mTempLine = new int[mSizeX];
+            } else {
+                mTempLine = (int[]) resizeArray(mTempLine, mSizeX);
+            }
+
+        }
     }
 
     /**
@@ -106,6 +361,7 @@ public class ImageProcessing {
     // getters, setters
     public void setEndPercentX(int endPercentX) {
         mEndPercentX = endPercentX;
+        mConfigStatus |= ePercensSet;
     }
 
     public void setStartPercentX(int startPercentX) {
@@ -116,19 +372,32 @@ public class ImageProcessing {
         mStartPercentY = startPercentW;
     }
 
-    public void setEndPercentY(int endPercentW) {
-        mEndPercentY = endPercentW;
-    }
-
-    public void setPictureWidthX(int pictureWidthX) {
-        mPictureWidthX = pictureWidthX;
-    }
-
-    public void setPictureHeightY(int pictureHeightY) {
-        mPictureHeightY = pictureHeightY;
+    public void setPictureSize(int pictureSizeWidth, int pictureSizeHeight) {
+        mConfigStatus |= eCameraDimensionSet;
+        mPictureSizeWidth = pictureSizeWidth;
+        mPictureSizeHeight = pictureSizeHeight;
     }
 
     public void setScanAreaWidth(int scanAreaWidth) {
         mSizeY = scanAreaWidth;
+        if (mSizeY == 1) {
+            mShiftToNormalize = -2;
+        } else if (mSizeY == 2) {
+            mShiftToNormalize = -1;
+        } else if (mSizeY == 4) {
+            mShiftToNormalize = 0;
+        } else if (mSizeY == 8) {
+            mShiftToNormalize = 1;
+        } else if (mSizeY == 16) {
+            mShiftToNormalize = 2;
+        } else if (mSizeY == 32) {
+            mShiftToNormalize = 3;
+        } else if (mSizeY == 64) {
+            mShiftToNormalize = 4;
+        } else if (mSizeY == 128) {
+            mShiftToNormalize = 5;
+        } else {
+            mShiftToNormalize = 5;
+        }
     }
 }

@@ -1,4 +1,24 @@
+/**
+ * This file is part of Aspectra.
+ *
+ * Aspectra is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Aspectra is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Aspectra.  If not, see <http://www.gnu.org/licenses/lgpl.html>.
+ *
+ * Copyright Jan Debiec
+ */
 package de.jandrotek.android.aspectra.libplotspectrav3;
+
+import android.util.Log;
 
 import com.jjoe64.graphview.GraphView;
 
@@ -6,103 +26,130 @@ import de.jandrotek.android.aspectra.core.AspectraGlobals;
 
 /**
  * Created by jan on 03.09.15.
- */
+// */
 public class PlotViewPresenter {
 
-    //    private GraphView.GraphViewData[][] realData = null;
-//    private int realPlotDataSize = 0;//PLOT_DATA_SIZE;
-    private PlotViewFragment mFragment;
-    private int mSpectraPlotCount = 0;
-    private int[] mFileDataLength;
-    private int[] mPlotIntDemoValues;
-    private static final int PLOT_DATA_SIZE = AspectraGlobals.eMaxSpectrumSize;
+    private static final String TAG = "PlotViewPresenter";
+    private PlotViewFragment mPlotViewFragment;
+    private int mItemListSizeAct = 0;// actually used
+
+    public boolean isInitialized() {
+        return mInitialized;
+    }
+
+    private static boolean mInitialized = false;
+
+    public int getmDataLengthMax() {
+        return mDataLengthMax;
+    }
+
+    private int mDataLengthMax = 0;
+    private int[] mPlotDataLength;
+//    private static final int PLOT_DATA_SIZE = AspectraGlobals.eMaxSpectrumSize;
     private int realPlotDataSize = 0;//PLOT_DATA_SIZE;
-    private int[][] mFileIntValues;
+    private int mCallerActivity = -1;
 
-    public PlotViewPresenter(int spectraPlotCount, PlotViewFragment fragment) {
-        this.mSpectraPlotCount = spectraPlotCount;
-        mFragment = fragment;
-//        realData = new GraphView.GraphViewData[mSpectraPlotCount][AspectraGlobals.eMaxSpectrumSize];
-        mFileDataLength = new int[mSpectraPlotCount];
-        mFileIntValues = new int[mSpectraPlotCount][AspectraGlobals.eMaxSpectrumSize];
+    public PlotViewPresenter(int callerActivity, PlotViewFragment fragment) {
+        mCallerActivity = callerActivity;
+        mPlotViewFragment = fragment;
 
+    }
+
+    public void init(int plotCount, int [][] data) {
+        if(plotCount <= AspectraGlobals.eMaxPlotCount) {
+            mPlotViewFragment.setItemlistSize(plotCount);
+            mItemListSizeAct = plotCount;
+        } else {
+            mPlotViewFragment.setItemlistSize(AspectraGlobals.eMaxPlotCount);
+            mItemListSizeAct = AspectraGlobals.eMaxPlotCount;
+        }
+        if (mPlotDataLength == null) {
+            mPlotDataLength = new int[AspectraGlobals.eMaxPlotCount];
+        }
+
+        for (int i = 0; i < mItemListSizeAct; i++) {// must be new
+            addPlot(i, data[i]);
+        }
+        mInitialized = true;
+    }
+
+    public void addPlot(int index,int [] data){
+        int length = data.length;
+        if(length > 0) {
+            mPlotDataLength[index] = length;
+            GraphView.GraphViewData[] realData = createSinglePlotData(data);
+            mPlotViewFragment.createPlotSerie(index, realData);
+        }
     }
 
     public void updateSinglePlot(int index, int[] data) {
         int length = data.length;
-        mFileIntValues[index] = data;
-//        if (mDataSeries[index] != null) {
-        if (length > realPlotDataSize) {
-            realPlotDataSize = length;
+        if(length > 0) {
+            if (mPlotDataLength == null) {
+                mPlotDataLength = new int[AspectraGlobals.eMaxPlotCount];
+            }
+            mPlotDataLength[index] = length;
+            GraphView.GraphViewData[] realData = generateData(data, length);
+            if (mPlotViewFragment.isFullInitialized()) {
+                mPlotViewFragment.updateSinglePlot(index, realData);// in live view, here we get null exception
+            }
+            updateFragmentPort(0,length);
         }
-        GraphView.GraphViewData[] realData = generateData(index, mFileIntValues[index], length);
-        mFragment.mDataSeries[index].resetData(realData);
-//        }
     }
 
+    public GraphView.GraphViewData[] createSinglePlotData(int[] data) {
+        int length = data.length;
+        GraphView.GraphViewData[] realData = generateData(data, length);
+        return realData;
+    }
 
-    //TODO: check the index boundaries, move to presenter
-    private GraphView.GraphViewData[] generateData(int index, int[] data, int length) {
+    public void updateFragmentPort(int start, int end) {
+        mPlotViewFragment.updateGraphViewPort(start, end);
+    }
+
+    private GraphView.GraphViewData[] generateData( int[] data, int length) {
         int realLength;
         GraphView.GraphViewData[] realData = new GraphView.GraphViewData[AspectraGlobals.eMaxSpectrumSize];
 
-        if (length > AspectraGlobals.eMaxSpectrumSize) {
-            realLength = AspectraGlobals.eMaxSpectrumSize;
-        } else {
-            realLength = length;
-        }
-        realLength = length;
-//        if(realData[index] == null){
-//            realData[index] = new GraphView.GraphViewData[length];
-//        }
-        for (int i = 0; i < realLength; i++) {
+        try {
+            if (length > AspectraGlobals.eMaxSpectrumSize) {
+                realLength = AspectraGlobals.eMaxSpectrumSize;
+            } else {
+                realLength = length;
+            }
+            for (int i = 0; i < realLength; i++) {
 
-            realData[i] = new GraphView.GraphViewData(i, data[i]);
-        }
-        //TODO: check in plot act length, and add needed data only for that length
-        if (mSpectraPlotCount > 1) {
-            realPlotDataSize = findMaxDataLength();
-        } else {
-            realPlotDataSize = realLength;
-        }
-
-
-        for (int i = realLength; i < AspectraGlobals.eMaxSpectrumSize; i++) {
-//        for (int i = realLength; i < realPlotDataSize; i++) {
-            realData[i] = new GraphView.GraphViewData(i, 0);
+                realData[i] = new GraphView.GraphViewData(i, data[i]);
+            }
+            //TODO: check in plot act length, and add needed data only for that length
+            if (mItemListSizeAct > 1) {
+                mDataLengthMax = findMaxDataLength();
+            } else {
+                mDataLengthMax = realLength;
+            }
+            for (int i = realLength; i < AspectraGlobals.eMaxSpectrumSize; i++) {
+                realData[i] = new GraphView.GraphViewData(i, 0);
+            }
+        } catch (Exception exception) {
+            if (BuildConfig.DEBUG) {
+                Log.e(TAG, "Exception caused by generateData()", exception);
+            }
         }
         return realData;
     }
 
     private int findMaxDataLength() {
         int max = 0;
-        int index = -1;
-        int i = 0;
-        for (i = 0; i < mSpectraPlotCount; i++) {
-            if (mFileDataLength[i] > max) {
-                max = mFileDataLength[i];
-                index = i;
+        int i;
+        for (i = 0; i < mItemListSizeAct; i++) {
+            if (mPlotDataLength[i] > max) {
+                max = mPlotDataLength[i];
             }
         }
-
         return max;
     }
 
-    private GraphView.GraphViewData[] generateDemoData() {
-        GraphView.GraphViewData[] demoData;
-        mPlotIntDemoValues = new int[PLOT_DATA_SIZE];
-        for (int i = 0; i < PLOT_DATA_SIZE / 2; i++)
-            mPlotIntDemoValues[i] = i;
-        for (int i = PLOT_DATA_SIZE / 2; i < PLOT_DATA_SIZE; i++)
-            mPlotIntDemoValues[i] = PLOT_DATA_SIZE - i;
-
-        demoData = new GraphView.GraphViewData[PLOT_DATA_SIZE];
-        for (int i = 0; i < PLOT_DATA_SIZE; i++) {
-
-            demoData[i] = new GraphView.GraphViewData(i, mPlotIntDemoValues[i]);
-        }
-        return demoData;
+    public void clearAllSeries(){
+        mPlotViewFragment.clearPlotSeries();
     }
-
-
 }

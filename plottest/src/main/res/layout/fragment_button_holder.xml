@@ -1,44 +1,117 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:columnCount="3"
+    android:rowCount="7"
     android:orientation="vertical"
     tools:context="de.jandrotek.android.aspectra.plottest.MainActivity">
 
-    <Button
-        android:layout_width="wrap_content"
+    <TextView
+        android:layout_width="147dp"
         android:layout_height="wrap_content"
-        android:text="move right 10"
-        android:id="@+id/buttonMoveRight"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:text="Move"
+        android:ems="10"
+        android:layout_column="1"
+        android:layout_row="0"
+        android:id="@+id/TextView" />
 
     <Button
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="stretch right 2.0"
-        android:id="@+id/buttonStretch"
-        android:layout_below="@+id/buttonMoveRight"
-        android:layout_alignRight="@+id/buttonMoveRight"
-        android:layout_alignEnd="@+id/buttonMoveRight" />
+        android:layout_height="36dp"
+        android:text="move right 10"
+        android:layout_column="1"
+        android:layout_row="1"
+        android:id="@+id/buttonMoveRight"
+        />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="move left 10"
         android:id="@+id/buttonMoveLeft"
-        android:layout_alignParentTop="true"
+        android:layout_column="0"
+        android:layout_row="1"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
+    <TextView
+        android:layout_width="149dp"
+        android:layout_height="wrap_content"
+        android:text="Squeeze"
+        android:ems="10"
+        android:layout_column="1"
+        android:layout_row="2"
+        android:id="@+id/TextView" />
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="squeeze 0.5"
         android:id="@+id/buttonSqueeze"
-        android:layout_below="@+id/buttonMoveLeft"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-</RelativeLayout>
+        android:layout_column="0"
+        android:layout_row="3"
+        />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="stretch right 2.0"
+        android:id="@+id/buttonStretch"
+        android:layout_column="1"
+        android:layout_row="3"
+        />
+    <TextView
+        android:layout_width="149dp"
+        android:layout_height="wrap_content"
+        android:text="Run"
+        android:layout_column="1"
+        android:layout_row="4"
+        android:id="@+id/TextView" />
+    <Button
+        android:text="Single"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/bt_single"
+        android:layout_column="0"
+        android:layout_row="5"
+
+        />
+
+    <Button
+        android:text="Add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/bt_add"
+        android:layout_column="1"
+        android:layout_row="5"
+        />
+
+    <Button
+        android:text="Clear"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/bt_clear"
+        android:layout_column="2"
+        android:layout_row="5"
+        />
+
+
+    <Button
+        android:text="Auto"
+        android:layout_column="0"
+        android:layout_row="6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/bt_auto"
+        />
+
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_column="1"
+        android:layout_row="6"
+        android:id="@+id/spinner_count" />
+
+
+</GridLayout>

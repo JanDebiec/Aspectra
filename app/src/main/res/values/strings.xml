@@ -35,6 +35,22 @@
     <string name="action_analyze">Analyze</string>
     <string name="action_list">List</string>
     <string name="title_activity_global_prefs">global preferences</string>
+    <string name="viewerWarning">Viewer can not be started</string>
+
+    <string name="title_to">To</string>
+    <string name="content_to">info@jandrotek.de</string>
+    <string name="title_cc">Cc</string>
+    <string name="title_bcc">Bcc</string>
+    <string name="title_subject">Subject</string>
+    <string name="content_subject">Aspectra feedback</string>
+    <string name="title_body">Body</string>
+    <string name="menu_feedback">Feedback</string>
+    <string name="feedback_subject">Feedback for Aspectra</string>
+    <string name="error_no_email_app">No email app found</string>
+    <string name="feedback_body">[Your feedback here]</string>
+    <string name="argument_error">Error: %s</string>
+    <string name="content_version">App version = </string>
+    <string name="camera_exception">Camera is not responding</string>
 
 
 </resources>

@@ -1,7 +1,26 @@
+/**
+ * This file is part of Aspectra.
+ *
+ * Aspectra is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Aspectra is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Aspectra.  If not, see <http://www.gnu.org/licenses/lgpl.html>.
+ *
+ * Copyright Jan Debiec
+ */
 package de.jandrotek.android.aspectra.libspectrafiles;
 
 /** android part of SpectraFiles */
 
+import android.os.AsyncTask;
 import android.os.Environment;
 import android.util.Log;
 
@@ -13,7 +32,9 @@ import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
 
+import de.jandrotek.android.aspectra.core.AspectraGlobals;
 import de.jandrotek.android.aspectra.core.FileWalker;
+import de.jandrotek.android.aspectra.core.SpectrumAsp;
 
 public class SpectrumFiles {
     private static final String TAG = "SpectraFiles";
@@ -104,7 +125,8 @@ public class SpectrumFiles {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss");
         String currentDateandTime = sdf.format(new Date());
 
-        return mPath  + "/" + currentDateandTime + "." + fileExt;
+        return currentDateandTime + "." + fileExt;
+//        return mPath  + "/" + currentDateandTime + "." + fileExt;
     }
 
     /**
@@ -163,5 +185,53 @@ public class SpectrumFiles {
         return (f);
 
     }
+
+    public String savePlotToFile(int[] data) {
+        String fileName = generateSpectrumAspFileName(mFileExt);
+        File f;
+        SpectrumAsp mSpectrum = new SpectrumAsp(fileName);
+        mSpectrum.setData(data, AspectraGlobals.eNoNormalize);
+        f = getTarget(fileName);
+        new SaveSpectrumTask(mSpectrum.toString(), f).execute();
+        return fileName;
+    }
+
+    //    //TODO: refactor: SpectrumAsp as parameter, work should be done in Spectrum
+    public class SaveSpectrumTask extends AsyncTask<Void, Void, Void> {
+        private Exception e = null;
+        private final String text;
+        private final File target;
+
+        SaveSpectrumTask(String text, File target) {
+            this.text = text;
+            this.target = target;
+        }
+
+        @Override
+        protected Void doInBackground(Void... args) {
+            try {
+                SpectrumFiles.saveStringToFile(text, target);
+            } catch (Exception e) {
+                this.e = e;
+            } finally {
+                AspectraGlobals.mSavePlotInFile = false;
+            }
+            return (null);
+        }
+
+        @Override
+        protected void onPostExecute(Void arg0) {
+//            if (e != null) {
+//                boom(e);
+//            }
+        }
+    }
+
+
+//    private void boom(Exception e) {
+//        Toast.makeText(this, e.toString(), Toast.LENGTH_LONG)
+//                .show();
+//        Log.e(getClass().getSimpleName(), "Exception saving file", e);
+//    }
 
 }

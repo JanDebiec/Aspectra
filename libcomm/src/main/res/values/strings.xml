@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">Libmail</string>
+
+    <string name="button_label_send_email">Send email</string>
+    <string name="title_to">To</string>
+    <string name="content_to">info@jandrotek.de</string>
+    <string name="title_cc">Cc</string>
+    <string name="title_bcc">Bcc</string>
+    <string name="title_subject">Subject</string>
+    <string name="content_subject">Aspectra feedback</string>
+    <string name="title_body">Body</string>
+    <string name="menu_feedback">Feedback</string>
+    <string name="feedback_subject">Feedback for EmailIntentBuilder</string>
+    <string name="error_no_email_app">No email app found</string>
+    <string name="feedback_body">[Your feedback here]</string>
+    <string name="argument_error">Error: %s</string>
+    <string name="title_activity_help">HelpActivity</string>
+    <string name="helpText">to get some help,\nto see detailed information \nabout the whole Aspectra system\nplease visit my wep page: </string>
+
+</resources>

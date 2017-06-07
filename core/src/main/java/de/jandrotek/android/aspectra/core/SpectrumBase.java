@@ -1,3 +1,21 @@
+/**
+ * This file is part of Aspectra.
+ *
+ * Aspectra is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Aspectra is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Aspectra.  If not, see <http://www.gnu.org/licenses/lgpl.html>.
+ *
+ * Copyright Jan Debiec
+ */
 package de.jandrotek.android.aspectra.core;
 
 import org.apache.commons.lang3.ArrayUtils;
@@ -51,12 +69,34 @@ public class SpectrumBase {
 	}
 
     /**
-     * @return only pure data, without zeros at the beginning, or end
+     * function updates the mData, returns data moved to Start/Stop indexy
+     * base mData is not changed
+     * @return
+     *
      */
     public int[] getValues(){
 
-        return mValues;
+        int[] newData;
+        if(mStartIndex >= 0) { // move to the right
+           newData = ArrayFunctions.moveArrayRight(mValues, mStartIndex);
+        } else { // move to the left
+            newData = ArrayFunctions.moveArrayLeft(mValues, - mStartIndex);
+        }
+         return newData;
     }
+
+//    public int[] moveData_oldVersion(int offset) {
+//        int[] newData;
+//        if(offset >= 0) { // move to the right
+//            newData = ArrayFunctions.moveArrayRight(mValues, offset);
+//        } else { // move to the left
+//            newData = ArrayFunctions.moveArrayLeft(mValues, - offset);
+//        }
+//        mValues = newData;
+//        mStartIndex += offset;
+//        mEndIndex += offset;
+//        return mValues;
+//    }
 
     public int[] getWholeSpectrum() {
         int[] newData;
@@ -91,7 +131,7 @@ public class SpectrumBase {
         int k = 0;
         int value;
         int[] values = new int[AspectraGlobals.eMaxSpectrumSize];
-//        mValues = new int[AspectraGlobals.eMaxSpectrumSize];
+        mValues = new int[AspectraGlobals.eMaxSpectrumSize];
         try {
             File file;
             file = new File(mFileName);// TODO:here we need the whole name with path
@@ -127,6 +167,7 @@ public class SpectrumBase {
         }
         mStartIndex = 0;
         mEndIndex = k;
+//        mValues = values;
         mValues = ArrayUtils.subarray(values, mStartIndex, mEndIndex);
         return k;
     }
@@ -142,18 +183,6 @@ public class SpectrumBase {
         return mValues;
     }
 
-//    public int[] moveData_oldVersion(int offset) {
-//        int[] newData;
-//        if(offset >= 0) { // move to the right
-//            newData = ArrayFunctions.moveArrayRight(mValues, offset);
-//        } else { // move to the left
-//            newData = ArrayFunctions.moveArrayLeft(mValues, - offset);
-//        }
-//        mValues = newData;
-//        mStartIndex += offset;
-//        mEndIndex += offset;
-//        return mValues;
-//    }
 
     //TODO: check working and update indexies, add offset
     public int[] stretchData(int offset, float factor) {

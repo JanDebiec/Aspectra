@@ -1,5 +1,24 @@
+/**
+ * This file is part of Aspectra.
+ *
+ * Aspectra is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Aspectra is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Aspectra.  If not, see <http://www.gnu.org/licenses/lgpl.html>.
+ *
+ * Copyright Jan Debiec
+ */
 package de.jandrotek.android.aspectra.plottest;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -10,34 +29,23 @@ import java.util.ArrayList;
 
 import de.jandrotek.android.aspectra.libplotspectrav3.PlotViewFragment;
 import de.jandrotek.android.aspectra.libplotspectrav3.PlotViewPresenter;
-
-//<<<<<<< HEAD
-//import de.jandrotek.android.aspectra.libplotspectrav3.PlotViewFragment_notToUse;
+import de.jandrotek.android.aspectra.libprefs.AspectraGlobalPrefsActivity;
 
 public class MainActivity extends AppCompatActivity
     implements ButtonHolderFragment.OnButtonClickListener
-//        PlotViewFragment_notToUse.OnFragmentInteractionListener
-//=======
-//import de.jandrotek.android.aspectra.libplotspectrav3.PlotViewFragment;
-//
-//public class MainActivity extends AppCompatActivity
-//    implements ButtonHolderFragment.OnButtonClickListener,
-//        PlotViewFragment.OnFragmentInteractionListener
-//>>>>>>> 1cda1a3... back on master, after rescue, can be build and run
 {
 
-    public PlotTestController mController = null;
-    private PlotViewPresenter mPlotViewPresenter;
+    public PlotTestModelController mModelController = null;
+    private PlotViewPresenter mPlotViewPresenter = null;
 
-    private static PlotViewFragment mPlotViewFragment;
-    private static ButtonHolderFragment mButtonHolderFragment;
+    private static PlotViewFragment mPlotViewFragment = null;
+    private static ButtonHolderFragment mButtonHolderFragment = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        ArrayList<String> dummyItems = null;
+//        ArrayList<String> dummyItems = null;
 
-        mController = new PlotTestController(this);
 
         mButtonHolderFragment = ButtonHolderFragment.newInstance(this);
         getSupportFragmentManager().beginTransaction()
@@ -49,8 +57,17 @@ public class MainActivity extends AppCompatActivity
                 .add(R.id.fvPlotView, mPlotViewFragment)
                 .commit();
         mPlotViewPresenter = new PlotViewPresenter(1, mPlotViewFragment);
-    }
+        mModelController = new PlotTestModelController(this);
+        mModelController.setPlotViewPresenter(mPlotViewPresenter);
+   }
 
+//    public boolean isPlotFragmentInitialized(){
+//        return mPlotViewFragment.isFullInitialized();
+//    }
+
+//    public void initPlotPresenter( int[][] data){
+//        mPlotViewPresenter.init(1, data);
+//    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -68,6 +85,8 @@ public class MainActivity extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            Intent intent = new Intent(this, AspectraGlobalPrefsActivity.class);
+            startActivity(intent);
             return true;
         }
 
@@ -77,27 +96,46 @@ public class MainActivity extends AppCompatActivity
     public void onButtonClickListener(int _buttonId){
         switch (_buttonId) {
             case ButtonHolderFragment.eButtonMoveLeft:{
-                mController.onButtonMoveLeft();
+                mModelController.onButtonMoveLeft();
                 break;
             }
             case ButtonHolderFragment.eButtonMoveRight:{
-                mController.onButtonMoveRight();
+                mModelController.onButtonMoveRight();
                 break;
             }
             case ButtonHolderFragment.eButtonStretch:{
-                mController.onButtonStretch();
+                mModelController.onButtonStretch();
                 break;
             }
             case ButtonHolderFragment.eButtonSqueeze:{
-                mController.onButtonSqeeze();
+                mModelController.onButtonSqeeze();
                 break;
             }
+
+
+            case ButtonHolderFragment.eButtonSingle:{
+                mModelController.onButtonSingle();
+                break;
+            }
+            case ButtonHolderFragment.eButtonAdd:{
+                mModelController.onButtonAdd();
+                break;
+            }
+            case ButtonHolderFragment.eButtonClear:{
+                mModelController.onButtonClear();
+                break;
+            }
+            case ButtonHolderFragment.eButtonAuto:{
+                mModelController.onButtonAuto();
+                break;
+            }
+
         } // switch
     }
 
-    public void updatePlot(int[] data){
-        mPlotViewPresenter.updateSinglePlot(0, data);
-    }
+//    public void updatePlot(int[] data){
+//        mPlotViewPresenter.updateSinglePlot(0, data);
+//    }
 
     public void onFragmentInteraction(Uri uri){
 

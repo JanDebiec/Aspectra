@@ -9,6 +9,7 @@ import de.jandrotek.android.aspectra.libspectrafiles.SpectrumFiles;
 /**
  * Controller part for AnalyzeView. In the past, all was in AnalyzeActivity and Fragment
  * Similar tasks as PlotViewController in fileViewer
+ * 15.09.2015 the content should be integrated in one PlotViewController
  * <p/>
  * Created by jan on 19.08.15.
  */
@@ -75,6 +76,7 @@ public class AnalyzeViewController {
 //        mSpectrumNames[eSpectrumReference] = nameReference;
 //    }
 
+    // he same in Controller
     public void initDisplayInFragment() {
         mPlotViewFragment.createPlotSeries();
         for (int i = 0; i < mItemListSizeAct; i++) {
@@ -86,7 +88,7 @@ public class AnalyzeViewController {
         if (mPlotViewFragment != null) {
             mPlotViewPresenter.updateSinglePlot(eSpectrumReference, mSpectrumToEditValues[eSpectrumReference]);
             mPlotViewPresenter.updateSinglePlot(eSpectrumToEdit, mSpectrumToEditValues[eSpectrumToEdit]);
-            mPlotViewFragment.updateGraphView(spectrumLengthMax);
+            mPlotViewFragment.updateGraphViewLength(spectrumLengthMax);
         }
     }
 
@@ -116,7 +118,7 @@ public class AnalyzeViewController {
         mSpectrumToEditValues[eSpectrumToEdit] = mSpectrumToShow[eSpectrumToEdit].getWholeSpectrum();
         mSpectrumToEditValues[eSpectrumReference] = mSpectrumToShow[eSpectrumReference].getWholeSpectrum();
         updateSpectraView(mSpectrumLengthMax);
-        mPlotViewFragment.updateGraphView(mSpectrumLengthMax);
+        mPlotViewFragment.updateGraphViewLength(mSpectrumLengthMax);
     }
 
     /**

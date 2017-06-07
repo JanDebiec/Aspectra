@@ -1,3 +1,24 @@
+/**
+ * This file is part of Aspectra.
+ *
+ * Aspectra is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Aspectra is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Aspectra.  If not, see <http://www.gnu.org/licenses/lgpl.html>.
+ *
+ * Copyright Jan Debiec
+ */
+//TODO we do need PlotViewController for that activity
+// input fileNames, output int[] data for presenter
+
 package de.jandrotek.android.aspectra.viewer;
 
 import android.annotation.TargetApi;
@@ -13,9 +34,10 @@ import java.util.ArrayList;
 
 import de.jandrotek.android.aspectra.core.AspectraGlobals;
 import de.jandrotek.android.aspectra.libplotspectrav3.PlotViewFragment;
+import de.jandrotek.android.aspectra.libplotspectrav3.PlotViewPresenter;
 import de.jandrotek.android.aspectra.libprefs.AspectraGlobalPrefsActivity;
+import de.jandrotek.android.aspectra.libspectrafiles.File2PlotConverter;
 
-//import de.jandrotek.android.aspectra.libplotspectrav3.PlotViewFragment_notToUse;
 
 public class ItemDetailActivity extends AppCompatActivity
 //        implements PlotViewFragment_notToUse.OnFragmentInteractionListener
@@ -23,7 +45,11 @@ public class ItemDetailActivity extends AppCompatActivity
 {
     private static final String TAG = "DetailItemsAct";
     private static PlotViewFragment mPlotViewFragment;
-    private static PlotViewController mPlotViewController;
+    private static PlotViewPresenter mPlotViewPresenter = null;
+    private static ArrayList<String> mNames = null;
+
+    private static File2PlotConverter mFile2PlotConverter = null;
+    private int mPlotCount = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,15 +63,21 @@ public class ItemDetailActivity extends AppCompatActivity
         if (savedInstanceState == null) {
             Bundle arguments = new Bundle();
 
-            ArrayList<String> names = getIntent().getExtras().getStringArrayList(AspectraGlobals.ARG_ITEM_IDS);
-            mPlotViewController = new PlotViewController(AspectraGlobals.ACT_ITEM_VIEW_PLOT, names);
-            mPlotViewFragment = PlotViewFragment.newInstance(names.size());
-            mPlotViewController.init(mPlotViewFragment);
+            mNames = getIntent().getExtras().getStringArrayList(AspectraGlobals.ARG_ITEM_IDS);
+            mPlotViewFragment = PlotViewFragment.newInstance(1);//TODO parameter?
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.item_detail_container, mPlotViewFragment)
                     .commit();
 
             //TODO: display content
+        }
+        if (mFile2PlotConverter == null) {
+            mFile2PlotConverter = new File2PlotConverter();
+        }
+        mPlotCount = mNames.size();
+        mFile2PlotConverter.init(mNames);
+        if (mPlotViewPresenter == null) {
+            mPlotViewPresenter = new PlotViewPresenter(mPlotCount, mPlotViewFragment);
         }
         // Show the Up button in the action bar.
 //        getActionBar().setDisplayHomeAsUpEnabled(true);
@@ -65,7 +97,13 @@ public class ItemDetailActivity extends AppCompatActivity
     @Override
     public void onResume() {
         super.onResume();
-        mPlotViewController.initDisplayInFragment();// must be called when fragment already exists
+        mPlotViewPresenter.clearAllSeries();
+        int[][] arrayOfData = mFile2PlotConverter.getPlotData();
+        mPlotViewPresenter.clearAllSeries();
+        mPlotViewPresenter.init(mPlotCount, arrayOfData);
+        int length = mPlotViewPresenter.getmDataLengthMax();
+
+        mPlotViewPresenter.updateFragmentPort(0, length);
     }
 
     @Override

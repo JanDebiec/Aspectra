@@ -1,36 +1,44 @@
 package de.jandrotek.android.aspectra.core.test;
 
-import junit.framework.TestCase;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 
 import de.jandrotek.android.aspectra.core.AspectraGlobals;
 import de.jandrotek.android.aspectra.core.SpectrumAsp;
 
+import static org.junit.Assert.assertEquals;
+
 /**
  * Created by jan on 28.03.15.
  */
-public class SpectrumBaseTest extends TestCase {
+public class SpectrumBaseTest {
+    //public class SpectrumBaseTest extends TestCase {
     SpectrumAsp mSpectrumAsp;
 
-    protected void setUp() throws Exception {
-        super.setUp();
+    @Before
+    public void setUp() throws Exception {
+//        super.setUp();
         mSpectrumAsp = new SpectrumAsp();
 
         // do initialization here, run on every test method
     }
 
 
-
-    protected void tearDown() throws Exception {
+    @After
+    public void tearDown() throws Exception {
         // do termination here, run on every test method
 
-        super.tearDown();
+//        super.tearDown();
     }
 
+    @Test
      public void testEmptyNameAfterConstruct() {
          String name = mSpectrumAsp.getFileName();
          assertEquals(name, "");
      }
 
+    @Test
     public void testNameAfterDefine() {
         String nameSet = "abcdefg";
         mSpectrumAsp.setFileName(nameSet);
@@ -38,16 +46,19 @@ public class SpectrumBaseTest extends TestCase {
         assertEquals(name, nameSet);
     }
 
+    @Test
     public void testEmptyDataAfterConstruct() {
         int size = mSpectrumAsp.getDataSize();
         assertEquals(size, 0);
     }
 
+    @Test
     public void testEmptyTypeAfterConstruct() {
         int type = mSpectrumAsp.getDataType();
         assertEquals(type, AspectraGlobals.eTypeUnkown);
     }
 
+    @Test
     public void testDataAfterDefine() {
         int[] extData = new int[64];
         mSpectrumAsp.setData(extData,0);
@@ -55,6 +66,7 @@ public class SpectrumBaseTest extends TestCase {
         assertEquals(size, 64);
     }
 
+    @Test
     public void testTypeAfterDefine() {
         int[] extData = new int[64];
         mSpectrumAsp.setData(extData,0);

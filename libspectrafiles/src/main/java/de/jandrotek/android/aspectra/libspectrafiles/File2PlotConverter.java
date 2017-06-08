@@ -51,11 +51,11 @@ public class File2PlotConverter {
             size = AspectraGlobals.eMaxSpectrumSize;
         }
         for (int i = 0; i < size; i++) {
-            String fileName = mFileNamesList.get(i);
-            // load file specified in mItem.content
-            mFileNames[i] = SpectrumFiles.mPath + "/" + fileName;
-            mSpectrumFiles[i] = new SpectrumBase(mFileNames[i]);
             try {
+                String fileName = mFileNamesList.get(i);
+                // load file specified in mItem.content
+                mFileNames[i] = SpectrumFiles.mPath + "/" + fileName;
+                mSpectrumFiles[i] = new SpectrumBase(mFileNames[i]);
                 mPlotDataLength[i] = mSpectrumFiles[i].readValuesFromFile();
                 mPlotdataArray[i] = mSpectrumFiles[i].getValues();
 

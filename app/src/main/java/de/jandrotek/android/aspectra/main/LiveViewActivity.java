@@ -67,6 +67,7 @@ public class LiveViewActivity extends BaseActivity
      */
 
     private final SpectrumHandler mHandler = new SpectrumHandler(this);
+    private boolean mActivityActive = false;
 
 
     @Override
@@ -79,12 +80,16 @@ public class LiveViewActivity extends BaseActivity
         } else {
             setContentView(R.layout.activity_live_view_cam_port);
         }
-        if (savedInstanceState == null) {
+        if(mCameraViewFragment == null) {
             mCameraViewFragment = CameraViewFragment.newInstance( AspectraGlobals.ACT_ITEM_LIVE_VIEW);
+        }
+        if(mPlotViewFragment == null) {
+            mPlotViewFragment = PlotViewFragment.newInstance(1);
+        }
+        if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.fragmentHolderCameraView, mCameraViewFragment)
                     .commit();
-            mPlotViewFragment = PlotViewFragment.newInstance(1);
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.fvPlotView, mPlotViewFragment)
                     .commit();
@@ -146,6 +151,7 @@ public class LiveViewActivity extends BaseActivity
     @Override
     public void onPause(){
         super.onPause();
+        mActivityActive = false;
         if(mCameraViewFragment != null){
             // get the preview size from CamPreview,
             // will be needed in ConfigView
@@ -159,6 +165,7 @@ public class LiveViewActivity extends BaseActivity
     @Override
     public void onStop(){
         super.onStop();
+        mActivityActive = false;
         if(mCameraViewFragment != null){
             mCameraViewFragment.onStop();
         }
@@ -178,6 +185,7 @@ public class LiveViewActivity extends BaseActivity
         setDeviceOrientationInViewSettings();
         updateConfViewSettings();
         configureImageProcessing();
+        mActivityActive = true;
     }
 
 
@@ -254,39 +262,41 @@ public class LiveViewActivity extends BaseActivity
             if (activity != null) {
                 int messId = inputMessage.what;
                 if(messId == AspectraGlobals.eMessageCompleteLine) {
-                    //TODO: interface to presenter
-                    // check if PlotFragment already prepared for data
-                    // by first run presenter.init
-                    // by next runs update plot
-                    int[] data = (int[])inputMessage.obj;
-                    int length = data.length;
-                    if(mPlotViewFragment.isReady4Plot()){
-                        // input for presenter.input is 2 dimensional array
-                        int [][] arrayOfData = new int[1][];
-                        arrayOfData[0] = data;
-                        mPlotViewPresenter.init(1, arrayOfData);//TODO:
-                        mPlotViewPresenter.updateFragmentPort(0, length);
-                    } else if (mPlotViewFragment.isFullInitialized()){
-                        mPlotViewPresenter.updateSinglePlot(0, data);//TODO:
-                        mPlotViewPresenter.updateFragmentPort(0, length);
-                    } else {
-                        if(BuildConfig.DEBUG) {
-                            Log.e(TAG, "PVPresenter is not initialized");
-                        }
-                    }
-                    if(AspectraGlobals.mSavePlotInFile){
-                        try {
-                            String fileName = mSpectrumFiles.savePlotToFile(data);
-                            Toast.makeText(activity, fileName, Toast.LENGTH_SHORT)
-                                    .show();
-                        } catch (Exception e) {
-                            Toast.makeText(activity, e.toString(), Toast.LENGTH_LONG)
-                                    .show();
-                            Log.e(getClass().getSimpleName(), "Exception saving file", e);
-
+                    if(mActivityActive) {
+                        //TODO: interface to presenter
+                        // check if PlotFragment already prepared for data
+                        // by first run presenter.init
+                        // by next runs update plot
+                        int[] data = (int[]) inputMessage.obj;
+                        int length = data.length;
+                        if (mPlotViewFragment.isReady4Plot()) {
+                            // input for presenter.input is 2 dimensional array
+                            int[][] arrayOfData = new int[1][];
+                            arrayOfData[0] = data;
+                            mPlotViewPresenter.init(1, arrayOfData);//TODO:
+                            mPlotViewPresenter.updateFragmentPort(0, length);
+                        } else if (mPlotViewFragment.isFullInitialized()) {
+                            mPlotViewPresenter.updateSinglePlot(0, data);//TODO:
+                            mPlotViewPresenter.updateFragmentPort(0, length);
+                        } else {
+                            if (BuildConfig.DEBUG) {
+                                Log.e(TAG, "PVPresenter is not initialized");
+                            }
                         }
 
-                        AspectraGlobals.mSavePlotInFile = false;
+                        if (AspectraGlobals.mSavePlotInFile) {
+                            try {
+                                String fileName = mSpectrumFiles.savePlotToFile(data);
+                                Toast.makeText(activity, fileName, Toast.LENGTH_SHORT)
+                                        .show();
+                            } catch (Exception e) {
+                                Toast.makeText(activity, e.toString(), Toast.LENGTH_LONG)
+                                        .show();
+                                Log.e(getClass().getSimpleName(), "Exception saving file", e);
+
+                            }
+
+                            AspectraGlobals.mSavePlotInFile = false;
 //                        //TODO: run task in controller, the only input: data
 //                        // but to make a toast we need fileName
 //                        File f;
@@ -296,6 +306,7 @@ public class LiveViewActivity extends BaseActivity
 //                        f =  mSpectrumFiles.getTarget(fileName);
 //                        new SaveSpectrumTask(mSpectrum.toString(),f).execute();
 
+                        }
                     }
                 } else if (messId == AspectraGlobals.eMessagePreviewSize) {
                     int[] data = (int[]) inputMessage.obj;

@@ -180,8 +180,10 @@ public class ViewConfigActivity extends BaseActivity
         });
         mSeekBarCreated = true;
 
-        if (savedInstanceState == null) {
+        if(mCameraViewFragment == null){
             mCameraViewFragment = CameraViewFragment.newInstance(AspectraGlobals.ACT_ITEM_VIEW_CONFIG);
+        }
+        if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
 // from LiveViewAct
                     .add(R.id.fragmentHolderCameraView_vca, mCameraViewFragment)

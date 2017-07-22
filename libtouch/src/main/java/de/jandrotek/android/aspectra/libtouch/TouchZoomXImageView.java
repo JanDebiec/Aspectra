@@ -77,7 +77,7 @@ public class TouchZoomXImageView extends ImageView {
                         if (mode == DRAG) {
                             float deltaX = curr.x - last.x;
                             float deltaY = 0;//curr.y - last.y;
-                            float deltaY = curr.y - last.y;
+                            deltaY = curr.y - last.y;
                             float fixTransX = getFixDragTrans(deltaX, viewWidth, origWidth * saveScale);
                             float fixTransY = getFixDragTrans(deltaY, viewHeight, origHeight * saveScale);
                             matrix.postTranslate(fixTransX, fixTransY);

@@ -19,31 +19,26 @@
     </style>
   </head>
   <body>
-    $ 2.1.1
-      % Version 2.1.1 (Neelix)
-      _ 2011-09-15
-      * now works with strange symbols: ÆæØøÅå Smørebrød
-      * and even stranger symbols, too: 將賦予他們的傳教工作標示為
-    $ 2.0.8
-      % Version 2.0.8 (Kirk)
-      _ 2011-07-12
-      * <span style="font-family:monospace">cl.isFirstRunEver()</span> added
-      * getting version name from manifest now
-    $ 2.0
-      % Version 2.0
-      _ 2011-06-19
-      ! completely overdone and cooler than ever!
-      # <a href="http://www.friendface.co.uk/">Friendface</a> integration
-      # now with Change Log
-      # Billions of bug fixes!
-    $ 1.0
-      % Version 1.0
-      _ 2011-06-01
-      ! Finally! <b>Rocking Chair Sound Generator</b> released!
-      * please register
-      * please donate
-    $ 0.1
-      % Version 0.1
+    $ 2.0.1
+      % Version 2.0.1
+      _ 2017-07-23
+      * added calibration
+    $ 1.0.5
+      % Version 1.0.5
+      _ 2011-06-07
+      *  fixing 2 reported bugs, stop messages onPause
+    $ 1.0.4
+      % Version 1.0.4
+      _ 2017-05-30
+    $ 1.0.3
+      % Version 1.0.3
+      _ 2017-04-20
+      *  catching camera exception
+    $ 1.0.1
+      _ 2017-02-18
+      *   prepare for first release
+    $ 1.0.0
+      % Version 1.0.0
       _ (beta, not working)
       * Now with <a href="http://petoria.de/android-change-log/">Android Change Log</a>!
     $ END_OF_CHANGE_LOG

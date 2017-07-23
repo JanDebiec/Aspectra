@@ -91,9 +91,9 @@
     <orderEntry type="jdk" jdkName="Android API 24 Platform" jdkType="Android SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" exported="" name="appcompat-v7-24.0.0" level="project" />
+    <orderEntry type="library" exported="" name="support-annotations-24.0.0" level="project" />
     <orderEntry type="library" exported="" name="common-lang3" level="project" />
     <orderEntry type="library" exported="" name="1_common-lang3" level="project" />
-    <orderEntry type="library" exported="" name="support-annotations-24.0.0" level="project" />
     <orderEntry type="library" exported="" name="support-v4-24.0.0" level="project" />
     <orderEntry type="library" exported="" name="animated-vector-drawable-24.0.0" level="project" />
     <orderEntry type="library" exported="" name="support-vector-drawable-24.0.0" level="project" />

@@ -52,5 +52,11 @@
     <string name="content_version">App version = </string>
     <string name="camera_exception">Camera is not responding</string>
 
+    <string name="changelog_full_title">Change Log</string>
+    <string name="changelog_title">What\'s New</string>
+    <string name="changelog_ok_button">OK</string>
+    <string name="changelog_show_full">more...</string>
+    <string name="background_color">black</string>
+
 
 </resources>

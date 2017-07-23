@@ -113,12 +113,12 @@ abstract public class GraphView extends LinearLayout {
 			if (horlabels == null) {
 				horlabels = generateHorlabels(graphwidth);
             } else if (getGraphViewStyle().getNumHorizontalLabels() > 0) {
-                Log.w("GraphView", "when you use static labels (via setHorizontalLabels) the labels will just be shown exactly in that way, that you have set it. setNumHorizontalLabels does not have any effect.");
+				Log.d("GraphView", "when you use static labels (via setHorizontalLabels) the labels will just be shown exactly in that way, that you have set it. setNumHorizontalLabels does not have any effect.");
 			}
 			if (verlabels == null) {
 				verlabels = generateVerlabels(graphheight);
             } else if (getGraphViewStyle().getNumVerticalLabels() > 0) {
-                Log.w("GraphView", "when you use static labels (via setVerticalLabels) the labels will just be shown exactly in that way, that you have set it. setNumVerticalLabels does not have any effect.");
+				Log.d("GraphView", "when you use static labels (via setVerticalLabels) the labels will just be shown exactly in that way, that you have set it. setNumVerticalLabels does not have any effect.");
 			}
 
 			// horizontal lines
@@ -299,8 +299,8 @@ abstract public class GraphView extends LinearLayout {
 			if (verlabels == null) {
 				verlabels = generateVerlabels(graphheight);
 			} else if (getGraphViewStyle().getNumVerticalLabels() > 0) {
-                Log.w("GraphView", "when you use static labels (via setVerticalLabels) the labels will just be shown exactly in that way, that you have set it. setNumVerticalLabels does not have any effect.");
-            }
+				Log.d("GraphView", "when you use static labels (via setVerticalLabels) the labels will just be shown exactly in that way, that you have set it. setNumVerticalLabels does not have any effect.");
+			}
 
 			// vertical labels
 			paint.setTextAlign(getGraphViewStyle().getVerticalLabelsAlign());

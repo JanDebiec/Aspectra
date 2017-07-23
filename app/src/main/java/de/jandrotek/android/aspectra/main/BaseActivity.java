@@ -67,6 +67,8 @@ public class BaseActivity extends AppCompatActivity //ActionBarActivity
     protected ConfigViewSettings mViewSettings = null;
     protected boolean mCameraDataMirrored;
 
+    protected ChangeLog cl;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
        super.onCreate(savedInstanceState);
@@ -83,6 +85,8 @@ public class BaseActivity extends AppCompatActivity //ActionBarActivity
 
        updateFromPreferences();
        setDeviceOrientationInViewSettings();
+
+        cl = new ChangeLog(this);
 
    }
 
@@ -202,21 +206,23 @@ public class BaseActivity extends AppCompatActivity //ActionBarActivity
     }
 
     protected void showVersion(){
-        try {
-        PackageInfo pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
-        String version = pInfo.versionName;
-        int verCode = pInfo.versionCode;
-            topView =  getWindow().getDecorView().getRootView();
-        String stringToDisplay = getString(R.string.content_version) + version;
 
-            // this snackbar overlaps the action bar in portrait mode
-            Snackbar.make(topView, stringToDisplay, Snackbar.LENGTH_LONG).show();
-
-//            Toast.makeText(this, stringToDisplay, Toast.LENGTH_LONG)
-//                .show();
-        } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
-        }
+        cl.getFullLogDialog().show();
+//        try {
+//        PackageInfo pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
+//        String version = pInfo.versionName;
+//        int verCode = pInfo.versionCode;
+//            topView =  getWindow().getDecorView().getRootView();
+//        String stringToDisplay = getString(R.string.content_version) + version;
+//
+//            // this snackbar overlaps the action bar in portrait mode
+//            Snackbar.make(topView, stringToDisplay, Snackbar.LENGTH_LONG).show();
+//
+////            Toast.makeText(this, stringToDisplay, Toast.LENGTH_LONG)
+////                .show();
+//        } catch (PackageManager.NameNotFoundException e) {
+//            e.printStackTrace();
+//        }
 
     }
 }

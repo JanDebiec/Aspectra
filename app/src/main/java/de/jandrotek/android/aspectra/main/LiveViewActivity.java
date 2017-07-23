@@ -175,6 +175,9 @@ public class LiveViewActivity extends BaseActivity
     public void onResume(){
         super.onResume();
         updateFromPreferences();
+//        ChangeLog cl = new ChangeLog(this);
+        if (cl.firstRun())
+            cl.getLogDialog().show();
 
         //TODO: suppose it os not needed:
         if(mPlotViewFragment == null) {

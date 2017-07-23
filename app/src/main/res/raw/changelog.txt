@@ -45,6 +45,7 @@
     $ 0.1
       % Version 0.1
       _ (beta, not working)
+      * Now with <a href="http://petoria.de/android-change-log/">Android Change Log</a>!
     $ END_OF_CHANGE_LOG
   </body>
 </html>

@@ -18,12 +18,15 @@
  */
 package de.jandrotek.android.aspectra.main;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.graphics.PointF;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -70,9 +73,15 @@ public class LiveViewActivity extends BaseActivity
     private final SpectrumHandler mHandler = new SpectrumHandler(this);
     private boolean mActivityActive = false;
 
-    private float mZommScale = 0.0f;
-    private PointF  mLastZoomXPoint;
+    private float mZommScale = 1.0f;
+    private PointF  mLastZoomXPoint = new PointF(0.0f, 0.0f);
+    private static final String ZOOMX_KEY = "PREFS_ZOOMX_KEY";
+    private static final String ZOOMY_KEY = "PREFS_ZOOMY_KEY";
+    private static final String ZOOMSCALE_KEY = "PREFS_ZOOMSCALE_KEY";
 
+    private static final float ZOOMX_DEF = 0.0f;
+    private static final float ZOOMY_DEF = 0.0f;
+    private static final float ZOOMSCALE_DEF = 1.0f;
 
 
     @Override
@@ -110,6 +119,7 @@ public class LiveViewActivity extends BaseActivity
         getScreenOrientation();
         mCameraViewFragment.setDeviceOrientation(mDeviceOrientation);
         updateFromPreferences();
+//        restoreZoomXParams();
     }
 
     @Override
@@ -195,9 +205,11 @@ public class LiveViewActivity extends BaseActivity
         setDeviceOrientationInViewSettings();
         updateConfViewSettings();
         configureImageProcessing();
-        if(mZommScale != 0.0f) {
+//        if(mZommScale != 1.0f) {
             restoreZoomXParams();
-        }
+            mPlotViewFragment.setZoomXLast(new PointF(mLastZoomXPoint.x, mLastZoomXPoint.y));
+            mPlotViewFragment.setZoomXSaveScale(mZommScale);
+//        }
         mActivityActive = true;
     }
 
@@ -205,11 +217,26 @@ public class LiveViewActivity extends BaseActivity
     private void saveZoomXParams(){
         mZommScale = mPlotViewFragment.getZoomXSaveScale();
         mLastZoomXPoint = mPlotViewFragment.getZoomXLast();
+
+        Context context = getApplicationContext();
+
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences.Editor editor = sp.edit();
+        editor.putFloat(ZOOMX_KEY, mLastZoomXPoint.x);
+        editor.putFloat(ZOOMY_KEY, mLastZoomXPoint.y);
+        editor.putFloat(ZOOMSCALE_KEY, mZommScale);
+
+        editor.commit();
     }
 
     private void restoreZoomXParams(){
-        mPlotViewFragment.setZoomXSaveScale(mZommScale);
-        mPlotViewFragment.setZoomXLast(mLastZoomXPoint);
+
+        Context context = getApplicationContext();
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
+        mLastZoomXPoint.x = sp.getFloat(ZOOMX_KEY, ZOOMX_DEF);
+        mLastZoomXPoint.y = sp.getFloat(ZOOMY_KEY, ZOOMY_DEF);
+        mZommScale = sp.getFloat(ZOOMSCALE_KEY,ZOOMSCALE_DEF);
+
     }
 
     //@Override

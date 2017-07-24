@@ -20,6 +20,7 @@ package de.jandrotek.android.aspectra.main;
 
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.graphics.PointF;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -68,6 +69,10 @@ public class LiveViewActivity extends BaseActivity
 
     private final SpectrumHandler mHandler = new SpectrumHandler(this);
     private boolean mActivityActive = false;
+
+    private float mZommScale = 0.0f;
+    private PointF  mLastZoomXPoint;
+
 
 
     @Override
@@ -160,6 +165,8 @@ public class LiveViewActivity extends BaseActivity
 
             mCameraViewFragment.onPause();
         }
+        saveZoomXParams();
+
     }
 
     @Override
@@ -188,9 +195,22 @@ public class LiveViewActivity extends BaseActivity
         setDeviceOrientationInViewSettings();
         updateConfViewSettings();
         configureImageProcessing();
+        if(mZommScale != 0.0f) {
+            restoreZoomXParams();
+        }
         mActivityActive = true;
     }
 
+
+    private void saveZoomXParams(){
+        mZommScale = mPlotViewFragment.getZoomXSaveScale();
+        mLastZoomXPoint = mPlotViewFragment.getZoomXLast();
+    }
+
+    private void restoreZoomXParams(){
+        mPlotViewFragment.setZoomXSaveScale(mZommScale);
+        mPlotViewFragment.setZoomXLast(mLastZoomXPoint);
+    }
 
     //@Override
     protected void updateFromPreferences(){

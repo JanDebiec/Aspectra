@@ -20,6 +20,7 @@ package de.jandrotek.android.aspectra.libplotspectrav3;
 
 import android.app.Activity;
 import android.graphics.Color;
+import android.graphics.PointF;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.Layout;
@@ -94,6 +95,7 @@ public class PlotViewFragment extends Fragment
     }
 
     private GraphViewSeries singleSerie = null;
+    private TouchZoomXImageView mColorImg;
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
@@ -153,7 +155,7 @@ public class PlotViewFragment extends Fragment
         }
 
 //        SurfaceView surfaceView = (TouchImageView) mRootView.findViewById(R.id.surfaceView);
-        TouchZoomXImageView mColorImg = (TouchZoomXImageView) mRootView.findViewById(R.id.surfaceView);
+        mColorImg = (TouchZoomXImageView) mRootView.findViewById(R.id.surfaceView);
 //        TouchImageView mColorImg = new TouchImageView(getActivity());
         mColorImg.setImageResource(R.drawable.spectrum_color);
         mColorImg.setMaxZoom(4f);
@@ -259,6 +261,24 @@ public class PlotViewFragment extends Fragment
     public void clearPlotSeries(){
         mGraphView.removeAllSeries();
     }
+
+
+    public float getZoomXSaveScale() {
+        return mColorImg.getSaveScale();
+    }
+
+    public void setZoomXSaveScale(float saveScale) {
+        mColorImg.setSaveScale(saveScale);
+    }
+
+    public PointF getZoomXLast() {
+        return mColorImg.getLast();
+    }
+
+    public void setZoomXLast(PointF point){
+        mColorImg.setLast(point);
+    }
+
 }
 
 

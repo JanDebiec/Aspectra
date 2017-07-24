@@ -13,9 +13,10 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
 import android.view.View;
-import android.widget.ImageView;
+import android.support.v7.widget.AppCompatImageView;
+//import android.widget.ImageView;
 
-public class TouchZoomXImageView extends ImageView {
+public class TouchZoomXImageView extends AppCompatImageView {
     Matrix matrix;
     // We can be in one of these 3 states
     static final int NONE = 0;
@@ -24,6 +25,13 @@ public class TouchZoomXImageView extends ImageView {
 
     int mode = NONE;
 
+    public PointF getLast() {
+        return last;
+    }
+
+    public void setLast(PointF point){
+        this.last = point;
+    }
     // Remember some things for zooming
     PointF last = new PointF();
     PointF start = new PointF();
@@ -33,6 +41,14 @@ public class TouchZoomXImageView extends ImageView {
     int viewWidth, viewHeight;
 
     static final int CLICK = 3;
+
+    public float getSaveScale() {
+        return saveScale;
+    }
+
+    public void setSaveScale(float saveScale) {
+        this.saveScale = saveScale;
+    }
 
     float saveScale = 1f;
 
@@ -75,14 +91,14 @@ public class TouchZoomXImageView extends ImageView {
                         break;
                     case MotionEvent.ACTION_MOVE:
                         if (mode == DRAG) {
-                            float deltaX = curr.x - last.x;
-                            float deltaY = 0;//curr.y - last.y;
-                            deltaY = curr.y - last.y;
-                            float fixTransX = getFixDragTrans(deltaX, viewWidth, origWidth * saveScale);
-                            float fixTransY = getFixDragTrans(deltaY, viewHeight, origHeight * saveScale);
-                            matrix.postTranslate(fixTransX, fixTransY);
-                            fixTrans();
-                            last.set(curr.x, curr.y);
+                            setImagePosition(curr);
+//                            float deltaX = curr.x - last.x;
+//                            float deltaY = curr.y - last.y;
+//                            float fixTransX = getFixDragTrans(deltaX, viewWidth, origWidth * saveScale);
+//                            float fixTransY = getFixDragTrans(deltaY, viewHeight, origHeight * saveScale);
+//                            matrix.postTranslate(fixTransX, fixTransY);
+//                            fixTrans();
+//                            last.set(curr.x, curr.y);
                         }
                         break;
                     case MotionEvent.ACTION_UP:
@@ -105,6 +121,17 @@ public class TouchZoomXImageView extends ImageView {
 
     public void setMaxZoom(float x) {
         maxScale = x;
+    }
+
+    public void setImagePosition(PointF curr){
+        float deltaX = curr.x - last.x;
+        float deltaY = curr.y - last.y;
+        float fixTransX = getFixDragTrans(deltaX, viewWidth, origWidth * saveScale);
+        float fixTransY = getFixDragTrans(deltaY, viewHeight, origHeight * saveScale);
+        matrix.postTranslate(fixTransX, fixTransY);
+        fixTrans();
+        last.set(curr.x, curr.y);
+
     }
 
     private class ScaleListener extends ScaleGestureDetector.SimpleOnScaleGestureListener {

@@ -279,6 +279,10 @@ public class PlotViewFragment extends Fragment
         mColorImg.setLast(point);
     }
 
+    public void setImagePosition(PointF curr){
+        mColorImg.setImagePosition(curr);
+    }
+
 }
 
 

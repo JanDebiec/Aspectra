@@ -91,14 +91,14 @@ public class TouchZoomXImageView extends AppCompatImageView {
                         break;
                     case MotionEvent.ACTION_MOVE:
                         if (mode == DRAG) {
-                            setImagePosition(curr);
-//                            float deltaX = curr.x - last.x;
-//                            float deltaY = curr.y - last.y;
-//                            float fixTransX = getFixDragTrans(deltaX, viewWidth, origWidth * saveScale);
-//                            float fixTransY = getFixDragTrans(deltaY, viewHeight, origHeight * saveScale);
-//                            matrix.postTranslate(fixTransX, fixTransY);
-//                            fixTrans();
-//                            last.set(curr.x, curr.y);
+//                            setImagePosition(curr);
+                            float deltaX = curr.x - last.x;
+                            float deltaY = curr.y - last.y;
+                            float fixTransX = getFixDragTrans(deltaX, viewWidth, origWidth * saveScale);
+                            float fixTransY = getFixDragTrans(deltaY, viewHeight, origHeight * saveScale);
+                            matrix.postTranslate(fixTransX, fixTransY);
+                            fixTrans();
+                            last.set(curr.x, curr.y);
                         }
                         break;
                     case MotionEvent.ACTION_UP:
@@ -208,7 +208,7 @@ public class TouchZoomXImageView extends AppCompatImageView {
             return;
         oldMeasuredHeight = viewHeight;
         oldMeasuredWidth = viewWidth;
-        if (saveScale == 1) {
+//        if (saveScale == 1) {
             //Fit to screen.
             float scale;
             Drawable drawable = getDrawable();
@@ -230,7 +230,7 @@ public class TouchZoomXImageView extends AppCompatImageView {
             origWidth = viewWidth - 2 * redundantXSpace;
             origHeight = viewHeight - 2 * redundantYSpace;
             setImageMatrix(matrix);
-        }
+//        }
         fixTrans();
     }
 }

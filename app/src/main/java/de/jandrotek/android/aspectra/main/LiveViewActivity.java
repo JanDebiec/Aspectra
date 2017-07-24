@@ -175,7 +175,7 @@ public class LiveViewActivity extends BaseActivity
 
             mCameraViewFragment.onPause();
         }
-        saveZoomXParams();
+//        saveZoomXParams();
 
     }
 
@@ -206,9 +206,10 @@ public class LiveViewActivity extends BaseActivity
         updateConfViewSettings();
         configureImageProcessing();
 //        if(mZommScale != 1.0f) {
-            restoreZoomXParams();
-            mPlotViewFragment.setZoomXLast(new PointF(mLastZoomXPoint.x, mLastZoomXPoint.y));
-            mPlotViewFragment.setZoomXSaveScale(mZommScale);
+//            restoreZoomXParams();
+//        mPlotViewFragment.setZoomXSaveScale(mZommScale);
+//        mPlotViewFragment.setZoomXLast(new PointF(mLastZoomXPoint.x, mLastZoomXPoint.y));
+//        mPlotViewFragment.setImagePosition(new PointF(mLastZoomXPoint.x, mLastZoomXPoint.y));
 //        }
         mActivityActive = true;
     }

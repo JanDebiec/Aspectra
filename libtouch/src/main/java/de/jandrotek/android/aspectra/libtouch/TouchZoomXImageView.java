@@ -13,10 +13,11 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
 import android.view.View;
-import android.support.v7.widget.AppCompatImageView;
-//import android.widget.ImageView;
+//import android.support.v7.widget.AppCompatImageView;
+import android.widget.ImageView;
 
-public class TouchZoomXImageView extends AppCompatImageView {
+public class TouchZoomXImageView extends ImageView {
+//public class TouchZoomXImageView extends AppCompatImageView {
     Matrix matrix;
     // We can be in one of these 3 states
     static final int NONE = 0;
@@ -208,7 +209,7 @@ public class TouchZoomXImageView extends AppCompatImageView {
             return;
         oldMeasuredHeight = viewHeight;
         oldMeasuredWidth = viewWidth;
-//        if (saveScale == 1) {
+        if (saveScale == 1) {
             //Fit to screen.
             float scale;
             Drawable drawable = getDrawable();
@@ -230,7 +231,7 @@ public class TouchZoomXImageView extends AppCompatImageView {
             origWidth = viewWidth - 2 * redundantXSpace;
             origHeight = viewHeight - 2 * redundantYSpace;
             setImageMatrix(matrix);
-//        }
+        }
         fixTrans();
     }
 }

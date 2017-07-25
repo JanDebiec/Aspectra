@@ -204,8 +204,8 @@ public class TouchZoomXImageView extends ImageView {
         //
         // Rescales image on rotation
         //
-        if (oldMeasuredHeight == viewWidth && oldMeasuredHeight == viewHeight
-                || viewWidth == 0 || viewHeight == 0)
+        if (((oldMeasuredWidth == viewWidth) && (oldMeasuredHeight == viewHeight))
+                || (viewWidth == 0) || (viewHeight == 0))
             return;
         oldMeasuredHeight = viewHeight;
         oldMeasuredWidth = viewWidth;

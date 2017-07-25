@@ -175,7 +175,7 @@ public class LiveViewActivity extends BaseActivity
 
             mCameraViewFragment.onPause();
         }
-//        saveZoomXParams();
+        saveZoomXParams();
 
     }
 
@@ -206,7 +206,7 @@ public class LiveViewActivity extends BaseActivity
         updateConfViewSettings();
         configureImageProcessing();
 //        if(mZommScale != 1.0f) {
-//            restoreZoomXParams();
+            restoreZoomXParams();
 //        mPlotViewFragment.setZoomXSaveScale(mZommScale);
 //        mPlotViewFragment.setZoomXLast(new PointF(mLastZoomXPoint.x, mLastZoomXPoint.y));
 //        mPlotViewFragment.setImagePosition(new PointF(mLastZoomXPoint.x, mLastZoomXPoint.y));

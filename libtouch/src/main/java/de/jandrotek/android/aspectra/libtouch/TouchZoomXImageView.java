@@ -163,6 +163,27 @@ public class TouchZoomXImageView extends ImageView {
         }
     }
 
+
+    public void onScaleExtern(float mScaleFactor){
+        float origScale = saveScale;
+        saveScale *= mScaleFactor;
+
+        if (saveScale > maxScale) {
+            saveScale = maxScale;
+            mScaleFactor = maxScale / origScale;
+        } else if (saveScale < minScale) {
+            saveScale = minScale;
+            mScaleFactor = minScale / origScale;
+        }
+//        if (origWidth * saveScale <= viewWidth || origHeight * saveScale <= viewHeight)
+            matrix.postScale(mScaleFactor, mScaleFactor, viewWidth / 2, viewHeight / 2);
+//        else
+//            matrix.postScale(mScaleFactor, mScaleFactor, detector.getFocusX(), detector.getFocusY());
+        fixTrans();
+
+    }
+
+
     void fixTrans() {
         matrix.getValues(m);
         float transX = m[Matrix.MTRANS_X];

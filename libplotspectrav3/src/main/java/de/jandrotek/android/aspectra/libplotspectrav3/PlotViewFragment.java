@@ -96,13 +96,18 @@ public class PlotViewFragment extends Fragment
 
     private GraphViewSeries singleSerie = null;
     private TouchZoomXImageView mColorImg;
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 count of plots to draw.
-     * @return A new instance of fragment PlotViewFragment.
-     */
+
+    public void setReferenceMode(boolean referenceMode) {
+        mColorImg.setReferenceMode(referenceMode);
+    }
+
+        /**
+         * Use this factory method to create a new instance of
+         * this fragment using the provided parameters.
+         *
+         * @param param1 count of plots to draw.
+         * @return A new instance of fragment PlotViewFragment.
+         */
     public static PlotViewFragment newInstance(int param1) {
         if (mFragment == null) {
             mFragment = new PlotViewFragment();

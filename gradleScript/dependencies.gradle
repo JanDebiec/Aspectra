@@ -1,6 +1,6 @@
 ext {
     supportLibrary = '24.0.0'
-    buildToolsVersion = '25.0.0'
+    buildToolsVersion = '26.0.2'
     compileSdkVersion = "android-24"
 
     tools = [

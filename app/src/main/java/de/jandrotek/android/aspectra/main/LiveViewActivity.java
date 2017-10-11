@@ -58,6 +58,7 @@ public class LiveViewActivity extends BaseActivity
 
     private static int mPreviewWidthX;
     private static int mPreviewHeightY;
+    private boolean mReferenceMode = false;
 
     public Handler getHandler() {
         return mHandler;
@@ -159,7 +160,19 @@ public class LiveViewActivity extends BaseActivity
                             .show();
                 }
                 return true;
-           }
+            } else if (id == R.id.action_reference){
+                String toastStr;
+                if(mReferenceMode == true){
+                    toastStr = "back to LiveView Mode";
+                    mReferenceMode = false;
+                } else {
+                    toastStr = "Reference Mode";
+                    mReferenceMode = true;
+                }
+                mPlotViewFragment.setReferenceMode(mReferenceMode);
+                Toast.makeText(this, toastStr, Toast.LENGTH_LONG)
+                        .show();
+            }
         return super.onOptionsItemSelected(item);
     }
 
@@ -212,6 +225,7 @@ public class LiveViewActivity extends BaseActivity
 //        mPlotViewFragment.setImagePosition(new PointF(mLastZoomXPoint.x, mLastZoomXPoint.y));
 //        }
         mActivityActive = true;
+        mPlotViewFragment.setReferenceMode(mReferenceMode);
     }
 
 

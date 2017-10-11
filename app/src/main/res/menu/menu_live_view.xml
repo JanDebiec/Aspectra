@@ -11,4 +11,9 @@
         android:orderInCategory="100"
         app:showAsAction="ifRoom|withText"
         />
+    <item android:id="@+id/action_reference"
+        android:title="@string/action_reference"
+        android:orderInCategory="100"
+        app:showAsAction="ifRoom|withText"
+        />
 </menu>

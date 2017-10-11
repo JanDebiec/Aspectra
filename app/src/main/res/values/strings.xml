@@ -57,6 +57,8 @@
     <string name="changelog_ok_button">OK</string>
     <string name="changelog_show_full">more...</string>
     <string name="background_color">black</string>
+    <string name="action_reference">Reference</string>
+    <string name="action_view">LiveView</string>
 
 
 </resources>

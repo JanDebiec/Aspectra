@@ -51,6 +51,7 @@ android {
     dexOptions {
         preDexLibraries = false
     }
+//    buildToolsVersion '26.0.2'
 }
 
 dependencies {

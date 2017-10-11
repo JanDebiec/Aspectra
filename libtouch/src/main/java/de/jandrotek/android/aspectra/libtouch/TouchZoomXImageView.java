@@ -57,6 +57,12 @@ public class TouchZoomXImageView extends ImageView {
 
     int oldMeasuredWidth, oldMeasuredHeight;
 
+    public void setReferenceMode(boolean referenceMode) {
+        mReferenceMode = referenceMode;
+    }
+
+    private boolean mReferenceMode;
+
     ScaleGestureDetector mScaleDetector;
 
     Context context;

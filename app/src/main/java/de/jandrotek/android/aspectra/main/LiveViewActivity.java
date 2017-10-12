@@ -18,18 +18,28 @@
  */
 package de.jandrotek.android.aspectra.main;
 
+import android.app.ActionBar;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.graphics.Color;
 import android.graphics.PointF;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.preference.PreferenceManager;
+import android.text.SpannableString;
+import android.text.style.BackgroundColorSpan;
+import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.IOException;
@@ -59,6 +69,7 @@ public class LiveViewActivity extends BaseActivity
     private static int mPreviewWidthX;
     private static int mPreviewHeightY;
     private boolean mReferenceMode = false;
+    private int mBackgroundColor;
 
     public Handler getHandler() {
         return mHandler;
@@ -162,12 +173,23 @@ public class LiveViewActivity extends BaseActivity
                 return true;
             } else if (id == R.id.action_reference){
                 String toastStr;
+                int newColor;
+                Window window = this.getWindow();
+                View view = findViewById(id);
+
                 if(mReferenceMode == true){
                     toastStr = "back to LiveView Mode";
                     mReferenceMode = false;
+                    newColor = mBackgroundColor;
                 } else {
+                    mBackgroundColor =  window.getStatusBarColor();
                     toastStr = "Reference Mode";
                     mReferenceMode = true;
+                    newColor = this.getResources().getColor(R.color.reference);
+                }
+                // finally change the color
+                if (view != null && view instanceof TextView) {
+                    ((TextView) view).setTextColor( newColor ); // Make text colour blue
                 }
                 mPlotViewFragment.setReferenceMode(mReferenceMode);
                 Toast.makeText(this, toastStr, Toast.LENGTH_LONG)

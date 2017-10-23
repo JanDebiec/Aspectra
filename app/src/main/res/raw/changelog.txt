@@ -23,6 +23,7 @@
       % Version 1.0.6
       _ 2017-10-23
       *  added Release-Log
+      *  added link to help on web-page
     $ 1.0.5
       % Version 1.0.5
       _ 2017-06-07

@@ -25,7 +25,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="www.jandrotek.de"
+        android:text="https://www.jandrotek.de/support/aspectra-technical-concept/"
         android:autoLink="web"
         android:ems="10"
         android:id="@+id/webpageAddr"

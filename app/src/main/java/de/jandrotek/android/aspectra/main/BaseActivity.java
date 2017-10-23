@@ -45,6 +45,7 @@ import de.cketti.mailto.EmailIntentBuilder;
 public class BaseActivity extends AppCompatActivity //ActionBarActivity
 {
     protected View topView;
+    protected ChangeLog cl;
 
 //    protected static final int ACT_ITEM_LIVE_VIEW   = 0;
 //    protected static final int ACT_ITEM_VIEW_CONFIG = 1;
@@ -84,6 +85,7 @@ public class BaseActivity extends AppCompatActivity //ActionBarActivity
        updateFromPreferences();
        setDeviceOrientationInViewSettings();
 
+        cl = new ChangeLog(this);
    }
 
     protected void setDeviceOrientationInViewSettings() {
@@ -202,21 +204,22 @@ public class BaseActivity extends AppCompatActivity //ActionBarActivity
     }
 
     protected void showVersion(){
-        try {
-        PackageInfo pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
-        String version = pInfo.versionName;
-        int verCode = pInfo.versionCode;
-            topView =  getWindow().getDecorView().getRootView();
-        String stringToDisplay = getString(R.string.content_version) + version;
-
-            // this snackbar overlaps the action bar in portrait mode
-            Snackbar.make(topView, stringToDisplay, Snackbar.LENGTH_LONG).show();
-
-//            Toast.makeText(this, stringToDisplay, Toast.LENGTH_LONG)
-//                .show();
-        } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
-        }
+        cl.getFullLogDialog().show();
+//        try {
+//        PackageInfo pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
+//        String version = pInfo.versionName;
+//        int verCode = pInfo.versionCode;
+//            topView =  getWindow().getDecorView().getRootView();
+//        String stringToDisplay = getString(R.string.content_version) + version;
+//
+//            // this snackbar overlaps the action bar in portrait mode
+//            Snackbar.make(topView, stringToDisplay, Snackbar.LENGTH_LONG).show();
+//
+////            Toast.makeText(this, stringToDisplay, Toast.LENGTH_LONG)
+////                .show();
+//        } catch (PackageManager.NameNotFoundException e) {
+//            e.printStackTrace();
+//        }
 
     }
 }

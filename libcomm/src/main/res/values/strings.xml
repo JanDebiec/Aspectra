@@ -15,6 +15,6 @@
     <string name="feedback_body">[Your feedback here]</string>
     <string name="argument_error">Error: %s</string>
     <string name="title_activity_help">HelpActivity</string>
-    <string name="helpText">to get some help,\nto see detailed information \nabout the whole Aspectra system\nplease visit my wep page: </string>
+    <string name="helpText">to get some help,\nabout functioning the Aspectra Mini\nand to see detailed information \nabout the whole Aspectra system\nplease visit page: </string>
 
 </resources>

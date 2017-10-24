@@ -1,11 +1,11 @@
 /**
  * Copyright (C) 2011-2013, Karsten Priegnitz
- *
+ * <p>
  * Permission to use, copy, modify, and distribute this piece of software
  * for any purpose with or without fee is hereby granted, provided that
  * the above copyright notice and this permission notice appear in the
  * source code of all copies.
- *
+ * <p>
  * It would be appreciated if you mention the author in your change log,
  * contributors list or the like.
  *
@@ -197,7 +197,9 @@ public class ChangeLog {
     /** modes for HTML-Lists (bullet, numbered) */
     private enum Listmode {
         NONE, ORDERED, UNORDERED,
-    };
+    }
+
+    ;
 
     private Listmode listMode = Listmode.NONE;
     private StringBuffer sb = null;
@@ -212,7 +214,7 @@ public class ChangeLog {
 
             String line = null;
             boolean advanceToEOVS = false; // if true: ignore further version
-                                           // sections
+            // sections
             while ((line = br.readLine()) != null) {
                 line = line.trim();
                 char marker = line.length() > 0 ? line.charAt(0) : 0;
@@ -230,35 +232,35 @@ public class ChangeLog {
                     }
                 } else if (!advanceToEOVS) {
                     switch (marker) {
-                    case '%':
-                        // line contains version title
-                        this.closeList();
-                        sb.append("<div class='title'>" + line.substring(1).trim() + "</div>\n");
-                        break;
-                    case '_':
-                        // line contains version title
-                        this.closeList();
-                        sb.append("<div class='subtitle'>" + line.substring(1).trim() + "</div>\n");
-                        break;
-                    case '!':
-                        // line contains free text
-                        this.closeList();
-                        sb.append("<div class='freetext'>" + line.substring(1).trim() + "</div>\n");
-                        break;
-                    case '#':
-                        // line contains numbered list item
-                        this.openList(Listmode.ORDERED);
-                        sb.append("<li>" + line.substring(1).trim() + "</li>\n");
-                        break;
-                    case '*':
-                        // line contains bullet list item
-                        this.openList(Listmode.UNORDERED);
-                        sb.append("<li>" + line.substring(1).trim() + "</li>\n");
-                        break;
-                    default:
-                        // no special character: just use line as is
-                        this.closeList();
-                        sb.append(line + "\n");
+                        case '%':
+                            // line contains version title
+                            this.closeList();
+                            sb.append("<div class='title'>" + line.substring(1).trim() + "</div>\n");
+                            break;
+                        case '_':
+                            // line contains version title
+                            this.closeList();
+                            sb.append("<div class='subtitle'>" + line.substring(1).trim() + "</div>\n");
+                            break;
+                        case '!':
+                            // line contains free text
+                            this.closeList();
+                            sb.append("<div class='freetext'>" + line.substring(1).trim() + "</div>\n");
+                            break;
+                        case '#':
+                            // line contains numbered list item
+                            this.openList(Listmode.ORDERED);
+                            sb.append("<li>" + line.substring(1).trim() + "</li>\n");
+                            break;
+                        case '*':
+                            // line contains bullet list item
+                            this.openList(Listmode.UNORDERED);
+                            sb.append("<li>" + line.substring(1).trim() + "</li>\n");
+                            break;
+                        default:
+                            // no special character: just use line as is
+                            this.closeList();
+                            sb.append(line + "\n");
                     }
                 }
             }

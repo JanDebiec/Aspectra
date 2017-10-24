@@ -60,6 +60,18 @@ public class CameraPreview  extends ViewGroup implements SurfaceHolder.Callback,
     private int mCameraSizeinViewWidth;
     private int mCameraSizeinViewHeight;
     private int mDeviceOrientation;
+    private int mResult;
+
+    public int getResult() {
+        return mResult;
+    }
+
+    public int getDegrees() {
+        return mDegrees;
+    }
+
+    private int mDegrees = 0;
+
 
     public void setDeviceOrientation(int deviceOrientation) {
         mDeviceOrientation = deviceOrientation;
@@ -220,22 +232,22 @@ public class CameraPreview  extends ViewGroup implements SurfaceHolder.Callback,
         android.hardware.Camera.getCameraInfo(cameraId, info);
         int displayRotation = mActivity.getWindowManager().getDefaultDisplay()
                      .getRotation();
-        int degrees = 0;
+//        int mDegrees = 0;
         switch (displayRotation) {
-            case Surface.ROTATION_0: degrees = 0; break;
-            case Surface.ROTATION_90: degrees = 90; break;
-            case Surface.ROTATION_180: degrees = 180; break;
-            case Surface.ROTATION_270: degrees = 270; break;
+            case Surface.ROTATION_0: mDegrees = 0; break;
+            case Surface.ROTATION_90: mDegrees = 90; break;
+            case Surface.ROTATION_180: mDegrees = 180; break;
+            case Surface.ROTATION_270: mDegrees = 270; break;
         }
 
-        int result;
+//        int mResult;
         if (info.facing == Camera.CameraInfo.CAMERA_FACING_FRONT) {
-            result = (info.orientation + degrees) % 360;
-            result = (360 - result) % 360;  // compensate the mirror
+            mResult = (info.orientation + mDegrees) % 360;
+            mResult = (360 - mResult) % 360;  // compensate the mirror
         } else {  // back-facing
-            result = (info.orientation - degrees + 360) % 360;
+            mResult = (info.orientation - mDegrees + 360) % 360;
         }
-        camera.setDisplayOrientation(result);
+        camera.setDisplayOrientation(mResult);
     }
 
 //    private void setAutofocusToInfinity(){
@@ -338,7 +350,7 @@ public class CameraPreview  extends ViewGroup implements SurfaceHolder.Callback,
                     mCameraOwnPreviewWidth = viewOwnWidth;
                     mCameraOwnPreviewHeight = viewOwnHeight;
 
-                    // from camera, result of getOptiomalPreviewSize()
+                    // from camera, mResult of getOptiomalPreviewSize()
                     if (mCameraPreviewSize != null) {
                         mCameraSizeinViewWidth = mCameraPreviewSize.width;
                         mCameraSizeinViewHeight = mCameraPreviewSize.height;
@@ -349,7 +361,7 @@ public class CameraPreview  extends ViewGroup implements SurfaceHolder.Callback,
                     //noinspection SuspiciousNameCombination
                     mCameraSizeinViewWidth = viewOwnHeight;
 
-                    // from camera, result of getOptiomalPreviewSize()
+                    // from camera, mResult of getOptiomalPreviewSize()
                     if (mCameraPreviewSize != null) {
                         //noinspection SuspiciousNameCombination
                         mCameraSizeinViewHeight = mCameraPreviewSize.width;

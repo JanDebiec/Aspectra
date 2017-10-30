@@ -1,5 +1,7 @@
 package de.jandrotek.android.aspectra.main;
 
+import android.app.Activity;
+import android.content.Context;
 import android.hardware.Camera;
 import android.util.Log;
 import android.view.Surface;
@@ -12,28 +14,47 @@ import java.io.IOException;
  */
 
 public class CameraHandle {
+    private static final String TAG = "CameraHandle";
 
+    private Activity mActivity = null;
     private Camera mCamera = null;
+    private int mResult;
 
-    public void setCamera(Camera camera) {
-        mCamera = camera;
-        if (mCamera != null) {
-            mSupportedPreviewSizes = mCamera.getParameters()
-                    .getSupportedPreviewSizes();
-            if (mSurfaceCreated) requestLayout();
-        }
+    public int getResult() {
+        return mResult;
     }
 
-    public void switchCamera(Camera camera) {
-        setCamera(camera);
-        try {
-            camera.setPreviewDisplay(mCameraHolder);
-        } catch (IOException exception) {
-            if(BuildConfig.DEBUG) {
-                Log.e(TAG, "IOException caused by setPreviewDisplay()", exception);
-            }
-        }
+    public int getDegrees() {
+        return mDegrees;
     }
+
+    private int mDegrees = 0;
+
+//    public CameraHandle(){
+    public CameraHandle(Context context){
+        mActivity = (Activity) context;
+
+    }
+
+//    public void setCamera(Camera camera) {
+//        mCamera = camera;
+//        if (mCamera != null) {
+//            mSupportedPreviewSizes = mCamera.getParameters()
+//                    .getSupportedPreviewSizes();
+//            if (mSurfaceCreated) requestLayout();
+//        }
+//    }
+//
+//    public void switchCamera(Camera camera) {
+//        setCamera(camera);
+//        try {
+//            camera.setPreviewDisplay(mCameraHolder);
+//        } catch (IOException exception) {
+//            if(BuildConfig.DEBUG) {
+//                Log.e(TAG, "IOException caused by setPreviewDisplay()", exception);
+//            }
+//        }
+//    }
 
     public  int getCameraDegResult(int cameraId) {
         Camera.CameraInfo info =

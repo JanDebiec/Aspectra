@@ -62,16 +62,16 @@ public class CameraPreview  extends ViewGroup implements SurfaceHolder.Callback,
     private int mCameraSizeinViewHeight;
     private int mDeviceOrientation;
     private int mResult;
-
-    public int getResult() {
-        return mResult;
-    }
-
-    public int getDegrees() {
-        return mDegrees;
-    }
-
-    private int mDegrees = 0;
+//
+//    public int getResult() {
+//        return mResult;
+//    }
+//
+//    public int getDegrees() {
+//        return mDegrees;
+//    }
+//
+//    private int mDegrees = 0;
 
 
     public void setDeviceOrientation(int deviceOrientation) {
@@ -101,6 +101,7 @@ public class CameraPreview  extends ViewGroup implements SurfaceHolder.Callback,
         SurfaceView surfaceView;
         //Context mContext = context;
         mActivity = (Activity) context;
+        mCameraHandle = new CameraHandle(context);
         if(activityId == AspectraGlobals.ACT_ITEM_LIVE_VIEW) {
             LiveViewActivity lvActivity = (LiveViewActivity) context;
             mLVActHandler = lvActivity.getHandler();

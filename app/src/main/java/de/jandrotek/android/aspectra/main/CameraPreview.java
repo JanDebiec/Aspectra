@@ -49,7 +49,8 @@ import de.jandrotek.android.aspectra.core.ImageProcessing;
 public class CameraPreview  extends ViewGroup implements SurfaceHolder.Callback,
         Camera.PreviewCallback {
     private static final String TAG = "CameraPreview";
-    private Camera mCamera = null;
+//    private Camera mCamera = null;
+    private CameraHandle mCameraHandle;
     private SurfaceHolder mCameraHolder;
     private ConfigViewSettings mViewSettings = null;
     private Size mCameraPreviewSize;
@@ -61,16 +62,16 @@ public class CameraPreview  extends ViewGroup implements SurfaceHolder.Callback,
     private int mCameraSizeinViewHeight;
     private int mDeviceOrientation;
     private int mResult;
-
-    public int getResult() {
-        return mResult;
-    }
-
-    public int getDegrees() {
-        return mDegrees;
-    }
-
-    private int mDegrees = 0;
+//
+//    public int getResult() {
+//        return mResult;
+//    }
+//
+//    public int getDegrees() {
+//        return mDegrees;
+//    }
+//
+//    private int mDegrees = 0;
 
 
     public void setDeviceOrientation(int deviceOrientation) {
@@ -100,6 +101,7 @@ public class CameraPreview  extends ViewGroup implements SurfaceHolder.Callback,
         SurfaceView surfaceView;
         //Context mContext = context;
         mActivity = (Activity) context;
+        mCameraHandle = new CameraHandle(context);
         if(activityId == AspectraGlobals.ACT_ITEM_LIVE_VIEW) {
             LiveViewActivity lvActivity = (LiveViewActivity) context;
             mLVActHandler = lvActivity.getHandler();
@@ -136,25 +138,25 @@ public class CameraPreview  extends ViewGroup implements SurfaceHolder.Callback,
         }
     }
 
-    public void setCamera(Camera camera) {
-        mCamera = camera;
-        if (mCamera != null) {
-            mSupportedPreviewSizes = mCamera.getParameters()
-                    .getSupportedPreviewSizes();
-            if (mSurfaceCreated) requestLayout();
-        }
-    }
-
-    public void switchCamera(Camera camera) {
-        setCamera(camera);
-        try {
-            camera.setPreviewDisplay(mCameraHolder);
-        } catch (IOException exception) {
-            if(BuildConfig.DEBUG) {
-                Log.e(TAG, "IOException caused by setPreviewDisplay()", exception);
-            }
-        }
-    }
+//    public void setCamera(Camera camera) {
+//        mCamera = camera;
+//        if (mCamera != null) {
+//            mSupportedPreviewSizes = mCamera.getParameters()
+//                    .getSupportedPreviewSizes();
+//            if (mSurfaceCreated) requestLayout();
+//        }
+//    }
+//
+//    public void switchCamera(Camera camera) {
+//        setCamera(camera);
+//        try {
+//            camera.setPreviewDisplay(mCameraHolder);
+//        } catch (IOException exception) {
+//            if(BuildConfig.DEBUG) {
+//                Log.e(TAG, "IOException caused by setPreviewDisplay()", exception);
+//            }
+//        }
+//    }
 
     @Override
     public void surfaceChanged(SurfaceHolder arg0, int arg1, int arg2, int arg3)
@@ -187,27 +189,35 @@ public class CameraPreview  extends ViewGroup implements SurfaceHolder.Callback,
     public void surfaceCreated(SurfaceHolder holder) {
         // The Surface has been created, acquire the camera and tell it where
         // to draw.
-        try {
-            if (mCamera != null) {
-                mCamera.setPreviewDisplay(holder);
-                mCamera.setPreviewCallback(this);
-            }
-        } catch (IOException exception) {
-            if(BuildConfig.DEBUG) {
-                Log.e(TAG, "IOException caused by setPreviewDisplay()", exception);
-            }
-        }
+//        try {
+            mCameraHandle.setPreview(holder, this);
+//        } catch (IOException exception) {
+//            if(BuildConfig.DEBUG) {
+//                Log.e(TAG, "IOException caused by setPreviewDisplay()", exception);
+//            }
+//        }
         if (mCameraPreviewSize == null) requestLayout();
         mSurfaceCreated = true;
     }
 
+//    public void setPreview(SurfaceHolder holder) {
+//        if (mCamera != null) {
+//            mCamera.setPreviewDisplay(holder);
+//            mCamera.setPreviewCallback(this);
+//        }
+//    }
+
     public void surfaceDestroyed(SurfaceHolder holder) {
         // Surface will be destroyed when we return, so stop the preview.
-        if (mCamera != null) {
-            mCamera.stopPreview();
-            mCamera.setPreviewCallback(null);
-        }
+        mCameraHandle.stopPreview();
     }
+
+//    public void stopPreview() {
+//        if (mCamera != null) {
+//            mCamera.stopPreview();
+//            mCamera.setPreviewCallback(null);
+//        }
+//    }
 
     private Runnable doImageProcessing = new Runnable() {
         public void run() {
@@ -227,28 +237,33 @@ public class CameraPreview  extends ViewGroup implements SurfaceHolder.Callback,
     };
 
     private void setCameraDisplayOrientation(int cameraId, android.hardware.Camera camera) {
-        android.hardware.Camera.CameraInfo info =
-                new android.hardware.Camera.CameraInfo();
-        android.hardware.Camera.getCameraInfo(cameraId, info);
-        int displayRotation = mActivity.getWindowManager().getDefaultDisplay()
-                     .getRotation();
-//        int mDegrees = 0;
-        switch (displayRotation) {
-            case Surface.ROTATION_0: mDegrees = 0; break;
-            case Surface.ROTATION_90: mDegrees = 90; break;
-            case Surface.ROTATION_180: mDegrees = 180; break;
-            case Surface.ROTATION_270: mDegrees = 270; break;
-        }
-
-//        int mResult;
-        if (info.facing == Camera.CameraInfo.CAMERA_FACING_FRONT) {
-            mResult = (info.orientation + mDegrees) % 360;
-            mResult = (360 - mResult) % 360;  // compensate the mirror
-        } else {  // back-facing
-            mResult = (info.orientation - mDegrees + 360) % 360;
-        }
+         mResult = mCameraHandle.getCameraDegResult(cameraId);
         camera.setDisplayOrientation(mResult);
     }
+
+//    private int getCameraDegResult(int cameraId) {
+//        Camera.CameraInfo info =
+//                new Camera.CameraInfo();
+//        Camera.getCameraInfo(cameraId, info);
+//        int displayRotation = mActivity.getWindowManager().getDefaultDisplay()
+//                     .getRotation();
+////        int mDegrees = 0;
+//        switch (displayRotation) {
+//            case Surface.ROTATION_0: mDegrees = 0; break;
+//            case Surface.ROTATION_90: mDegrees = 90; break;
+//            case Surface.ROTATION_180: mDegrees = 180; break;
+//            case Surface.ROTATION_270: mDegrees = 270; break;
+//        }
+//
+////        int mResult;
+//        if (info.facing == Camera.CameraInfo.CAMERA_FACING_FRONT) {
+//            mResult = (info.orientation + mDegrees) % 360;
+//            mResult = (360 - mResult) % 360;  // compensate the mirror
+//        } else {  // back-facing
+//            mResult = (info.orientation - mDegrees + 360) % 360;
+//        }
+//        return mResult;
+//    }
 
 //    private void setAutofocusToInfinity(){
 //        Parameters parameters;
@@ -321,17 +336,22 @@ public class CameraPreview  extends ViewGroup implements SurfaceHolder.Callback,
 
         }
 
-        if ((mCamera != null) && (mCameraPreviewSize != null)) {
+        if ( (mCameraPreviewSize != null)) {
+//        if ((mCamera != null) && (mCameraPreviewSize != null)) {
             try {
-                Camera.Parameters parameters = mCamera.getParameters();
-                parameters.setPreviewSize(mCameraPreviewSize.width, mCameraPreviewSize.height);
-                parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_INFINITY);
-                mCamera.setParameters(parameters);
+                mCameraHandle.setPreviewSize(mCameraPreviewSize);
             } catch (Exception exception) {
                     Log.e(TAG, "IOException caused by mCamera.setParameters()", exception);
             }
         }
     }
+
+//    private void setPreviewSize(Size cameraPreviewSize) {
+//        Parameters parameters = mCamera.getParameters();
+//        parameters.setPreviewSize(cameraPreviewSize.width, cameraPreviewSize.height);
+//        parameters.setFocusMode(Parameters.FOCUS_MODE_INFINITY);
+//        mCamera.setParameters(parameters);
+//    }
 
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {

@@ -1,7 +1,5 @@
 package de.jandrotek.android.aspectra.main;
 
-import android.app.Activity;
-import android.content.Context;
 import android.hardware.Camera;
 import android.util.Log;
 import android.view.Surface;
@@ -19,7 +17,7 @@ import de.jandrotek.android.aspectra.core.ImageProcessing;
 public class CameraHandle {
     private static final String TAG = "CameraHandle";
 
-    private Activity mActivity = null;
+    private LiveViewActivity mActivity = null;
     private Camera mCamera = null;
     private ImageProcessing mImageProcessing = null;
 
@@ -28,10 +26,10 @@ public class CameraHandle {
     }
 
     private List<Camera.Size> mSupportedPreviewSizes;
-    private int mResult;
+    private int mDegResult;
 
     public int getResult() {
-        return mResult;
+        return mDegResult;
     }
 
     public int getDegrees() {
@@ -40,9 +38,8 @@ public class CameraHandle {
 
     private int mDegrees = 0;
 
-//    public CameraHandle(){
-    public CameraHandle(Context context){
-        mActivity = (Activity) context;
+    public CameraHandle(LiveViewActivity activity){
+        mActivity = (LiveViewActivity) activity;
         if(mImageProcessing == null) {
             mImageProcessing = ImageProcessing.getInstance();
         }
@@ -69,12 +66,13 @@ public class CameraHandle {
 //        }
 //    }
     public void setCameraDisplayOrientation(int cameraId) {
-        mResult = getCameraDegResult(cameraId);
-        mCamera.setDisplayOrientation(mResult);
+        mDegResult = getCameraDegResult(cameraId);
+        mCamera.setDisplayOrientation(mDegResult);
         if(mImageProcessing == null) {
             mImageProcessing = ImageProcessing.getInstance();
         }
-        mImageProcessing.setCameraOrientation(mResult);
+        mImageProcessing.setCameraOrientation(mDegResult);
+        mActivity.setCameraOrientInImProc(mDegResult);
     }
 
 
@@ -92,14 +90,14 @@ public class CameraHandle {
             case Surface.ROTATION_270: mDegrees = 270; break;
         }
 
-//        int mResult;
+//        int mDegResult;
         if (info.facing == Camera.CameraInfo.CAMERA_FACING_FRONT) {
-            mResult = (info.orientation + mDegrees) % 360;
-            mResult = (360 - mResult) % 360;  // compensate the mirror
+            mDegResult = (info.orientation + mDegrees) % 360;
+            mDegResult = (360 - mDegResult) % 360;  // compensate the mirror
         } else {  // back-facing
-            mResult = (info.orientation - mDegrees + 360) % 360;
+            mDegResult = (info.orientation - mDegrees + 360) % 360;
         }
-        return mResult;
+        return mDegResult;
     }
 
     public void setPreviewSize(Camera.Size cameraPreviewSize) {

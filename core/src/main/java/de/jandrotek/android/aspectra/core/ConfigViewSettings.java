@@ -44,6 +44,7 @@ public class ConfigViewSettings {
         mConfigStatus &= ~eDeviceOrientFlag;
         mConfigStatus &= ~ePercentsFlag;
         mConfigStatus &= ~eEndPercentFlag;
+        mConfigStatus &= ~eCameraOrientFlag;
     }
 
     private final int eSpectrumOrientFlag = 0x01;
@@ -52,14 +53,16 @@ public class ConfigViewSettings {
     private final int eCameraPreviewFlag = 0x08;
     private final int eViewDimFlag = 0x10;
     private final int eEndPercentFlag = 0x20;
+    private final int eCameraOrientFlag = 0x40;
 
     private final int eNeededConfig =
-            eSpectrumOrientFlag +
+                    eSpectrumOrientFlag +
                     eDeviceOrientFlag +
                     ePercentsFlag +
                     eCameraPreviewFlag +
                     eViewDimFlag +
-                    eEndPercentFlag;
+                    eEndPercentFlag +
+                    eCameraOrientFlag;
 
     public void setSpectrumOrientationLandscape(boolean spectrumOrientationLandscape) {
         mSpectrumOrientationLandscape = spectrumOrientationLandscape;
@@ -71,6 +74,15 @@ public class ConfigViewSettings {
     // both orientations defines: device, spectrum
     private boolean mSpectrumOrientationLandscape = true;
     private int mDeviceOrientation = AspectraGlobals.DEVICE_ORIENTATION_LANDSCAPE;
+
+    public void setCameraOrientation(int mCameraOrientation) {
+        this.mCameraOrientation = mCameraOrientation;
+        mConfigStatus |= eCameraOrientFlag;
+        if (mConfigStatus == eNeededConfig)
+            calcCrossPoints();
+    }
+
+    private int mCameraOrientation = AspectraGlobals.CAMERA_ORIENTATION_UNKNOWN;
 
     public void setDeviceOrientation(int deviceOrientation) {
         mDeviceOrientation = deviceOrientation;
@@ -241,14 +253,12 @@ public class ConfigViewSettings {
         mConfigEndPercentX = widthEndX;
         mConfigStartPercentY = heightStartY;
         mAmountLinesY = deltaLinesY;
-//        if(mCamPreviewConfigured) {
         if ((mConfigStatus & eCameraPreviewFlag) == eCameraPreviewFlag) {
             mConfigEndPercentY = mConfigStartPercentY + (mAmountLinesY * 100) / mCameraPreviewHeight;
             mConfigStatus |= eEndPercentFlag;
         }
         if (mConfigStatus == eNeededConfig)
             calcCrossPoints();
-//        calcCrossPoints();
     }
 
     public void setConfigStartPercentX(int configStartPercentX) {

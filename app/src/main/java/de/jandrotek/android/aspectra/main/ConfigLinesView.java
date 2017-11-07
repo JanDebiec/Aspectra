@@ -29,8 +29,6 @@ import android.view.View;
 
 import de.jandrotek.android.aspectra.core.ConfigViewSettings;
 
-//import static de.jandrotek.android.aspectra.core.ConfigViewSettings;
-
 /**
  * Created by jan on 12.01.15.
  * changed 30.05.2016
@@ -101,9 +99,9 @@ public class ConfigLinesView extends View {
 
 
     @Override
-        protected void onLayout(boolean changed, int l, int t, int r, int b) {
-            super.onLayout(changed, l, t, r, b);
-            //here you have the size of the view and you can do stuff
+    protected void onLayout(boolean changed, int l, int t, int r, int b) {
+        super.onLayout(changed, l, t, r, b);
+        //here you have the size of the view and you can do stuff
         mConfigHeightY = b - t;
         mConfigWidthX = r - l;
         if(mConfigWidthX > 0){
@@ -119,10 +117,6 @@ public class ConfigLinesView extends View {
 
     public void setPreviewDimensions(int widthX, int heightY){
         //TODO hier is bug, these values are original camera values, not modified to view values
-//        mViewSettings.setCameraPreviewDimensions(widthX, heightY);
-
-
-//        mViewSettings.setSpectrumOrientationLandscape(mSpectrumOrientationLandscape);
         mViewSettings.calcCrossPoints();
 
         initializeLines();
@@ -130,7 +124,6 @@ public class ConfigLinesView extends View {
 
     private void setConfigViewDimensions(float widthX, float heightY) {
         mViewSettings.setConfigViewDimensions(widthX, heightY);
-//        mViewSettings.setSpectrumOrientationLandscape(mSpectrumOrientationLandscape);
         initializeLines();
     }
 

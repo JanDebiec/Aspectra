@@ -45,7 +45,8 @@ public class ImageProcessing {
     private static final int ePercensSet = 0x2;
     private static final int eSpectrumOrientationSet = 0x4;
     private static final int eCameraMirroredSet = 0x8;
-    private static final int eNeededConfig = eCameraDimensionSet + ePercensSet + eSpectrumOrientationSet + eCameraMirroredSet;
+    private static final int eCameraOrientSet = 0x10;
+    private static final int eNeededConfig = eCameraDimensionSet + ePercensSet + eSpectrumOrientationSet + eCameraMirroredSet + eCameraOrientSet;
     private int mConfigStatus = 0;
 
     public void clearCameraConfigFlag() {
@@ -75,6 +76,7 @@ public class ImageProcessing {
     private int mSizeX;
     private int mSizeY;
     private int mShiftToNormalize;
+    private int mOrientResult = 0;
 
     private int mStartPercentX = 5;
     private int mEndPercentX = 95;
@@ -300,6 +302,11 @@ public class ImageProcessing {
     public void setSpectrumOrientationLandscape(boolean _SpectrumOrientationLandscape) {
         mConfigStatus |= eSpectrumOrientationSet;
         mSpectrumOrientationLandscape = _SpectrumOrientationLandscape;
+    }
+
+    public void setCameraOrientation(int orientResult){
+        mOrientResult = orientResult;
+        mConfigStatus |= eCameraOrientSet;
     }
 
     public void configureBinningArea() {

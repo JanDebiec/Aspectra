@@ -10,6 +10,8 @@ import android.view.SurfaceHolder;
 import java.io.IOException;
 import java.util.List;
 
+import de.jandrotek.android.aspectra.core.ImageProcessing;
+
 /**
  * Created by jan on 27.10.2017.
  */
@@ -19,6 +21,7 @@ public class CameraHandle {
 
     private Activity mActivity = null;
     private Camera mCamera = null;
+    private ImageProcessing mImageProcessing = null;
 
     public List<Camera.Size> getSupportedPreviewSizes() {
         return mSupportedPreviewSizes;
@@ -40,6 +43,9 @@ public class CameraHandle {
 //    public CameraHandle(){
     public CameraHandle(Context context){
         mActivity = (Activity) context;
+        if(mImageProcessing == null) {
+            mImageProcessing = ImageProcessing.getInstance();
+        }
 
     }
 
@@ -65,6 +71,10 @@ public class CameraHandle {
     public void setCameraDisplayOrientation(int cameraId) {
         mResult = getCameraDegResult(cameraId);
         mCamera.setDisplayOrientation(mResult);
+        if(mImageProcessing == null) {
+            mImageProcessing = ImageProcessing.getInstance();
+        }
+        mImageProcessing.setCameraOrientation(mResult);
     }
 
 

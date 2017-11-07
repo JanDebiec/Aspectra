@@ -184,29 +184,57 @@ public class ConfigViewSettings {
                 smallerY = previewInConfigY;
 //            }
             if (mSpectrumOrientationLandscape) {
-                mCrossPointsW[0] = offsetX;
-                mCrossPointsW[3] = offsetX + smallerX;
+                if(mCameraOrientation == AspectraGlobals.CAMERA_ORIENTATION_LANDSCAPE_RIGHT) {
+                    mCrossPointsW[0] = offsetX;
+                    mCrossPointsW[3] = offsetX + smallerX;
 
-                mCrosstPointsH[0] = offsetY;
-                mCrosstPointsH[3] = offsetY + smallerY;
+                    mCrosstPointsH[0] = offsetY;
+                    mCrosstPointsH[3] = offsetY + smallerY;
 
-                mCrossPointsW[1] = offsetX + mConfigStartPercentX * smallerX / 100;
-                mCrossPointsW[2] = offsetX + mConfigEndPercentX * smallerX / 100;
+                    mCrossPointsW[1] = offsetX + mConfigStartPercentX * smallerX / 100;
+                    mCrossPointsW[2] = offsetX + mConfigEndPercentX * smallerX / 100;
 
-                mCrosstPointsH[1] = offsetY + mConfigStartPercentY * smallerY / 100;
-                mCrosstPointsH[2] = offsetY + mConfigEndPercentY * smallerY / 100;
+                    mCrosstPointsH[1] = offsetY + mConfigStartPercentY * smallerY / 100;
+                    mCrosstPointsH[2] = offsetY + mConfigEndPercentY * smallerY / 100;
+                } else {
+                    mCrossPointsW[0] = offsetX + smallerX;
+                    mCrossPointsW[3] = offsetX;
+
+                    mCrosstPointsH[0] = offsetY + smallerY;
+                    mCrosstPointsH[3] = offsetY;
+
+                    mCrossPointsW[1] = offsetX + (100 - mConfigStartPercentX) * smallerX / 100;
+                    mCrossPointsW[2] = offsetX + (100 - mConfigEndPercentX) * smallerX / 100;
+
+                    mCrosstPointsH[1] = offsetY + (100 - mConfigStartPercentY) * smallerY / 100;
+                    mCrosstPointsH[2] = offsetY + (100 - mConfigEndPercentY) * smallerY / 100;
+                }
             } else { // spectrum portrait
-                mCrossPointsW[0] = offsetX;
-                mCrossPointsW[3] = offsetX + smallerX;
+                if(mCameraOrientation == AspectraGlobals.CAMERA_ORIENTATION_LANDSCAPE_RIGHT) {
+                    mCrossPointsW[0] = offsetX;
+                    mCrossPointsW[3] = offsetX + smallerX;
 
-                mCrosstPointsH[0] = offsetY;
-                mCrosstPointsH[3] = offsetY + smallerY;
+                    mCrosstPointsH[0] = offsetY;
+                    mCrosstPointsH[3] = offsetY + smallerY;
 
-                mCrossPointsW[1] = offsetX + mConfigStartPercentY * smallerX / 100;
-                mCrossPointsW[2] = offsetX + mConfigEndPercentY * smallerX / 100;
+                    mCrossPointsW[1] = offsetX + mConfigStartPercentY * smallerX / 100;
+                    mCrossPointsW[2] = offsetX + mConfigEndPercentY * smallerX / 100;
 
-                mCrosstPointsH[1] = offsetY + mConfigStartPercentX * smallerY / 100;
-                mCrosstPointsH[2] = offsetY + mConfigEndPercentX * smallerY / 100;
+                    mCrosstPointsH[1] = offsetY + mConfigStartPercentX * smallerY / 100;
+                    mCrosstPointsH[2] = offsetY + mConfigEndPercentX * smallerY / 100;
+                } else {
+                    mCrossPointsW[0] = offsetX + smallerX;
+                    mCrossPointsW[3] = offsetX;
+
+                    mCrosstPointsH[0] = offsetY + smallerY;
+                    mCrosstPointsH[3] = offsetY;
+
+                    mCrossPointsW[1] = offsetX + (100 - mConfigStartPercentY) * smallerX / 100;
+                    mCrossPointsW[2] = offsetX + (100 - mConfigEndPercentY) * smallerX / 100;
+
+                    mCrosstPointsH[1] = offsetY + (100 - mConfigStartPercentX) * smallerY / 100;
+                    mCrosstPointsH[2] = offsetY + (100 - mConfigEndPercentX) * smallerY / 100;
+                }
             }
         } else if (mDeviceOrientation == AspectraGlobals.DEVICE_ORIENTATION_PORTRAIT) {
             // for camera preview hidht should be considered as view-width, and preview-width as view-height

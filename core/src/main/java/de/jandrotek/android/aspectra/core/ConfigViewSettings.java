@@ -207,7 +207,8 @@ public class ConfigViewSettings {
                     mCrosstPointsH[2] = offsetY + (100 - mConfigEndPercentY) * smallerY / 100;
                 }
             } else { // spectrum portrait
-                if(mCameraOrientation == AspectraGlobals.CAMERA_ORIENTATION_LANDSCAPE_RIGHT) {
+                if(mCameraOrientation == AspectraGlobals.CAMERA_ORIENTATION_LANDSCAPE_LEFT) {
+//                if(mCameraOrientation == AspectraGlobals.CAMERA_ORIENTATION_LANDSCAPE_RIGHT) {
                     mCrossPointsW[0] = offsetX;
                     mCrossPointsW[3] = offsetX + smallerX;
 

@@ -146,7 +146,6 @@ public class ImageProcessing {
         }
     }
 
-    // version for N7 with flipped data in both axis
     private int[] extractBinnedLinePortM(byte[] inputArray)
             throws ArrayIndexOutOfBoundsException {
         int indexW;
@@ -198,7 +197,6 @@ public class ImageProcessing {
             for (int x = 0; x < mSizeX; x++) {
                 mBinnedLine[x] = 0;
                 indexH = mIndexStartH - mSizeX + x;
-//                indexH = mIndexStartH - x;
                 indexW = mPictureSizeWidth * indexH + mIndexStartW;
                 temp = 0;
                 for (int y = 0; y < mSizeY; y++) {
@@ -219,7 +217,6 @@ public class ImageProcessing {
     }
 
 
-    // version for N7 with flipped data
     private int[] extractBinnedLineLandM(byte[] inputArray)
             throws ArrayIndexOutOfBoundsException {
         int indexW;

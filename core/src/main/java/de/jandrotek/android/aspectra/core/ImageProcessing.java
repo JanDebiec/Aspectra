@@ -131,9 +131,15 @@ public class ImageProcessing {
         boolean configFull = isConfigFull();
         if (configFull) {
             if (mSpectrumOrientationLandscape) {
-                return extractBinnedLineLandM(inputArray);
+                if(mCameraDataMirrored)
+                    return extractBinnedLineLandM(inputArray);
+                else
+                    return extractBinnedLineLand(inputArray);
             } else {
-                return extractBinnedLinePortM(inputArray);
+                if(mCameraDataMirrored)
+                    return extractBinnedLinePortM(inputArray);
+                else
+                    return extractBinnedLinePort(inputArray);
             }
         } else {
             return mDemoLine;
@@ -176,6 +182,43 @@ public class ImageProcessing {
         return mBinnedLine;
     }
 
+    private int[] extractBinnedLinePort(byte[] inputArray)
+            throws ArrayIndexOutOfBoundsException {
+        int indexW;
+        int indexH;
+        int temp;
+
+        try {
+
+            // another method:
+            // main loop: every index of spectrum binned line
+            // internal loop:
+            // we add (bin) pixels for every spectrum index
+
+            for (int x = 0; x < mSizeX; x++) {
+                mBinnedLine[x] = 0;
+                indexH = mIndexStartH - mSizeX + x;
+//                indexH = mIndexStartH - x;
+                indexW = mPictureSizeWidth * indexH + mIndexStartW;
+                temp = 0;
+                for (int y = 0; y < mSizeY; y++) {
+                    temp += inputArray[indexW] & 0xFF;
+                    indexW--;
+                }
+                if (mShiftToNormalize <= 0) {
+                    mBinnedLine[x] = temp << -mShiftToNormalize;
+                } else {
+                    mBinnedLine[x] = temp >> mShiftToNormalize;
+                }
+            }
+
+        } catch (ArrayIndexOutOfBoundsException e) {
+
+        }
+        return mBinnedLine;
+    }
+
+
     // version for N7 with flipped data
     private int[] extractBinnedLineLandM(byte[] inputArray)
             throws ArrayIndexOutOfBoundsException {
@@ -183,7 +226,7 @@ public class ImageProcessing {
         int indexH = mIndexStartH;
         try {
 
-            indexW = mIndexStartW + mPictureSizeWidth * indexH;
+            indexW = mIndexStartW + mSizeY + mPictureSizeWidth * indexH;
 
             //first line
             for (int x = 0; x < mSizeX; x++) {
@@ -199,6 +242,45 @@ public class ImageProcessing {
                 for (int x = 0; x < mSizeX; x++) {
                     mTempLine[x] += inputArray[indexW] & 0xFF;
                     indexW--;
+                }
+            }
+            for (int x = 0; x < mSizeX; x++) {
+                if (mShiftToNormalize <= 0) {
+                    mBinnedLine[x] = mTempLine[x] << -mShiftToNormalize;
+                } else {
+                    mBinnedLine[x] = mTempLine[x] >> mShiftToNormalize;
+                }
+            }
+
+        }
+        catch (ArrayIndexOutOfBoundsException e){
+
+        }
+        return mBinnedLine;
+    }
+
+    private int[] extractBinnedLineLand(byte[] inputArray)
+            throws ArrayIndexOutOfBoundsException {
+        int indexW;
+        int indexH = mIndexStartH;
+        try {
+
+            indexW = mIndexStartW + mPictureSizeWidth * indexH;
+
+            //first line
+            for (int x = 0; x < mSizeX; x++) {
+
+                mTempLine[x] = inputArray[indexW] & 0xFF;
+                indexW++;
+            }
+
+            //next lines
+            for (int y = 1; y < mSizeY; y++) {
+                indexH--;
+                indexW = mIndexStartW + mPictureSizeWidth * indexH;
+                for (int x = 0; x < mSizeX; x++) {
+                    mTempLine[x] += inputArray[indexW] & 0xFF;
+                    indexW++;
                 }
             }
             for (int x = 0; x < mSizeX; x++) {

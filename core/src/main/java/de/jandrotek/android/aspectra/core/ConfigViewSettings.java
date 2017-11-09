@@ -275,15 +275,11 @@ public class ConfigViewSettings {
                     mCrosstPointsH[0] = offsetY;
                     mCrosstPointsH[3] = offsetY + smallerY;
 
-//                    mCrossPointsW[1] = offsetX + mConfigStartPercentX * smallerX / 100;
-//                    mCrossPointsW[2] = offsetX + mConfigEndPercentX * smallerX / 100;
                     mCrossPointsW[1] = offsetX + (100 - mConfigStartPercentX) * smallerX / 100;
                     mCrossPointsW[2] = offsetX + (100 - mConfigEndPercentX) * smallerX / 100;
 
                     mCrosstPointsH[1] = offsetY + mConfigStartPercentY * smallerY / 100;
                     mCrosstPointsH[2] = offsetY + mConfigEndPercentY * smallerY / 100;
-//                    mCrosstPointsH[2] = offsetY + mConfigStartPercentY * smallerY / 100;
-//                    mCrosstPointsH[1] = offsetY + mConfigEndPercentY * smallerY / 100;
                 } else {
                     mCrossPointsW[0] = offsetX + smallerX;
                     mCrossPointsW[3] = offsetX;
@@ -291,8 +287,6 @@ public class ConfigViewSettings {
                     mCrosstPointsH[0] = offsetY + smallerY;
                     mCrosstPointsH[3] = offsetY;
 
-//                    mCrossPointsW[1] = offsetX + (100- mConfigStartPercentX) * smallerX / 100;
-//                    mCrossPointsW[2] = offsetX + (100 - mConfigEndPercentX) * smallerX / 100;
                     mCrossPointsW[1] = offsetX + (mConfigStartPercentX) * smallerX / 100;
                     mCrossPointsW[2] = offsetX + (mConfigEndPercentX) * smallerX / 100;
 

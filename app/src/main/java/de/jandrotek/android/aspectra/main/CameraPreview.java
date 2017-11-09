@@ -91,7 +91,7 @@ public class CameraPreview  extends ViewGroup implements SurfaceHolder.Callback,
 
     private boolean mbProcessingShouldRun = false;
 
-    private Activity mActivity = null;
+    private BaseActivity mActivity = null;
     private Handler mLVActHandler = null;
     //Handler mVCActHandler = null;
     private ImageProcessing mImageProcessing;
@@ -99,17 +99,22 @@ public class CameraPreview  extends ViewGroup implements SurfaceHolder.Callback,
     public CameraPreview(Context context, int activityId) {
         super(context);
         SurfaceView surfaceView;
-        //Context mContext = context;
-        mActivity = (Activity) context;
-        if(activityId == AspectraGlobals.ACT_ITEM_LIVE_VIEW) {
-            LiveViewActivity lvActivity = (LiveViewActivity) context;
-            mLVActHandler = lvActivity.getHandler();
-            mCameraHandle = new CameraHandle(lvActivity);
-//        } else if(activityId == BaseActivity.ACT_ITEM_VIEW_CONFIG){
+        mActivity = (BaseActivity) context;
+        mCameraHandle = new CameraHandle();
+        mCameraHandle.setActivity(mActivity);
+
+//        if(activityId == AspectraGlobals.ACT_ITEM_LIVE_VIEW) {
+//            LiveViewActivity lvActivity = (LiveViewActivity) context;
+//            BaseActivity baseActivity = lvActivity.super() ;
+//            mLVActHandler = lvActivity.getHandler();
+//        } else if(activityId == AspectraGlobals.ACT_ITEM_VIEW_CONFIG){
 //            ViewConfigActivity vcActivity = (ViewConfigActivity) context;
-//            // act. no need for handler in that activity
-//            //mVCActHandler = vcActivity.getHandler();
-        }
+////            LiveViewActivity lvActivity = (LiveViewActivity) context;
+//            BaseActivity baseActivity = vcActivity.super() ;
+//            mCameraHandle.setActivity(baseActivity);
+////            // act. no need for handler in that activity
+////            //mVCActHandler = vcActivity.getHandler();
+//        }
         //as in AOSP sample
         surfaceView = new SurfaceView(context);
         addView(surfaceView);

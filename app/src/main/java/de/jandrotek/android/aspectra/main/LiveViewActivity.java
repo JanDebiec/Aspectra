@@ -211,11 +211,11 @@ public class LiveViewActivity extends BaseActivity
         mImageProcessing.setCameraDataMirrored(mCameraDataMirrored);
     }
 
-    public void setCameraOrientInImProc(int cameraOrient){
-//        if(mCameraViewFragment != null){
-            mViewSettings.setCameraOrientation(cameraOrient);
-//        }
-    }
+//    public void setCameraOrientInImProc(int cameraOrient){
+////        if(mCameraViewFragment != null){
+//            mViewSettings.setCameraOrientation(cameraOrient);
+////        }
+//    }
 
 // moved to SpectrumFiles
 //    public class SaveSpectrumTask extends AsyncTask<Void, Void, Void> {

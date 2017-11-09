@@ -208,7 +208,6 @@ public class ConfigViewSettings {
                 }
             } else { // spectrum portrait
                 if(mCameraOrientation == AspectraGlobals.CAMERA_ORIENTATION_LANDSCAPE_LEFT) {
-//                if(mCameraOrientation == AspectraGlobals.CAMERA_ORIENTATION_LANDSCAPE_RIGHT) {
                     mCrossPointsW[0] = offsetX;
                     mCrossPointsW[3] = offsetX + smallerX;
 
@@ -241,7 +240,7 @@ public class ConfigViewSettings {
                 offsetX = (mConfigViewWidth - previewInConfigX) / 2;
                 smallerX = previewInConfigX;
             if (mSpectrumOrientationLandscape) {
-                if(mCameraOrientation == AspectraGlobals.CAMERA_ORIENTATION_PORTRAIT_BOTTOM) {
+                if(mCameraOrientation == AspectraGlobals.CAMERA_ORIENTATION_PORTRAIT_TOP) {
                     mCrossPointsW[0] = offsetX;
                     mCrossPointsW[3] = offsetX + smallerX;
 
@@ -267,7 +266,7 @@ public class ConfigViewSettings {
                     mCrosstPointsH[2] = offsetY + (100 - mConfigEndPercentX) * smallerY / 100;
                 }
             } else { // spectrum portrait
-                if(mCameraOrientation == AspectraGlobals.CAMERA_ORIENTATION_PORTRAIT_BOTTOM) {
+                if(mCameraOrientation == AspectraGlobals.CAMERA_ORIENTATION_PORTRAIT_TOP) {
                     mCrossPointsW[0] = offsetX;
                     mCrossPointsW[3] = offsetX + smallerX;
 

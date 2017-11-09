@@ -190,6 +190,13 @@ public class BaseActivity extends AppCompatActivity //ActionBarActivity
         }
         mViewSettings.setDeviceOrientation(mDeviceOrientation);
     }
+
+    public void setCameraOrientInImProc(int cameraOrient){
+//        if(mCameraViewFragment != null){
+        mViewSettings.setCameraOrientation(cameraOrient);
+//        }
+    }
+
     protected void sendFeedback() {
         topView =  getWindow().getDecorView().getRootView();
         boolean success = EmailIntentBuilder.from(this)

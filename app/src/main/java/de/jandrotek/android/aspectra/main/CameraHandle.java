@@ -17,7 +17,11 @@ import de.jandrotek.android.aspectra.core.ImageProcessing;
 public class CameraHandle {
     private static final String TAG = "CameraHandle";
 
-    private LiveViewActivity mActivity = null;
+    public void setActivity(BaseActivity mActivity) {
+        this.mActivity = mActivity;
+    }
+
+    private BaseActivity mActivity = null;
     private Camera mCamera = null;
     private ImageProcessing mImageProcessing = null;
 
@@ -38,8 +42,8 @@ public class CameraHandle {
 
     private int mDegrees = 0;
 
-    public CameraHandle(LiveViewActivity activity){
-        mActivity = (LiveViewActivity) activity;
+    public CameraHandle(){
+//        mActivity = (BaseActivity) activity;
         if(mImageProcessing == null) {
             mImageProcessing = ImageProcessing.getInstance();
         }
@@ -101,10 +105,18 @@ public class CameraHandle {
     }
 
     public void setPreviewSize(Camera.Size cameraPreviewSize) {
-        Camera.Parameters parameters = mCamera.getParameters();
-        parameters.setPreviewSize(cameraPreviewSize.width, cameraPreviewSize.height);
-        parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_INFINITY);
-        mCamera.setParameters(parameters);
+//    try {
+        if (mCamera != null) {
+            Camera.Parameters parameters = mCamera.getParameters();
+            parameters.setPreviewSize(cameraPreviewSize.width, cameraPreviewSize.height);
+            parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_INFINITY);
+            mCamera.setParameters(parameters);
+        }
+//    } catch(IOException exception) {
+//        if (BuildConfig.DEBUG) {
+//            Log.e(TAG, "IOException caused by setParameters()", exception);
+//        }
+//    }
     }
 
     public void setPreview(SurfaceHolder holder, CameraPreview preview) {

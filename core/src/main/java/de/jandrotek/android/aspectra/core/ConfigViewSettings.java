@@ -261,8 +261,6 @@ public class ConfigViewSettings {
 
                     mCrossPointsW[1] = offsetX + (100 - mConfigStartPercentY) * smallerX / 100;
                     mCrossPointsW[2] = offsetX + (100 - mConfigEndPercentY) * smallerX / 100;
-//                    mCrossPointsW[1] = offsetX + (mConfigStartPercentY) * smallerX / 100;
-//                    mCrossPointsW[2] = offsetX + (mConfigEndPercentY) * smallerX / 100;
 
                     mCrosstPointsH[1] = offsetY + (100 - mConfigStartPercentX) * smallerY / 100;
                     mCrosstPointsH[2] = offsetY + (100 - mConfigEndPercentX) * smallerY / 100;

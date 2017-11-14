@@ -45,7 +45,8 @@ public class ImageProcessing {
     private static final int ePercensSet = 0x2;
     private static final int eSpectrumOrientationSet = 0x4;
     private static final int eCameraMirroredSet = 0x8;
-    private static final int eNeededConfig = eCameraDimensionSet + ePercensSet + eSpectrumOrientationSet + eCameraMirroredSet;
+    private static final int eCameraOrientSet = 0x10;
+    private static final int eNeededConfig = eCameraDimensionSet + ePercensSet + eSpectrumOrientationSet + eCameraMirroredSet + eCameraOrientSet;
     private int mConfigStatus = 0;
 
     public void clearCameraConfigFlag() {
@@ -75,6 +76,7 @@ public class ImageProcessing {
     private int mSizeX;
     private int mSizeY;
     private int mShiftToNormalize;
+    private int mOrientResult = 0;
 
     private int mStartPercentX = 5;
     private int mEndPercentX = 95;
@@ -129,12 +131,12 @@ public class ImageProcessing {
         boolean configFull = isConfigFull();
         if (configFull) {
             if (mSpectrumOrientationLandscape) {
-                if (mCameraDataMirrored)
+                if(mCameraDataMirrored)
                     return extractBinnedLineLandM(inputArray);
                 else
                     return extractBinnedLineLand(inputArray);
             } else {
-                if (mCameraDataMirrored)
+                if(mCameraDataMirrored)
                     return extractBinnedLinePortM(inputArray);
                 else
                     return extractBinnedLinePort(inputArray);
@@ -144,7 +146,6 @@ public class ImageProcessing {
         }
     }
 
-    // version for N7 with flipped data in both axis
     private int[] extractBinnedLinePortM(byte[] inputArray)
             throws ArrayIndexOutOfBoundsException {
         int indexW;
@@ -180,14 +181,49 @@ public class ImageProcessing {
         return mBinnedLine;
     }
 
-    // version for N7 with flipped data
+    private int[] extractBinnedLinePort(byte[] inputArray)
+            throws ArrayIndexOutOfBoundsException {
+        int indexW;
+        int indexH;
+        int temp;
+
+        try {
+
+            // another method:
+            // main loop: every index of spectrum binned line
+            // internal loop:
+            // we add (bin) pixels for every spectrum index
+
+            for (int x = 0; x < mSizeX; x++) {
+                mBinnedLine[x] = 0;
+                indexH = mIndexStartH - mSizeX + x;
+                indexW = mPictureSizeWidth * indexH + mIndexStartW;
+                temp = 0;
+                for (int y = 0; y < mSizeY; y++) {
+                    temp += inputArray[indexW] & 0xFF;
+                    indexW--;
+                }
+                if (mShiftToNormalize <= 0) {
+                    mBinnedLine[x] = temp << -mShiftToNormalize;
+                } else {
+                    mBinnedLine[x] = temp >> mShiftToNormalize;
+                }
+            }
+
+        } catch (ArrayIndexOutOfBoundsException e) {
+
+        }
+        return mBinnedLine;
+    }
+
+
     private int[] extractBinnedLineLandM(byte[] inputArray)
             throws ArrayIndexOutOfBoundsException {
         int indexW;
         int indexH = mIndexStartH;
         try {
 
-            indexW = mIndexStartW + mPictureSizeWidth * indexH;
+            indexW = mIndexStartW + mSizeY + mPictureSizeWidth * indexH;
 
             //first line
             for (int x = 0; x < mSizeX; x++) {
@@ -220,48 +256,10 @@ public class ImageProcessing {
         return mBinnedLine;
     }
 
-    private int[] extractBinnedLinePort(byte[] inputArray)
-            throws ArrayIndexOutOfBoundsException {
-        int indexW;
-        int indexH;
-        int temp;
-
-        try {
-
-            // another method:
-            // main loop: every index of spectrum binned line
-            // internal loop:
-            // we add (bin) pixels for every spectrum index
-
-            for (int x = 0; x < mSizeX; x++) {
-                mBinnedLine[x] = 0;
-                temp = 0;
-                indexH = mIndexStartH + x;
-                indexW = mIndexStartW + mPictureSizeWidth * indexH;
-
-                for (int y = 0; y < mSizeY; y++) {
-                    temp += inputArray[indexW] & 0xFF;
-                    indexW++;
-                }
-                // normalize
-                if (mShiftToNormalize <= 0) {
-                    mBinnedLine[x] = temp << -mShiftToNormalize;
-                } else {
-                    mBinnedLine[x] = temp >> mShiftToNormalize;
-                }
-            }
-
-        } catch (ArrayIndexOutOfBoundsException e) {
-
-        }
-        return mBinnedLine;
-    }
-
     private int[] extractBinnedLineLand(byte[] inputArray)
             throws ArrayIndexOutOfBoundsException {
         int indexW;
         int indexH = mIndexStartH;
-
         try {
 
             indexW = mIndexStartW + mPictureSizeWidth * indexH;
@@ -275,14 +273,13 @@ public class ImageProcessing {
 
             //next lines
             for (int y = 1; y < mSizeY; y++) {
-                indexH++;
+                indexH--;
                 indexW = mIndexStartW + mPictureSizeWidth * indexH;
                 for (int x = 0; x < mSizeX; x++) {
                     mTempLine[x] += inputArray[indexW] & 0xFF;
                     indexW++;
                 }
             }
-            // normalize
             for (int x = 0; x < mSizeX; x++) {
                 if (mShiftToNormalize <= 0) {
                     mBinnedLine[x] = mTempLine[x] << -mShiftToNormalize;
@@ -291,40 +288,35 @@ public class ImageProcessing {
                 }
             }
 
-        } catch (ArrayIndexOutOfBoundsException e) {
+        }
+        catch (ArrayIndexOutOfBoundsException e){
 
         }
         return mBinnedLine;
     }
+
 
     public void setSpectrumOrientationLandscape(boolean _SpectrumOrientationLandscape) {
         mConfigStatus |= eSpectrumOrientationSet;
         mSpectrumOrientationLandscape = _SpectrumOrientationLandscape;
     }
 
+    public void setCameraOrientation(int orientResult){
+        mOrientResult = orientResult;
+        mConfigStatus |= eCameraOrientSet;
+    }
+
     public void configureBinningArea() {
         boolean configFull = isConfigFull();
         if (configFull) {
-            if (mCameraDataMirrored) { // N7
-                if (mSpectrumOrientationLandscape) {
-                    mSizeX = mPictureSizeWidth * (mEndPercentX - mStartPercentX) / 100;
-                    mIndexStartW = mPictureSizeWidth * (100 - mStartPercentX) / 100;
-                    mIndexStartH = mPictureSizeHeight * (100 - mStartPercentY) / 100;
-                } else {
-                    mSizeX = mPictureSizeHeight * (mEndPercentX - mStartPercentX) / 100;
-                    mIndexStartW = mPictureSizeWidth * (100 - mStartPercentY) / 100;
-                    mIndexStartH = mPictureSizeHeight * (100 - mStartPercentX) / 100;
-                }
-            } else { // data not mirrored; N5, GalNex
-                if (mSpectrumOrientationLandscape) {
-                    mSizeX = mPictureSizeWidth * (mEndPercentX - mStartPercentX) / 100;
-                    mIndexStartW = mPictureSizeWidth * mStartPercentX / 100;
-                    mIndexStartH = mPictureSizeHeight * mStartPercentY / 100;
-                } else {
-                    mSizeX = mPictureSizeHeight * (mEndPercentX - mStartPercentX) / 100;
-                    mIndexStartW = mPictureSizeWidth * mStartPercentY / 100;
-                    mIndexStartH = mPictureSizeHeight * mStartPercentX / 100;
-                }
+            if (mSpectrumOrientationLandscape) {
+                mSizeX = mPictureSizeWidth * (mEndPercentX - mStartPercentX) / 100;
+                mIndexStartW = mPictureSizeWidth * (100 - mStartPercentX) / 100;
+                mIndexStartH = mPictureSizeHeight * (100 - mStartPercentY) / 100;
+            } else {
+                mSizeX = mPictureSizeHeight * (mEndPercentX - mStartPercentX) / 100;
+                mIndexStartW = mPictureSizeWidth * (100 - mStartPercentY) / 100;
+                mIndexStartH = mPictureSizeHeight * (100 - mStartPercentX) / 100;
             }
             if (mBinnedLine == null) {
                 mBinnedLine = new int[mSizeX];

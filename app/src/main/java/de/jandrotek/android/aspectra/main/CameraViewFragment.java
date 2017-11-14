@@ -332,6 +332,11 @@ public class CameraViewFragment extends Fragment {
         mImageProcessing = imageProcessing;
     }
 
+//    public void setCameraOrientation(int cameraOrientation){
+//        mConfigLinesView.setCameraOrientation(cameraOrientation);
+//    }
+
+
     // not used ??
 //    public void updateBorderPercents() {
 //

@@ -26,7 +26,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.ImageFormat;
 import android.hardware.Camera;
-import android.hardware.Camera.Parameters;
+//import android.hardware.Camera.Parameters;
 import android.hardware.Camera.Size;
 import android.os.Handler;
 import android.os.Message;
@@ -91,7 +91,7 @@ public class CameraPreview  extends ViewGroup implements SurfaceHolder.Callback,
 
     private boolean mbProcessingShouldRun = false;
 
-    private Activity mActivity = null;
+    private BaseActivity mActivity = null;
     private Handler mLVActHandler = null;
     //Handler mVCActHandler = null;
     private ImageProcessing mImageProcessing;
@@ -99,16 +99,21 @@ public class CameraPreview  extends ViewGroup implements SurfaceHolder.Callback,
     public CameraPreview(Context context, int activityId) {
         super(context);
         SurfaceView surfaceView;
-        //Context mContext = context;
-        mActivity = (Activity) context;
-        mCameraHandle = new CameraHandle(context);
+        mActivity = (BaseActivity) context;
+        mCameraHandle = new CameraHandle();
+        mCameraHandle.setActivity(mActivity);
+
         if(activityId == AspectraGlobals.ACT_ITEM_LIVE_VIEW) {
             LiveViewActivity lvActivity = (LiveViewActivity) context;
+//            BaseActivity baseActivity = lvActivity.super() ;
             mLVActHandler = lvActivity.getHandler();
-//        } else if(activityId == BaseActivity.ACT_ITEM_VIEW_CONFIG){
+//        } else if(activityId == AspectraGlobals.ACT_ITEM_VIEW_CONFIG){
 //            ViewConfigActivity vcActivity = (ViewConfigActivity) context;
-//            // act. no need for handler in that activity
-//            //mVCActHandler = vcActivity.getHandler();
+////            LiveViewActivity lvActivity = (LiveViewActivity) context;
+//            BaseActivity baseActivity = vcActivity.super() ;
+//            mCameraHandle.setActivity(baseActivity);
+////            // act. no need for handler in that activity
+////            //mVCActHandler = vcActivity.getHandler();
         }
         //as in AOSP sample
         surfaceView = new SurfaceView(context);
@@ -125,8 +130,6 @@ public class CameraPreview  extends ViewGroup implements SurfaceHolder.Callback,
         if(mbProcessingShouldRun) {
             // At preview mode, the frame data will push to here.
             if (mImageFormat == ImageFormat.NV21) {
-                // TODO: check which format can we support                mCamera.setPreviewDisplay(holder);
-
                 // We only accept the NV21(YUV420) format.
                 if (!mbProcessing) {
                     mFrameData = arg0;
@@ -138,86 +141,31 @@ public class CameraPreview  extends ViewGroup implements SurfaceHolder.Callback,
         }
     }
 
-//    public void setCamera(Camera camera) {
-//        mCamera = camera;
-//        if (mCamera != null) {
-//            mSupportedPreviewSizes = mCamera.getParameters()
-//                    .getSupportedPreviewSizes();
-//            if (mSurfaceCreated) requestLayout();
-//        }
-//    }
-//
-//    public void switchCamera(Camera camera) {
-//        setCamera(camera);
-//        try {
-//            camera.setPreviewDisplay(mCameraHolder);
-//        } catch (IOException exception) {
-//            if(BuildConfig.DEBUG) {
-//                Log.e(TAG, "IOException caused by setPreviewDisplay()", exception);
-//            }
-//        }
-//    }
-
     @Override
     public void surfaceChanged(SurfaceHolder arg0, int arg1, int arg2, int arg3)
 //    throws Exception {
     {
-    //TODO: check configuration: portrait/landscape, disable by portrait
 
-        try {
-            Parameters parameters;
+        mImageFormat = mCameraHandle.startPreview(mCameraPreviewSize);
+        requestLayout();
 
-            parameters = mCamera.getParameters();
-            parameters.setPreviewSize(mCameraOwnPreviewWidth, mCameraOwnPreviewHeight);
-            requestLayout();
-            mImageFormat = parameters.getPreviewFormat();
-
-            setCameraDisplayOrientation(0, mCamera);
-            parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_INFINITY);
-
-            mCamera.startPreview();
-            mCamera.setParameters(parameters);
-
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            Log.e(TAG, "Exception caused by setCameraParams()", e);
-        }
+        mCameraHandle.setCameraDisplayOrientation(0);
     }
 
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
         // The Surface has been created, acquire the camera and tell it where
         // to draw.
-//        try {
             mCameraHandle.setPreview(holder, this);
-//        } catch (IOException exception) {
-//            if(BuildConfig.DEBUG) {
-//                Log.e(TAG, "IOException caused by setPreviewDisplay()", exception);
-//            }
-//        }
-        if (mCameraPreviewSize == null) requestLayout();
+        if (mCameraPreviewSize == null)
+            requestLayout();
         mSurfaceCreated = true;
     }
-
-//    public void setPreview(SurfaceHolder holder) {
-//        if (mCamera != null) {
-//            mCamera.setPreviewDisplay(holder);
-//            mCamera.setPreviewCallback(this);
-//        }
-//    }
 
     public void surfaceDestroyed(SurfaceHolder holder) {
         // Surface will be destroyed when we return, so stop the preview.
         mCameraHandle.stopPreview();
     }
-
-//    public void stopPreview() {
-//        if (mCamera != null) {
-//            mCamera.stopPreview();
-//            mCamera.setPreviewCallback(null);
-//        }
-//    }
 
     private Runnable doImageProcessing = new Runnable() {
         public void run() {
@@ -235,44 +183,6 @@ public class CameraPreview  extends ViewGroup implements SurfaceHolder.Callback,
             mbProcessing = false;
         }
     };
-
-    private void setCameraDisplayOrientation(int cameraId, android.hardware.Camera camera) {
-         mResult = mCameraHandle.getCameraDegResult(cameraId);
-        camera.setDisplayOrientation(mResult);
-    }
-
-//    private int getCameraDegResult(int cameraId) {
-//        Camera.CameraInfo info =
-//                new Camera.CameraInfo();
-//        Camera.getCameraInfo(cameraId, info);
-//        int displayRotation = mActivity.getWindowManager().getDefaultDisplay()
-//                     .getRotation();
-////        int mDegrees = 0;
-//        switch (displayRotation) {
-//            case Surface.ROTATION_0: mDegrees = 0; break;
-//            case Surface.ROTATION_90: mDegrees = 90; break;
-//            case Surface.ROTATION_180: mDegrees = 180; break;
-//            case Surface.ROTATION_270: mDegrees = 270; break;
-//        }
-//
-////        int mResult;
-//        if (info.facing == Camera.CameraInfo.CAMERA_FACING_FRONT) {
-//            mResult = (info.orientation + mDegrees) % 360;
-//            mResult = (360 - mResult) % 360;  // compensate the mirror
-//        } else {  // back-facing
-//            mResult = (info.orientation - mDegrees + 360) % 360;
-//        }
-//        return mResult;
-//    }
-
-//    private void setAutofocusToInfinity(){
-//        Parameters parameters;
-//
-//        parameters = mCamera.getParameters();
-//        parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_INFINITY);
-//        mCamera.setParameters(parameters);
-//
-//    }
 
     private Size getOptimalPreviewSize(List<Size> sizes, int w, int h) {
         final double ASPECT_TOLERANCE = 0.1;
@@ -345,13 +255,6 @@ public class CameraPreview  extends ViewGroup implements SurfaceHolder.Callback,
             }
         }
     }
-
-//    private void setPreviewSize(Size cameraPreviewSize) {
-//        Parameters parameters = mCamera.getParameters();
-//        parameters.setPreviewSize(cameraPreviewSize.width, cameraPreviewSize.height);
-//        parameters.setFocusMode(Parameters.FOCUS_MODE_INFINITY);
-//        mCamera.setParameters(parameters);
-//    }
 
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
@@ -433,6 +336,17 @@ public class CameraPreview  extends ViewGroup implements SurfaceHolder.Callback,
         }
     }
 
+    public void setCamera(Camera camera) {
+        mCameraHandle.setCamera(camera);
+//        mCamera = camera;
+//        if (mCamera != null) {
+//            mSupportedPreviewSizes = mCamera.getParameters()
+//                    .getSupportedPreviewSizes();
+        mSupportedPreviewSizes =  mCameraHandle.getSupportedPreviewSizes();
+        if (mSurfaceCreated)
+                requestLayout();
+//        }
+    }
 
     // getter and setters
     public void setProcessing(ImageProcessing imageProcessing) {

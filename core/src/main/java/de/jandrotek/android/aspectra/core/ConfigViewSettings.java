@@ -44,6 +44,7 @@ public class ConfigViewSettings {
         mConfigStatus &= ~eDeviceOrientFlag;
         mConfigStatus &= ~ePercentsFlag;
         mConfigStatus &= ~eEndPercentFlag;
+        mConfigStatus &= ~eCameraOrientFlag;
     }
 
     private final int eSpectrumOrientFlag = 0x01;
@@ -52,14 +53,16 @@ public class ConfigViewSettings {
     private final int eCameraPreviewFlag = 0x08;
     private final int eViewDimFlag = 0x10;
     private final int eEndPercentFlag = 0x20;
+    private final int eCameraOrientFlag = 0x40;
 
     private final int eNeededConfig =
-            eSpectrumOrientFlag +
+                    eSpectrumOrientFlag +
                     eDeviceOrientFlag +
                     ePercentsFlag +
                     eCameraPreviewFlag +
                     eViewDimFlag +
-                    eEndPercentFlag;
+                    eEndPercentFlag +
+                    eCameraOrientFlag;
 
     public void setSpectrumOrientationLandscape(boolean spectrumOrientationLandscape) {
         mSpectrumOrientationLandscape = spectrumOrientationLandscape;
@@ -71,6 +74,15 @@ public class ConfigViewSettings {
     // both orientations defines: device, spectrum
     private boolean mSpectrumOrientationLandscape = true;
     private int mDeviceOrientation = AspectraGlobals.DEVICE_ORIENTATION_LANDSCAPE;
+
+    public void setCameraOrientation(int mCameraOrientation) {
+        this.mCameraOrientation = mCameraOrientation;
+        mConfigStatus |= eCameraOrientFlag;
+        if (mConfigStatus == eNeededConfig)
+            calcCrossPoints();
+    }
+
+    private int mCameraOrientation = AspectraGlobals.CAMERA_ORIENTATION_UNKNOWN;
 
     public void setDeviceOrientation(int deviceOrientation) {
         mDeviceOrientation = deviceOrientation;
@@ -164,71 +176,121 @@ public class ConfigViewSettings {
         float previewInConfigY;
 
         if (mDeviceOrientation == AspectraGlobals.DEVICE_ORIENTATION_LANDSCAPE) {
-//            deltaX = mCameraPreviewWidth - mConfigViewWidth;
-//            if (deltaX > 1.0f) { // prefiewX bigger then configX
-                faktorK = mConfigViewWidth / mCameraPreviewWidth;
-                previewInConfigY = mCameraPreviewHeight * faktorK;
-                offsetY = (mConfigViewHeight - previewInConfigY) / 2;
-                smallerY = previewInConfigY;
-//            }
+            faktorK = mConfigViewWidth / mCameraPreviewWidth;
+            previewInConfigY = mCameraPreviewHeight * faktorK;
+            offsetY = (mConfigViewHeight - previewInConfigY) / 2;
+            smallerY = previewInConfigY;
             if (mSpectrumOrientationLandscape) {
-                mCrossPointsW[0] = offsetX;
-                mCrossPointsW[3] = offsetX + smallerX;
+                if(mCameraOrientation == AspectraGlobals.CAMERA_ORIENTATION_LANDSCAPE_RIGHT) {
+                    mCrossPointsW[0] = offsetX;
+                    mCrossPointsW[3] = offsetX + smallerX;
 
-                mCrosstPointsH[0] = offsetY;
-                mCrosstPointsH[3] = offsetY + smallerY;
+                    mCrosstPointsH[0] = offsetY;
+                    mCrosstPointsH[3] = offsetY + smallerY;
 
-                mCrossPointsW[1] = offsetX + mConfigStartPercentX * smallerX / 100;
-                mCrossPointsW[2] = offsetX + mConfigEndPercentX * smallerX / 100;
+                    mCrossPointsW[1] = offsetX + mConfigStartPercentX * smallerX / 100;
+                    mCrossPointsW[2] = offsetX + mConfigEndPercentX * smallerX / 100;
 
-                mCrosstPointsH[1] = offsetY + mConfigStartPercentY * smallerY / 100;
-                mCrosstPointsH[2] = offsetY + mConfigEndPercentY * smallerY / 100;
+                    mCrosstPointsH[1] = offsetY + mConfigStartPercentY * smallerY / 100;
+                    mCrosstPointsH[2] = offsetY + mConfigEndPercentY * smallerY / 100;
+                } else {
+                    mCrossPointsW[0] = offsetX + smallerX;
+                    mCrossPointsW[3] = offsetX;
+
+                    mCrosstPointsH[0] = offsetY + smallerY;
+                    mCrosstPointsH[3] = offsetY;
+
+                    mCrossPointsW[1] = offsetX + (100 - mConfigStartPercentX) * smallerX / 100;
+                    mCrossPointsW[2] = offsetX + (100 - mConfigEndPercentX) * smallerX / 100;
+
+                    mCrosstPointsH[1] = offsetY + (100 - mConfigStartPercentY) * smallerY / 100;
+                    mCrosstPointsH[2] = offsetY + (100 - mConfigEndPercentY) * smallerY / 100;
+                }
             } else { // spectrum portrait
-                mCrossPointsW[0] = offsetX;
-                mCrossPointsW[3] = offsetX + smallerX;
+                if(mCameraOrientation == AspectraGlobals.CAMERA_ORIENTATION_LANDSCAPE_LEFT) {
+                    mCrossPointsW[0] = offsetX;
+                    mCrossPointsW[3] = offsetX + smallerX;
 
-                mCrosstPointsH[0] = offsetY;
-                mCrosstPointsH[3] = offsetY + smallerY;
+                    mCrosstPointsH[0] = offsetY;
+                    mCrosstPointsH[3] = offsetY + smallerY;
 
-                mCrossPointsW[1] = offsetX + mConfigStartPercentY * smallerX / 100;
-                mCrossPointsW[2] = offsetX + mConfigEndPercentY * smallerX / 100;
+                    mCrossPointsW[1] = offsetX + mConfigStartPercentY * smallerX / 100;
+                    mCrossPointsW[2] = offsetX + mConfigEndPercentY * smallerX / 100;
 
-                mCrosstPointsH[1] = offsetY + mConfigStartPercentX * smallerY / 100;
-                mCrosstPointsH[2] = offsetY + mConfigEndPercentX * smallerY / 100;
+                    mCrosstPointsH[1] = offsetY + mConfigStartPercentX * smallerY / 100;
+                    mCrosstPointsH[2] = offsetY + mConfigEndPercentX * smallerY / 100;
+                } else {
+                    mCrossPointsW[0] = offsetX + smallerX;
+                    mCrossPointsW[3] = offsetX;
+
+                    mCrosstPointsH[0] = offsetY + smallerY;
+                    mCrosstPointsH[3] = offsetY;
+
+                    mCrossPointsW[1] = offsetX + (100 - mConfigStartPercentY) * smallerX / 100;
+                    mCrossPointsW[2] = offsetX + (100 - mConfigEndPercentY) * smallerX / 100;
+
+                    mCrosstPointsH[1] = offsetY + (100 - mConfigStartPercentX) * smallerY / 100;
+                    mCrosstPointsH[2] = offsetY + (100 - mConfigEndPercentX) * smallerY / 100;
+                }
             }
         } else if (mDeviceOrientation == AspectraGlobals.DEVICE_ORIENTATION_PORTRAIT) {
             // for camera preview hidht should be considered as view-width, and preview-width as view-height
-//            deltaY = mCameraPreviewHeight - mConfigViewHeight;
-//            if (deltaY > 1.0f) { // preViewY bigger then configY
             faktorK = mConfigViewHeight / mCameraPreviewHeight;
             previewInConfigX = mCameraPreviewWidth * faktorK;
                 offsetX = (mConfigViewWidth - previewInConfigX) / 2;
                 smallerX = previewInConfigX;
-//            }
             if (mSpectrumOrientationLandscape) {
-                mCrossPointsW[0] = offsetX;
-                mCrossPointsW[3] = offsetX + smallerX;
+                if(mCameraOrientation == AspectraGlobals.CAMERA_ORIENTATION_PORTRAIT_TOP) {
+                    mCrossPointsW[0] = offsetX;
+                    mCrossPointsW[3] = offsetX + smallerX;
 
-                mCrosstPointsH[0] = offsetY;
-                mCrosstPointsH[3] = offsetY + smallerY;
+                    mCrosstPointsH[0] = offsetY;
+                    mCrosstPointsH[3] = offsetY + smallerY;
 
-                mCrossPointsW[1] = offsetX + mConfigStartPercentY * smallerX / 100;
-                mCrossPointsW[2] = offsetX + mConfigEndPercentY * smallerX / 100;
+                    mCrossPointsW[1] = offsetX + mConfigStartPercentY * smallerX / 100;
+                    mCrossPointsW[2] = offsetX + mConfigEndPercentY * smallerX / 100;
 
-                mCrosstPointsH[1] = offsetY + mConfigStartPercentX * smallerY / 100;
-                mCrosstPointsH[2] = offsetY + mConfigEndPercentX * smallerY / 100;
+                    mCrosstPointsH[1] = offsetY + mConfigStartPercentX * smallerY / 100;
+                    mCrosstPointsH[2] = offsetY + mConfigEndPercentX * smallerY / 100;
+                } else {
+                    mCrossPointsW[0] = offsetX + smallerX;
+                    mCrossPointsW[3] = offsetX;
+
+                    mCrosstPointsH[0] = offsetY + smallerY;
+                    mCrosstPointsH[3] = offsetY;
+
+                    mCrossPointsW[1] = offsetX + (100 - mConfigStartPercentY) * smallerX / 100;
+                    mCrossPointsW[2] = offsetX + (100 - mConfigEndPercentY) * smallerX / 100;
+
+                    mCrosstPointsH[1] = offsetY + (100 - mConfigStartPercentX) * smallerY / 100;
+                    mCrosstPointsH[2] = offsetY + (100 - mConfigEndPercentX) * smallerY / 100;
+                }
             } else { // spectrum portrait
-                mCrossPointsW[0] = offsetX;
-                mCrossPointsW[3] = offsetX + smallerX;
+                if(mCameraOrientation == AspectraGlobals.CAMERA_ORIENTATION_PORTRAIT_TOP) {
+                    mCrossPointsW[0] = offsetX;
+                    mCrossPointsW[3] = offsetX + smallerX;
 
-                mCrosstPointsH[0] = offsetY;
-                mCrosstPointsH[3] = offsetY + smallerY;
+                    mCrosstPointsH[0] = offsetY;
+                    mCrosstPointsH[3] = offsetY + smallerY;
 
-                mCrossPointsW[1] = offsetX + mConfigStartPercentX * smallerX / 100;
-                mCrossPointsW[2] = offsetX + mConfigEndPercentX * smallerX / 100;
+                    mCrossPointsW[1] = offsetX + (100 - mConfigStartPercentX) * smallerX / 100;
+                    mCrossPointsW[2] = offsetX + (100 - mConfigEndPercentX) * smallerX / 100;
 
-                mCrosstPointsH[1] = offsetY + mConfigStartPercentY * smallerY / 100;
-                mCrosstPointsH[2] = offsetY + mConfigEndPercentY * smallerY / 100;
+                    mCrosstPointsH[1] = offsetY + mConfigStartPercentY * smallerY / 100;
+                    mCrosstPointsH[2] = offsetY + mConfigEndPercentY * smallerY / 100;
+                } else {
+                    mCrossPointsW[0] = offsetX + smallerX;
+                    mCrossPointsW[3] = offsetX;
+
+                    mCrosstPointsH[0] = offsetY + smallerY;
+                    mCrosstPointsH[3] = offsetY;
+
+                    mCrossPointsW[1] = offsetX + (mConfigStartPercentX) * smallerX / 100;
+                    mCrossPointsW[2] = offsetX + (mConfigEndPercentX) * smallerX / 100;
+
+                    mCrosstPointsH[1] = offsetY + (100 - mConfigStartPercentY) * smallerY / 100;
+                    mCrosstPointsH[2] = offsetY + (100 - mConfigEndPercentY) * smallerY / 100;
+                }
             }
         }
         mNewCrossPoints = true;
@@ -241,14 +303,12 @@ public class ConfigViewSettings {
         mConfigEndPercentX = widthEndX;
         mConfigStartPercentY = heightStartY;
         mAmountLinesY = deltaLinesY;
-//        if(mCamPreviewConfigured) {
         if ((mConfigStatus & eCameraPreviewFlag) == eCameraPreviewFlag) {
             mConfigEndPercentY = mConfigStartPercentY + (mAmountLinesY * 100) / mCameraPreviewHeight;
             mConfigStatus |= eEndPercentFlag;
         }
         if (mConfigStatus == eNeededConfig)
             calcCrossPoints();
-//        calcCrossPoints();
     }
 
     public void setConfigStartPercentX(int configStartPercentX) {

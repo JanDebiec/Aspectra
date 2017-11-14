@@ -19,6 +19,11 @@
     </style>
   </head>
   <body>
+    $ 1.0.7
+      % Version 1.0.7
+      _ 2017-11-09
+      *  fixed camera and device orientation in spectrum portrait mode
+      *  changed mirror_flag settings
     $ 1.0.6
       % Version 1.0.6
       _ 2017-10-23

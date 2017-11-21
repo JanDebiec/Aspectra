@@ -29,8 +29,8 @@ android {
         defaultConfig {
 
             applicationId "de.jandrotek.android.aspectra.mini"
-            minSdkVersion 15
-            targetSdkVersion 22
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
             versionCode versionNumber
             versionName "${versionMajor}.${versionMinor}.${versionBuild} Release"
 

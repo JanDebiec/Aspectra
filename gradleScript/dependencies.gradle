@@ -4,6 +4,10 @@ ext {
 //    buildToolsVersion = '25.0.0'
     compileSdkVersion = "android-24"
 
+    minSdkVersion = 15
+    targetSdkVersion = 22
+
+
     tools = [
             bTV: "${buildToolsVersion}",
             cSV: "${compileSdkVersion}"

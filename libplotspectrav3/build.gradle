@@ -5,8 +5,8 @@ android {
     buildToolsVersion tools.bTV
 
     defaultConfig {
-        minSdkVersion 15
-        targetSdkVersion 22
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
         versionName "1.0"
     }
@@ -16,7 +16,6 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-//    buildToolsVersion '25.0.0'
 }
 
 dependencies {

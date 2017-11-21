@@ -165,6 +165,7 @@ public class LiveViewActivity extends BaseActivity
                 if(mReferenceMode == true){
                     toastStr = "back to LiveView Mode";
                     mReferenceMode = false;
+                    saveZoomXParams();
                 } else {
                     toastStr = "Reference Mode";
                     mReferenceMode = true;
@@ -218,6 +219,7 @@ public class LiveViewActivity extends BaseActivity
         setDeviceOrientationInViewSettings();
         updateConfViewSettings();
         configureImageProcessing();
+        // TODO: restore ZoomXParameters
 //        if(mZommScale != 1.0f) {
             restoreZoomXParams();
 //        mPlotViewFragment.setZoomXSaveScale(mZommScale);

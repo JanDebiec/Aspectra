@@ -16,4 +16,5 @@
     <color name="primary">#0066cc</color>
     <color name="primary_dark">#003366</color>
     <color name="accent">#cc6600</color>
+    <color name="reference">#cc6600</color>
 </resources>

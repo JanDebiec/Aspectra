@@ -22,7 +22,7 @@
     $ 1.0.7
       % Version 1.0.7
       _ 2017-11-09
-      *  fixed camera and device orientation in spectrum portrait mode
+      *  fixed camera and device orientation in both spectrum modes
       *  changed mirror_flag settings
     $ 1.0.6
       % Version 1.0.6

@@ -211,52 +211,6 @@ public class LiveViewActivity extends BaseActivity
         mImageProcessing.setCameraDataMirrored(mCameraDataMirrored);
     }
 
-//    public void setCameraOrientInImProc(int cameraOrient){
-////        if(mCameraViewFragment != null){
-//            mViewSettings.setCameraOrientation(cameraOrient);
-////        }
-//    }
-
-// moved to SpectrumFiles
-//    public class SaveSpectrumTask extends AsyncTask<Void, Void, Void> {
-//        private Exception e=null;
-//        private final String text;
-//        private final File target;
-//
-//        SaveSpectrumTask(String text, File target) {
-//            this.text=text;
-//            this.target=target;
-//        }
-//
-//        @Override
-//        protected Void doInBackground(Void... args) {
-//            try {
-//                SpectrumFiles.saveStringToFile(text, target);
-//            }
-//            catch (Exception e) {
-//                this.e=e;
-//            }
-//            finally {
-//                AspectraGlobals.mSavePlotInFile = false;
-//            }
-//            return(null);
-//        }
-//
-//        @Override
-//        protected void onPostExecute(Void arg0) {
-//            if (e != null) {
-//                boom(e);
-//            }
-//        }
-//    }
-//
-//
-//     private void boom(Exception e) {
-//        Toast.makeText(this, e.toString(), Toast.LENGTH_LONG)
-//                .show();
-//        Log.e(getClass().getSimpleName(), "Exception saving file", e);
-//    }
-
     private class SpectrumHandler extends Handler {
         private final WeakReference<LiveViewActivity> mActivity;
 
@@ -305,23 +259,12 @@ public class LiveViewActivity extends BaseActivity
                             }
 
                             AspectraGlobals.mSavePlotInFile = false;
-//                        //TODO: run task in controller, the only input: data
-//                        // but to make a toast we need fileName
-//                        File f;
-//                        String fileName = SpectrumFiles.generateSpectrumAspFileName(mFileExt);
-//                        SpectrumAsp mSpectrum = new SpectrumAsp(fileName);
-//                        mSpectrum.setData(data, AspectraGlobals.eNoNormalize);
-//                        f =  mSpectrumFiles.getTarget(fileName);
-//                        new SaveSpectrumTask(mSpectrum.toString(),f).execute();
-
                         }
                     }
                 } else if (messId == AspectraGlobals.eMessagePreviewSize) {
                     int[] data = (int[]) inputMessage.obj;
                     mPreviewWidthX = data[0];
                     mPreviewHeightY = data[1];
-                    //TODO: check if needed and proper value
-//                    updatePreviewSizeInConfigView();
                 }
             }
         }

@@ -145,8 +145,8 @@ public class PlotViewFragment extends Fragment
             mFrameLayout = (FrameLayout) mRootView.findViewById(R.id.flPlotView);
             mFrameLayout.addView(mGraphView);
         } else {
-            mFrameLayout = (FrameLayout) mRootView.findViewById(R.id.flPlotView);
             mFrameLayout.removeView(mGraphView);
+            mFrameLayout = (FrameLayout) mRootView.findViewById(R.id.flPlotView);
             mFrameLayout.addView(mGraphView);
         }
         mInitialization |= eViewInitialized;

@@ -22,6 +22,7 @@ import android.app.Activity;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
@@ -44,6 +45,7 @@ import de.jandrotek.android.aspectra.core.AspectraGlobals;
 public class PlotViewFragment extends Fragment
         implements View.OnCreateContextMenuListener {
     private static PlotViewFragment mFragment = null;
+    private static final String TAG = "PlotViewFragment";
 
     private static final int eClassCreated = 0x01;
     private static final int eViewInitialized = 0x02;
@@ -143,8 +145,8 @@ public class PlotViewFragment extends Fragment
             mFrameLayout = (FrameLayout) mRootView.findViewById(R.id.flPlotView);
             mFrameLayout.addView(mGraphView);
         } else {
-            mFrameLayout = (FrameLayout) mRootView.findViewById(R.id.flPlotView);
             mFrameLayout.removeView(mGraphView);
+            mFrameLayout = (FrameLayout) mRootView.findViewById(R.id.flPlotView);
             mFrameLayout.addView(mGraphView);
         }
         mInitialization |= eViewInitialized;
@@ -223,13 +225,17 @@ public class PlotViewFragment extends Fragment
     public void createPlotSerie( int index, GraphView.GraphViewData[] realData) {
         int colorIndex = index % 3;
 
-        mDataSeries[index] = new GraphViewSeries(
-                "",
-                new GraphViewSeries.GraphViewSeriesStyle(mColor[colorIndex],1),
+        try {
+            mDataSeries[index] = new GraphViewSeries(
+                    "",
+                    new GraphViewSeries.GraphViewSeriesStyle(mColor[colorIndex], 1),
 
-                realData);
-        mInitialization |= eContentInitialized;
-        mGraphView.addSeries(mDataSeries[index]);
+                    realData);
+            mInitialization |= eContentInitialized;
+            mGraphView.addSeries(mDataSeries[index]);
+        } catch (NullPointerException e){
+            Log.e(TAG, "NullPointerException by createPlotSerie");
+        }
 
     }
 

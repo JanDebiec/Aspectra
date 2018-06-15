@@ -19,6 +19,10 @@
     </style>
   </head>
   <body>
+    $ 1.0.8
+      % Version 1.0.8
+      _ 2017-11-23
+      *  fixing IllegalStateException
     $ 1.0.7
       % Version 1.0.7
       _ 2017-11-09

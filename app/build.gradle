@@ -55,11 +55,11 @@ android {
 
 dependencies {
     // new one
-    compile supportDependencies.appCompat
-    compile project(':libplotspectrav3')
-    compile project(':libspectrafiles')
-    compile project(':core')
-    compile project(':libprefs')
-    compile project(':libcomm')
+    api supportDependencies.appCompat
+    api project(':libplotspectrav3')
+    api project(':libspectrafiles')
+    api project(':core')
+    api project(':libprefs')
+    api project(':libcomm')
 }
 

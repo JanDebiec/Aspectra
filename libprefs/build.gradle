@@ -19,6 +19,6 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile supportDependencies.appCompat
+    api fileTree(dir: 'libs', include: ['*.jar'])
+    api supportDependencies.appCompat
 }
